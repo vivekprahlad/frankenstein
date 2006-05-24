@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="frankenstein" default="all">
+
+
+    <property file="dataobjects.properties"/>
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+   <property name="skip.tests" value="true"/>
+    -->
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.svn/**"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+    </patternset>
+
+    <property name="cobertura.dir" value="cobertura"/>
+    <property name="coveragereport.dir" value="coverage-report"/>
+
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura.dir}">
+            <include name="cobertura.jar"/>
+            <include name="lib/**/*.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+    <!-- Project Libraries -->
+
+    <path id="library.libs.classpath">
+        <pathelement location="${basedir}/lib/commons-lang.jar"/>
+        <pathelement location="${basedir}/lib/jmock.jar"/>
+        <pathelement location="${basedir}/lib/junit.jar"/>
+        <pathelement location="${basedir}/lib/picocontainer.jar"/>
+    </path>
+
+    <dirname property="module.basedir" file="${ant.file}"/>
+
+    <property name="compiler.args" value="${compiler.args}"/>
+    <property name="build.dir" value="${module.basedir}/build"/>
+    <property name="compiledclasses.dir" value="${build.dir}/classes"/>
+    <property name="instrumented.dir" value="${build.dir}/instrumented"/>
+    <property name="compiledtests.dir" value="${build.dir}/test-classes"/>
+
+    <path id="module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="module.classpath">
+        <path refid="library.libs.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.dataobjects">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.dataobjects">
+        <patternset refid="excluded.from.module.dataobjects"/>
+    </patternset>
+
+    <path id="module.sourcepath">
+        <dirset dir="${module.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+    <path id="module.test.sourcepath">
+        <dirset dir="${module.basedir}">
+            <include name="test"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile" depends="compile.src,compile.tests" description="Compile module dataobjects"/>
+
+    <target name="compile.src" description="Compile module dataobjects; production classes">
+        <mkdir dir="${compiledclasses.dir}"/>
+        <javac destdir="${compiledclasses.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}"
+               memoryMaximumSize="${compiler.max.memory}" fork="true">
+            <compilerarg line="${compiler.args}"/>
+            <bootclasspath refid="module.bootclasspath"/>
+            <classpath refid="module.classpath"/>
+            <src refid="module.sourcepath"/>
+        </javac>
+
+        <copy todir="${compiledclasses.dir}">
+            <fileset dir="${module.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"
+            unless="skip.tests">
+        <mkdir dir="${compiledtests.dir}"/>
+        <javac destdir="${compiledtests.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}" memoryMaximumSize="${compiler.max.memory}" fork="true">
+            <compilerarg line="${compiler.args}"/>
+            <classpath refid="module.classpath"/>
+            <classpath location="${compiledclasses.dir}"/>
+            <src refid="module.test.sourcepath"/>
+        </javac>
+
+        <copy todir="${compiledtests.dir}">
+            <fileset dir="${module.basedir}/test">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="clean" description="cleanup module">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="test" description="Run unit tests">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <pathelement location="${compiledtests.dir}"/>
+                <pathelement location="${compiledclasses.dir}"/>
+            </classpath>
+            <classpath refid="module.classpath"/>
+            <batchtest todir="${reports.tests}">
+                <fileset dir="${module.basedir}/test">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="cobertura.instrument" description="Instrument production classes in preparation for coverage report"
+            depends="compile">
+        <delete file="cobertura.ser"/>
+        <cobertura-instrument todir="${instrumented.dir}">
+            <fileset dir="${compiledclasses.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </cobertura-instrument>
+    </target>
+
+    <target name="cobertura.test" depends="cobertura.instrument">
+        <junit fork="yes" dir="${basedir}" failureProperty="test.failed">
+            <!--
+           Specify the name of the coverage data file to use.
+           The value specified below is the default.
+       -->
+            <sysproperty key="net.sourceforge.cobertura.datafile"
+                         file="${basedir}/cobertura.ser"/>
+
+            <!--
+           Note the classpath order: instrumented classes are before the
+           original (uninstrumented) classes.  This is important.
+       -->
+            <classpath location="${instrumented.dir}"/>
+            <classpath location="${compiledclasses.dir}"/>
+
+            <!--
+           The instrumented classes reference classes used by the
+           Cobertura runtime, so Cobertura and its dependencies
+           must be on your classpath.
+       -->
+            <classpath refid="cobertura.classpath"/>
+            <classpath>
+                <pathelement location="${compiledtests.dir}"/>
+            </classpath>
+            <classpath refid="module.classpath"/>
+            <batchtest todir="${reports.tests}">
+                <fileset dir="${module.basedir}/test">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="cobertura.report" depends="clean, cobertura.test">
+        <cobertura-report format="html" destdir="${coveragereport.dir}" srcdir="${module.basedir}/src"/>
+    </target>
+
+    <target name="all" depends="init, clean, compile, test" description="build all"/>
+</project>
