@@ -16,7 +16,7 @@ import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
- * Ensures behaviour of composite recorder.
+ * Ensures behaviour of frankenstein recorder.
  */
 public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
     private Mock mockRecorder;

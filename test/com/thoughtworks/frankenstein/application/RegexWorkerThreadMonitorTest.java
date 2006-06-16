@@ -5,10 +5,10 @@ import junit.framework.TestCase;
 /**
  * Ensures behaviour of the worker thread monitor
  */
-public class SimpleWorkerThreadMonitorTest extends TestCase {
+public class RegexWorkerThreadMonitorTest extends TestCase {
 
     public void testWaitsForThreadToComplete() {
-        WorkerThreadMonitor monitor = new SimpleWorkerThreadMonitor();
+        WorkerThreadMonitor monitor = new RegexWorkerThreadMonitor("Worker");
         monitor.start();
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -18,7 +18,7 @@ public class SimpleWorkerThreadMonitorTest extends TestCase {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }, "MyWorker");
         thread.start();
         assertTrue(thread.isAlive());
         monitor.waitForIdle();
