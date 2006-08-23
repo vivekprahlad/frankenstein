@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="frankenstein" default="all">
 
-
     <property file="dataobjects.properties"/>
     <!-- Uncomment the following property if no tests compilation is needed -->
     <!--
@@ -114,6 +113,12 @@
         </copy>
     </target>
 
+    <target name="jar">
+        <jar basedir="${compiledclasses.dir}" file="dist/frankenstein.jar"></jar>
+        <copy file="lib/commons-lang.jar" tofile="dist/commons-lang.jar"/>
+        <copy file="lib/picocontainer.jar" tofile="dist/picocontainer.jar"/> 
+     </target>
+
     <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"
             unless="skip.tests">
         <mkdir dir="${compiledtests.dir}"/>
@@ -204,5 +209,5 @@
         <cobertura-report format="html" destdir="${coveragereport.dir}" srcdir="${module.basedir}/src"/>
     </target>
 
-    <target name="all" depends="init, clean, compile, test" description="build all"/>
+    <target name="all" depends="init, clean, compile, test, jar" description="build all"/>
 </project>
