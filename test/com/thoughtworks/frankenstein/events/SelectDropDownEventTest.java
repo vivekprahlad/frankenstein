@@ -36,7 +36,7 @@ public class SelectDropDownEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("SelectDropDown parent.comboFieldName text", new SelectDropDownEvent("parent.comboFieldName", "text").scriptLine());
+        assertEquals("select_drop_down parent.comboFieldName text", new SelectDropDownEvent("parent.comboFieldName", "text").scriptLine());
     }
 
     public void testPlay() {

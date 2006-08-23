@@ -23,13 +23,18 @@ public class RegexWorkerThreadMonitor implements WorkerThreadMonitor {
     }
 
     private boolean hasActiveWorkerThreads() {
-        ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
-        Thread[] threads = new Thread[threadGroup.activeCount()];
-        threadGroup.enumerate(threads, true);
+        Thread[] threads = enumerateThreads();
         for (int i = 0; i < threads.length; i++) {
             if (matchesPattern(threads[i].getName())) return true;
         }
         return false;
+    }
+
+    private Thread[] enumerateThreads() {
+        ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
+        Thread[] threads = new Thread[threadGroup.activeCount()];
+        threadGroup.enumerate(threads, true);
+        return threads;
     }
 
     private boolean matchesPattern(String name) {

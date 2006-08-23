@@ -37,7 +37,7 @@ public class ClickCheckboxEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("ClickCheckbox testButton true", new ClickCheckboxEvent("testButton", true).scriptLine());
+        assertEquals("click_checkbox testButton true", new ClickCheckboxEvent("testButton", true).scriptLine());
     }
 
     public void testPlay() {

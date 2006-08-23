@@ -33,7 +33,11 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (action() + " " + target() + " " + parameters()).replaceAll("/s", " ").trim();
+        return (underscore(action()) + " " + target() + " " + parameters()).replaceAll("/s", " ").trim();
+    }
+
+    protected String underscore(String action) {
+        return action.replaceAll("(\\w)([A-Z])", "$1_$2").toLowerCase();
     }
 
     public boolean equals(Object o) {

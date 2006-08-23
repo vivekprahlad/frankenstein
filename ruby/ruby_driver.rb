@@ -13,67 +13,67 @@ class FrankensteinDriver
   end
   
   def activate_window(title)
-    append_to_script "WindowActivated #{title}"
+    append_to_script "activate_window #{title}"
   end
   
   def click_button(button)
-    append_to_script "ClickButton #{button}"
+    append_to_script "click_button #{button}"
   end
 
   def click_checkbox(button, value)
-    append_to_script "ClickCheckbox #{button} #{value}"
+    append_to_script "click_checkbox #{button} #{value}"
   end
 
   def click_radiobutton(button)
-    append_to_script "ClickRadioButton #{button}"
+    append_to_script "click_radio_button #{button}"
   end
 
   def dialog_shown(title)
-    append_to_script "DialogShown #{title}"
+    append_to_script "dialog_shown #{title}"
   end
 
   def enter_text(textfield, text)
-    append_to_script "EnterText #{textfield} #{text}"
+    append_to_script "enter_text #{textfield} #{text}"
   end
 
   def edit_table_cell(table, row, column)
-    append_to_script "EditTableCell #{table} #{row},#{column}"
+    append_to_script "edit_table_cell #{table} #{row},#{column}"
   end
   
   def internal_frame_shown(title)
-    append_to_script "InternalFrameShown #{title}"
+    append_to_script "internal_frame_shown #{title}"
   end
   
   def keystroke(modifiers, keycode)
-    append_to_script "KeyStroke #{modifiers},#{keycode}"
+    append_to_script "key_stroke #{modifiers},#{keycode}"
   end
   
   def navigate(path)
-    append_to_script "Navigate #{path}"
+    append_to_script "navigate #{path}"
   end
 
   def select_dropdown(combo, value)
-    append_to_script "SelectDropDown #{combo} #{value}"
+    append_to_script "select_drop_down #{combo} #{value}"
   end
 
   def select_list(list, value)
-    append_to_script "SelectList #{list} #{value}"
+    append_to_script "select_list #{list} #{value}"
   end
   
   def select_tree(tree, path)
-    append_to_script "SelectTree #{tree} #{path}"
+    append_to_script "select_tree #{tree} #{path}"
   end
   
   def stop_table_edit(table)
-    append_to_script "StopTableEdit #{table}"
+    append_to_script "stop_table_edit #{table}"
   end
   
   def switch_tab(tab, title)
-    append_to_script "SwitchTab #{tab} #{title}"
+    append_to_script "switch_tab #{tab} #{title}"
   end
   
   def start_test(testname)
-    @script +="StartTest #{testname}\n"
+    @script +="start_test #{testname}\n"
   end
 
   def finish_test
@@ -93,7 +93,7 @@ class TestSwingSetAboutBox < FrankensteinDriver
 
   def test
     activate_window "SwingSet"
-    click_button "resources/images/toolbar/JTable.gif"
+	click_button "resources/images/toolbar/JTable.gif"
     show_about_box
   end
   

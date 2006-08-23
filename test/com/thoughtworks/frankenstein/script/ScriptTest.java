@@ -14,22 +14,22 @@ import junit.framework.TestCase;
  * tests.
  */
 public class ScriptTest extends TestCase {
-    private static final String SCRIPT = "CancelTableEdit tableName\n" +
-    "ClickButton click button\n" +
-    "ClickCheckbox check Box true\n" +
-    "ClickRadioButton radio button\n" +
-    "DialogShown title\n" +
-    "EnterText textFieldName text\n" +
-    "EditTableCell tableName 1,1\n" +
-    "EnterText textBox text\n" +
-    "InternalFrameShown title a\n" +
-    "KeyStroke 0,48\n" +
-    "Navigate ab>ac>de\n" +
-    "SelectDropDown combo text a\n" +
-    "SelectList list text a\n" +
-    "StopTableEdit table\n" +
-    "SwitchTab tab text a\n" +
-    "WindowActivated text a";
+    private static final String SCRIPT = "cancel_table_edit tableName\n" +
+    "click_button click button\n" +
+    "click_checkbox check Box true\n" +
+    "click_radio_button radio button\n" +
+    "dialog_shown title\n" +
+    "enter_text textFieldName text\n" +
+    "edit_table_cell tableName 1,1\n" +
+    "enter_text textBox text\n" +
+    "internal_frame_shown title a\n" +
+    "key_stroke 0,48\n" +
+    "navigate ab>ac>de\n" +
+    "select_drop_down combo text a\n" +
+    "select_list list text a\n" +
+    "stop_table_edit table\n" +
+    "switch_tab tab text a\n" +
+    "activate_window text a";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
@@ -48,7 +48,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new SelectListEvent("list", "text a"));
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
-        eventList.add(new WindowActivatedEvent("text a"));
+        eventList.add(new ActivateWindowEvent("text a"));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -72,6 +72,6 @@ public class ScriptTest extends TestCase {
         assertEquals(new SelectListEvent("list", "text a"), eventList.get(12));
         assertEquals(new StopTableEditEvent("table"), eventList.get(13));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(14));
-        assertEquals(new WindowActivatedEvent("text a"), eventList.get(15));
+        assertEquals(new ActivateWindowEvent("text a"), eventList.get(15));
     }
 }

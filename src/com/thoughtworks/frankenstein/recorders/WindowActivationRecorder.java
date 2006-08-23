@@ -5,7 +5,7 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.WindowActivatedEvent;
+import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
 
@@ -35,7 +35,7 @@ public class WindowActivationRecorder implements ComponentRecorder, AWTEventList
                 if (windowEvent.getWindow() instanceof JFrame) {
                     JFrame frame = (JFrame) windowEvent.getWindow();
                     if (hasNoRecorderPane(frame)) {
-                        recorder.record(new WindowActivatedEvent(frame.getTitle()));
+                        recorder.record(new ActivateWindowEvent(frame.getTitle()));
                     }
 
                 }

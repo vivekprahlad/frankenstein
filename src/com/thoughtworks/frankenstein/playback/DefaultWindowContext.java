@@ -43,6 +43,10 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         return activeWindow;
     }
 
+    public Component focusOwner() {
+        return KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+    }
+
     public synchronized void waitForDialog(String title, int timeoutInSeconds) throws InterruptedException {
         if (activeWindow instanceof JDialog) {
             JDialog dialog = (JDialog) activeWindow;

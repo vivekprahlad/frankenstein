@@ -53,6 +53,7 @@ public class DefaultScriptContext implements ScriptContext {
 
     protected void play(FrankensteinEvent event) {
         try {
+            System.out.println("Playing: " + event);
             event.play(context, finder, this, robot);
             reporter.reportSuccess(event);
         } catch (Exception e) {

@@ -42,7 +42,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesClickButtonEvent() {
        defaultEventRegistry.registerEvent(ClickButtonEvent.class);
-       assertEquals(new ClickButtonEvent("abc"), defaultEventRegistry.createEvent("ClickButton abc"));
+       assertEquals(new ClickButtonEvent("abc"), defaultEventRegistry.createEvent("click_button abc"));
     }
 
     public void testCreatesClickCheckboxEvent() {
@@ -111,8 +111,8 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreatesWindowActivatedEvent() {
-        defaultEventRegistry.registerEvent(WindowActivatedEvent.class);
-        assertEquals(new WindowActivatedEvent("title"), defaultEventRegistry.createEvent("WindowActivated title"));
+        defaultEventRegistry.registerEvent(ActivateWindowEvent.class);
+        assertEquals(new ActivateWindowEvent("title"), defaultEventRegistry.createEvent("ActivateWindow title"));
     }
 
     public void testCreatesCheckTextEvent() {
@@ -134,6 +134,13 @@ public class DefaultEventRegistryTest extends TestCase {
         }
     }
 
+    public void testConvertsUnderscoreTextToCamelCase() {
+        assertEquals("ClickButton", defaultEventRegistry.convert("click_button"));
+    }
+
+    public void testReturnsCamelCaseAsCamelCase() {
+        assertEquals("ClickButton", defaultEventRegistry.convert("ClickButton"));
+    }
 
     private class FakeFrankensteinEvent implements FrankensteinEvent {
 

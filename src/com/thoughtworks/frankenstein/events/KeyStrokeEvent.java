@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
@@ -13,9 +14,10 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * Represents a keystroke event.
  * @author Vivek Prahlad
  */
-public class KeyStrokeEvent extends AbstractFrankensteinEvent {
+public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyListener {
     private int modifiers;
     private int keyCode;
+    private int currentKey;
 
     public KeyStrokeEvent(int modifiers, int keyCode) {
         this.modifiers = modifiers;
@@ -34,11 +36,19 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent {
         return "KeyStrokeEvent:" +  (modifiers !=0 ? " modifiers: " + KeyEvent.getModifiersExText(modifiers) : "") + " key: " + KeyEvent.getKeyText(keyCode);
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public synchronized void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+        Component focusOwner = context.focusOwner();
+        focusOwner.addKeyListener(this);
         pressModifiers(robot);
         robot.keyPress(keyCode);
-        robot.keyRelease(keyCode);
+        releaseKey(robot, keyCode);
         releaseModifiers(robot);
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        focusOwner.removeKeyListener(this);
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -50,7 +60,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent {
     }
 
     public String scriptLine() {
-        return action() + " " + modifiers + "," + keyCode;
+        return underscore(action()) + " " + modifiers + "," + keyCode;
     }
 
     public String parameters() {
@@ -59,11 +69,16 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent {
 
     private void releaseModifiers(Robot robot) {
         KeyEvent event = createKeyEvent();
-        if (event.isAltDown()) robot.keyRelease(KeyEvent.VK_ALT);
-        if (event.isAltGraphDown()) robot.keyRelease(KeyEvent.VK_ALT_GRAPH);
-        if (event.isControlDown()) robot.keyRelease(KeyEvent.VK_CONTROL);
-        if (event.isMetaDown()) robot.keyRelease(KeyEvent.VK_META);
-        if (event.isShiftDown()) robot.keyRelease(KeyEvent.VK_SHIFT);
+        if (event.isAltDown()) releaseKey(robot, KeyEvent.VK_ALT);
+        if (event.isAltGraphDown()) releaseKey(robot, KeyEvent.VK_ALT_GRAPH);
+        if (event.isControlDown()) releaseKey(robot, KeyEvent.VK_CONTROL);
+        if (event.isMetaDown()) releaseKey(robot, KeyEvent.VK_META);
+        if (event.isShiftDown()) releaseKey(robot, KeyEvent.VK_SHIFT);
+    }
+
+    private void releaseKey(Robot robot, int key) {
+        robot.keyRelease(key);
+        currentKey = key;
     }
 
     private KeyEvent createKeyEvent() {
@@ -77,5 +92,17 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent {
         if (event.isControlDown()) robot.keyPress(KeyEvent.VK_CONTROL);
         if (event.isMetaDown()) robot.keyPress(KeyEvent.VK_META);
         if (event.isShiftDown()) robot.keyPress(KeyEvent.VK_SHIFT);
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+    }
+
+    public synchronized void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == currentKey) {
+            notifyAll();
+        }
     }
 }

@@ -10,7 +10,7 @@ import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
-import com.thoughtworks.frankenstein.events.WindowActivatedEvent;
+import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.recorders.DefaultComponentVisibility;
 import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
@@ -69,7 +69,7 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
 
     private List eventList() {
         List eventList = new ArrayList();
-        eventList.add(new WindowActivatedEvent("title"));
+        eventList.add(new ActivateWindowEvent("title"));
         return eventList;
     }
 }

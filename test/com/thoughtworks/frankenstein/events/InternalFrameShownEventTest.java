@@ -35,7 +35,7 @@ public class InternalFrameShownEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("InternalFrameShown testFrame", new InternalFrameShownEvent("testFrame").scriptLine());
+        assertEquals("internal_frame_shown testFrame", new InternalFrameShownEvent("testFrame").scriptLine());
     }
 
     public void testNoErrorIfTitleMatches() {

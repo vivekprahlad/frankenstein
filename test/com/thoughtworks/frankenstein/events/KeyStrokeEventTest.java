@@ -9,8 +9,11 @@ import java.util.List;
 import javax.swing.*;
 
 import org.jmock.MockObjectTestCase;
+import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
+import com.thoughtworks.frankenstein.application.ThreadUtil;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of keystroke event.
@@ -18,6 +21,8 @@ import com.thoughtworks.frankenstein.common.WaitForIdle;
 public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListener {
     private static final Object FOCUS_LOCK = new Object();
     private Robot robot;
+    private JFrame frame;
+
     protected void setUp() throws Exception {
         super.setUp();
         waitForIdle();
@@ -66,22 +71,41 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     }
 
     public void testScriptLine() {
-        assertEquals("KeyStroke 8,48", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).scriptLine());
+        assertEquals("key_stroke 8,48", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).scriptLine());
     }
 
     public void testPlayWithSpecialKeys() throws InterruptedException {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        JFrame frame = createAndShowFrame();
+        frame = createAndShowFrame();
         modifierKeyTest(manager, KeyEvent.VK_ALT, KeyEvent.ALT_MASK);
         modifierKeyTest(manager, KeyEvent.VK_CONTROL, KeyEvent.CTRL_MASK);
         modifierKeyTest(manager, KeyEvent.VK_SHIFT, KeyEvent.SHIFT_MASK);
         frame.dispose();
     }
 
+    public void testPlayWithNoSpecialKeys() throws InterruptedException {
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        frame = createAndShowFrame();
+        MockKeyEventDispatcher dispatcher = new MockKeyEventDispatcher();
+        manager.addKeyEventDispatcher(dispatcher);
+        Mock windowContext = mock(WindowContext.class);
+        windowContext.expects(once()).method("focusOwner").will(returnValue(frame));
+        new KeyStrokeEvent(0, KeyEvent.VK_A).play((WindowContext) windowContext.proxy(), null, null, robot);
+        waitForIdle();
+        List events = dispatcher.events;
+        assertEquals(events.toString(), 3, events.size());
+        assertKeyEvent(events, 0, KeyEvent.VK_A, KeyEvent.KEY_PRESSED);
+        assertKeyEvent(events, 2, KeyEvent.VK_A, KeyEvent.KEY_RELEASED);
+        manager.removeKeyEventDispatcher(dispatcher);
+        frame.dispose();
+    }
+
     private void modifierKeyTest(KeyboardFocusManager manager, int modifierKey, int modifierMask) {
         MockKeyEventDispatcher dispatcher = new MockKeyEventDispatcher();
         manager.addKeyEventDispatcher(dispatcher);
-        new KeyStrokeEvent(modifierMask, KeyEvent.VK_A).play(null, null, null, robot);
+        Mock windowContext = mock(WindowContext.class);
+        windowContext.expects(once()).method("focusOwner").will(returnValue(frame));
+        new KeyStrokeEvent(modifierMask, KeyEvent.VK_A).play((WindowContext) windowContext.proxy(), null, null, robot);
         waitForIdle();
         List events = dispatcher.events;
         assertEquals(events.toString(), 5, events.size());

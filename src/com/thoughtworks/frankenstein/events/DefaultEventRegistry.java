@@ -29,7 +29,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(StartTestEvent.class);
         registerEvent(StopTableEditEvent.class);
         registerEvent(SwitchTabEvent.class);
-        registerEvent(WindowActivatedEvent.class);
+        registerEvent(ActivateWindowEvent.class);
     }
 
     public void registerEvent(Class eventClass) {
@@ -52,8 +52,9 @@ public class DefaultEventRegistry implements EventRegistry{
 
     public FrankensteinEvent createEvent(String scriptLine) {
         String[] strings = scriptLine.split("\\s", 2);
-        if (!eventNameToEventClassMap.containsKey(strings[0])) throw new RuntimeException("Could not find event for action :" + strings[0]);
-        return createEvent((Class) eventNameToEventClassMap.get(strings[0]), strings[1]);
+        String action = convert(strings[0]);
+        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + strings[0]);
+        return createEvent((Class) eventNameToEventClassMap.get(action), strings[1]);
     }
 
     private FrankensteinEvent createEvent(Class clazz, String string) {
@@ -63,5 +64,18 @@ public class DefaultEventRegistry implements EventRegistry{
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error", e);
         }
+    }
+
+    protected String convert(String scriptAction) {
+        String[] tokens = scriptAction.split("_");
+        String converted = "";
+        for (int i = 0; i < tokens.length; i++) {
+            converted += capitalize(tokens[i]);
+        }
+        return converted;
+    }
+
+    private String capitalize(String token) {
+        return Character.toUpperCase(token.charAt(0)) + token.substring(1);
     }
 }

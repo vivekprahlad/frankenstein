@@ -33,7 +33,7 @@ public class DialogShownEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("DialogShown testDialog", new DialogShownEvent("testDialog").scriptLine());
+        assertEquals("dialog_shown testDialog", new DialogShownEvent("testDialog").scriptLine());
     }
 
     public void testNoErrorIfTitleMatches() {

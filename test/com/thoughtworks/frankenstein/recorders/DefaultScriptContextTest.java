@@ -23,7 +23,6 @@ import com.thoughtworks.frankenstein.script.TestReporter;
 public class DefaultScriptContextTest extends MockObjectTestCase {
     private DefaultScriptContext context;
     private Mock testReporter;
-    private Robot robot;
     private WindowContext windowContext;
     private Mock finder;
     private Mock monitor;
@@ -32,7 +31,6 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         testReporter = mock(TestReporter.class);
-        robot = new Robot();
         windowContext = new DefaultWindowContext();
         finder = mock(ComponentFinder.class);
         monitor = mock(WorkerThreadMonitor.class);

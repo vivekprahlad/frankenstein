@@ -14,10 +14,10 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * Represents an internal frame being shown.
  * @author Vivek Prahlad
  */
-public class WindowActivatedEvent extends AbstractFrankensteinEvent implements FocusListener {
+public class ActivateWindowEvent extends AbstractFrankensteinEvent implements FocusListener {
     private String title;
 
-    public WindowActivatedEvent(String title) {
+    public ActivateWindowEvent(String title) {
         this.title = title;
     }
 
@@ -27,7 +27,7 @@ public class WindowActivatedEvent extends AbstractFrankensteinEvent implements F
     }
 
     public String toString() {
-        return "WindowActivatedEvent: " + title;
+        return "ActivateWindowEvent: " + title;
     }
 
     public synchronized void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {

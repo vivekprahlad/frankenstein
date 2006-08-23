@@ -14,34 +14,34 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Ensures behaviour of windowactivated event.
  */
-public class WindowActivatedEventTest extends MockObjectTestCase {
+public class ActivateWindowEventTest extends MockObjectTestCase {
     public static final Object FOCUS_LOCK = new Object();
 
     public void testEqualsAndHashCode() {
-        WindowActivatedEvent one = new WindowActivatedEvent("title");
-        WindowActivatedEvent two = new WindowActivatedEvent("title");
+        ActivateWindowEvent one = new ActivateWindowEvent("title");
+        ActivateWindowEvent two = new ActivateWindowEvent("title");
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
 
     public void testToString() {
-        assertEquals("WindowActivatedEvent: title", new WindowActivatedEvent("title").toString());
+        assertEquals("ActivateWindowEvent: title", new ActivateWindowEvent("title").toString());
     }
 
     public void testAction() {
-        assertEquals("WindowActivated", new WindowActivatedEvent("title").action());
+        assertEquals("ActivateWindow", new ActivateWindowEvent("title").action());
     }
 
     public void testTarget() {
-        assertEquals("title", new WindowActivatedEvent("title").target());
+        assertEquals("title", new ActivateWindowEvent("title").target());
     }
 
     public void testParameters() {
-        assertEquals("", new WindowActivatedEvent("title").parameters());
+        assertEquals("", new ActivateWindowEvent("title").parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("WindowActivated title", new WindowActivatedEvent("title").scriptLine());
+        assertEquals("activate_window title", new ActivateWindowEvent("title").scriptLine());
     }
 
     private void waitForIdle() {
@@ -71,7 +71,7 @@ public class WindowActivatedEventTest extends MockObjectTestCase {
         }
         frameOne.removeFocusListener(focusListener);
         waitForIdle();
-        WindowActivatedEvent event = new WindowActivatedEvent("title2");
+        ActivateWindowEvent event = new ActivateWindowEvent("title2");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         mockComponentFinder.expects(once()).method("findWindow").with(eq("title2"))
                 .will(returnValue(frameTwo));

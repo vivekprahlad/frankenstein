@@ -15,11 +15,10 @@ import com.thoughtworks.frankenstein.events.*;
  */
 public class DefaultRecorderTest extends MockObjectTestCase {
     private DefaultRecorder recorder;
-    private Mock scriptContext;
 
     protected void setUp() throws Exception {
         super.setUp();
-        scriptContext = mock(ScriptContext.class);
+        Mock scriptContext = mock(ScriptContext.class);
         recorder = new DefaultRecorder((ScriptContext) scriptContext.proxy());
     }
 
@@ -85,7 +84,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     public void testWindowActivatedAfterDialogShownIsNotRecorded() {
         DialogShownEvent dialogShownEvent = new DialogShownEvent("dialog");
         recorder.record(dialogShownEvent);
-        recorder.record(new WindowActivatedEvent("myWindow"));
+        recorder.record(new ActivateWindowEvent("myWindow"));
         assertEquals(1, recorder.eventList().size());
         assertEquals(dialogShownEvent, recorder.eventList().get(0));
     }
@@ -153,7 +152,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
 
     public void testReset() {
         Mock mockChangeListener = mock(ChangeListener.class);
-        recorder.record(new WindowActivatedEvent("title"));
+        recorder.record(new ActivateWindowEvent("title"));
         mockChangeListener.expects(once()).method("stateChanged").with(ANYTHING);
         recorder.addChangeListener((ChangeListener) mockChangeListener.proxy());
         recorder.reset();
@@ -162,7 +161,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
 
     public void testSetEventList() {
         Mock mockChangeListener = mock(ChangeListener.class);
-        recorder.record(new WindowActivatedEvent("title"));
+        recorder.record(new ActivateWindowEvent("title"));
         mockChangeListener.expects(once()).method("stateChanged").with(ANYTHING);
         recorder.addChangeListener((ChangeListener) mockChangeListener.proxy());
         recorder.setEventList(new ArrayList());
@@ -172,7 +171,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     public void testPlayRunsEventsInScriptContext() throws InterruptedException {
         MockScriptContext scriptContext = new MockScriptContext();
         recorder = new DefaultRecorder(scriptContext);
-        recorder.record(new WindowActivatedEvent("title"));
+        recorder.record(new ActivateWindowEvent("title"));
         recorder.play();
         recorder.playerThread.join();
         assertEquals(recorder.eventList(), scriptContext.eventList);
