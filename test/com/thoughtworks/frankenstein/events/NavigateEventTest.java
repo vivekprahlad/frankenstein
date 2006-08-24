@@ -49,7 +49,7 @@ public class NavigateEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("navigate one>two>three", new NavigateEvent("one>two>three").scriptLine());
+        assertEquals("navigate \"one>two>three\"", new NavigateEvent("one>two>three").scriptLine());
     }
 
     private void expectActionPerformed(Mock mockActionListener) {

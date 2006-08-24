@@ -71,7 +71,7 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     }
 
     public void testScriptLine() {
-        assertEquals("key_stroke 8,48", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).scriptLine());
+        assertEquals("key_stroke \"8,48\"", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).scriptLine());
     }
 
     public void testPlayWithSpecialKeys() throws InterruptedException {

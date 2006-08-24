@@ -7,6 +7,7 @@ import java.awt.event.InputEvent;
  * Base class for all mouse actions.
  */
 public class AbstractMouseAction {
+
     protected void moveMouse(Component component, Robot robot) {
         Point point = component.getLocationOnScreen();
         robot.mouseMove(point.x + component.getWidth() / 2, point.y + component.getHeight() / 2);

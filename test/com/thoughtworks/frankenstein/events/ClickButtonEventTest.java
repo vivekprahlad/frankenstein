@@ -39,7 +39,7 @@ public class ClickButtonEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("click_button testButton", new ClickButtonEvent("testButton").scriptLine());
+        assertEquals("click_button \"testButton\"", new ClickButtonEvent("testButton").scriptLine());
     }
 
     public void testPlay() throws InterruptedException, AWTException {

@@ -37,92 +37,92 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesCancelTableEditEvent() {
         defaultEventRegistry.registerEvent(CancelTableEditEvent.class);
-        assertEquals(new CancelTableEditEvent("abc"), defaultEventRegistry.createEvent("CancelTableEdit abc"));
+        assertEquals(new CancelTableEditEvent("abc"), defaultEventRegistry.createEvent("CancelTableEdit \"abc\""));
     }
 
     public void testCreatesClickButtonEvent() {
        defaultEventRegistry.registerEvent(ClickButtonEvent.class);
-       assertEquals(new ClickButtonEvent("abc"), defaultEventRegistry.createEvent("click_button abc"));
+       assertEquals(new ClickButtonEvent("abc"), defaultEventRegistry.createEvent("click_button \"abc\""));
     }
 
     public void testCreatesClickCheckboxEvent() {
         defaultEventRegistry.registerEvent(ClickCheckboxEvent.class);
-        assertEquals(new ClickCheckboxEvent("abc", true), defaultEventRegistry.createEvent("ClickCheckbox abc true"));
+        assertEquals(new ClickCheckboxEvent("abc", true), defaultEventRegistry.createEvent("ClickCheckbox \"abc\" \"true\""));
     }
 
     public void testCreatesClickRadioButtonEvent() {
         defaultEventRegistry.registerEvent(ClickRadioButtonEvent.class);
-        assertEquals(new ClickRadioButtonEvent("abc"), defaultEventRegistry.createEvent("ClickRadioButton abc"));
+        assertEquals(new ClickRadioButtonEvent("abc"), defaultEventRegistry.createEvent("ClickRadioButton \"abc\""));
     }
 
     public void testCreatesDialogShownEvent() {
         defaultEventRegistry.registerEvent(DialogShownEvent.class);
-        assertEquals(new DialogShownEvent("abc"), defaultEventRegistry.createEvent("DialogShown abc"));
+        assertEquals(new DialogShownEvent("abc"), defaultEventRegistry.createEvent("DialogShown \"abc\""));
     }
 
     public void testCreatesEditTableCellEvent() {
         defaultEventRegistry.registerEvent(EditTableCellEvent.class);
-        assertEquals(new EditTableCellEvent("abc", 1, 2), defaultEventRegistry.createEvent("EditTableCell abc 1,2"));
+        assertEquals(new EditTableCellEvent("abc", 1, 2), defaultEventRegistry.createEvent("EditTableCell \"abc\" \"1,2\""));
     }
 
     public void testCreatesEnterTextEvent() {
         defaultEventRegistry.registerEvent(EnterTextEvent.class);
-        assertEquals(new EnterTextEvent("textField", "abc"), defaultEventRegistry.createEvent("EnterText textField abc"));
+        assertEquals(new EnterTextEvent("textField", "abc"), defaultEventRegistry.createEvent("EnterText \"textField\" \"abc\""));
     }
 
     public void testCreatesInternalFrameShownEvent() {
         defaultEventRegistry.registerEvent(InternalFrameShownEvent.class);
-        assertEquals(new InternalFrameShownEvent("title"), defaultEventRegistry.createEvent("InternalFrameShown title"));
+        assertEquals(new InternalFrameShownEvent("title"), defaultEventRegistry.createEvent("InternalFrameShown \"title\""));
     }
 
     public void testCreatesKeystrokeEvent() {
         defaultEventRegistry.registerEvent(KeyStrokeEvent.class);
-        assertEquals(new KeyStrokeEvent(0,48), defaultEventRegistry.createEvent("KeyStroke 0,48"));
+        assertEquals(new KeyStrokeEvent(0,48), defaultEventRegistry.createEvent("KeyStroke \"0,48\""));
     }
 
     public void testCreatesNavigateEvent() {
         defaultEventRegistry.registerEvent(NavigateEvent.class);
-        assertEquals(new NavigateEvent("one>two"), defaultEventRegistry.createEvent("Navigate one>two"));
+        assertEquals(new NavigateEvent("one>two"), defaultEventRegistry.createEvent("Navigate \"one>two\""));
     }
 
     public void testCreatesSelectDropDownEvent() {
         defaultEventRegistry.registerEvent(SelectDropDownEvent.class);
-        assertEquals(new SelectDropDownEvent("dropDown", "value"), defaultEventRegistry.createEvent("SelectDropDown dropDown value"));
+        assertEquals(new SelectDropDownEvent("dropDown", "value"), defaultEventRegistry.createEvent("SelectDropDown \"dropDown\" \"value\""));
     }
 
     public void testCreatesSelectListEvent() {
         defaultEventRegistry.registerEvent(SelectListEvent.class);
-        assertEquals(new SelectListEvent("list", "value"), defaultEventRegistry.createEvent("SelectList list value"));
+        assertEquals(new SelectListEvent("list", "value"), defaultEventRegistry.createEvent("SelectList \"list\" \"value\""));
     }
 
     public void testCreatesSelectTreeEvent() {
         defaultEventRegistry.registerEvent(SelectTreeEvent.class);
-        assertEquals(new SelectTreeEvent("tree", "one>two>three"), defaultEventRegistry.createEvent("SelectTree tree one>two>three"));
+        assertEquals(new SelectTreeEvent("tree", "one>two>three"), defaultEventRegistry.createEvent("SelectTree \"tree\" \"one>two>three\""));
     }
 
     public void testCreatesStopTableEditEvent() {
         defaultEventRegistry.registerEvent(StopTableEditEvent.class);
-        assertEquals(new StopTableEditEvent("table"), defaultEventRegistry.createEvent("StopTableEdit table"));
+        assertEquals(new StopTableEditEvent("table"), defaultEventRegistry.createEvent("StopTableEdit \"table\""));
     }
 
     public void testCreatesSwitchTabEvent() {
         defaultEventRegistry.registerEvent(SwitchTabEvent.class);
-        assertEquals(new SwitchTabEvent("tabName", "tabTitle"), defaultEventRegistry.createEvent("SwitchTab tabName tabTitle"));
+        assertEquals(new SwitchTabEvent("tabName", "tabTitle"), defaultEventRegistry.createEvent("SwitchTab \"tabName\" \"tabTitle\""));
     }
 
     public void testCreatesWindowActivatedEvent() {
         defaultEventRegistry.registerEvent(ActivateWindowEvent.class);
-        assertEquals(new ActivateWindowEvent("title"), defaultEventRegistry.createEvent("ActivateWindow title"));
+        assertEquals(new ActivateWindowEvent("title"), defaultEventRegistry.createEvent("ActivateWindow \"title\""));
     }
 
     public void testCreatesCheckTextEvent() {
         defaultEventRegistry.registerEvent(CheckTextEvent.class);
-        assertEquals(new CheckTextEvent("textField", "text"), defaultEventRegistry.createEvent("CheckText textField text"));
+        assertEquals(new CheckTextEvent("textField", "text"), defaultEventRegistry.createEvent("CheckText \"textField\" \"text\""));
     }
 
     public void testCreatesStartTestEvent() {
         defaultEventRegistry.registerEvent(StartTestEvent.class);
-        assertEquals(new StartTestEvent("testName"), defaultEventRegistry.createEvent("StartTest testName"));
+        assertEquals(new StartTestEvent("testName"), defaultEventRegistry.createEvent("StartTest \"testName\""));
     }
 
     public void testThrowsExceptionIfCreatingEventFails() {

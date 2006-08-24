@@ -36,7 +36,7 @@ public class EnterTextEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("enter_text parent.textFieldName text", new EnterTextEvent("parent.textFieldName", "text").scriptLine());
+        assertEquals("enter_text \"parent.textFieldName\" \"text\"", new EnterTextEvent("parent.textFieldName", "text").scriptLine());
     }
 
     public void testPlay() {

@@ -37,7 +37,7 @@ public class SelectListEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_list parent.listFieldName text", new SelectListEvent("parent.listFieldName", "text").scriptLine());
+        assertEquals("select_list \"parent.listFieldName\" \"text\"", new SelectListEvent("parent.listFieldName", "text").scriptLine());
     }
 
     public void testPlay() {

@@ -39,7 +39,7 @@ public class CancelTableEditEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("cancel_table_edit testTarget", new CancelTableEditEvent("testTarget").scriptLine());
+        assertEquals("cancel_table_edit \"testTarget\"", new CancelTableEditEvent("testTarget").scriptLine());
     }
 
     public void testPlay() {

@@ -51,10 +51,11 @@ public class DefaultEventRegistry implements EventRegistry{
     }
 
     public FrankensteinEvent createEvent(String scriptLine) {
-        String[] strings = scriptLine.split("\\s", 2);
-        String action = convert(strings[0]);
-        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + strings[0]);
-        return createEvent((Class) eventNameToEventClassMap.get(action), strings[1]);
+        int quoteIndex = scriptLine.indexOf("\"");
+        String line = scriptLine.substring(quoteIndex).replaceAll("\"", "");
+        String action = convert(scriptLine.substring(0, quoteIndex-1));
+        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + action);
+        return createEvent((Class) eventNameToEventClassMap.get(action), line);
     }
 
     private FrankensteinEvent createEvent(Class clazz, String string) {

@@ -41,7 +41,7 @@ public class ActivateWindowEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("activate_window title", new ActivateWindowEvent("title").scriptLine());
+        assertEquals("activate_window \"title\"", new ActivateWindowEvent("title").scriptLine());
     }
 
     private void waitForIdle() {

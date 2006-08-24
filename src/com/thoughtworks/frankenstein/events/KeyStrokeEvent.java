@@ -60,7 +60,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public String scriptLine() {
-        return underscore(action()) + " " + modifiers + "," + keyCode;
+        return underscore(action()) + " \"" + modifiers + "," + keyCode +"\"";
     }
 
     public String parameters() {

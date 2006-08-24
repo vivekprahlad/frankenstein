@@ -36,7 +36,7 @@ public class StopTableEditEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("stop_table_edit testTarget", new StopTableEditEvent("testTarget").scriptLine());
+        assertEquals("stop_table_edit \"testTarget\"", new StopTableEditEvent("testTarget").scriptLine());
     }
 
     public void testPlay() {

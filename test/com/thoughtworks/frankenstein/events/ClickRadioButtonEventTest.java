@@ -37,7 +37,7 @@ public class ClickRadioButtonEventTest extends MockObjectTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("click_radio_button testButton", new ClickRadioButtonEvent("testButton").scriptLine());
+        assertEquals("click_radio_button \"testButton\"", new ClickRadioButtonEvent("testButton").scriptLine());
     }
 
     public void testPlay() {

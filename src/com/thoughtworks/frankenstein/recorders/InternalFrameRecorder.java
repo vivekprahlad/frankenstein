@@ -17,6 +17,7 @@ public class InternalFrameRecorder extends AbstractComponentRecorder {
     }
 
     void componentShown(Component component) {
+        System.out.println("Recording inter");
         recorder.record(new InternalFrameShownEvent("title"));
     }
 
