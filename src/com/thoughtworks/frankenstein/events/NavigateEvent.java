@@ -12,7 +12,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * @author Vivek Prahlad
  */
 public class NavigateEvent extends AbstractFrankensteinEvent {
-    private String path;
+    protected String path;
 
     public NavigateEvent(String path) {
         this.path = path;

@@ -5,10 +5,7 @@ package com.thoughtworks.frankenstein.application;
  */
 public class PipingMain {
     public static void main(String[] args) throws ClassNotFoundException {
-        Class mainClass = parseClass(args);
-        String[] mainClassArgs = parseArgs(args);
-        FrankensteinIntegration integration = new FrankensteinIntegration(mainClass);
-        integration.start(mainClassArgs);
+        new FrankensteinIntegration(parseClass(args)).start(parseArgs(args));
     }
 
     static String[] parseArgs(String[] args) {

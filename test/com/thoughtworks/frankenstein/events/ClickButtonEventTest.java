@@ -1,6 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.*;
 import javax.swing.*;
 
@@ -9,6 +11,7 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.common.RobotFactory;
 
 /**
  * Ensures behaviour of ClickButtonEvent
@@ -55,7 +58,7 @@ public class ClickButtonEventTest extends MockObjectTestCase {
         button.addActionListener((ActionListener) mockActionListener.proxy());
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.buttonName")).will(returnValue(button));
         mockActionListener.expects(once()).method("actionPerformed");
-        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, new Robot());
+        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
         frame.dispose();
     }
 }

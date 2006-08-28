@@ -38,8 +38,17 @@ public class ListSelectionRecorder extends AbstractComponentRecorder implements 
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting()) return;
         JList list = (JList) e.getSource();
-        if (!visibility.isShowing(list) || list.getClass().getName().matches(".*Combo.*")) return;
+        if (!visibility.isShowing(list) || list.getClass().getName().matches(".*Combo.*") || isFileChooserChild(list)) return;
         Component rendererComponent = list.getCellRenderer().getListCellRendererComponent(list, list.getSelectedValue(), list.getSelectedIndex(), false, false);
         recorder.record(new SelectListEvent(componentName(list), decoder.decode(rendererComponent)));
+    }
+
+    private boolean isFileChooserChild(JList list) {
+        Component parent = list.getParent();
+        while(parent  != null) {
+            if (parent instanceof JFileChooser) return true;
+            parent = parent.getParent();
+        }
+        return false;
     }
 }

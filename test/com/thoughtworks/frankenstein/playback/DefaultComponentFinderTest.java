@@ -94,6 +94,25 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         assertSame(component, finder.findComponent(null, "table.editor"));
     }
 
+    public void testFindsInternalFrame() {
+        JFrame frame = new JFrame("testFrame");
+        JDesktopPane pane = new JDesktopPane();
+        JInternalFrame internalFrame = new JInternalFrame("Test");
+        pane.add(internalFrame);
+        frame.setContentPane(pane);
+        frame.setVisible(true);
+        mockWindowContext.expects(once()).method("activeWindow").will(returnValue(frame));
+        assertSame(internalFrame, finder.findInternalFrame((WindowContext) mockWindowContext.proxy(), "Test"));
+    }
+
+    public void testFindsFileChooser() {
+        JFileChooser chooser = new JFileChooser(".");
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(chooser);
+        mockWindowContext.expects(once()).method("activeWindow").will(returnValue(frame));
+        assertSame(chooser, finder.fileChooser((WindowContext) mockWindowContext.proxy()));
+    }
+
     private JMenuBar createMenuBar() {
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("Top");

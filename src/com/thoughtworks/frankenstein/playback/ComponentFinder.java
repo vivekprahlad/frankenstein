@@ -15,4 +15,8 @@ public interface ComponentFinder {
     JMenuItem findMenuItem(WindowContext context, String path);
 
     Window findWindow(String title);
+
+    JInternalFrame findInternalFrame(WindowContext windowContext, String title);
+
+    JFileChooser fileChooser(WindowContext context);
 }

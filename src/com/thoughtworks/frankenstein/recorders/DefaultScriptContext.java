@@ -6,6 +6,7 @@ import java.util.List;
 import java.io.IOException;
 
 import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
+import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
@@ -53,7 +54,6 @@ public class DefaultScriptContext implements ScriptContext {
 
     protected void play(FrankensteinEvent event) {
         try {
-            System.out.println("Playing: " + event);
             event.play(context, finder, this, robot);
             reporter.reportSuccess(event);
         } catch (Exception e) {

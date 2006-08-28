@@ -92,4 +92,16 @@ public class DefaultComponentFinder implements ComponentFinder {
         }
         throw new RuntimeException("Could not find window with title: " + title);
     }
+
+    public JInternalFrame findInternalFrame(WindowContext windowContext, String title) {
+            InternalFrameMatchingRule rule = new InternalFrameMatchingRule(title);
+            new ComponentHierarchyWalker().matchComponentsIn((Container) windowContext.activeWindow(), rule);
+            return rule.matchingComponent();
+    }
+
+    public JFileChooser fileChooser(WindowContext context) {
+        UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JFileChooser.class);
+        new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
+        return (JFileChooser) rule.unnamedComponents().get(0);
+    }
 }

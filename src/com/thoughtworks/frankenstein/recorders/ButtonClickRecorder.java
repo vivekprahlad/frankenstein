@@ -35,7 +35,9 @@ public class ButtonClickRecorder extends AbstractComponentRecorder implements Ac
 
     protected boolean matchesComponentType(AWTEvent event) {
         Object source = event.getSource();
-        return (source instanceof JButton && !source.getClass().getName().matches(".*Combo.*") ) || source.getClass() == JToggleButton.class;
+        return (source instanceof JButton
+                && !source.getClass().getName().matches(".*Combo.*|javax\\.swing\\.plaf.*|FilePane.*") ) 
+                || source.getClass() == JToggleButton.class;
     }
 
     public void actionPerformed(ActionEvent e) {

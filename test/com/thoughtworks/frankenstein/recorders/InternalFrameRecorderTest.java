@@ -1,9 +1,12 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyVetoException;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
+import com.thoughtworks.frankenstein.events.ActivateInternalFrameEvent;
+import com.thoughtworks.frankenstein.events.CloseInternalFrameEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
@@ -17,17 +20,50 @@ public class InternalFrameRecorderTest extends AbstractRecorderTestCase {
         recorder = new InternalFrameRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy());
     }
 
-    public void testDoesNotListenForEventsOtherThanJInternalFrames() {
-        mockRecorder.expects(never()).method(ANYTHING).withAnyArguments();
-        recorder.eventDispatched(new ComponentEvent(new JButton(), ComponentEvent.COMPONENT_SHOWN));
-    }
-
-    public void testListensForOptionPanesShowing() {
+    public void testAddsInternalFrameListenerWhenFrameIsShown() {
+        JInternalFrame internalFrame = new JInternalFrame("title");
+        int initialListenerCount = internalFrameListenerCount(internalFrame);
         mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
-        recorder.componentShown(new JInternalFrame("title"));
+        recorder.componentShown(internalFrame);
+        assertEquals(initialListenerCount + 1, internalFrameListenerCount(internalFrame));
     }
 
-    public void testDoesNothingWhenInternalFrameIsHidden() {
-        recorder.componentHidden(new JInternalFrame());
+    private int internalFrameListenerCount(JInternalFrame internalFrame) {
+        return internalFrame.getInternalFrameListeners().length;
+    }
+
+    public void testRemovesInternalFrameListenerWhenFrameIsHidden() {
+        JInternalFrame internalFrame = new JInternalFrame("title");
+        int initialListenerCount = internalFrameListenerCount(internalFrame);
+        mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
+        recorder.componentShown(internalFrame);
+        recorder.componentHidden(internalFrame);
+        assertEquals(initialListenerCount, internalFrameListenerCount(internalFrame));
+    }
+
+    public void testRecordsFrameActivation() throws PropertyVetoException {
+        JInternalFrame internalFrame = new JInternalFrame("title") {
+            public boolean isShowing() {
+                return true;
+            }
+        };
+        int initialListenerCount = internalFrameListenerCount(internalFrame);
+        mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
+        recorder.componentShown(internalFrame);
+        mockRecorder.expects(once()).method("record").with(eq(new ActivateInternalFrameEvent("title")));
+        internalFrame.setSelected(true);
+    }
+
+    public void testRecordsFrameClosing() throws PropertyVetoException {
+        JInternalFrame internalFrame = new JInternalFrame("title") {
+            public boolean isShowing() {
+                return true;
+            }
+        };
+        int initialListenerCount = internalFrameListenerCount(internalFrame);
+        mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
+        recorder.componentShown(internalFrame);
+        mockRecorder.expects(once()).method("record").with(eq(new CloseInternalFrameEvent("title")));
+        internalFrame.setClosed(true);
     }
 }

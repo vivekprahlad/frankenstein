@@ -2,6 +2,8 @@ package com.thoughtworks.frankenstein.events;
 
 import org.jmock.MockObjectTestCase;
 
+import java.beans.PropertyVetoException;
+
 /**
  * Base test case for all events.
  */
@@ -18,5 +20,5 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
 
     public abstract void testScriptLine();
 
-    public abstract void testPlay();
+    public abstract void testPlay() throws Exception;
 }

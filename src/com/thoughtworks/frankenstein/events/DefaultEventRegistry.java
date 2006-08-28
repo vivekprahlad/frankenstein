@@ -12,11 +12,14 @@ public class DefaultEventRegistry implements EventRegistry{
     private Map eventNameToEventClassMap = new HashMap();
 
     public DefaultEventRegistry() {
+        registerEvent(ActivateInternalFrameEvent.class);
+        registerEvent(ActivateWindowEvent.class);
         registerEvent(CancelTableEditEvent.class);
         registerEvent(CheckTextEvent.class);
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);
         registerEvent(ClickRadioButtonEvent.class);
+        registerEvent(CloseInternalFrameEvent.class);
         registerEvent(DialogShownEvent.class);
         registerEvent(EditTableCellEvent.class);
         registerEvent(EnterTextEvent.class);
@@ -24,12 +27,12 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(KeyStrokeEvent.class);
         registerEvent(NavigateEvent.class);
         registerEvent(SelectDropDownEvent.class);
+        registerEvent(SelectFileEvent.class);
         registerEvent(SelectListEvent.class);
         registerEvent(SelectTreeEvent.class);
         registerEvent(StartTestEvent.class);
         registerEvent(StopTableEditEvent.class);
         registerEvent(SwitchTabEvent.class);
-        registerEvent(ActivateWindowEvent.class);
     }
 
     public void registerEvent(Class eventClass) {

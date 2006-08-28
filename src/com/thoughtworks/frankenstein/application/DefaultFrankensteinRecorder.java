@@ -41,6 +41,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(CheckBoxRecorder.class);
         registerRecorder(CheckTextRecorder.class);
         registerRecorder(DialogRecorder.class);
+        registerRecorder(FileChooserRecorder.class);
         registerRecorder(InternalFrameRecorder.class);
         registerRecorder(KeystrokeRecorder.class);
         registerRecorder(ListSelectionRecorder.class);

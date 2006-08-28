@@ -18,7 +18,7 @@ import javax.swing.*;
  * Understands recording button clicks.
  * @author Vivek Prahlad
  */
-public class ClickButtonEvent extends AbstractFrankensteinEvent implements ActionListener {
+public class ClickButtonEvent extends AbstractFrankensteinEvent {
     private String buttonName;
     private Action clickButtonAction = new ClickAction();
 
@@ -37,9 +37,5 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent implements Actio
 
     public String target() {
         return buttonName;
-    }
-
-    public synchronized void actionPerformed(ActionEvent e) {
-        notifyAll();
     }
 }
