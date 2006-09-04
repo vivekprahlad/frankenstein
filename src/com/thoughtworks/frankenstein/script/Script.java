@@ -45,7 +45,6 @@ public class Script {
         while ((nextLine = br.readLine()) != null) {
             sb.append(nextLine).append(System.getProperty("line.separator"));
         }
-        reader.close();
         return sb.toString();
     }
 

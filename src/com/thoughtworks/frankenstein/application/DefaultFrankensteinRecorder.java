@@ -97,7 +97,9 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
     }
 
     public void load(File file) throws IOException {
-        load(new FileReader(file));
+        FileReader reader = new FileReader(file);
+        load(reader);
+        reader.close();
     }
 
     public void load(Reader reader) throws IOException {

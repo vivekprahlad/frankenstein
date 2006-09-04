@@ -70,6 +70,7 @@ public class SocketListenerTest extends MockObjectTestCase {
 
         public void load(Reader reader) throws IOException {
             events = new Script(new DefaultEventRegistry()).parse(reader);
+            reader.close();
         }
     }
 }

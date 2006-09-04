@@ -16,6 +16,10 @@ class FrankensteinDriver
     append_to_script "activate_window \"#{title}\""
   end
   
+  def activate_internal_frame(title)
+    append_to_script "activate_internal_frame \"#{title}\""
+  end
+
   def click_button(button)
     append_to_script "click_button \"#{button}\""
   end
@@ -26,6 +30,10 @@ class FrankensteinDriver
 
   def click_radiobutton(button)
     append_to_script "click_radio_button \"#{button}\""
+  end
+
+  def close_radiobutton(title)
+    append_to_script "close_internal_frame \"#{title}\""
   end
 
   def dialog_shown(title)
@@ -56,10 +64,14 @@ class FrankensteinDriver
     append_to_script "select_drop_down \"#{combo}\" \"#{value}\""
   end
 
+  def select_file(path)
+    append_to_script "select_file \"#{path}\""
+  end
+  
   def select_list(list, value)
     append_to_script "select_list \"#{list}\" \"#{value}\""
   end
-  
+
   def select_tree(tree, path)
     append_to_script "select_tree \"#{tree}\" \"#{path}\""
   end
@@ -78,7 +90,12 @@ class FrankensteinDriver
 
   def finish_test
     socket = TCPSocket.new("localhost", @port)
-    socket.puts @script
+    socket.write @script
+    socket.close_write
+    recvthread = Thread.start do
+        puts socket.read
+      end
+    recvthread.join
     socket.close
   end
 

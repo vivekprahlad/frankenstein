@@ -3,7 +3,7 @@ package com.thoughtworks.frankenstein.application;
 import java.util.regex.Pattern;
 
 /**
- * Monitors threads that match a Regular Expression
+ * Monitors threads whose names match a supplied Regular Expression
  */
 public class RegexWorkerThreadMonitor implements WorkerThreadMonitor {
     private final Pattern pattern;

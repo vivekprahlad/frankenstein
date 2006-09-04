@@ -39,7 +39,9 @@ public class SocketListener implements Runnable {
             socket = new ServerSocket(port);
             while (run) {
                 Socket sock = socket.accept();
-                recorder.load(new BufferedReader(new InputStreamReader(sock.getInputStream())));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                recorder.load(reader);
+                reader.close();
                 sock.close();
                 recorder.play();
             }
