@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
- * Represents an internal frame being shown.
+ * Represents a top level frame being activated.
  * @author Vivek Prahlad
  */
 public class ActivateWindowEvent extends AbstractFrankensteinEvent implements FocusListener {
@@ -22,7 +22,8 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
-        if (!lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION))
+        if (!(lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION)
+                || lastEvent.action().equals(ClickButtonEvent.CLICK_BUTTON_ACTION)))
             super.record(list, lastEvent);
     }
 

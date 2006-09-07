@@ -21,6 +21,7 @@ import javax.swing.*;
 public class ClickButtonEvent extends AbstractFrankensteinEvent {
     private String buttonName;
     private Action clickButtonAction = new ClickAction();
+    public static final String CLICK_BUTTON_ACTION = "ClickButton";
 
     public ClickButtonEvent(String buttonName) {
         this.buttonName = buttonName;

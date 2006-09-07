@@ -89,6 +89,14 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         assertEquals(dialogShownEvent, recorder.eventList().get(0));
     }
 
+    public void testWindowActivatedAfterClickButtonIsNotRecorded() {
+        ClickButtonEvent clickButtonEvent = new ClickButtonEvent("button");
+        recorder.record(clickButtonEvent);
+        recorder.record(new ActivateWindowEvent("myWindow"));
+        assertEquals(1, recorder.eventList().size());
+        assertEquals(clickButtonEvent, recorder.eventList().get(0));
+    }
+
     public void testDoesNotRemoveCancelEventAfterOtherEvents() {
         recorder.record(new KeyStrokeEvent(KeyEvent.ALT_MASK, '0'));
         recorder.record(new CancelTableEditEvent("testTable"));
