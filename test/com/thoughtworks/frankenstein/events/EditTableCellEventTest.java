@@ -49,7 +49,7 @@ public class EditTableCellEventTest extends MockObjectTestCase {
         final JTable table = new JTable(new TestTableModel());
         assertFalse(table.isEditing());
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.tableName")).will(returnValue(table));
-        mockComponentFinder.expects(once()).method("setEditor").with(ANYTHING);
+        mockComponentFinder.expects(once()).method("setTableCellEditor").with(ANYTHING);
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         new WaitForIdle().waitForIdle();
         assertTrue(table.isEditing());

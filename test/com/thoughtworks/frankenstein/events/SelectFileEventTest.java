@@ -40,7 +40,7 @@ public class SelectFileEventTest extends AbstractEventTestCase {
     public void testPlay() throws Exception {
         JFileChooser chooser = new JFileChooser(".");
         Mock mockFinder = mock(ComponentFinder.class);
-        mockFinder.expects(once()).method("fileChooser").will(returnValue(chooser));
+        mockFinder.expects(once()).method("findFileChooser").will(returnValue(chooser));
         new SelectFileEvent("com/thoughtworks/frankenstein/events/SelectFileEvent.java").play(null,
                 (ComponentFinder) mockFinder.proxy(), null, null);
         assertEquals("com/thoughtworks/frankenstein/events/SelectFileEvent.java", chooser.getSelectedFile().getPath());

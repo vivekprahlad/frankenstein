@@ -41,7 +41,7 @@ public class StopTableEditEventTest extends MockObjectTestCase {
 
     public void testPlay() {
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        mockComponentFinder.expects(once()).method("setEditor").with(eq(null));
+        mockComponentFinder.expects(once()).method("setTableCellEditor").with(eq(null));
         mockComponentFinder.expects(once()).method("findComponent").will(returnValue(new JTable()));
         new StopTableEditEvent("testTarget").play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
     }
