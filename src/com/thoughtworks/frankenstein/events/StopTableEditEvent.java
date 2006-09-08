@@ -21,7 +21,7 @@ public class StopTableEditEvent extends AbstractFrankensteinEvent {
     }
 
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        finder.setEditor(null);
+        finder.setTableCellEditor(null);
         JTable table = (JTable) finder.findComponent(context, tableName);
         table.repaint();
     }

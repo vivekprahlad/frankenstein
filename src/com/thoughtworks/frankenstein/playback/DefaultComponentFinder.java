@@ -33,7 +33,7 @@ public class DefaultComponentFinder implements ComponentFinder {
         return comp;
     }
 
-    public void setEditor(Component component) {
+    public void setTableCellEditor(Component component) {
         this.editor = component;
     }
 
@@ -99,7 +99,7 @@ public class DefaultComponentFinder implements ComponentFinder {
             return rule.matchingComponent();
     }
 
-    public JFileChooser fileChooser(WindowContext context) {
+    public JFileChooser findFileChooser(WindowContext context) {
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JFileChooser.class);
         new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
         return (JFileChooser) rule.unnamedComponents().get(0);

@@ -10,7 +10,7 @@ import javax.swing.*;
 public interface ComponentFinder {
     Component findComponent(WindowContext parent, String componentName);
 
-    void setEditor(Component component);
+    void setTableCellEditor(Component component);
 
     JMenuItem findMenuItem(WindowContext context, String path);
 
@@ -18,5 +18,5 @@ public interface ComponentFinder {
 
     JInternalFrame findInternalFrame(WindowContext windowContext, String title);
 
-    JFileChooser fileChooser(WindowContext context);
+    JFileChooser findFileChooser(WindowContext context);
 }

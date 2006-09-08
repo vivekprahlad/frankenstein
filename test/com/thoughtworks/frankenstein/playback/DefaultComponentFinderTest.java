@@ -90,7 +90,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
     public void testFindsEditorComponent() {
         JTextField component = new JTextField();
         component.setName("table.editor");
-        finder.setEditor(component);
+        finder.setTableCellEditor(component);
         assertSame(component, finder.findComponent(null, "table.editor"));
     }
 
@@ -110,7 +110,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         JFrame frame = new JFrame();
         frame.getContentPane().add(chooser);
         mockWindowContext.expects(once()).method("activeWindow").will(returnValue(frame));
-        assertSame(chooser, finder.fileChooser((WindowContext) mockWindowContext.proxy()));
+        assertSame(chooser, finder.findFileChooser((WindowContext) mockWindowContext.proxy()));
     }
 
     private JMenuBar createMenuBar() {

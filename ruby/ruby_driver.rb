@@ -116,7 +116,6 @@ class TestSwingSetAboutBox < FrankensteinDriver
 	click_button "Cancel"
 	dialog_shown "Printing Result"
 	click_button "OptionPane.button"
-	activate_window "SwingSet"
   end
   
   def show_about_box

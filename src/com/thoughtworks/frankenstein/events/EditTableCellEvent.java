@@ -45,7 +45,7 @@ public class EditTableCellEvent extends AbstractFrankensteinEvent {
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
         JTable table = (JTable) finder.findComponent(context, tableName);
         table.editCellAt(row, column);
-        finder.setEditor(table.getEditorComponent());
+        finder.setTableCellEditor(table.getEditorComponent());
     }
 
     public String target() {

@@ -4,7 +4,6 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
@@ -24,7 +23,7 @@ public class SelectFileEvent extends AbstractFrankensteinEvent {
     }
 
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        finder.fileChooser(context).setSelectedFile(new File(fileName));
+        finder.findFileChooser(context).setSelectedFile(new File(fileName));
     }
 
     public String target() {

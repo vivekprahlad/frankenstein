@@ -42,11 +42,11 @@ public class FrankensteinIntegration {
     }
 
     public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {
-        this(mainClass, new JFrame(), monitor, new DefaultWindowContext(), new DefaultNamingStrategy());
+        this(mainClass, new JFrame("Recorder"), monitor, new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
     public FrankensteinIntegration(Class mainClass) {
-        this(mainClass, new JFrame(), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
+        this(mainClass, new JFrame("Recorder"), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
     public void registerEvent(Class eventClass) {
