@@ -106,3 +106,9 @@ module FrankensteinDriver
     puts @test_status
   end
 end
+
+class TestRunner
+  def run(*args)
+        args.each{|test| test.new.run}
+  end
+end

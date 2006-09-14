@@ -23,7 +23,6 @@ end
 
 class TestSwingSetTwo 
 include FrankensteinDriver
-
   def test
 	activate_window "SwingSet"
 	click_button "resources/images/toolbar/JTable.gif"
@@ -35,15 +34,7 @@ include FrankensteinDriver
   end
 end
 
-class TestRunner
-  def run(*args)
-        args.each{|test| test.new.run}
-  end
-end
-
-
-test_suite = TestRunner.new
-test_suite.run(
+TestRunner.new.run(
 TestSwingSetAboutBox,
 TestSwingSetTwo
 )
