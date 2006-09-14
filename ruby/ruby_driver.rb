@@ -1,6 +1,6 @@
 require  'socket'
 
-class FrankensteinDriver
+module FrankensteinDriver
   def initialize(port = 5678)
     @test_name = self.class.to_s
     @port = port
@@ -93,7 +93,7 @@ class FrankensteinDriver
     socket.write @script
     socket.close_write
     recvthread = Thread.start do
-        puts socket.read
+        @test_status = socket.read
       end
     recvthread.join
     socket.close
@@ -103,10 +103,12 @@ class FrankensteinDriver
     start_test @test_name
     test
     finish_test
+    puts @test_status
   end
 end 
 
-class TestSwingSetAboutBox < FrankensteinDriver
+class TestSwingSetAboutBox 
+include FrankensteinDriver
 
   def test
 	activate_window "SwingSet"

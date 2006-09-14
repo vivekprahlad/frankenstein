@@ -12,6 +12,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.recorders.MenuNavigationRecorder;
 import com.thoughtworks.frankenstein.recorders.Recorder;
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  *
@@ -39,6 +40,12 @@ public class MenuSelectionSpike {
             }
 
             public void reset() {
+            }
+
+            public void addScriptListener(ScriptListener listener) {
+            }
+
+            public void removeScriptListener(ScriptListener listener) {
             }
 
             public List eventList() {

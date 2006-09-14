@@ -106,6 +106,14 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         recorder.setEventList(script.parse(reader));
     }
 
+    public void addScriptListener(ScriptListener listener) {
+        recorder.addScriptListener(listener);
+    }
+
+    public void removeScriptListener(ScriptListener listener) {
+        recorder.removeScriptListener(listener);
+    }
+
     public void reset() {
         recorder.reset();
     }

@@ -138,6 +138,12 @@ public class TableEditRecorderTest extends AbstractRecorderTestCase {
         public void reset() {
         }
 
+        public void addScriptListener(ScriptListener listener) {
+        }
+
+        public void removeScriptListener(ScriptListener listener) {
+        }
+
         public List eventList() {
             return null;
         }

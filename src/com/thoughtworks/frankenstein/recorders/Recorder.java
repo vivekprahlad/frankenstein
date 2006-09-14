@@ -9,4 +9,6 @@ public interface Recorder extends EventRecorder {
     void stop();
     void play();
     void reset();
+    void addScriptListener(ScriptListener listener);
+    void removeScriptListener(ScriptListener listener);
 }

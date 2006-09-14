@@ -185,6 +185,16 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         assertEquals(recorder.eventList(), scriptContext.eventList);
     }
 
+    public void testNotifiesScriptListenerOnceTestCompletes() {
+        MockScriptContext scriptContext = new MockScriptContext();
+        recorder = new DefaultRecorder(scriptContext);
+        recorder.record(new ActivateWindowEvent("title"));
+        Mock listener = mock(ScriptListener.class);
+        recorder.addScriptListener((ScriptListener) listener.proxy());
+        listener.expects(once()).method("scriptCompleted");
+        recorder.run();
+    }
+
     private class MockScriptContext implements ScriptContext {
         private List eventList;
 
@@ -193,6 +203,10 @@ public class DefaultRecorderTest extends MockObjectTestCase {
 
         public void play(List events) {
             eventList = events;
+        }
+
+        public boolean isScriptPassed() {
+            return false;
         }
     }
 }

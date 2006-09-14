@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.application;
 
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -10,16 +10,18 @@ import java.net.Socket;
  * Listens for incoming requests from drivers.
  * @author Vivek Prahlad
  */
-public class SocketListener implements Runnable {
+public class SocketListener implements Runnable, ScriptListener {
     private int port;
     private FrankensteinRecorder recorder;
     protected Thread thread;
     protected ServerSocket socket;
     private boolean run = true;
+    private boolean passed;
 
     public SocketListener(int port, FrankensteinRecorder recorder) {
         this.port = port;
         this.recorder = recorder;
+        recorder.addScriptListener(this);
     }
 
     public SocketListener(FrankensteinRecorder recorder) {
@@ -37,16 +39,30 @@ public class SocketListener implements Runnable {
     public void run() {
         try {
             socket = new ServerSocket(port);
+            Socket sock;
+            BufferedReader reader;
             while (run) {
-                Socket sock = socket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                sock = socket.accept();
+                reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 recorder.load(reader);
+                recorder.play();
+                synchronized (this) {
+                    wait();//Wait for the script to complete
+                }
+                writeScriptCompletion(sock);
                 reader.close();
                 sock.close();
-                recorder.play();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
         }
+    }
+
+    private void writeScriptCompletion(Socket sock) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        writer.write(passed ? "P" : "F");
+        writer.close();
     }
 
     public synchronized void stop() {
@@ -56,6 +72,13 @@ public class SocketListener implements Runnable {
             if (thread!=null) thread.interrupt();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally{
+            notifyAll();
         }
+    }
+
+    public synchronized void scriptCompleted(boolean passed) {
+        this.passed = passed;
+        notifyAll();
     }
 }

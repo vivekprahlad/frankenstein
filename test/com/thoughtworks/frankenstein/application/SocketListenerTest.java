@@ -10,6 +10,7 @@ import org.jmock.MockObjectTestCase;
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
 import com.thoughtworks.frankenstein.events.EnterTextEvent;
 import com.thoughtworks.frankenstein.script.Script;
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  * Ensures behaviour of socket listener
@@ -71,6 +72,12 @@ public class SocketListenerTest extends MockObjectTestCase {
         public void load(Reader reader) throws IOException {
             events = new Script(new DefaultEventRegistry()).parse(reader);
             reader.close();
+        }
+
+        public void addScriptListener(ScriptListener listener) {
+        }
+
+        public void removeScriptListener(ScriptListener listener) {
         }
     }
 }

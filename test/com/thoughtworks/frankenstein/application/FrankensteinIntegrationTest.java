@@ -13,9 +13,11 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
  */
 public class FrankensteinIntegrationTest extends MockObjectTestCase {
     private FrankensteinIntegration integration;
+    private MockJFrame frame;
 
     protected void setUp() throws Exception {
-        integration = new FrankensteinIntegration(TestMainClass.class, new MockJFrame(),
+        frame = new MockJFrame();
+        integration = new FrankensteinIntegration(TestMainClass.class, frame,
                 new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
@@ -23,6 +25,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         if (integration!= null) {
             integration.stop();
         }
+        frame.dispose();
     }
 
     public void testLaunchesMain() {

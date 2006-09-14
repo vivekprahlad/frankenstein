@@ -22,6 +22,7 @@ public class DefaultScriptContext implements ScriptContext {
     private WorkerThreadMonitor monitor;
     private WindowContext context;
     private ComponentFinder finder;
+    private boolean testPassed = true;
 
     public DefaultScriptContext(TestReporter reporter, WorkerThreadMonitor monitor, WindowContext context, ComponentFinder finder) {
         this.reporter = reporter;
@@ -45,6 +46,10 @@ public class DefaultScriptContext implements ScriptContext {
         finishTest();
     }
 
+    public boolean isScriptPassed() {
+        return testPassed;
+    }
+
     private void playEvent(List events) {
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
@@ -57,6 +62,7 @@ public class DefaultScriptContext implements ScriptContext {
             event.play(context, finder, this, robot);
             reporter.reportSuccess(event);
         } catch (Exception e) {
+            testPassed = false;
             reporter.reportFailure(event, e);
         }
     }

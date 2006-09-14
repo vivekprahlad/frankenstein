@@ -9,4 +9,5 @@ import java.util.List;
 public interface ScriptContext {
     void startTest(String testName);
     void play(List events);
+    boolean isScriptPassed();
 }
