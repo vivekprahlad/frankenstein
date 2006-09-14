@@ -37,6 +37,7 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
         frame.setState(Frame.NORMAL);
         frame.setVisible(false);
         frame.setVisible(true);
+        frame.toFront();
         RootPaneContainer rootPaneContainer = (RootPaneContainer) window;
         if (rootPaneContainer.getGlassPane().getClass() == JPanel.class) {
             waitForFocus(window);
