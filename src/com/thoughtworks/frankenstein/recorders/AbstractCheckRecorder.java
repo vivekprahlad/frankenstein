@@ -44,9 +44,17 @@ public abstract class AbstractCheckRecorder implements ComponentRecorder, AWTEve
     protected abstract void check(Component component);
 
     protected boolean isControlRightClick(MouseEvent mouseEvent) {
-        return mouseEvent.getID() == MouseEvent.MOUSE_PRESSED
-                && mouseEvent.isPopupTrigger()
-                && mouseEvent.isControlDown();
+        return isControlPopup(mouseEvent, MouseEvent.MOUSE_PRESSED)
+               || isControlPopup(mouseEvent, MouseEvent.MOUSE_RELEASED);
+    }
+
+    private boolean isControlPopup(MouseEvent mouseEvent, int id) {
+        return mouseEvent.getID() == id
+                && isControlPopup(mouseEvent);
+    }
+
+    private boolean isControlPopup(MouseEvent event) {
+        return event.isPopupTrigger() && event.isControlDown();
     }
 
     protected void highlightComponent(final JComponent component, int delay) {
