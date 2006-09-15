@@ -44,8 +44,8 @@ module FrankensteinDriver
     append_to_script "enter_text \"#{textfield}\" \"#{text}\""
   end
 
-  def edit_table_cell(table, row, column)
-    append_to_script "edit_table_cell \"#{table}\" \"#{row},#{column}\""
+  def edit_table_cell(table, coords)
+    append_to_script "edit_table_cell \"#{table}\" \"#{coords}\""
   end
   
   def internal_frame_shown(title)
