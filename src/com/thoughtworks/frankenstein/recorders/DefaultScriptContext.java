@@ -6,7 +6,6 @@ import java.util.List;
 import java.io.IOException;
 
 import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
-import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
@@ -38,11 +37,12 @@ public class DefaultScriptContext implements ScriptContext {
 
     public void startTest(String testName) {
         reporter.startTest(testName);
+        testPassed = true;
     }
 
     public void play(List events) {
         monitor.start();
-        playEvent(events);
+        playEvents(events);
         finishTest();
     }
 
@@ -50,7 +50,7 @@ public class DefaultScriptContext implements ScriptContext {
         return testPassed;
     }
 
-    private void playEvent(List events) {
+    private void playEvents(List events) {
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
             play((FrankensteinEvent) iterator.next());

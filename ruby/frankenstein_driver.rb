@@ -1,6 +1,7 @@
 require  'socket'
-
 module FrankensteinDriver
+  @@test_dir =""
+  attr_accessor :test_status
   def initialize(port = 5678)
     @test_name = self.class.to_s
     @port = port
@@ -100,15 +101,56 @@ module FrankensteinDriver
   end
 
  def run
-    start_test @test_name
+    start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
     test
     finish_test
     puts @test_status
+    @test_status
   end
+
+  def FrankensteinDriver.test_dir=(dir)
+    @@test_dir = dir
+  end
+
+  def FrankensteinDriver.test_dir
+    @@test_dir
+  end
+
 end
 
 class TestRunner
-  def run(*args)
-        args.each{|test| test.new.run}
+  def initialize
+    @test_reporter = TestReporter.new
   end
+
+  def run(*args)
+    args.each {|test| @test_reporter.report_test_result(test,test.new.run)}
+    @test_reporter.report
+  end
+end
+
+class TestReporter
+  def initialize
+    @test_hash = Hash.new
+  end
+
+  def report_test_result(test,result)
+    @test_hash.store test,result
+  end
+
+  def report
+    index_file = File.new(FrankensteinDriver.test_dir + "/" + "index.html", "w+")
+    index_file.puts "<html>"
+    index_file.puts "<head><title>Test Results</title></head>"
+    index_file.puts "<body>"
+    index_file.puts "<h3>Test Results</h3><br>"
+    index_file.puts "<table BORDER CELLSPACING=0 CELLPADDING=4>"
+    @test_hash.each do |key,value| 
+      index_file.puts "<tr><td bgcolor=#CFFFCF><font size=2 color=black><a href=\"#{key}.html\">#{key}</a></font></td></tr>"
+    end
+    index_file.puts "</table>"
+    index_file.puts "</body>"
+    index_file.puts "</html>"
+    index_file.close
+  end    
 end

@@ -71,4 +71,20 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "</table>\n" +
                 "</body>", reporter.report());
     }
+
+    public void testExtractsNameWhenNoPatchIsSpecified() {
+        assertEquals("TestName", reporter.extractTestName("TestName"));
+    }
+
+    public void testExtractsNameGivenPathOnWindows() {
+        assertEquals("TestName", reporter.extractTestName("C:/TestDir/TestName"));
+    }
+
+    public void testExtractsNameGivenPathWithBackSlashesOnWindows() {
+        assertEquals("TestName", reporter.extractTestName("C:\\TestDir\\TestName"));
+    }
+
+    public void testExtractsNameGivenPathOnUnix() {
+        assertEquals("TestName", reporter.extractTestName("/home/user/reportdir/TestName"));
+    }
 }
