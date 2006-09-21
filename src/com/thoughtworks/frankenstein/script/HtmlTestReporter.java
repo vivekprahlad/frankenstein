@@ -66,13 +66,18 @@ public class HtmlTestReporter implements TestReporter {
     }
 
     public void finishTest() throws IOException {
-        body += "</table>\n</body>";
+        body += "</table>\n</body>\n</html>";
         writeReport();
+        body = INITIAL_BODY;
     }
 
     private void writeReport() throws IOException {
         File reportFile = new File(testFileName);
         if (reportFile.getParent()!=null) new File(reportFile.getParent()).mkdirs();
+        if (reportFile.exists()) {
+            reportFile.delete();
+            reportFile.createNewFile();
+        }
         writeReport(reportFile);
     }
 
