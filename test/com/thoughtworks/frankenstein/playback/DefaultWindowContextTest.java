@@ -87,7 +87,7 @@ public class DefaultWindowContextTest extends TestCase {
     }
 
     public void testFindsTopLevelWindowIfActiveWindowIsInternalFrame() {
-        JFrame frame = new JFrame("testFrame");
+        JFrame frame = new JFrame("testTopLevelWindow");
         JDesktopPane pane = new JDesktopPane();
         JInternalFrame internalFrame = new JInternalFrame("Test");
         pane.add(internalFrame);

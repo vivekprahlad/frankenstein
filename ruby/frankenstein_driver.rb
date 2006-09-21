@@ -129,13 +129,24 @@ class TestRunner
   end
 end
 
+class TestResult
+  attr_accessor :test
+  def initialize(test,status)
+    @test,@status = test,status
+  end
+
+  def status
+    @status == "P" ? "#CFFFCF" : "#FFCFCF"
+  end
+end
+
 class TestReporter
   def initialize
-    @test_hash = Hash.new
+    @tests = []
   end
 
   def report_test_result(test,result)
-    @test_hash.store test,result
+    @tests.push TestResult.new test,result
   end
 
   def report
@@ -145,8 +156,8 @@ class TestReporter
     index_file.puts "<body>"
     index_file.puts "<h3>Test Results</h3><br>"
     index_file.puts "<table BORDER CELLSPACING=0 CELLPADDING=4>"
-    @test_hash.each do |key,value| 
-      index_file.puts "<tr><td bgcolor=#CFFFCF><font size=2 color=black><a href=\"#{key}.html\">#{key}</a></font></td></tr>"
+    @tests.each do |value|
+      index_file.puts "<tr><td bgcolor=#{value.status}><font size=2 color=black><a href=\"#{value.test}.html\">#{value.test}</a></font></td></tr>"
     end
     index_file.puts "</table>"
     index_file.puts "</body>"
