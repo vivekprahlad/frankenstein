@@ -15,11 +15,12 @@ public class ComponentNameMatchingRule implements ComponentMatchingRule {
     }
 
     public boolean matchAndContinue(Component component) {
-        if (!componentName.equals(component.getName())) {
+        if (componentName.equals(component.getName()) && component.isShowing()) {
+            matchingComponent = component;
+            return false;//Stop searching when a match is found.
+        } else {
             return true;
         }
-        matchingComponent = component;
-        return false;//Stop searching when a match is found.
     }
 
     public boolean hasNoMatches() {

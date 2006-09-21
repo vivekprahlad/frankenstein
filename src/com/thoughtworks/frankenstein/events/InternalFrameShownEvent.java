@@ -23,13 +23,9 @@ public class InternalFrameShownEvent extends AbstractFrankensteinEvent {
     }
 
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        Component component = context.activeWindow();
-        if (component instanceof JInternalFrame) {
-            JInternalFrame frame = (JInternalFrame) component;
-            if (title.equals(frame.getTitle()))
-                return;
-        }
-        throw new RuntimeException("Could not find JInternalFrame with title: " + title);
+        JInternalFrame component = finder.findInternalFrame(context, title);
+        if (component == null)
+            throw new RuntimeException("Could not find JInternalFrame with title: " + title);
     }
 
     public String target() {

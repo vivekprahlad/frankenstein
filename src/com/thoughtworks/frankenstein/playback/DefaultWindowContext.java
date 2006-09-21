@@ -43,6 +43,13 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         return activeWindow;
     }
 
+    public Component activeTopLevelWindow() {
+        if (activeWindow instanceof JInternalFrame) {
+            return new RootPaneContainerFinder().findRootPane(activeWindow.getParent());   
+        }
+        return activeWindow;
+    }
+
     public Component focusOwner() {
         return KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
     }

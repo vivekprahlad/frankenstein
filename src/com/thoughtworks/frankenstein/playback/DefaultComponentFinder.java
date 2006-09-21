@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.naming.*;
+import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Default component finder implementation
@@ -95,7 +96,7 @@ public class DefaultComponentFinder implements ComponentFinder {
 
     public JInternalFrame findInternalFrame(WindowContext windowContext, String title) {
             InternalFrameMatchingRule rule = new InternalFrameMatchingRule(title);
-            new ComponentHierarchyWalker().matchComponentsIn((Container) windowContext.activeWindow(), rule);
+            new ComponentHierarchyWalker().matchComponentsIn((Container) windowContext.activeTopLevelWindow(), rule);
             return rule.matchingComponent();
     }
 

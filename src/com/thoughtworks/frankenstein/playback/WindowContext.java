@@ -8,6 +8,10 @@ import java.awt.*;
  */
 public interface WindowContext {
     Component activeWindow();
+
+    Component activeTopLevelWindow();
+
     Component focusOwner();
+
     void waitForDialog(String title, int timeout) throws InterruptedException;
 }

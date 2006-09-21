@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 import javax.swing.*;
 
@@ -40,17 +41,17 @@ public class InternalFrameShownEventTest extends MockObjectTestCase {
 
     public void testNoErrorIfTitleMatches() {
         InternalFrameShownEvent event = new InternalFrameShownEvent("title");
-        Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("activeWindow").will(returnValue(new JInternalFrame("title")));
-        event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        mockComponentFinder.expects(once()).method("findInternalFrame").will(returnValue(new JInternalFrame("title")));
+        event.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
     }
 
     public void testDoesNotProceedIfTitleDoesNotMatch() {
         InternalFrameShownEvent event = new InternalFrameShownEvent("wrongtitle");
-        Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("activeWindow").will(returnValue(new JDialog(new JFrame(), "title")));
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        mockComponentFinder.expects(once()).method("findInternalFrame").will(returnValue(null));
         try {
-            event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
+            event.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
             fail();
         } catch (Exception e) {
         }

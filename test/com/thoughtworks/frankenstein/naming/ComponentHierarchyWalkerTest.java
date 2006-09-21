@@ -45,7 +45,11 @@ public class ComponentHierarchyWalkerTest extends TestCase {
         JPanel panel = new JPanel();
         panel.add(new JTextField());
         panel.add(new JTextField());
-        JTextArea namedTextArea = new JTextArea();
+        JTextArea namedTextArea = new JTextArea() {
+            public boolean isShowing() {
+                return true;
+            }
+        };
         namedTextArea.setName("testName");
         panel.add(namedTextArea);
         ComponentNameMatchingRule rule = new ComponentNameMatchingRule("testName");

@@ -17,7 +17,7 @@ public class HtmlTestReporter implements TestReporter {
     private static final String RED = "#FFCFCF";
     private static final String GREEN = "#CFFFCF";
     private static final String INITIAL_BODY = "<table BORDER CELLSPACING=0 CELLPADDING=4>\n";
-    private String testFileName;
+    private String testFileName = testName + ".html";
 
     public void startTest(String testName) {
         this.testName = extractTestName(testName);
@@ -39,6 +39,11 @@ public class HtmlTestReporter implements TestReporter {
                 + td(background, event.parameters()) + "</tr>\n";
     }
 
+    private String line(FrankensteinEvent event, String background, Exception cause) {
+        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br>" +cause.getMessage())
+                + td(background, event.parameters()) + "</tr>\n";
+    }
+
     private String td(String background, String value) {
         return "<td bgcolor=" + background + "><font size=2 color=black>" + valueString(value) + "</font></td>";
     }
@@ -57,7 +62,7 @@ public class HtmlTestReporter implements TestReporter {
     }
 
     public void reportFailure(FrankensteinEvent event, Exception cause) {
-        body += line(event, RED);
+        body += line(event, RED, cause);
     }
 
     public void finishTest() throws IOException {

@@ -23,7 +23,11 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     public void testFindsComponentsByName() {
         JPanel panel = new JPanel();
-        JTextField textField = new JTextField();
+        JTextField textField = new JTextField() {
+            public boolean isShowing() {
+                return true;
+            }
+        };
         textField.setName("parent.textfield");
         panel.add(textField);
         mockWindowContext.expects(once()).method("activeWindow").will(returnValue(panel));
@@ -101,8 +105,9 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         pane.add(internalFrame);
         frame.setContentPane(pane);
         frame.setVisible(true);
-        mockWindowContext.expects(once()).method("activeWindow").will(returnValue(frame));
+        mockWindowContext.expects(once()).method("activeTopLevelWindow").will(returnValue(frame));
         assertSame(internalFrame, finder.findInternalFrame((WindowContext) mockWindowContext.proxy(), "Test"));
+        frame.dispose();
     }
 
     public void testFindsFileChooser() {
