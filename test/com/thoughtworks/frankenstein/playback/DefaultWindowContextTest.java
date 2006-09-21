@@ -86,6 +86,17 @@ public class DefaultWindowContextTest extends TestCase {
         testDialog.dispose();
     }
 
+    public void testFindsTopLevelWindowIfActiveWindowIsInternalFrame() {
+        JFrame frame = new JFrame("testFrame");
+        JDesktopPane pane = new JDesktopPane();
+        JInternalFrame internalFrame = new JInternalFrame("Test");
+        pane.add(internalFrame);
+        frame.setContentPane(pane);
+        windowContext.setActiveWindow(internalFrame);
+        assertSame(frame, windowContext.activeTopLevelWindow());
+        frame.dispose();
+    }
+
     private class TestKeyboardFocusManager extends DefaultKeyboardFocusManager {
         private Component focusOwner;
 
