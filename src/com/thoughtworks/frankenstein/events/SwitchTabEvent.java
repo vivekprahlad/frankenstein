@@ -37,7 +37,16 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
                 return;
             }
         }
-        throw new RuntimeException("Could not find tab: " + tabTitle + " in tab " + tabbedPaneName);
+        throw new RuntimeException("Could not find tab: " + tabTitle + " in tab " + tabbedPaneName
+                + ", available tabs are: " + tabs(pane));
+    }
+
+    private String tabs(JTabbedPane pane) {
+        String values = "";
+        for (int i=0 ; i<pane.getTabCount(); i++) {
+             values += pane.getTitleAt(i) + " ";
+        }
+        return values;
     }
 
     public String target() {

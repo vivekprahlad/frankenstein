@@ -85,4 +85,38 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTree_1", tree.getName());
     }
 
+    public void testNamesJTabbedPaneNestedInATabbedPane() {
+        JTabbedPane parent = new JTabbedPane() {
+            public boolean isShowing() {
+                return true;
+            }
+        };
+        parent.setName("JTabbedPane_1");
+        JTabbedPane child = new JTabbedPane();
+        parent.add(child);
+        JPanel container = new JPanel();
+        container.add(parent);
+        namingStrategy.nameComponentsIn(container);
+        assertEquals("JTabbedPane_2", child.getName());
+    }
+
+    public void testNamesJTabbedPaneNestedInATabbedPaneWhenBothParentsAreNotNamed() {
+        JPanel container = new JPanel();
+        JTabbedPane parent = new JTabbedPane();
+        JTabbedPane child = new JTabbedPane();
+        parent.add(child);
+        container.add(parent);
+        namingStrategy.nameComponentsIn(container);
+        assertEquals("JTabbedPane_2", child.getName());
+        assertEquals("JTabbedPane_1", parent.getName());
+    }
+
+    public void testNamesJTabbedPane() {
+        JPanel container = new JPanel();
+        JTabbedPane parent = new JTabbedPane();
+        container.add(parent);
+        namingStrategy.nameComponentsIn(container);
+        assertEquals("JTabbedPane_1", parent.getName());
+    }
+
 }

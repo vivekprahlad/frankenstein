@@ -22,13 +22,12 @@ public class DefaultNamingStrategy implements NamingStrategy {
         nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy());
         nameComponentOfType(JComboBox.class, panel, new CounterBasedNamingStrategy());
         nameComponentOfType(JTable.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JTabbedPane.class, panel, new StaticCounterBasedNamingStrategy());
+        new SmartCounterNamingStrategy(panel, JTabbedPane.class, this).name();
         nameComponentOfType(JTree.class, panel, new CounterBasedNamingStrategy());
     }
 
     private void nameComponentOfType(Class componentType, Container panel, ComponentNamingStrategy strategy) {
         List components = matchedComponents(componentType, new ComponentHierarchyWalker(), panel);
-        Collections.sort(components, new ComponentPositionComparator());
         nameComponentsIn(components, strategy);
     }
 
@@ -38,7 +37,8 @@ public class DefaultNamingStrategy implements NamingStrategy {
         return rule.unnamedComponents();
     }
 
-    private void nameComponentsIn(List components, ComponentNamingStrategy strategy) {
+    public void nameComponentsIn(List components, ComponentNamingStrategy strategy) {
+        Collections.sort(components, new ComponentPositionComparator());
         for (Iterator iterator = components.iterator(); iterator.hasNext();) {
             strategy.name((Component) iterator.next());
         }
