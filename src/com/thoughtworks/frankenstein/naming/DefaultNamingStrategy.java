@@ -22,7 +22,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
         nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy());
         nameComponentOfType(JComboBox.class, panel, new CounterBasedNamingStrategy());
         nameComponentOfType(JTable.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JTabbedPane.class, panel, new CounterBasedNamingStrategy());
+        nameComponentOfType(JTabbedPane.class, panel, new StaticCounterBasedNamingStrategy());
         nameComponentOfType(JTree.class, panel, new CounterBasedNamingStrategy());
     }
 
