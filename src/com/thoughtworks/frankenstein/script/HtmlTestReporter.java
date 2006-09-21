@@ -65,10 +65,12 @@ public class HtmlTestReporter implements TestReporter {
         body += line(event, RED, cause);
     }
 
-    public void finishTest() throws IOException {
+    public String finishTest() throws IOException {
         body += "</table>\n</body>\n</html>";
         writeReport();
+        String retVal = report();
         body = INITIAL_BODY;
+        return retVal;
     }
 
     private void writeReport() throws IOException {

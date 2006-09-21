@@ -30,11 +30,6 @@ public class RadiobuttonRecorder extends AbstractComponentRecorder implements Ac
     }
 
     public void actionPerformed(ActionEvent e) {
-        recorder.record(new ClickRadioButtonEvent(checkBoxName(e)));
-    }
-
-    private String checkBoxName(ActionEvent e) {
-        String name = ((JRadioButton) e.getSource()).getText();
-        return name == null ? "" : name;
+        recorder.record(new ClickRadioButtonEvent(componentName((Component) e.getSource())));
     }
 }

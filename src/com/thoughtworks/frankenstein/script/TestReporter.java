@@ -12,5 +12,5 @@ public interface TestReporter {
     void startTest(String testName);
     void reportSuccess(FrankensteinEvent event);
     void reportFailure(FrankensteinEvent event, Exception cause);
-    void finishTest() throws IOException;
+    String finishTest() throws IOException;
 }
