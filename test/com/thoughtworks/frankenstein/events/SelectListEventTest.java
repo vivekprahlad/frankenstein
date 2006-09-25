@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 /**
  * Ensures behaviour of SelectListEvent
  */
-public class SelectListEventTest extends MockObjectTestCase {
+public class SelectListEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         SelectListEvent eventOne = new SelectListEvent("parent.listFieldName", "text");
@@ -48,6 +48,10 @@ public class SelectListEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.listFieldName")).will(returnValue(list));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", list.getSelectedValue());
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new SelectListEvent("parent.listFieldName", "text");
     }
 
     public void testPlayWithNonExistentListItemDoesNotSelect() {

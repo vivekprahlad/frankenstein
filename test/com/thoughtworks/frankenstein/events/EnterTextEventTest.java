@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Ensures behaviour of EnterTextEvent
  */
-public class EnterTextEventTest extends MockObjectTestCase {
+public class EnterTextEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         EnterTextEvent eventOne = new EnterTextEvent("parent.textFieldName", "text");
@@ -47,5 +47,9 @@ public class EnterTextEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.textFieldName")).will(returnValue(textField));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", textField.getText());
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new EnterTextEvent("parent.textFieldName", "text");
     }
 }

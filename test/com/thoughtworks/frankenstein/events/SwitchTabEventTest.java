@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Ensures behaviour of CheckBoxSelectEvent.
  */
-public class SwitchTabEventTest extends MockObjectTestCase {
+public class SwitchTabEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         SwitchTabEvent eventOne = new SwitchTabEvent("parent.testTabName", "tabTwo");
@@ -50,6 +50,10 @@ public class SwitchTabEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.testTabName")).will(returnValue(pane));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals(1, pane.getSelectedIndex());
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new SwitchTabEvent("parent.testTabName", "tabTwo");
     }
 
     public void testPlayForTabThatIsNotPresent() {

@@ -12,6 +12,7 @@ import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
+import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
@@ -26,13 +27,12 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     protected void setUp() throws Exception {
         super.setUp();
         waitForIdle();
-        robot = new Robot();
+        robot = RobotFactory.getRobot();
     }
 
     protected void tearDown() throws Exception {
         super.tearDown();
         waitForIdle();
-        robot = null;
     }
 
     private void waitForIdle() {

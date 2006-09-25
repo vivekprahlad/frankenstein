@@ -104,7 +104,7 @@ module FrankensteinDriver
     start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
     test
     finish_test
-    puts @test_status
+    puts @test_name + " : " + (@test_status == "F" ? "Failed" : "Passed")
     @test_status
   end
 
@@ -146,7 +146,7 @@ class TestReporter
   end
 
   def report_test_result(test,result)
-    @tests.push TestResult.new test,result
+    @tests.push TestResult.new(test,result)
   end
 
   def report

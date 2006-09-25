@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Ensures behaviour of ClickButtonEvent
  */
-public class EditTableCellEventTest extends MockObjectTestCase {
+public class EditTableCellEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         EditTableCellEvent eventOne = new EditTableCellEvent("parent.tableName", 1, 2);
@@ -55,5 +55,9 @@ public class EditTableCellEventTest extends MockObjectTestCase {
         assertTrue(table.isEditing());
         assertEquals(1, table.getEditingRow());
         assertEquals(1, table.getEditingColumn());
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new EditTableCellEvent("parent.tableName", 1, 2);
     }
 }

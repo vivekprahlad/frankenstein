@@ -50,6 +50,10 @@ public class ActivateInternalFrameEventTest extends AbstractEventTestCase {
         assertTrue(internalFrame.isSelected());
     }
 
+    protected FrankensteinEvent createEvent() {
+        return new ActivateWindowEvent("title");
+    }
+
     public void testPropogatesPropertyVetoExceptionIfFrameIsNotSelectable() throws PropertyVetoException {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         JInternalFrame internalFrame = new JInternalFrame("title") {

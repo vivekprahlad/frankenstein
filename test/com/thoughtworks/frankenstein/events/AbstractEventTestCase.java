@@ -21,4 +21,21 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
     public abstract void testScriptLine();
 
     public abstract void testPlay() throws Exception;
+
+    public void testSavesAndRestoresEventFromScriptLine() throws Exception {
+        FrankensteinEvent event = createEvent();
+        assertEquals(event, createEventFromScriptLine(event.getClass(), event.scriptLine()));
+    }
+
+    private FrankensteinEvent createEventFromScriptLine(Class aClass, String scriptLine) throws Exception {
+        DefaultEventRegistry eventRegistry = new DefaultEventRegistry();
+        eventRegistry.registerEvent(aClass);
+        return eventRegistry.createEvent(scriptLine);
+    }
+
+    private void checkHasStringConstructor(Class eventClass) throws Exception {
+         eventClass.getConstructor(new Class[] {String.class});
+    }
+
+    protected abstract FrankensteinEvent createEvent();
 }

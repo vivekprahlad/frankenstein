@@ -16,7 +16,7 @@ import com.thoughtworks.frankenstein.common.RobotFactory;
 /**
  * Ensures behaviour of ClickButtonEvent
  */
-public class ClickButtonEventTest extends MockObjectTestCase {
+public class ClickButtonEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         ClickButtonEvent eventOne = new ClickButtonEvent("parent.buttonName");
@@ -60,5 +60,9 @@ public class ClickButtonEventTest extends MockObjectTestCase {
         mockActionListener.expects(once()).method("actionPerformed");
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
         frame.dispose();
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new ClickButtonEvent("parent.buttonName"); 
     }
 }

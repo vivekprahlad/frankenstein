@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Ensures behaviour of SelectDropDownEvent
  */
-public class SelectDropDownEventTest extends MockObjectTestCase {
+public class SelectDropDownEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         SelectDropDownEvent eventOne = new SelectDropDownEvent("parent.comboFieldName", "text");
@@ -47,5 +47,9 @@ public class SelectDropDownEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.comboFieldName")).will(returnValue(combo));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", combo.getSelectedItem());
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new SelectDropDownEvent("parent.comboFieldName", "text");
     }
 }

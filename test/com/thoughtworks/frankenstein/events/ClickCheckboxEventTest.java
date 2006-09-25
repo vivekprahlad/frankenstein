@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Ensures behaviour of CheckBoxSelectEvent.
  */
-public class ClickCheckboxEventTest extends MockObjectTestCase {
+public class ClickCheckboxEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
         ClickCheckboxEvent eventOne = new ClickCheckboxEvent("parent.buttonName", true);
@@ -50,5 +50,9 @@ public class ClickCheckboxEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.buttonName")).will(returnValue(checkBox));
         mockActionListener.expects(once()).method("actionPerformed");
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new ClickCheckboxEvent("parent.buttonName", true);
     }
 }

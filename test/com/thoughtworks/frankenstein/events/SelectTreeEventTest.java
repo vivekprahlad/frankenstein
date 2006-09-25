@@ -88,4 +88,8 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         two.add(three);
         return new JTree(one);
     }
+
+    protected FrankensteinEvent createEvent() {
+        return new SelectTreeEvent("treeName", "one>two>three");
+    }
 }

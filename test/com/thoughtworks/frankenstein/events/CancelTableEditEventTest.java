@@ -55,6 +55,10 @@ public class CancelTableEditEventTest extends AbstractEventTestCase {
         assertFalse(table.isEditing());
     }
 
+    protected FrankensteinEvent createEvent() {
+        return new CancelTableEditEvent("tableName");
+    }
+
     private void editTable(final JTable table) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

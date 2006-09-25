@@ -45,4 +45,8 @@ public class SelectFileEventTest extends AbstractEventTestCase {
                 (ComponentFinder) mockFinder.proxy(), null, null);
         assertEquals("com/thoughtworks/frankenstein/events/SelectFileEvent.java", chooser.getSelectedFile().getPath());
     }
+
+    protected FrankensteinEvent createEvent() {
+        return new SelectFileEvent("com/thoughtworks/frankenstein/events/SelectFileEvent.java");
+    }
 }

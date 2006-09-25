@@ -30,7 +30,7 @@ public class StartTestEvent extends AbstractFrankensteinEvent {
     }
 
     public String scriptLine() {
-        return action() + " " + testName;
+        return action() + " \"" + testName + "\"";
     }
 
     public String parameters() {

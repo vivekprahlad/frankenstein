@@ -69,4 +69,8 @@ public class CloseInternalFrameEventTest extends AbstractEventTestCase {
         }
     }
 
+    protected FrankensteinEvent createEvent() {
+        return new CloseInternalFrameEvent("title");
+    }
+
 }

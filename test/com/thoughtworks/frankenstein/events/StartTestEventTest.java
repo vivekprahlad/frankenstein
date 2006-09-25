@@ -32,12 +32,16 @@ public class StartTestEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("StartTest testName" ,new StartTestEvent("testName").scriptLine());
+        assertEquals("StartTest \"testName\"" ,new StartTestEvent("testName").scriptLine());
     }
 
     public void testPlay() {
         Mock scriptContext = mock(ScriptContext.class);
         scriptContext.expects(once()).method("startTest").with(eq("testName"));
         new StartTestEvent("testName").play(null, null, (ScriptContext) scriptContext.proxy(), null);
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new StartTestEvent("testName");
     }
 }
