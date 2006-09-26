@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.recorders;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.HierarchyEvent;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 
@@ -92,13 +93,23 @@ public class TextFieldRecorderTest extends AbstractRecorderTestCase {
         assertEquals(listenerCount,  documentListenerCount());
     }
 
-    public void testEventDispatchedWithComponentShown() {
+    public void testEventDispatchedWithComponentShown() throws InterruptedException, InvocationTargetException {
         int listenerCount = documentListenerCount();
-        JTextField textField = new FakeComponent();
+        JTextField textField = textField();
         HierarchyEvent event = new HierarchyEvent(textField, HierarchyEvent.DISPLAYABILITY_CHANGED, textField, new JPanel(), HierarchyEvent.SHOWING_CHANGED);
         recorder.eventDispatched(event);
         recorder.componentHidden(textField);
         assertEquals(listenerCount,  documentListenerCount());
+    }
+
+    private FakeComponent textField() throws InvocationTargetException, InterruptedException {
+        final FakeComponent[] fakeComponent = new FakeComponent[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                fakeComponent[0]  = new FakeComponent();
+            }
+        });
+        return fakeComponent[0];
     }
 
     private class FakeComponent extends JTextField {

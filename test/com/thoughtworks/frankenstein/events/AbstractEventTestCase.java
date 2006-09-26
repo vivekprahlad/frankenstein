@@ -6,6 +6,10 @@ import java.beans.PropertyVetoException;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 
+import javax.swing.*;
+
+import spin.over.CheckingRepaintManager;
+
 /**
  * Base test case for all events.
  */
@@ -23,6 +27,12 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
     public abstract void testScriptLine();
 
     public abstract void testPlay() throws Exception;
+
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        RepaintManager.setCurrentManager(new CheckingRepaintManager());
+    }
 
     public void testSavesAndRestoresEventFromScriptLine() throws Exception {
         FrankensteinEvent event = createEvent();

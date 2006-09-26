@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
@@ -41,12 +42,8 @@ public class InternalFrameRecorderTest extends AbstractRecorderTestCase {
         assertEquals(initialListenerCount, internalFrameListenerCount(internalFrame));
     }
 
-    public void testRecordsFrameActivation() throws PropertyVetoException {
-        final JInternalFrame internalFrame = new JInternalFrame("title") {
-            public boolean isShowing() {
-                return true;
-            }
-        };
+    public void testRecordsFrameActivation() throws PropertyVetoException, InterruptedException, InvocationTargetException {
+        final JInternalFrame internalFrame = createInternalFrame();
         int initialListenerCount = internalFrameListenerCount(internalFrame);
         mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
         recorder.componentShown(internalFrame);
@@ -63,12 +60,22 @@ public class InternalFrameRecorderTest extends AbstractRecorderTestCase {
         waitForIdle();
     }
 
-    public void testRecordsFrameClosing() throws PropertyVetoException {
-        JInternalFrame internalFrame = new JInternalFrame("title") {
-            public boolean isShowing() {
-                return true;
+    private JInternalFrame createInternalFrame() throws InvocationTargetException, InterruptedException {
+        final JInternalFrame[] internalFrame = new JInternalFrame[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                internalFrame[0] = new JInternalFrame("title") {
+                    public boolean isShowing() {
+                        return true;
+                    }
+                };
             }
-        };
+        });
+        return internalFrame[0];
+    }
+
+    public void testRecordsFrameClosing() throws PropertyVetoException, InterruptedException, InvocationTargetException {
+        JInternalFrame internalFrame = createInternalFrame();
         int initialListenerCount = internalFrameListenerCount(internalFrame);
         mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
         recorder.componentShown(internalFrame);

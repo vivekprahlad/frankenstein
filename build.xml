@@ -62,6 +62,7 @@
     <property name="compiledclasses.dir" value="${build.dir}/classes"/>
     <property name="instrumented.dir" value="${build.dir}/instrumented"/>
     <property name="compiledtests.dir" value="${build.dir}/test-classes"/>
+    <property name="reports.tests" value="${build.dir}/test-reports"/>
 
     <path id="module.bootclasspath">
         <!-- Paths to be included in compilation bootclasspath -->
@@ -149,7 +150,7 @@
     </target>
 
     <target name="test" description="Run unit tests">
-        <junit printsummary="yes" haltonfailure="no">
+        <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
             <classpath>
                 <pathelement location="${compiledtests.dir}"/>
                 <pathelement location="${compiledclasses.dir}"/>
@@ -161,6 +162,7 @@
                 </fileset>
             </batchtest>
         </junit>
+        <fail if="test.failed" message="Tests have failed"/>
     </target>
 
     <target name="cobertura.instrument" description="Instrument production classes in preparation for coverage report"

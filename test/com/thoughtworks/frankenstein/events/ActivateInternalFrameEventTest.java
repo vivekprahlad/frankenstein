@@ -5,6 +5,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 import javax.swing.*;
 import java.beans.PropertyVetoException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Ensures behaviour of ActivateInternalFrameEvent
@@ -39,37 +40,57 @@ public class ActivateInternalFrameEventTest extends AbstractEventTestCase {
 
     public void testPlay() throws Exception {
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        JInternalFrame internalFrame = new JInternalFrame("title") {
-            public boolean isShowing() {
-                return true;
-            }
-        };
+        JInternalFrame internalFrame = createInternalFrame();
         mockComponentFinder.expects(once()).method("findInternalFrame").will(returnValue(internalFrame));
         internalFrame.setSelected(false);
         new ActivateInternalFrameEvent("title").play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertTrue(internalFrame.isSelected());
     }
 
+    private JInternalFrame createInternalFrame() throws InvocationTargetException, InterruptedException {
+        final JInternalFrame[] internalFrame = new JInternalFrame[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                internalFrame[0] = new JInternalFrame("title") {
+                    public boolean isShowing() {
+                        return true;
+                    }
+                };
+            }
+        });
+        return internalFrame[0];
+    }
+
     protected FrankensteinEvent createEvent() {
         return new ActivateWindowEvent("title");
     }
 
-    public void testPropogatesPropertyVetoExceptionIfFrameIsNotSelectable() throws PropertyVetoException {
+    public void testPropogatesPropertyVetoExceptionIfFrameIsNotSelectable() throws PropertyVetoException, InterruptedException, InvocationTargetException {
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        JInternalFrame internalFrame = new JInternalFrame("title") {
-            public boolean isShowing() {
-                return true;
-            }
-
-            public void setSelected(boolean selected) throws PropertyVetoException {
-                throw new PropertyVetoException("Vetoing", null);
-            }
-        };
+        JInternalFrame internalFrame = createInternalFrameWithPropertyVetoException();
         mockComponentFinder.expects(once()).method("findInternalFrame").will(returnValue(internalFrame));
         try {
             new ActivateInternalFrameEvent("title").play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
             fail("Expected selection to fail");
         } catch (Exception e) {
         }
+    }
+
+    private JInternalFrame createInternalFrameWithPropertyVetoException() throws InvocationTargetException, InterruptedException {
+        final JInternalFrame[] internalFrame = new JInternalFrame[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                internalFrame[0] = new JInternalFrame("title") {
+                    public boolean isShowing() {
+                        return true;
+                    }
+
+                    public void setSelected(boolean selected) throws PropertyVetoException {
+                        throw new PropertyVetoException("Vetoing", null);
+                    }
+                };
+            }
+        });
+        return internalFrame[0];
     }
 }

@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
 import junit.framework.TestCase;
@@ -17,7 +18,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesTextFields() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         JTextField first = new JTextField();
         panel.add(first);
         namingStrategy.nameComponentsIn(panel);
@@ -25,7 +26,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesComponentsWithTitledBorderAsPrefix() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Title"));
         JTextField first = new JTextField();
         panel.add(first);
@@ -34,7 +35,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesComponentsNestedInTitledBorder() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Title"));
         JPanel secondLevelNestedPanel = new JPanel();
         JTextField first = new JTextField();
@@ -47,7 +48,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesComponentsNestedInMultipleTitledBorders() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.setBorder(BorderFactory.createTitledBorder("TopLevelTitle"));
         JPanel secondLevelNestedPanel = new JPanel();
         secondLevelNestedPanel.setBorder(BorderFactory.createTitledBorder("NextLevelTitle"));
@@ -61,7 +62,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesRadioButtons() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         JRadioButton first = new JRadioButton("one");
         panel.add(first);
         namingStrategy.nameComponentsIn(panel);
@@ -69,7 +70,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesRadioButtonsWithImageIcons() {
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         ImageIcon icon = new ImageIcon("icons/list-add.png");
         JRadioButton first = new JRadioButton(icon);
         panel.add(first);
@@ -85,19 +86,34 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTree_1", tree.getName());
     }
 
-    public void testNamesJTabbedPaneNestedInATabbedPane() {
-        JTabbedPane parent = new JTabbedPane() {
-            public boolean isShowing() {
-                return true;
-            }
-        };
+    public void testNamesJTabbedPaneNestedInATabbedPane() throws InterruptedException, InvocationTargetException {
+        final JTabbedPane parent = createTabbedPane();
         parent.setName("JTabbedPane_1");
-        JTabbedPane child = new JTabbedPane();
-        parent.add(child);
+        final JTabbedPane child = new JTabbedPane();
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                parent.add(child);
+            }
+        });
         JPanel container = new JPanel();
         container.add(parent);
         namingStrategy.nameComponentsIn(container);
         assertEquals("JTabbedPane_2", child.getName());
+    }
+
+    private JTabbedPane createTabbedPane() throws InvocationTargetException, InterruptedException {
+        final JTabbedPane[] tabbedPane = new JTabbedPane[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                tabbedPane[0] = new JTabbedPane() {
+                    public boolean isShowing() {
+                        return true;
+                    }
+                };
+            }
+        });
+        ;
+        return tabbedPane[0];
     }
 
     public void testNamesJTabbedPaneNestedInATabbedPaneWhenBothParentsAreNotNamed() {

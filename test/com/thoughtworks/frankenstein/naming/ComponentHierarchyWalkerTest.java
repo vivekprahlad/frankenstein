@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Ensures behaviour of the component list
@@ -41,20 +42,30 @@ public class ComponentHierarchyWalkerTest extends TestCase {
         assertEquals(8, rule.unnamedComponents().size());
     }
 
-    public void testMatchesComponentsByName() {
+    public void testMatchesComponentsByName() throws InterruptedException, InvocationTargetException {
         JPanel panel = new JPanel();
         panel.add(new JTextField());
         panel.add(new JTextField());
-        JTextArea namedTextArea = new JTextArea() {
-            public boolean isShowing() {
-                return true;
-            }
-        };
+        JTextArea namedTextArea = createTextArea();
         namedTextArea.setName("testName");
         panel.add(namedTextArea);
         ComponentNameMatchingRule rule = new ComponentNameMatchingRule("testName");
         factory.matchComponentsIn(panel, rule);
-        assertSame(namedTextArea, rule.matchingComponent());        
+        assertSame(namedTextArea, rule.matchingComponent());
+    }
+
+    private JTextArea createTextArea() throws InvocationTargetException, InterruptedException {
+        final JTextArea[] namedTextArea = new JTextArea[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                namedTextArea[0] = new JTextArea() {
+                    public boolean isShowing() {
+                        return true;
+                    }
+                };
+            }
+        });
+        return namedTextArea[0];
     }
 
     public void testHasNoMatches() {

@@ -7,6 +7,8 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Ensures behaviour of component finder.
  */
@@ -21,17 +23,28 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         mockWindowContext = mock(WindowContext.class);
     }
 
-    public void testFindsComponentsByName() {
+    public void testFindsComponentsByName() throws InterruptedException, InvocationTargetException {
         JPanel panel = new JPanel();
-        JTextField textField = new JTextField() {
-            public boolean isShowing() {
-                return true;
-            }
-        };
+        JTextField textField = createTextField();
         textField.setName("parent.textfield");
         panel.add(textField);
         mockWindowContext.expects(once()).method("activeWindow").will(returnValue(panel));
         assertSame(textField, finder.findComponent((WindowContext) mockWindowContext.proxy(), "parent.textfield"));
+    }
+
+    private JTextField createTextField() throws InvocationTargetException, InterruptedException {
+        final JTextField[] textField = new JTextField[1];
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                textField[0] = new JTextField() {
+                    public boolean isShowing() {
+                        return true;
+                    }
+                };
+            }
+        });
+        ;
+        return textField[0];
     }
 
     public void testDoesNotProceedIfComponentNotFound() {
