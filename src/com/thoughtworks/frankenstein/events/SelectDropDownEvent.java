@@ -29,7 +29,20 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
         return "SelectDropDownEvent: " + "Combo: " + comboBoxName + ", Choice: " + choice;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public String target() {
+        return comboBoxName;
+    }
+
+    public String parameters() {
+        return choice;
+    }
+
+    private String valueToString(ListCellRenderer renderer, Object element, int i) {
+        Component rendererComponent = renderer.getListCellRendererComponent(new JList(), element, i, true, true);
+        return new DefaultRendererDecoder().decode(rendererComponent);
+    }
+
+    public void run() {
         JComboBox combo = (JComboBox) finder.findComponent(context, comboBoxName);
         ListCellRenderer renderer = combo.getRenderer();
         ComboBoxModel model = combo.getModel();
@@ -42,18 +55,5 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
             }
         }
         combo.setSelectedItem(selectValue);
-    }
-
-    public String target() {
-        return comboBoxName;
-    }
-
-    public String parameters() {
-        return choice;
-    }
-
-    private String valueToString(ListCellRenderer renderer, Object element, int i) {
-        Component rendererComponent = renderer.getListCellRendererComponent(new JList(), element, i, true, true);
-        return new DefaultRendererDecoder().decode(rendererComponent);
     }
 }

@@ -7,6 +7,7 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of SelectListEvent
@@ -43,9 +44,10 @@ public class SelectListEventTest extends AbstractEventTestCase {
     public void testPlay() {
         SelectListEvent event = new SelectListEvent("parent.listFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JList  list = new JList(new Object[]{"one", "text", "three"});
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.listFieldName")).will(returnValue(list));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.listFieldName")).will(returnValue(list));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", list.getSelectedValue());
     }
@@ -57,9 +59,10 @@ public class SelectListEventTest extends AbstractEventTestCase {
     public void testPlayWithNonExistentListItemDoesNotSelect() {
         SelectListEvent event = new SelectListEvent("parent.listFieldName", "nonexisten_text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JList  list = new JList(new Object[]{"one", "text", "three"});
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.listFieldName")).will(returnValue(list));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.listFieldName")).will(returnValue(list));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals(null, list.getSelectedValue());
     }

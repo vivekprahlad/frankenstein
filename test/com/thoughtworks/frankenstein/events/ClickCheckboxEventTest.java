@@ -4,6 +4,7 @@ import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -44,10 +45,11 @@ public class ClickCheckboxEventTest extends AbstractEventTestCase {
         ClickCheckboxEvent event = new ClickCheckboxEvent("parent.buttonName", true);
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JCheckBox checkBox = new JCheckBox();
         checkBox.addActionListener((ActionListener) mockActionListener.proxy());
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.buttonName")).will(returnValue(checkBox));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.buttonName")).will(returnValue(checkBox));
         mockActionListener.expects(once()).method("actionPerformed");
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
     }

@@ -42,7 +42,7 @@ public class InternalFrameRecorderTest extends AbstractRecorderTestCase {
     }
 
     public void testRecordsFrameActivation() throws PropertyVetoException {
-        JInternalFrame internalFrame = new JInternalFrame("title") {
+        final JInternalFrame internalFrame = new JInternalFrame("title") {
             public boolean isShowing() {
                 return true;
             }
@@ -51,7 +51,16 @@ public class InternalFrameRecorderTest extends AbstractRecorderTestCase {
         mockRecorder.expects(once()).method("record").with(eq(new InternalFrameShownEvent("title")));
         recorder.componentShown(internalFrame);
         mockRecorder.expects(once()).method("record").with(eq(new ActivateInternalFrameEvent("title")));
-        internalFrame.setSelected(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    internalFrame.setSelected(true);
+                } catch (PropertyVetoException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        waitForIdle();
     }
 
     public void testRecordsFrameClosing() throws PropertyVetoException {

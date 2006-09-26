@@ -4,6 +4,8 @@ import org.jmock.MockObjectTestCase;
 
 import java.beans.PropertyVetoException;
 
+import com.thoughtworks.frankenstein.common.WaitForIdle;
+
 /**
  * Base test case for all events.
  */
@@ -38,4 +40,8 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
     }
 
     protected abstract FrankensteinEvent createEvent();
+
+    protected void waitForIdle() {
+        new WaitForIdle().waitForIdle();
+    }
 }

@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Ensures behaviour of the check text event
  */
-public class CheckTextEventTest extends MockObjectTestCase {
+public class CheckTextEventTest extends AbstractEventTestCase {
     private JTextField field;
 
     public void testEqualsAndHashCode() {
@@ -17,6 +17,9 @@ public class CheckTextEventTest extends MockObjectTestCase {
         CheckTextEvent two = new CheckTextEvent("textField", "text");
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
+    }
+
+    public void testToString() {
     }
 
     public void testAction() {
@@ -29,6 +32,16 @@ public class CheckTextEventTest extends MockObjectTestCase {
 
     public void testParameters() {
         assertEquals("text", new CheckTextEvent("textField", "text").parameters());
+    }
+
+    public void testScriptLine() {
+    }
+
+    public void testPlay() throws Exception {
+    }
+
+    protected FrankensteinEvent createEvent() {
+        return new CheckTextEvent("textField", "text");
     }
 
     public void testPlayWithMatchingText() {

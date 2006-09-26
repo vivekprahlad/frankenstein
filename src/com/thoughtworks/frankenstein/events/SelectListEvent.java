@@ -29,11 +29,6 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
         return "SelectListEvent: List: " + listName + ", Value: " + choice;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JList list = (JList) finder.findComponent(context, listName);
-        list.setSelectedValue(value(list), true);
-    }
-
     public String target() {
         return listName;
     }
@@ -55,5 +50,10 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
         ListCellRenderer renderer = list.getCellRenderer();
         Component component = renderer.getListCellRendererComponent(list, elementAt, i, true, true);
         return new DefaultRendererDecoder().decode(component);
+    }
+
+    public void run() {
+        JList list = (JList) finder.findComponent(context, listName);
+        list.setSelectedValue(value(list), true);
     }
 }

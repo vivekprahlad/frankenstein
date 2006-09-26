@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * Represents a frankenstein event.
  * @author Vivek Prahlad
  */
-public interface FrankensteinEvent {
+public interface FrankensteinEvent extends Runnable{
     FrankensteinEvent NULL = new AbstractFrankensteinEvent() {
         public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
             throw new UnsupportedOperationException("Cannot play back null events");
@@ -19,6 +19,9 @@ public interface FrankensteinEvent {
 
         public String target() {
             return "NullTarget";
+        }
+
+        public void run() {
         }
     };
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot);

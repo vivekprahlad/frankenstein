@@ -25,18 +25,19 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
 
     public ClickButtonEvent(String buttonName) {
         this.buttonName = buttonName;
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public String toString() {
         return "ClickButtonEvent: " + buttonName;
     }
 
-    public synchronized void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        AbstractButton button =  (AbstractButton) finder.findComponent(context, buttonName);
-        clickButtonAction.execute(button, robot);
-    }
-
     public String target() {
         return buttonName;
+    }
+
+    public void run() {
+        AbstractButton button =  (AbstractButton) finder.findComponent(context, buttonName);
+        clickButtonAction.execute(button, robot);
     }
 }

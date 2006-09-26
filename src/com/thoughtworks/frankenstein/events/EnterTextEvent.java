@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Understands entering text in a text field.
+ *
  * @author Vivek Prahlad
  */
 public class EnterTextEvent extends AbstractFrankensteinEvent {
@@ -25,12 +26,7 @@ public class EnterTextEvent extends AbstractFrankensteinEvent {
     }
 
     public String toString() {
-        return "EnterTextEvent: " + "TextField: "+ textFieldName + ", text: "+ text;
-    }
-
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTextField field = (JTextField) finder.findComponent(context, textFieldName);
-        field.setText(text);
+        return "EnterTextEvent: " + "TextField: " + textFieldName + ", text: " + text;
     }
 
     public String target() {
@@ -39,5 +35,10 @@ public class EnterTextEvent extends AbstractFrankensteinEvent {
 
     public String parameters() {
         return text;
+    }
+
+    public void run() {
+        JTextField field = (JTextField) finder.findComponent(context, textFieldName);
+        field.setText(text);
     }
 }

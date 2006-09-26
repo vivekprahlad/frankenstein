@@ -23,15 +23,15 @@ public class CloseInternalFrameEvent extends AbstractFrankensteinEvent {
         return "CloseInternalFrameEvent: " + title;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public String target() {
+        return title;
+    }
+
+    public void run() {
         try {
             finder.findInternalFrame(context, title).setClosed(true);
         } catch (PropertyVetoException e) {
             throw new RuntimeException("CloseInternalFrameEvent: closing vetoed", e);
         }
-    }
-
-    public String target() {
-        return title;
     }
 }

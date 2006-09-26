@@ -63,4 +63,8 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         wait(timeoutInSeconds * 1000);
         this.title = null;
     }
+
+    public void close() {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().removePropertyChangeListener("focusOwner", this);
+    }
 }

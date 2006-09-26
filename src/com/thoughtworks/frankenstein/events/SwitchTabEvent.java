@@ -28,19 +28,6 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
         return "SwitchTabEvent: " + tabbedPaneName + ", tab: " + tabTitle;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTabbedPane pane = (JTabbedPane) finder.findComponent(context, tabbedPaneName);
-        int count = pane.getTabCount();
-        for (int i=0 ; i<count; i++) {
-            if (tabTitle.equals(pane.getTitleAt(i))) {
-                pane.setSelectedIndex(i);
-                return;
-            }
-        }
-        throw new RuntimeException("Could not find tab: " + tabTitle + " in tab " + tabbedPaneName
-                + ", available tabs are: " + tabs(pane));
-    }
-
     private String tabs(JTabbedPane pane) {
         String values = "";
         for (int i=0 ; i<pane.getTabCount(); i++) {
@@ -55,5 +42,18 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
 
     public String parameters() {
         return tabTitle;
+    }
+
+    public void run() {
+        JTabbedPane pane = (JTabbedPane) finder.findComponent(context, tabbedPaneName);
+        int count = pane.getTabCount();
+        for (int i=0 ; i<count; i++) {
+            if (tabTitle.equals(pane.getTitleAt(i))) {
+                pane.setSelectedIndex(i);
+                return;
+            }
+        }
+        throw new RuntimeException("Could not find tab: " + tabTitle + " in tab " + tabbedPaneName
+                + ", available tabs are: " + tabs(pane));
     }
 }

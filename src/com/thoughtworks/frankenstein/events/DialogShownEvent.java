@@ -17,21 +17,22 @@ public class DialogShownEvent extends AbstractFrankensteinEvent {
 
     public DialogShownEvent(String title) {
         this.title = title;
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public String toString() {
         return "DialogShownEvent: " + title;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public String target() {
+        return title;
+    }
+
+    public void run() {
         try {
             context.waitForDialog(title, DEFAULT_TIMEOUT);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String target() {
-        return title;
     }
 }

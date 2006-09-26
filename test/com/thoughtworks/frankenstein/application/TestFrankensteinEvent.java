@@ -14,11 +14,10 @@ public class TestFrankensteinEvent extends AbstractFrankensteinEvent {
     public TestFrankensteinEvent(String line) {
 
     }
-
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-    }
-
     public String target() {
         return null;
+    }
+
+    public void run() {
     }
 }

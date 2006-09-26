@@ -37,4 +37,7 @@ public class ExceptionThrowingEvent implements FrankensteinEvent {
     public String scriptLine() {
         return null;
     }
+
+    public void run() {
+    }
 }

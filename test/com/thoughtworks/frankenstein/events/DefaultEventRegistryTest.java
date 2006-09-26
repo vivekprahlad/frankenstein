@@ -165,6 +165,9 @@ public class DefaultEventRegistryTest extends TestCase {
         public String scriptLine() {
             return null;
         }
+
+        public void run() {
+        }
     }
 
 }

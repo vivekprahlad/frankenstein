@@ -22,12 +22,12 @@ public class ClickRadioButtonEvent extends AbstractFrankensteinEvent {
         return "ClickRadioButtonEvent: " + radioButtonName;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JRadioButton radioButton = (JRadioButton) finder.findComponent(context, radioButtonName);
-        radioButton.doClick();
-    }
-
     public String target() {
         return radioButtonName;
+    }
+
+    public void run() {
+        JRadioButton radioButton = (JRadioButton) finder.findComponent(context, radioButtonName);
+        radioButton.doClick();
     }
 }

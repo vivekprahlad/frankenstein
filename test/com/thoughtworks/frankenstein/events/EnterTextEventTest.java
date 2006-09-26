@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
@@ -42,10 +43,12 @@ public class EnterTextEventTest extends AbstractEventTestCase {
     public void testPlay() {
         EnterTextEvent event = new EnterTextEvent("parent.textFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JTextField  textField = new JTextField();
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.textFieldName")).will(returnValue(textField));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.textFieldName")).will(returnValue(textField));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        waitForIdle();
         assertEquals("text", textField.getText());
     }
 

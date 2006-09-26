@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
@@ -28,10 +29,11 @@ public class NavigateEventTest extends MockObjectTestCase {
         NavigateEvent event = new NavigateEvent("toplevel>nextlevel>thirdlevel");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JMenuItem item = new JMenuItem("thirdlevel");
         item.addActionListener((ActionListener) mockActionListener.proxy());
-        mockComponentFinder.expects(once()).method("findMenuItem").with(eq(context), eq("toplevel>nextlevel>thirdlevel")).will(returnValue(item));
+        mockComponentFinder.expects(once()).method("findMenuItem").with(same(context), eq("toplevel>nextlevel>thirdlevel")).will(returnValue(item));
         expectActionPerformed(mockActionListener);
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
     }

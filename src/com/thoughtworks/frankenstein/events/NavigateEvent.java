@@ -22,12 +22,12 @@ public class NavigateEvent extends AbstractFrankensteinEvent {
         return "NavigateEvent: " + path;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JMenuItem menuItem = finder.findMenuItem(context, path);
-        menuItem.doClick();
-    }
-
     public String target() {
         return path;
+    }
+
+    public void run() {
+        JMenuItem menuItem = finder.findMenuItem(context, path);
+        menuItem.doClick();
     }
 }

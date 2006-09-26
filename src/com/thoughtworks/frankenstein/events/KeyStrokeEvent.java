@@ -22,6 +22,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     public KeyStrokeEvent(int modifiers, int keyCode) {
         this.modifiers = modifiers;
         this.keyCode = keyCode;
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public KeyStrokeEvent(String scriptLine) {
@@ -34,21 +35,6 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
 
     public String toString() {
         return "KeyStrokeEvent:" +  (modifiers !=0 ? " modifiers: " + KeyEvent.getModifiersExText(modifiers) : "") + " key: " + KeyEvent.getKeyText(keyCode);
-    }
-
-    public synchronized void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        Component focusOwner = context.focusOwner();
-        focusOwner.addKeyListener(this);
-        pressModifiers(robot);
-        robot.keyPress(keyCode);
-        releaseKey(robot, keyCode);
-        releaseModifiers(robot);
-        try {
-            wait();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        focusOwner.removeKeyListener(this);
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -104,5 +90,20 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
         if (e.getKeyCode() == currentKey) {
             notifyAll();
         }
+    }
+
+    public synchronized void run() {
+        Component focusOwner = context.focusOwner();
+        focusOwner.addKeyListener(this);
+        pressModifiers(robot);
+        robot.keyPress(keyCode);
+        releaseKey(robot, keyCode);
+        releaseModifiers(robot);
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        focusOwner.removeKeyListener(this);
     }
 }

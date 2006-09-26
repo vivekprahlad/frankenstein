@@ -22,13 +22,13 @@ public class InternalFrameShownEvent extends AbstractFrankensteinEvent {
         return "InternalFrameShownEvent: " + title;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public String target() {
+        return title;
+    }
+
+    public void run() {
         JInternalFrame component = finder.findInternalFrame(context, title);
         if (component == null)
             throw new RuntimeException("Could not find JInternalFrame with title: " + title);
-    }
-
-    public String target() {
-        return title;
     }
 }

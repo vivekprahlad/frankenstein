@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
@@ -9,6 +10,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Understands selecting checkboxes.
+ *
  * @author Vivek Prahlad
  */
 public class ClickCheckboxEvent extends AbstractFrankensteinEvent {
@@ -36,17 +38,18 @@ public class ClickCheckboxEvent extends AbstractFrankensteinEvent {
         return "ClickCheckboxEvent: " + checkBoxName + ", selected: " + selected;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JCheckBox checkBox = (JCheckBox) finder.findComponent(context, checkBoxName);
-        if (checkBox.isSelected() ^ selected)
-            checkBox.doClick();
-    }
-
     public String target() {
         return checkBoxName;
     }
 
     public String parameters() {
         return String.valueOf(selected);
+    }
+
+    public void run() {
+        JCheckBox checkBox = (JCheckBox) finder.findComponent(context, checkBoxName);
+        if (checkBox.isSelected() ^ selected) {
+            checkBox.doClick();
+        }
     }
 }

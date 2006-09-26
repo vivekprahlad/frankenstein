@@ -31,11 +31,6 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
         return "SelectTreeEvent: Tree: " + treeName + ", Path: " + path;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTree tree = (JTree) finder.findComponent(context, treeName);
-        select(tree);
-    }
-
     private void select(JTree tree) {
         String[] nodeNames = path.split(">");
         TreePath path = findRoot(tree, nodeNames[0]);
@@ -75,5 +70,10 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
 
     public String parameters() {
         return path;
+    }
+
+    public void run() {
+        JTree tree = (JTree) finder.findComponent(context, treeName);
+        select(tree);
     }
 }

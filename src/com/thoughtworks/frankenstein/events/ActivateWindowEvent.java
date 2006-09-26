@@ -19,6 +19,7 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
 
     public ActivateWindowEvent(String title) {
         this.title = title;
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -29,21 +30,6 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
 
     public String toString() {
         return "ActivateWindowEvent: " + title;
-    }
-
-    public synchronized void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        Window window = finder.findWindow(title);
-        Frame frame = (Frame) window;
-        frame.setState(Frame.NORMAL);
-        frame.setVisible(false);
-        frame.setVisible(true);
-        frame.toFront();
-        RootPaneContainer rootPaneContainer = (RootPaneContainer) window;
-        if (rootPaneContainer.getGlassPane().getClass() == JPanel.class) {
-            waitForFocus(window);
-        } else {
-            waitForFocus(rootPaneContainer.getGlassPane());
-        }
     }
 
     private void waitForFocus(Component component) {
@@ -67,5 +53,20 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
     }
 
     public void focusLost(FocusEvent e) {
+    }
+
+    public synchronized void run() {
+        Window window = finder.findWindow(title);
+        Frame frame = (Frame) window;
+        frame.setState(Frame.NORMAL);
+        frame.setVisible(false);
+        frame.setVisible(true);
+        frame.toFront();
+        RootPaneContainer rootPaneContainer = (RootPaneContainer) window;
+        if (rootPaneContainer.getGlassPane().getClass() == JPanel.class) {
+            waitForFocus(window);
+        } else {
+            waitForFocus(rootPaneContainer.getGlassPane());
+        }
     }
 }

@@ -15,10 +15,7 @@ public class StartTestEvent extends AbstractFrankensteinEvent {
 
     public StartTestEvent(String testName) {
         this.testName = testName;
-    }
-
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        scriptContext.startTest(testName);
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public String toString() {
@@ -35,5 +32,9 @@ public class StartTestEvent extends AbstractFrankensteinEvent {
 
     public String parameters() {
         return testName;
+    }
+
+    public void run() {
+        scriptContext.startTest(testName);
     }
 }

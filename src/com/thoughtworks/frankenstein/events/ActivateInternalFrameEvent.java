@@ -12,7 +12,7 @@ import java.beans.PropertyVetoException;
  * Represents an internal frame being activated.
  * @author Vivek Prahlad
  */
-public class ActivateInternalFrameEvent extends AbstractFrankensteinEvent {
+public class ActivateInternalFrameEvent extends AbstractFrankensteinEvent implements Runnable{
     private String title;
 
     public ActivateInternalFrameEvent(String title) {
@@ -23,16 +23,16 @@ public class ActivateInternalFrameEvent extends AbstractFrankensteinEvent {
         return "ActivateInternalFrameEvent: " + title;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+    public String target() {
+        return title;
+    }
+
+    public void run() {
         JInternalFrame frame = finder.findInternalFrame(context, title);
         try {
             frame.setSelected(true);
         } catch (PropertyVetoException e) {
             throw new RuntimeException("ActivateInternalFrameEvent selection vetoed", e);
         }
-    }
-
-    public String target() {
-        return title;
     }
 }

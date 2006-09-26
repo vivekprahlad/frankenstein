@@ -24,11 +24,6 @@ public class CancelTableEditEvent extends AbstractFrankensteinEvent {
         return "CancelTableEditEvent: " + "Table: " + tableName;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTable table = (JTable) finder.findComponent(context, tableName);
-        table.getCellEditor().cancelCellEditing();
-    }
-
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (isLastEventTableEdit(lastEvent)) {
             list.removeLastEvent();
@@ -53,5 +48,10 @@ public class CancelTableEditEvent extends AbstractFrankensteinEvent {
 
     public String parameters() {
         return "";
+    }
+
+    public void run() {
+        JTable table = (JTable) finder.findComponent(context, tableName);
+        table.getCellEditor().cancelCellEditing();
     }
 }

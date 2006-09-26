@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
@@ -42,12 +43,13 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
     public void testPlay() {
         SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", "tabTwo");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JTabbedPane pane = new JTabbedPane();
         pane.addTab("tabOne", new JPanel());
         pane.addTab("tabTwo", new JPanel());
         assertEquals(0, pane.getSelectedIndex());
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.testTabName")).will(returnValue(pane));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.testTabName")).will(returnValue(pane));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals(1, pane.getSelectedIndex());
     }
@@ -59,9 +61,10 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
     public void testPlayForTabThatIsNotPresent() {
         SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", "tabTwo");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JTabbedPane pane = new JTabbedPane();
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.testTabName")).will(returnValue(pane));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.testTabName")).will(returnValue(pane));
         try {
             event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
             fail();

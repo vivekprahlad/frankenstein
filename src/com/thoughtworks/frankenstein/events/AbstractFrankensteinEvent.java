@@ -2,11 +2,15 @@ package com.thoughtworks.frankenstein.events;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.*;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.thoughtworks.frankenstein.recorders.EventList;
+import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Base class for all events
@@ -14,6 +18,11 @@ import com.thoughtworks.frankenstein.recorders.EventList;
  */
 public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     private static final Map actionNameMap = new HashMap();
+    protected EventExecutionStrategy eventExecutionStrategy = EventExecutionStrategy.IN_SWING_THREAD;
+    protected WindowContext context;
+    protected ComponentFinder finder;
+    protected ScriptContext scriptContext;
+    protected Robot robot;
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (isSameTargetAs(lastEvent)) {
@@ -54,5 +63,13 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
 
     protected static String[] params(String scriptLine) {
         return scriptLine.split("\\s", 2);
+    }
+
+    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
+        this.context = context;
+        this.finder = finder;
+        this.scriptContext = scriptContext;
+        this.robot = robot;
+        eventExecutionStrategy.execute(this);
     }
 }

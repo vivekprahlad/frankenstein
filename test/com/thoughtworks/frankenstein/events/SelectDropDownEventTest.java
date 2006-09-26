@@ -4,6 +4,7 @@ import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
 
@@ -42,9 +43,10 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
     public void testPlay() {
         SelectDropDownEvent event = new SelectDropDownEvent("parent.comboFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         JComboBox  combo = new JComboBox(new Object[]{"one", "text", "three"});
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.comboFieldName")).will(returnValue(combo));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.comboFieldName")).will(returnValue(combo));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", combo.getSelectedItem());
     }

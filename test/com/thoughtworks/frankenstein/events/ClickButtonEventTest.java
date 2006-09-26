@@ -11,6 +11,7 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.common.RobotFactory;
 
 /**
@@ -54,11 +55,13 @@ public class ClickButtonEventTest extends AbstractEventTestCase {
         ClickButtonEvent event = new ClickButtonEvent("parent.buttonName");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         button.addActionListener((ActionListener) mockActionListener.proxy());
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.buttonName")).will(returnValue(button));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.buttonName")).will(returnValue(button));
         mockActionListener.expects(once()).method("actionPerformed");
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
+        waitForIdle();
         frame.dispose();
     }
 

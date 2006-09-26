@@ -21,6 +21,7 @@ public class DefaultWindowContextTest extends TestCase {
 
     protected void tearDown() throws Exception {
         super.tearDown();
+        windowContext.close();
         KeyboardFocusManager.setCurrentKeyboardFocusManager(defaultKeyboardFocusManager);
     }
 

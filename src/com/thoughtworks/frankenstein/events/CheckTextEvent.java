@@ -23,16 +23,16 @@ public class CheckTextEvent extends AbstractFrankensteinEvent {
         this(params(args)[0], params(args)[1]);
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTextField field = (JTextField) finder.findComponent(context, textField);
-        if (!text.equals(field.getText())) throw new RuntimeException("Expected \"" + text + "\" but was \""+ field.getText() + "\"");
-    }
-
     public String target() {
         return textField;
     }
 
     public String parameters() {
         return text;
+    }
+
+    public void run() {
+        JTextField field = (JTextField) finder.findComponent(context, textField);
+        if (!text.equals(field.getText())) throw new RuntimeException("Expected \"" + text + "\" but was \""+ field.getText() + "\"");
     }
 }

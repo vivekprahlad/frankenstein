@@ -26,6 +26,7 @@ public class FrankensteinIntegration {
     private DefaultFrankensteinRecorder recorder;
     private Class mainClass;
     private JFrame frame;
+    private WindowContext context;
     private SocketListener socketListener;
 
     public FrankensteinIntegration(Class mainClass,
@@ -35,6 +36,7 @@ public class FrankensteinIntegration {
                                    NamingStrategy namingStrategy) {
         this.mainClass = mainClass;
         this.frame = frame;
+        this.context = context;
         eventRecorder = new DefaultRecorder(new DefaultScriptContext(new HtmlTestReporter(), monitor, context, new DefaultComponentFinder(namingStrategy)));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultRendererDecoder(), new DefaultComponentVisibility(), namingStrategy);
         socketListener = new SocketListener(recorder);
@@ -74,6 +76,7 @@ public class FrankensteinIntegration {
     }
 
     public void stop() {
+        context.close();
         recorder.stopRecording();
         socketListener.stop();
         frame.dispose();

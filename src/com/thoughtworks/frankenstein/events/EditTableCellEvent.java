@@ -42,17 +42,17 @@ public class EditTableCellEvent extends AbstractFrankensteinEvent {
         return "EditTableCellEvent: " + "Table: " + tableName + " cell: (" + row + "," + column + ")";
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        JTable table = (JTable) finder.findComponent(context, tableName);
-        table.editCellAt(row, column);
-        finder.setTableCellEditor(table.getEditorComponent());
-    }
-
     public String target() {
         return tableName;
     }
 
     public String parameters() {
         return row + "," + column;
+    }
+
+    public void run() {
+        final JTable table = (JTable) finder.findComponent(context, tableName);
+        table.editCellAt(row, column);
+        finder.setTableCellEditor(table.getEditorComponent());
     }
 }

@@ -22,11 +22,11 @@ public class SelectFileEvent extends AbstractFrankensteinEvent {
         return "SelectFileEvent: " + fileName;
     }
 
-    public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
-        finder.findFileChooser(context).setSelectedFile(new File(fileName));
-    }
-
     public String target() {
         return fileName;
+    }
+
+    public void run() {
+        finder.findFileChooser(context).setSelectedFile(new File(fileName));
     }
 }

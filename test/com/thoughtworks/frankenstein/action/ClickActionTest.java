@@ -25,6 +25,7 @@ public class ClickActionTest extends TestCase {
         frame.getContentPane().add(button);
         frame.pack();
         frame.setVisible(true);
+        assertTrue(frame.isShowing());
         new ClickAction().execute(button, RobotFactory.getRobot());
         assertTrue(dialog.isShowing());
         frame.dispose();

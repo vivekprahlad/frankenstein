@@ -31,7 +31,8 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         testReporter = mock(TestReporter.class);
-        windowContext = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        windowContext = (WindowContext) mockContext.proxy();
         finder = mock(ComponentFinder.class);
         monitor = mock(WorkerThreadMonitor.class);
         componentFinder = (ComponentFinder) finder.proxy();

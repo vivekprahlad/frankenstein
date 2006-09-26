@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 import org.jmock.Mock;
@@ -45,10 +46,11 @@ public class EditTableCellEventTest extends AbstractEventTestCase {
     public void testPlay() {
         EditTableCellEvent event = new EditTableCellEvent("parent.tableName", 1, 1);
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         final JTable table = new JTable(new TestTableModel());
         assertFalse(table.isEditing());
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.tableName")).will(returnValue(table));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.tableName")).will(returnValue(table));
         mockComponentFinder.expects(once()).method("setTableCellEditor").with(ANYTHING);
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         new WaitForIdle().waitForIdle();

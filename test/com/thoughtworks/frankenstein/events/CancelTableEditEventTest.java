@@ -6,7 +6,7 @@ import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
 
 /**
@@ -45,13 +45,15 @@ public class CancelTableEditEventTest extends AbstractEventTestCase {
     public void testPlay() {
         CancelTableEditEvent event = new CancelTableEditEvent("parent.tableName");
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        DefaultWindowContext context = new DefaultWindowContext();
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
         final JTable table = new JTable(new TestTableModel());
         editTable(table);
-        new WaitForIdle().waitForIdle();
+        waitForIdle();
         assertTrue(table.isEditing());
-        mockComponentFinder.expects(once()).method("findComponent").with(eq(context), eq("parent.tableName")).will(returnValue(table));
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.tableName")).will(returnValue(table));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        waitForIdle();
         assertFalse(table.isEditing());
     }
 
