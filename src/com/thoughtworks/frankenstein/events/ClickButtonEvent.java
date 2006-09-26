@@ -36,7 +36,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
         return buttonName;
     }
 
-    public void run() {
+    public synchronized void run() {
         AbstractButton button =  (AbstractButton) finder.findComponent(context, buttonName);
         clickButtonAction.execute(button, robot);
     }

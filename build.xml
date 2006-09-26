@@ -52,6 +52,7 @@
         <pathelement location="${basedir}/lib/jmock.jar"/>
         <pathelement location="${basedir}/lib/junit.jar"/>
         <pathelement location="${basedir}/lib/picocontainer.jar"/>
+        <pathelement location="${basedir}/lib/spin.jar"/>
     </path>
 
     <dirname property="module.basedir" file="${ant.file}"/>
@@ -117,6 +118,7 @@
         <jar basedir="${compiledclasses.dir}" file="dist/frankenstein.jar"></jar>
         <copy file="lib/commons-lang.jar" tofile="dist/commons-lang.jar"/>
         <copy file="lib/picocontainer.jar" tofile="dist/picocontainer.jar"/> 
+        <copy file="lib/spin.jar" tofile="dist/spin.jar"/> 
      </target>
 
     <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"

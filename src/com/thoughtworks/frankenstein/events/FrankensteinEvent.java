@@ -8,7 +8,9 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
- * Represents a frankenstein event.
+ * Represents a frankenstein event. Events can execute either in the Swing thread (in case they manipulate swing components)
+ * or in the player thread.
+ * @see EventExecutionStrategy
  * @author Vivek Prahlad
  */
 public interface FrankensteinEvent extends Runnable{

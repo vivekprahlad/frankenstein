@@ -16,6 +16,7 @@ import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
+import spin.over.CheckingRepaintManager;
 
 /**
  * Facade for the framework.
@@ -41,6 +42,7 @@ public class FrankensteinIntegration {
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultRendererDecoder(), new DefaultComponentVisibility(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
+        RepaintManager.setCurrentManager(new CheckingRepaintManager());
     }
 
     public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {
