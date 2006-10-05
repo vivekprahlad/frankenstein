@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+    <title>Testing Multithreaded Applications</title>
+</head>
+
+<body>
+<p>
+Frankenstein makes it easy to test applications that use Worker Threads. By definition, worker threads are
+usually spawned as the result of a user action. At the end of every step, Frankenstein waits until all worker thread
+activity ceases.
+</p>
+<p>
+The basic approach is to:
+<ul>
+    <li>Choose a Worker Thread naming convention. (For example you could choose a naming convention that names all worker
+        threads with a prefix and a counter: <code>UIWorker-1</code>, <code>UIWorker-2</code>, etc.)</li>
+    <li>Create a regular expression that matches the naming convention</li>
+    <li>Create a <code>RegexWorkerThreadMonitor</code> with the regular expression, and supply it to
+        a <code>FrankensteinIntegration</code> instance</li>
+</ul>
+
+Another way of doing this would be to implement the <code>WorkerThreadMonitor</code> interface.
+</p>
+</body>
+</html>

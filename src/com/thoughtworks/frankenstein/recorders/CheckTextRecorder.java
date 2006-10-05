@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-import com.thoughtworks.frankenstein.events.CheckTextEvent;
+import com.thoughtworks.frankenstein.events.AssertTextEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -19,6 +19,6 @@ public class CheckTextRecorder extends AbstractCheckRecorder {
 
     protected void check(Component source) {
         JTextField component = (JTextField) source;
-        recorder.record(new CheckTextEvent(componentName(component), component.getText()));
+        recorder.record(new AssertTextEvent(componentName(component), component.getText()));
     }
 }

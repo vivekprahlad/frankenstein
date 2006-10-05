@@ -8,18 +8,18 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
- * Checks text event
+ * Assert text event
  * @author Vivek Prahlad
  */
-public class CheckTextEvent extends AbstractFrankensteinEvent {
+public class AssertTextEvent extends AbstractFrankensteinEvent {
     private String textField, text;
 
-    public CheckTextEvent(String textField, String text) {
+    public AssertTextEvent(String textField, String text) {
         this.textField = textField;
         this.text = text;
     }
 
-    public CheckTextEvent(String args) {
+    public AssertTextEvent(String args) {
         this(params(args)[0], params(args)[1]);
     }
 

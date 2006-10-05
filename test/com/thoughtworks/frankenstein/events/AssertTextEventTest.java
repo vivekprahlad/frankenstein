@@ -1,6 +1,5 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
@@ -9,12 +8,12 @@ import javax.swing.*;
 /**
  * Ensures behaviour of the check text event
  */
-public class CheckTextEventTest extends AbstractEventTestCase {
+public class AssertTextEventTest extends AbstractEventTestCase {
     private JTextField field;
 
     public void testEqualsAndHashCode() {
-        CheckTextEvent one = new CheckTextEvent("textField", "text");
-        CheckTextEvent two = new CheckTextEvent("textField", "text");
+        AssertTextEvent one = new AssertTextEvent("textField", "text");
+        AssertTextEvent two = new AssertTextEvent("textField", "text");
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
@@ -23,15 +22,15 @@ public class CheckTextEventTest extends AbstractEventTestCase {
     }
 
     public void testAction() {
-        assertEquals("CheckText", new CheckTextEvent("textField, text").action());
+        assertEquals("AssertText", new AssertTextEvent("textField, text").action());
     }
 
     public void testTarget() {
-        assertEquals("textField", new CheckTextEvent("textField", "text").target());
+        assertEquals("textField", new AssertTextEvent("textField", "text").target());
     }
 
     public void testParameters() {
-        assertEquals("text", new CheckTextEvent("textField", "text").parameters());
+        assertEquals("text", new AssertTextEvent("textField", "text").parameters());
     }
 
     public void testScriptLine() {
@@ -41,11 +40,11 @@ public class CheckTextEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new CheckTextEvent("textField", "text");
+        return new AssertTextEvent("textField", "text");
     }
 
     public void testPlayWithMatchingText() {
-        FrankensteinEvent event = new CheckTextEvent("textField", "text");
+        FrankensteinEvent event = new AssertTextEvent("textField", "text");
         Mock mockFinder = mock(ComponentFinder.class);
         field = new JTextField();
         field.setName("textField");
@@ -55,7 +54,7 @@ public class CheckTextEventTest extends AbstractEventTestCase {
     }
 
     public void testPlayWithTextNotMatching() {
-        FrankensteinEvent event = new CheckTextEvent("textField", "text");
+        FrankensteinEvent event = new AssertTextEvent("textField", "text");
         Mock mockFinder = mock(ComponentFinder.class);
         field = new JTextField();
         field.setName("textField");

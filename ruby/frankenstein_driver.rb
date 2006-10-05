@@ -21,6 +21,10 @@ module FrankensteinDriver
     append_to_script "activate_internal_frame \"#{title}\""
   end
 
+  def assert_text(textfield, text)
+    append_to_script "assert_text \"#{textfield}\" \"#{text}\""
+  end
+
   def click_button(button)
     append_to_script "click_button \"#{button}\""
   end

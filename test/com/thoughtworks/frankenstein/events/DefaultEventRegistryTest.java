@@ -115,9 +115,9 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new ActivateWindowEvent("title"), defaultEventRegistry.createEvent("ActivateWindow \"title\""));
     }
 
-    public void testCreatesCheckTextEvent() {
-        defaultEventRegistry.registerEvent(CheckTextEvent.class);
-        assertEquals(new CheckTextEvent("textField", "text"), defaultEventRegistry.createEvent("CheckText \"textField\" \"text\""));
+    public void testCreatesAssertTextEvent() {
+        defaultEventRegistry.registerEvent(AssertTextEvent.class);
+        assertEquals(new AssertTextEvent("textField", "text"), defaultEventRegistry.createEvent("AssertText \"textField\" \"text\""));
     }
 
     public void testCreatesStartTestEvent() {
