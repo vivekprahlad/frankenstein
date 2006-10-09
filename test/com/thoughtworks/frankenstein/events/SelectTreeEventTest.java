@@ -40,7 +40,7 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_tree \"treeName\" \"one>two>three\"", new SelectTreeEvent("treeName", "one>two>three").scriptLine());
+        assertEquals("select_tree \"treeName\" , \"one>two>three\"", new SelectTreeEvent("treeName", "one>two>three").scriptLine());
     }
 
     public void testPlay() {

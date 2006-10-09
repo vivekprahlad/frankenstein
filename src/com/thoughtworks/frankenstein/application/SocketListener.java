@@ -54,7 +54,7 @@ public class SocketListener implements Runnable, ScriptListener {
                 sock.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (InterruptedException e) {
         }
     }

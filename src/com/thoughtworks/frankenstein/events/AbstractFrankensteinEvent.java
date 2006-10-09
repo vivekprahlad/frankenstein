@@ -42,7 +42,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " \"" + target() + "\"" +  (parameters().equals("") ? "": " \"" + parameters() + "\"")).replaceAll("/s", " ").trim();
+        return (underscore(action()) + " \"" + target() + "\"" +  (parameters().equals("") ? "": " , \"" + parameters() + "\"")).replaceAll("/s", " ").trim();
     }
 
     protected String underscore(String action) {

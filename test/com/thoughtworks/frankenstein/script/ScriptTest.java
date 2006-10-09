@@ -16,19 +16,19 @@ import junit.framework.TestCase;
 public class ScriptTest extends TestCase {
     private static final String SCRIPT = "cancel_table_edit \"tableName\"\n" +
     "click_button \"click button\"\n" +
-    "click_checkbox \"check Box\" \"true\"\n" +
+    "click_checkbox \"check Box\" , \"true\"\n" +
     "click_radio_button \"radio button\"\n" +
     "dialog_shown \"title\"\n" +
-    "enter_text \"textFieldName\" \"text\"\n" +
-    "edit_table_cell \"tableName\" \"1,1\"\n" +
-    "enter_text \"textBox\" \"text\"\n" +
+    "enter_text \"textFieldName\" , \"text\"\n" +
+    "edit_table_cell \"tableName\" , \"1,1\"\n" +
+    "enter_text \"textBox\" , \"text\"\n" +
     "internal_frame_shown \"title a\"\n" +
     "key_stroke \"0,48\"\n" +
     "navigate \"ab>ac>de\"\n" +
-    "select_drop_down \"combo\" \"text a\"\n" +
-    "select_list \"list\" \"text a\"\n" +
+    "select_drop_down \"combo\" , \"text a\"\n" +
+    "select_list \"list\" , \"text a\"\n" +
     "stop_table_edit \"table\"\n" +
-    "switch_tab \"tab\" \"text a\"\n" +
+    "switch_tab \"tab\" , \"text a\"\n" +
     "activate_window \"text a\"";
 
     public void testCreatesScriptFromEventList() {

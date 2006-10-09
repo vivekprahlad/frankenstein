@@ -38,7 +38,7 @@ public class ClickCheckboxEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("click_checkbox \"testButton\" \"true\"", new ClickCheckboxEvent("testButton", true).scriptLine());
+        assertEquals("click_checkbox \"testButton\" , \"true\"", new ClickCheckboxEvent("testButton", true).scriptLine());
     }
 
     public void testPlay() {

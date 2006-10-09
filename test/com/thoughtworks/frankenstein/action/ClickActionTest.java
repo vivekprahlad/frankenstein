@@ -14,7 +14,7 @@ import com.thoughtworks.frankenstein.common.RobotFactory;
  */
 public class ClickActionTest extends TestCase {
     public void testWaitsForWindowToShowAfterClick() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("title");
         JButton button = new JButton("Click");
         final JDialog dialog = new JDialog(frame, "TestDialog");
         button.addActionListener(new ActionListener() {

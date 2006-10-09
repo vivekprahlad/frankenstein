@@ -38,7 +38,7 @@ public class SelectListEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_list \"parent.listFieldName\" \"text\"", new SelectListEvent("parent.listFieldName", "text").scriptLine());
+        assertEquals("select_list \"parent.listFieldName\" , \"text\"", new SelectListEvent("parent.listFieldName", "text").scriptLine());
     }
 
     public void testPlay() {

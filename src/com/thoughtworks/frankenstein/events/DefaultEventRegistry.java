@@ -55,7 +55,7 @@ public class DefaultEventRegistry implements EventRegistry{
 
     public FrankensteinEvent createEvent(String scriptLine) {
         int quoteIndex = scriptLine.indexOf("\"");
-        String line = scriptLine.substring(quoteIndex).replaceAll("\"", "");
+        String line = scriptLine.substring(quoteIndex).replaceAll("\"\\s+,\\s+\"", " ").replaceAll("\"", "");
         String action = convert(scriptLine.substring(0, quoteIndex-1));
         if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + action);
         return createEvent((Class) eventNameToEventClassMap.get(action), line);

@@ -40,7 +40,7 @@ public class EditTableCellEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("edit_table_cell \"testTableName\" \"1,2\"", new EditTableCellEvent("testTableName", 1, 2).scriptLine());
+        assertEquals("edit_table_cell \"testTableName\" , \"1,2\"", new EditTableCellEvent("testTableName", 1, 2).scriptLine());
     }
 
     public void testPlay() {

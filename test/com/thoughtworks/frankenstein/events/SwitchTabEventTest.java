@@ -37,7 +37,7 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("switch_tab \"parent.testTabName\" \"tabTwo\"", new SwitchTabEvent("parent.testTabName", "tabTwo").scriptLine());
+        assertEquals("switch_tab \"parent.testTabName\" , \"tabTwo\"", new SwitchTabEvent("parent.testTabName", "tabTwo").scriptLine());
     }
 
     public void testPlay() {
