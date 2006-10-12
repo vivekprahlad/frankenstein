@@ -3,10 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import java.awt.*;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 
 /**
  * Represents a List selection event.
@@ -49,7 +46,7 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
     private Object valueAsString(JList list, Object elementAt, int i) {
         ListCellRenderer renderer = list.getCellRenderer();
         Component component = renderer.getListCellRendererComponent(list, elementAt, i, true, true);
-        return new DefaultRendererDecoder().decode(component);
+        return new DefaultComponentDecoder().decode(component);
     }
 
     public void run() {

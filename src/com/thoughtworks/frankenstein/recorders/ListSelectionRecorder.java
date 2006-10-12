@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.thoughtworks.frankenstein.common.RendererDecoder;
+import com.thoughtworks.frankenstein.common.ComponentDecoder;
 import com.thoughtworks.frankenstein.events.SelectListEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
@@ -14,10 +14,10 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * @author Vivek Prahlad
  */
 public class ListSelectionRecorder extends AbstractComponentRecorder implements ListSelectionListener {
-    private RendererDecoder decoder;
+    private ComponentDecoder decoder;
     private ComponentVisibility visibility;
 
-    public ListSelectionRecorder(EventRecorder recorder, NamingStrategy namingStrategy, RendererDecoder decoder, ComponentVisibility visibility) {
+    public ListSelectionRecorder(EventRecorder recorder, NamingStrategy namingStrategy, ComponentDecoder decoder, ComponentVisibility visibility) {
         super(recorder, namingStrategy, JList.class);
         this.decoder = decoder;
         this.visibility = visibility;

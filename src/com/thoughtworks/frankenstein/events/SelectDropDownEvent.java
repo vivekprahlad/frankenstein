@@ -3,10 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import java.awt.*;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 
 /**
  * Represents a combo box selection event.
@@ -39,7 +36,7 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
 
     private String valueToString(ListCellRenderer renderer, Object element, int i) {
         Component rendererComponent = renderer.getListCellRendererComponent(new JList(), element, i, true, true);
-        return new DefaultRendererDecoder().decode(rendererComponent);
+        return new DefaultComponentDecoder().decode(rendererComponent);
     }
 
     public void run() {

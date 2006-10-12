@@ -12,7 +12,7 @@ import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
 import com.thoughtworks.frankenstein.ui.DefaultFileDialogLauncher;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
 import com.thoughtworks.frankenstein.ui.RecorderTableModel;
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
@@ -39,7 +39,7 @@ public class FrankensteinIntegration {
         this.frame = frame;
         this.context = context;
         eventRecorder = new DefaultRecorder(new DefaultScriptContext(new HtmlTestReporter(), monitor, context, new DefaultComponentFinder(namingStrategy)));
-        recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultRendererDecoder(), new DefaultComponentVisibility(), namingStrategy);
+        recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), new DefaultComponentVisibility(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
         RepaintManager.setCurrentManager(new CheckingRepaintManager());

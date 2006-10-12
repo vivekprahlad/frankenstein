@@ -9,7 +9,7 @@ import java.util.List;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.recorders.DefaultComponentVisibility;
 import com.thoughtworks.frankenstein.recorders.Recorder;
@@ -26,7 +26,7 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
         super.setUp();
         mockRecorder = mock(Recorder.class);
         mockRecorder.expects(once()).method("stop");
-        compositeRecorder = new DefaultFrankensteinRecorder((Recorder) mockRecorder.proxy(), new DefaultRendererDecoder(),
+        compositeRecorder = new DefaultFrankensteinRecorder((Recorder) mockRecorder.proxy(), new DefaultComponentDecoder(),
                 new DefaultComponentVisibility(), new DefaultNamingStrategy());
     }
 

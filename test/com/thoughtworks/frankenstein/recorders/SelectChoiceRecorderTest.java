@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.SelectDropDownEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
@@ -21,7 +21,7 @@ public class SelectChoiceRecorderTest extends AbstractRecorderTestCase {
         comboBox = new JComboBox();
         comboBox.setName("testComboBox");
         mockComponentVisibility = mock(ComponentVisibility.class);
-        recorder = new SelectDropDownRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy(), new DefaultRendererDecoder(), (ComponentVisibility) mockComponentVisibility.proxy());
+        recorder = new SelectDropDownRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy(), new DefaultComponentDecoder(), (ComponentVisibility) mockComponentVisibility.proxy());
     }
 
     public void testAddsComboBoxListenerWhenComboBoxIsShown() {

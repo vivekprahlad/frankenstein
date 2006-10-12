@@ -5,7 +5,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.common.RendererDecoder;
+import com.thoughtworks.frankenstein.common.ComponentDecoder;
 import com.thoughtworks.frankenstein.events.SelectDropDownEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
@@ -14,11 +14,11 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * @author Vivek Prahlad
  */
 public class SelectDropDownRecorder extends AbstractComponentRecorder implements ItemListener {
-    private RendererDecoder decoder;
+    private ComponentDecoder decoder;
     private static JList DUMMY_LIST = new JList();
     private ComponentVisibility visibility;
 
-    public SelectDropDownRecorder(EventRecorder recorder, NamingStrategy namingStrategy, RendererDecoder decoder, ComponentVisibility visibility) {
+    public SelectDropDownRecorder(EventRecorder recorder, NamingStrategy namingStrategy, ComponentDecoder decoder, ComponentVisibility visibility) {
         super(recorder, namingStrategy, JComboBox.class);
         this.decoder = decoder;
         this.visibility = visibility;

@@ -7,7 +7,7 @@ import javax.swing.*;
  * Decodes JCheckBoxes.
  * @author Vivek Prahlad
  */
-public class JCheckBoxDecoder implements RendererDecoder {
+public class JCheckBoxDecoder implements ComponentDecoder {
 
     public String decode(Component renderer) {
         return Boolean.toString(((JCheckBox) renderer).isSelected());

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.common.DefaultRendererDecoder;
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.SelectListEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
@@ -21,7 +21,7 @@ public class ListSelectionRecorderTest extends AbstractRecorderTestCase {
         list = new JList();
         list.setName("testList");
         mockComponentVisibility = mock(ComponentVisibility.class);
-        recorder = new ListSelectionRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy(), new DefaultRendererDecoder(), (ComponentVisibility) mockComponentVisibility.proxy());
+        recorder = new ListSelectionRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy(), new DefaultComponentDecoder(), (ComponentVisibility) mockComponentVisibility.proxy());
     }
 
     public void testAddsComboBoxListenerWhenComboBoxIsShown() {

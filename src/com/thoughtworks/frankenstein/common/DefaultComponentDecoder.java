@@ -1,5 +1,10 @@
 package com.thoughtworks.frankenstein.common;
 
+import com.thoughtworks.frankenstein.common.JTextComponentDecoder;
+import com.thoughtworks.frankenstein.common.JLabelDecoder;
+import com.thoughtworks.frankenstein.common.ComponentDecoder;
+import com.thoughtworks.frankenstein.common.JCheckBoxDecoder;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +15,12 @@ import javax.swing.text.JTextComponent;
  * Decodes default swing components.
  * @author Vivek Prahlad
  */
-public class DefaultRendererDecoder implements RendererDecoder {
+public class DefaultComponentDecoder implements ComponentDecoder {
     private Map componentDecoderMap;
-    private RendererDecoder textComponentDecoder = new JTextComponentDecoder();
-    private RendererDecoder jlabelDecoder = new JLabelDecoder();
+    private ComponentDecoder textComponentDecoder = new JTextComponentDecoder();
+    private ComponentDecoder jlabelDecoder = new JLabelDecoder();
 
-    public DefaultRendererDecoder() {
+    public DefaultComponentDecoder() {
         componentDecoderMap = new HashMap();
         componentDecoderMap.put(JCheckBox.class, new JCheckBoxDecoder());
     }
@@ -24,14 +29,14 @@ public class DefaultRendererDecoder implements RendererDecoder {
         if (renderer instanceof JTextComponent) return textComponentDecoder.decode(renderer);
         if (renderer instanceof JLabel) return jlabelDecoder.decode(renderer);
         if (componentDecoderMap.containsKey(renderer.getClass())) {
-            RendererDecoder decoder = (RendererDecoder) componentDecoderMap.get(renderer.getClass());
+            ComponentDecoder decoder = (ComponentDecoder) componentDecoderMap.get(renderer.getClass());
             return decoder.decode(renderer);
         } else {
             return "Could not decode component of type: " + renderer.getClass().getName();
         }
     }
 
-    public void registerDecoder(Class componentClass, RendererDecoder decoder) {
+    public void registerDecoder(Class componentClass, ComponentDecoder decoder) {
         componentDecoderMap.put(componentClass, decoder);
     }
 }

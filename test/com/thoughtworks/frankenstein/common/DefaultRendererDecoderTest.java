@@ -9,10 +9,10 @@ import java.awt.*;
  * Ensures behaviour of default renderer decoder.
  */
 public class DefaultRendererDecoderTest extends TestCase {
-    private DefaultRendererDecoder decoder;
+    private DefaultComponentDecoder decoder;
 
     protected void setUp() throws Exception {
-        decoder = new DefaultRendererDecoder();
+        decoder = new DefaultComponentDecoder();
     }
 
     public void testDecodesTextField() {
@@ -37,7 +37,7 @@ public class DefaultRendererDecoderTest extends TestCase {
     }
 
     public void testRegisterDecoder() {
-        decoder.registerDecoder(JRadioButton.class, new RendererDecoder() {
+        decoder.registerDecoder(JRadioButton.class, new ComponentDecoder() {
             public String decode(Component renderer) {
                 return ((JRadioButton) renderer).getText();
             }

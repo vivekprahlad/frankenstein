@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.picocontainer.defaults.DefaultPicoContainer;
 
-import com.thoughtworks.frankenstein.common.RendererDecoder;
+import com.thoughtworks.frankenstein.common.ComponentDecoder;
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
 import com.thoughtworks.frankenstein.recorders.*;
 import com.thoughtworks.frankenstein.script.Script;
@@ -24,7 +24,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
     private DefaultPicoContainer container = new DefaultPicoContainer();
     private Recorder recorder;
 
-    public DefaultFrankensteinRecorder(Recorder recorder, RendererDecoder decoder, ComponentVisibility componentVisibility, NamingStrategy namingStrategy) {
+    public DefaultFrankensteinRecorder(Recorder recorder, ComponentDecoder decoder, ComponentVisibility componentVisibility, NamingStrategy namingStrategy) {
         this.recorder = recorder;
         container.registerComponentInstance(recorder);
         container.registerComponentInstance(decoder);
