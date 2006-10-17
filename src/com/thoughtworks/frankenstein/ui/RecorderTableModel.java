@@ -62,18 +62,10 @@ public class RecorderTableModel extends AbstractTableModel implements ChangeList
 
     public void stateChanged(ChangeEvent evt) {
         eventList = recorder.eventList();
-        if (SwingUtilities.isEventDispatchThread()) {
-            fireTableDataChanged();
-        } else {
-            try {
-                SwingUtilities.invokeAndWait(new Runnable() {
-                    public void run() {
-                        fireTableDataChanged();
-                    }
-                });
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                fireTableDataChanged();
             }
-        }
+        });
     }
 }
