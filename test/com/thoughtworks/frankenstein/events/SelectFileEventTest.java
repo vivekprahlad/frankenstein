@@ -37,6 +37,10 @@ public class SelectFileEventTest extends AbstractEventTestCase {
         assertEquals("select_file \"/home/test/file\"", new SelectFileEvent("/home/test/file").scriptLine());
     }
 
+    public void testDoesNotReplaceSInScriptLine() {
+        assertEquals("select_file \"/home/sabc/file\"", new SelectFileEvent("/home/sabc/file").scriptLine());
+    }
+
     public void testPlay() throws Exception {
         JFileChooser chooser = new JFileChooser(".");
         Mock mockFinder = mock(ComponentFinder.class);

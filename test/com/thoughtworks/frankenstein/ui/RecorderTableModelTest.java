@@ -10,6 +10,7 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.SwitchTabEvent;
 import com.thoughtworks.frankenstein.recorders.Recorder;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 
 /**
  * Ensures behaviour of the recorder table model.
@@ -63,6 +64,7 @@ public class RecorderTableModelTest extends MockObjectTestCase {
         mockTableModelListener.expects(once()).method("tableChanged");
         mockRecorder.expects(once()).method("eventList");
         model.stateChanged(new ChangeEvent(this));
+        new WaitForIdle().waitForIdle();
     }
 
     public void testReturnsActionAsColumnNameForFirstColumn() {

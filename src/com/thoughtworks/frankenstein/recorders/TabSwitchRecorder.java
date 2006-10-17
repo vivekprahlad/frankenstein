@@ -34,7 +34,9 @@ public class TabSwitchRecorder extends AbstractComponentRecorder implements Chan
 
     public void stateChanged(ChangeEvent e) {
         if (!visibility.isShowing(tabbedPane(e))) return;
-        recorder.record(new SwitchTabEvent(componentName(tabbedPane(e)), tabbedPane(e).getTitleAt(tabbedPane(e).getSelectedIndex())));
+        if (tabbedPane(e).getSelectedIndex() != -1) {
+            recorder.record(new SwitchTabEvent(componentName(tabbedPane(e)), tabbedPane(e).getTitleAt(tabbedPane(e).getSelectedIndex())));
+        }
     }
 
     private JTabbedPane tabbedPane(ChangeEvent e) {

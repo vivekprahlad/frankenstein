@@ -21,13 +21,13 @@ public interface FrankensteinRecorder {
 
     void load(File selectedFile) throws IOException;
 
+    void load(Reader reader) throws IOException;
+
     void reset();
 
     void registerRecorder(Class recorderClass);
 
     void registerEvent(Class frankensteinEvent);
-
-    void load(Reader reader) throws IOException;
 
     void addScriptListener(ScriptListener listener);
 
