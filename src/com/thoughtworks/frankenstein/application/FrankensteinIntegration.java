@@ -5,6 +5,7 @@ import javax.swing.*;
 import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.DefaultRecorder;
 import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.recorders.DefaultComponentVisibility;
@@ -35,10 +36,19 @@ public class FrankensteinIntegration {
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
                                    NamingStrategy namingStrategy) {
+        this(mainClass, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy));
+    }
+
+    public FrankensteinIntegration(Class mainClass,
+                                   JFrame frame,
+                                   WorkerThreadMonitor monitor,
+                                   WindowContext context,
+                                   NamingStrategy namingStrategy,
+                                   ComponentFinder finder) {
         this.mainClass = mainClass;
         this.frame = frame;
         this.context = context;
-        eventRecorder = new DefaultRecorder(new DefaultScriptContext(new HtmlTestReporter(), monitor, context, new DefaultComponentFinder(namingStrategy)));
+        eventRecorder = new DefaultRecorder(new DefaultScriptContext(new HtmlTestReporter(), monitor, context, finder));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), new DefaultComponentVisibility(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
