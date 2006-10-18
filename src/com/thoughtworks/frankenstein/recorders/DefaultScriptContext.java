@@ -53,7 +53,9 @@ public class DefaultScriptContext implements ScriptContext {
     private void playEvents(List events) {
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
-            play((FrankensteinEvent) iterator.next());
+            FrankensteinEvent event = (FrankensteinEvent) iterator.next();
+            System.out.println("Playing: " + event);
+            play(event);
         }
     }
 

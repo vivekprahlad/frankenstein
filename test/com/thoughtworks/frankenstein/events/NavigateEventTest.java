@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
@@ -36,6 +37,7 @@ public class NavigateEventTest extends MockObjectTestCase {
         mockComponentFinder.expects(once()).method("findMenuItem").with(same(context), eq("toplevel>nextlevel>thirdlevel")).will(returnValue(item));
         expectActionPerformed(mockActionListener);
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        new WaitForIdle().waitForIdle();
     }
 
     public void testAction() {

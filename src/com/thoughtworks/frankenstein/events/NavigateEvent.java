@@ -27,9 +27,13 @@ public class NavigateEvent extends AbstractFrankensteinEvent {
     }
 
     public void run() {
-        JMenuItem menuItem = finder.findMenuItem(context, path);
+        final JMenuItem menuItem = finder.findMenuItem(context, path);
         if (menuItem.isEnabled()) {
-            menuItem.doClick();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    menuItem.doClick();
+                }
+            });
         } else {
             throw new RuntimeException("Menu item: "+ path + " is disabled");
         }

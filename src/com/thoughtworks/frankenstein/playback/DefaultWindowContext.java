@@ -9,11 +9,11 @@ import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
- *
  * @author Vivek Prahlad
  */
 public class DefaultWindowContext implements PropertyChangeListener, WindowContext {
     private Component activeWindow;
+    private String title;
 
     public DefaultWindowContext() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("focusOwner", this);
@@ -28,7 +28,10 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     protected synchronized void setActiveWindow(Component focusOwner) {
         activeWindow = rootPaneContainer(focusOwner);
         if (activeWindow instanceof JDialog) {
-            notifyAll();
+            JDialog dialog = (JDialog) activeWindow;
+            if (title != null && title.equals(dialog.getTitle())) {
+                notifyAll();
+            }
         }
     }
 
@@ -51,10 +54,14 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         return KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
     }
 
-    public synchronized void waitForDialog(int timeoutInSeconds) throws InterruptedException {
-        if (activeWindow instanceof JDialog) return;
+    public synchronized void waitForDialog(String title, int timeoutInSeconds) throws InterruptedException {
+        if (activeWindow instanceof JDialog) {
+            JDialog dialog = (JDialog) activeWindow;
+            if (title.equals(dialog.getTitle())) return;
+        }
+        this.title = title;
         wait(timeoutInSeconds * 1000);
-        if (!(activeWindow instanceof JDialog)) throw new RuntimeException("Dialog now shown");
+        this.title = null;
     }
 
     public void close() {

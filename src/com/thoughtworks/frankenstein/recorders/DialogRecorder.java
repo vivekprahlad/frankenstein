@@ -11,7 +11,6 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * @author Vivek Prahlad
  */
 public class DialogRecorder extends AbstractComponentRecorder {
-    public static final String DEFAULT_DIALOG_TIMEOUT = "1";
 
     public DialogRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
         super(recorder, namingStrategy, JDialog.class);
@@ -19,7 +18,11 @@ public class DialogRecorder extends AbstractComponentRecorder {
 
     void componentShown(Component component) {
         JDialog dialog = dialog(component);
-        recorder.record(new DialogShownEvent(DEFAULT_DIALOG_TIMEOUT));
+        recorder.record(new DialogShownEvent(title(dialog)));
+    }
+
+    private String title(JDialog dialog) {
+        return dialog.getTitle() == null ? "" : dialog.getTitle();
     }
 
     private JDialog dialog(Component component) {

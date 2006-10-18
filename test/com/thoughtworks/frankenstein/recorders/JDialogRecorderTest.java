@@ -22,7 +22,7 @@ public class JDialogRecorderTest extends AbstractRecorderTestCase {
     }
 
     public void testListensForDialogsShowing() {
-        mockRecorder.expects(once()).method("record").with(eq(new DialogShownEvent("1")));
+        mockRecorder.expects(once()).method("record").with(eq(new DialogShownEvent("title")));
         recorder.componentShown(new JDialog(new JFrame(), "title"));
     }
 

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.InvocationTargetException;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
@@ -38,15 +37,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
     }
 
     public synchronized void run() {
-        final AbstractButton[] button = new AbstractButton[1];
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
-                   button[0]  =  (AbstractButton) finder.findComponent(context, buttonName);
-                }
-            });
-        } catch (Exception e) {
-        }
-        clickButtonAction.execute(button[0], robot);
+        AbstractButton button =  (AbstractButton) finder.findComponent(context, buttonName);
+        clickButtonAction.execute(button, robot);
     }
 }
