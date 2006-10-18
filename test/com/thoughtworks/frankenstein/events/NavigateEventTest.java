@@ -54,7 +54,33 @@ public class NavigateEventTest extends MockObjectTestCase {
         assertEquals("navigate \"one>two>three\"", new NavigateEvent("one>two>three").scriptLine());
     }
 
+    public void testShouldNotClickOnDisabledMenuItem() {
+        NavigateEvent event = new NavigateEvent("toplevel>nextlevel>thirdlevel");
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        Mock mockActionListener = mock(ActionListener.class);
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
+        JMenuItem item = new JMenuItem("thirdlevel") {
+            public boolean isEnabled() {
+                return false;
+            }
+        };
+        item.addActionListener((ActionListener) mockActionListener.proxy());
+        mockComponentFinder.expects(once()).method("findMenuItem").with(same(context), eq("toplevel>nextlevel>thirdlevel")).will(returnValue(item));
+        expectActionNotPerformed(mockActionListener);
+        try {
+            event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+            fail("Should have thrown an exception since menu item was disabled");
+        } catch (Exception e) {
+            //Expected
+        }
+    }
+
     private void expectActionPerformed(Mock mockActionListener) {
         mockActionListener.expects(once()).method("actionPerformed");
+    }
+
+    private void expectActionNotPerformed(Mock mockActionListener) {
+        mockActionListener.expects(never()).method("actionPerformed");
     }
 }

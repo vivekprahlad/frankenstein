@@ -57,7 +57,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesDialogShownEvent() {
         defaultEventRegistry.registerEvent(DialogShownEvent.class);
-        assertEquals(new DialogShownEvent("abc"), defaultEventRegistry.createEvent("DialogShown \"abc\""));
+        assertEquals(new DialogShownEvent("2"), defaultEventRegistry.createEvent("DialogShown \"2\""));
     }
 
     public void testCreatesEditTableCellEvent() {
@@ -123,6 +123,11 @@ public class DefaultEventRegistryTest extends TestCase {
     public void testCreatesStartTestEvent() {
         defaultEventRegistry.registerEvent(StartTestEvent.class);
         assertEquals(new StartTestEvent("testName"), defaultEventRegistry.createEvent("StartTest \"testName\""));
+    }
+
+    public void testCreateDelayEvent() {
+        defaultEventRegistry.registerEvent(DelayEvent.class);
+        assertEquals(new DelayEvent("10"), defaultEventRegistry.createEvent("Delay \"10\""));
     }
 
     public void testThrowsExceptionIfCreatingEventFails() {

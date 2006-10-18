@@ -18,7 +18,7 @@ public class ScriptTest extends TestCase {
     "click_button \"click button\"\n" +
     "click_checkbox \"check Box\" , \"true\"\n" +
     "click_radio_button \"radio button\"\n" +
-    "dialog_shown \"title\"\n" +
+    "dialog_shown \"2\"\n" +
     "enter_text \"textFieldName\" , \"text\"\n" +
     "edit_table_cell \"tableName\" , \"1,1\"\n" +
     "enter_text \"textBox\" , \"text\"\n" +
@@ -37,7 +37,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new ClickButtonEvent("click button"));
         eventList.add(new ClickCheckboxEvent("check Box", true));
         eventList.add(new ClickRadioButtonEvent("radio button"));
-        eventList.add(new DialogShownEvent("title"));
+        eventList.add(new DialogShownEvent("2"));
         eventList.add(new EnterTextEvent("textFieldName", "text"));
         eventList.add(new EditTableCellEvent("tableName", 1, 1));
         eventList.add(new EnterTextEvent("textBox", "text"));
@@ -61,7 +61,7 @@ public class ScriptTest extends TestCase {
         assertEquals(new ClickButtonEvent("click button"), eventList.get(1));
         assertEquals(new ClickCheckboxEvent("check Box", true), eventList.get(2));
         assertEquals(new ClickRadioButtonEvent("radio button"), eventList.get(3));
-        assertEquals(new DialogShownEvent("title"), eventList.get(4));
+        assertEquals(new DialogShownEvent("2"), eventList.get(4));
         assertEquals(new EnterTextEvent("textFieldName", "text"), eventList.get(5));
         assertEquals(new EditTableCellEvent("tableName", 1, 1), eventList.get(6));
         assertEquals(new EnterTextEvent("textBox", "text"), eventList.get(7));

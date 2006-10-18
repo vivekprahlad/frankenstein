@@ -82,7 +82,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     }
 
     public void testWindowActivatedAfterDialogShownIsNotRecorded() {
-        DialogShownEvent dialogShownEvent = new DialogShownEvent("dialog");
+        DialogShownEvent dialogShownEvent = new DialogShownEvent("2");
         recorder.record(dialogShownEvent);
         recorder.record(new ActivateWindowEvent("myWindow"));
         assertEquals(1, recorder.eventList().size());
@@ -124,10 +124,10 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     public void testReplaceLastEvent() {
         recorder.addEvent(new SelectDropDownEvent("comboName1", "choice1"));
         recorder.addEvent(new SelectDropDownEvent("comboName2", "choice2"));
-        recorder.replaceLastEvent(new DialogShownEvent("title"));
+        recorder.replaceLastEvent(new DialogShownEvent("2"));
         assertEquals(2, recorder.eventList().size());
         assertEquals(new SelectDropDownEvent("comboName1", "choice1"), recorder.eventList().get(0));
-        assertEquals(new DialogShownEvent("title"), recorder.eventList().get(1));
+        assertEquals(new DialogShownEvent("2"), recorder.eventList().get(1));
     }
 
     public void testAddRecorderListener() {

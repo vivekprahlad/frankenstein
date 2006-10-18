@@ -29,7 +29,7 @@ public class DefaultComponentFinder implements ComponentFinder {
         }
         comp = findComp(componentName, activeWindow);
         if (comp == null) {
-            throw new RuntimeException("Unable to find component with name: " + componentName);
+            throw new RuntimeException("Unable to find component with name: " + componentName + " in " + activeWindow.toString());
         }
         return comp;
     }

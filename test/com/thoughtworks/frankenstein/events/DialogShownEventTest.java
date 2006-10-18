@@ -10,43 +10,43 @@ import org.jmock.MockObjectTestCase;
 public class DialogShownEventTest extends MockObjectTestCase {
 
     public void testEqualsAndHashCode() {
-        DialogShownEvent eventOne = new DialogShownEvent("title");
-        DialogShownEvent eventTwo = new DialogShownEvent("title");
+        DialogShownEvent eventOne = new DialogShownEvent("2");
+        DialogShownEvent eventTwo = new DialogShownEvent("2");
         assertEquals(eventOne, eventTwo);
         assertEquals(eventOne.hashCode(), eventTwo.hashCode());
     }
 
     public void testToString() {
-        assertEquals("DialogShownEvent: title", new DialogShownEvent("title").toString());
+        assertEquals("DialogShownEvent: 10", new DialogShownEvent("10").toString());
     }
 
     public void testAction() {
-        assertEquals("DialogShown", new DialogShownEvent("testDialog").action());
+        assertEquals("DialogShown", new DialogShownEvent("2").action());
     }
 
     public void testTarget() {
-        assertEquals("testDialog", new DialogShownEvent("testDialog").target());
+        assertEquals("2", new DialogShownEvent("2").target());
     }
 
     public void testParameters() {
-        assertEquals("", new DialogShownEvent("testDialog").parameters());
+        assertEquals("", new DialogShownEvent("2").parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("dialog_shown \"testDialog\"", new DialogShownEvent("testDialog").scriptLine());
+        assertEquals("dialog_shown \"3\"", new DialogShownEvent("3").scriptLine());
     }
 
     public void testNoErrorIfTitleMatches() {
-        DialogShownEvent event = new DialogShownEvent("title");
+        DialogShownEvent event = new DialogShownEvent("2");
         Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("waitForDialog").with(eq("title"), eq(10));
+        mockWindownContext.expects(once()).method("waitForDialog").with( eq(2));
         event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
     }
 
     public void testInterruptedException() {
-        DialogShownEvent event = new DialogShownEvent("title");
+        DialogShownEvent event = new DialogShownEvent("10");
         Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("waitForDialog").with(eq("title"), eq(10)).will(throwException(new InterruptedException()));
+        mockWindownContext.expects(once()).method("waitForDialog").with(eq(10)).will(throwException(new InterruptedException()));
         try {
             event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
             fail();

@@ -9,11 +9,11 @@ import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
+ *
  * @author Vivek Prahlad
  */
 public class DefaultWindowContext implements PropertyChangeListener, WindowContext {
     private Component activeWindow;
-    private String title;
 
     public DefaultWindowContext() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("focusOwner", this);
@@ -28,10 +28,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     protected synchronized void setActiveWindow(Component focusOwner) {
         activeWindow = rootPaneContainer(focusOwner);
         if (activeWindow instanceof JDialog) {
-            JDialog dialog = (JDialog) activeWindow;
-            if (title != null && title.equals(dialog.getTitle())) {
-                notifyAll();
-            }
+            notifyAll();
         }
     }
 
@@ -45,7 +42,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
 
     public Component activeTopLevelWindow() {
         if (activeWindow instanceof JInternalFrame) {
-            return new RootPaneContainerFinder().findRootPane(activeWindow.getParent());   
+            return new RootPaneContainerFinder().findRootPane(activeWindow.getParent());
         }
         return activeWindow;
     }
@@ -54,14 +51,10 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         return KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
     }
 
-    public synchronized void waitForDialog(String title, int timeoutInSeconds) throws InterruptedException {
-        if (activeWindow instanceof JDialog) {
-            JDialog dialog = (JDialog) activeWindow;
-            if (title.equals(dialog.getTitle())) return;
-        }
-        this.title = title;
+    public synchronized void waitForDialog(int timeoutInSeconds) throws InterruptedException {
+        if (activeWindow instanceof JDialog) return;
         wait(timeoutInSeconds * 1000);
-        this.title = null;
+        if (!(activeWindow instanceof JDialog)) throw new RuntimeException("Dialog now shown");
     }
 
     public void close() {

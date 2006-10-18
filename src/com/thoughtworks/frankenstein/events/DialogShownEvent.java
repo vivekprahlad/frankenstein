@@ -11,26 +11,29 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * @author Vivek Prahlad
  */
 public class DialogShownEvent extends AbstractFrankensteinEvent {
-    private String title;
+    private int delay;
     public static final String DIALOG_SHOWN_ACTION = "DialogShown";
-    static final int DEFAULT_TIMEOUT = 10;
 
-    public DialogShownEvent(String title) {
-        this.title = title;
+    public DialogShownEvent(String scriptLine) {
+        delay = Integer.parseInt(scriptLine);
         eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public String toString() {
-        return "DialogShownEvent: " + title;
+        return "DialogShownEvent: " + delay;
     }
 
     public String target() {
-        return title;
+        return String.valueOf(delay);
+    }
+
+    public String parameters() {
+        return "";
     }
 
     public void run() {
         try {
-            context.waitForDialog(title, DEFAULT_TIMEOUT);
+            context.waitForDialog(delay);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -13,7 +13,7 @@ public interface WindowContext {
 
     Component focusOwner();
 
-    void waitForDialog(String title, int timeout) throws InterruptedException;
+    void waitForDialog(int timeout) throws InterruptedException;
 
     void close();
 }
