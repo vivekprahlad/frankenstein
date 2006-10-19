@@ -10,7 +10,7 @@ import javax.swing.*;
 public class RootPaneContainerFinder {
     public Component findRootPane(Component focusOwner) {
         if (focusOwner == null) return null;
-        if (focusOwner instanceof RootPaneContainer) return focusOwner;
+        if (focusOwner instanceof RootPaneContainer && !(focusOwner instanceof JInternalFrame)) return focusOwner;
         if (focusOwner.getParent()!=null) return findRootPane(focusOwner.getParent());
         return null;
     }
