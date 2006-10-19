@@ -6,9 +6,11 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
+import com.thoughtworks.frankenstein.application.ThreadUtil;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
+ *
  * @author Vivek Prahlad
  */
 public class DefaultWindowContext implements PropertyChangeListener, WindowContext {
@@ -54,14 +56,27 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         return KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
     }
 
-    public synchronized void waitForDialog(String title, int timeoutInSeconds) throws InterruptedException {
-        if (activeWindow instanceof JDialog) {
-            JDialog dialog = (JDialog) activeWindow;
-            if (title.equals(dialog.getTitle())) return;
-        }
+    public synchronized void waitForDialogOpening(String title, int timeoutInSeconds) throws InterruptedException {
+        if (isDialogOpen(title)) return;
         this.title = title;
         wait(timeoutInSeconds * 1000);
+//        if (!isDialogOpen(title)) throw //
         this.title = null;
+    }
+
+    private boolean isDialogOpen(String title) {
+        if (activeWindow instanceof JDialog) {
+            JDialog dialog = (JDialog) activeWindow;
+            return (title.equals(dialog.getTitle()));
+        }
+        return false;
+    }
+
+    public void waitForDialogClosing(String title, int timeout) {
+        if (!isDialogOpen(title)) return;
+        while (isDialogOpen(title)) {
+            ThreadUtil.sleep(100);
+        }
     }
 
     public void close() {

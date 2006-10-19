@@ -25,15 +25,21 @@ public class RegexWorkerThreadMonitor implements WorkerThreadMonitor {
     private boolean hasActiveWorkerThreads() {
         Thread[] threads = enumerateThreads();
         for (int i = 0; i < threads.length; i++) {
-            if (matchesPattern(threads[i].getName())) return true;
+            Thread thread = threads[i];
+            if(thread!=null && thread.isAlive()) {
+                if (matchesPattern(thread.getName())) return true;
+            }
         }
         return false;
     }
 
     private Thread[] enumerateThreads() {
         ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
-        Thread[] threads = new Thread[threadGroup.activeCount()];
-        threadGroup.enumerate(threads, true);
+        Thread[] threads;
+        synchronized (threadGroup) {
+            threads = new Thread[threadGroup.activeCount()];
+            threadGroup.enumerate(threads, true);
+        }
         return threads;
     }
 

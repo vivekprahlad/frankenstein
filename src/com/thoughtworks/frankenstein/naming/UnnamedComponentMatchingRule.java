@@ -21,10 +21,14 @@ public class UnnamedComponentMatchingRule implements ComponentMatchingRule{
     }
 
     public boolean matchAndContinue(Component component) {
-        if (isSupportedComponent(component.getClass()) && component.getName() == null) {
+        if (isSupportedComponent(component.getClass()) && (component.getName() == null || isOptionPaneButton(component))) {
             matchingComponents.add(component);
         }
         return true;
+    }
+
+    private boolean isOptionPaneButton(Component component) {
+        return component.getName().equals("OptionPane.button");
     }
 
     public java.util.List unnamedComponents() {

@@ -25,14 +25,6 @@ public class DefaultWindowContextTest extends TestCase {
         KeyboardFocusManager.setCurrentKeyboardFocusManager(defaultKeyboardFocusManager);
     }
 
-    public void testContextIsInternalFrameWhenInternalFrameIsShown() {
-        JInternalFrame internalFrame = new JInternalFrame();
-        JButton comp = new JButton();
-        internalFrame.getContentPane().add(comp);
-        windowContext.setActiveWindow(comp);
-        assertSame(internalFrame, windowContext.activeWindow());
-    }
-
     public void testContextIsJFrameWhenJFrameIsShown() {
         JFrame frame = new JFrame();
         JButton comp = new JButton();
@@ -68,7 +60,7 @@ public class DefaultWindowContextTest extends TestCase {
         JDialog testDialog = new JDialog(frame, "testDialog");
         KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
         windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
-        windowContext.waitForDialog("testDialog", 10);
+        windowContext.waitForDialogOpening("testDialog", 10);
         assertEquals(testDialog, windowContext.activeWindow());
         testDialog.dispose();
         frame.dispose();
@@ -82,7 +74,7 @@ public class DefaultWindowContextTest extends TestCase {
                 windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
             }
         }).start();
-        windowContext.waitForDialog("testDialog", 10);
+        windowContext.waitForDialogOpening("testDialog", 10);
         assertEquals(testDialog, windowContext.activeWindow());
         testDialog.dispose();
     }

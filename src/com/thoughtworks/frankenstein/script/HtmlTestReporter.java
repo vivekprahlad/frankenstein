@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.script;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
@@ -40,8 +41,19 @@ public class HtmlTestReporter implements TestReporter {
     }
 
     private String line(FrankensteinEvent event, String background, Exception cause) {
-        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br>" +cause.getMessage())
+        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br>" +exception(cause))
                 + td(background, event.parameters()) + "</tr>\n";
+    }
+
+    private String exception(Exception cause) {
+        if (cause instanceof RuntimeException) {
+            RuntimeException rtException = (RuntimeException) cause;
+            if (rtException.getCause() instanceof InvocationTargetException) {
+                InvocationTargetException invocationTargetException = (InvocationTargetException) rtException.getCause();
+                return invocationTargetException.getCause().getMessage();
+            }
+        }
+        return cause.getMessage();
     }
 
     private String td(String background, String value) {

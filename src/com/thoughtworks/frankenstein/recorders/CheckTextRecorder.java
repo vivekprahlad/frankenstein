@@ -18,7 +18,7 @@ public class CheckTextRecorder extends AbstractCheckRecorder {
     }
 
     protected void check(Component source) {
-        JTextField component = (JTextField) source;
+        JTextComponent component = (JTextComponent) source;
         recorder.record(new AssertTextEvent(componentName(component), component.getText()));
     }
 }

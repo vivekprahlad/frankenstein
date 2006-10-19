@@ -15,7 +15,7 @@ public class FileChooserRecorderTest extends AbstractRecorderTestCase {
         JFileChooser chooser = new JFileChooser(".");
         int initialListenerCount = listenerCount(chooser);
         recorder.componentShown(chooser);
-        assertEquals(initialListenerCount + 1, listenerCount(chooser));
+        assertEquals(initialListenerCount + 2, listenerCount(chooser));
     }
 
     public void testRemovesPropertyChangeListenerWhenComponentIsHidden() {

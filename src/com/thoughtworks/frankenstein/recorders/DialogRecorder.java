@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.DialogShownEvent;
+import com.thoughtworks.frankenstein.events.DialogClosedEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -30,5 +31,6 @@ public class DialogRecorder extends AbstractComponentRecorder {
     }
 
     void componentHidden(Component component) {
+        recorder.record(new DialogClosedEvent(title(dialog(component))));
     }
 }

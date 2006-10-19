@@ -12,7 +12,9 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 class ComponentName {
 
     String componentName(Component component, NamingStrategy namingStrategy) {
-        if (component.getName() == null) nameTopLevelWindowWith(component, namingStrategy);
+        if (component.getName() == null || component.getName().equals("OptionPane.button")) {
+            nameTopLevelWindowWith(component, namingStrategy);
+        }
         return component.getName();
     }
 

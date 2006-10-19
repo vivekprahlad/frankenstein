@@ -13,7 +13,9 @@ public interface WindowContext {
 
     Component focusOwner();
 
-    void waitForDialog(String title, int timeout) throws InterruptedException;
+    void waitForDialogOpening(String title, int timeout) throws InterruptedException;
+
+    void waitForDialogClosing(String title, int timeout);
 
     void close();
 }

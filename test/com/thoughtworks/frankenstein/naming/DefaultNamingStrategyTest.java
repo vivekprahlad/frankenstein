@@ -135,4 +135,13 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTabbedPane_1", parent.getName());
     }
 
+    public void testNamesOptionpaneButtons() {
+        JPanel container = new JPanel();
+        JButton optionPaneButton = new JButton("Yes");
+        optionPaneButton.setName("OptionPane.button");
+        container.add(optionPaneButton);
+        namingStrategy.nameComponentsIn(container);
+        assertEquals("Yes", optionPaneButton.getName());
+    }
+
 }

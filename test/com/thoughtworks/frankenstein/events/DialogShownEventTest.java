@@ -39,14 +39,14 @@ public class DialogShownEventTest extends MockObjectTestCase {
     public void testNoErrorIfTitleMatches() {
         DialogShownEvent event = new DialogShownEvent("title");
         Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("waitForDialog").with(eq("title"), eq(10));
+        mockWindownContext.expects(once()).method("waitForDialogOpening").with(eq("title"), eq(10));
         event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
     }
 
     public void testInterruptedException() {
         DialogShownEvent event = new DialogShownEvent("title");
         Mock mockWindownContext = mock(WindowContext.class);
-        mockWindownContext.expects(once()).method("waitForDialog").with(eq("title"), eq(10)).will(throwException(new InterruptedException()));
+        mockWindownContext.expects(once()).method("waitForDialogOpening").with(eq("title"), eq(10)).will(throwException(new InterruptedException()));
         try {
             event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
             fail();

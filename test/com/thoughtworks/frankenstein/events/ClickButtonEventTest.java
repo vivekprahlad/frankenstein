@@ -47,11 +47,8 @@ public class ClickButtonEventTest extends AbstractEventTestCase {
     }
 
     public void testPlay() throws InterruptedException, AWTException {
-        JFrame frame = new JFrame();
         JButton button = new JButton("abc");
-        frame.getContentPane().add(button);
-        frame.pack();
-        frame.setVisible(true);
+        button.setName("parent.buttonName");
         ClickButtonEvent event = new ClickButtonEvent("parent.buttonName");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);
@@ -62,7 +59,6 @@ public class ClickButtonEventTest extends AbstractEventTestCase {
         mockActionListener.expects(once()).method("actionPerformed");
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
         waitForIdle();
-        frame.dispose();
     }
 
     protected FrankensteinEvent createEvent() {

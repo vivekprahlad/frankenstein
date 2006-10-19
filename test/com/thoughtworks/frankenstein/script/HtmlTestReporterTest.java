@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.script;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
@@ -43,6 +44,25 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
         reporter.startTest("testName");
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"));
+        assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
+                "<h4>Test Status</h4>\n" +
+                "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
+                "<tr><td bgcolor=#FFCFCF><font size=2 color=black>Action</font></td>" +
+                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br>Some Exception</font></td>" +
+                "<td bgcolor=#FFCFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
+                "</table>\n" +
+                "</body>\n" +
+                "</html>", reporter.finishTest());
+    }
+
+    public void testReportsCauseFromInvocationTargetException() throws IOException {
+        Mock frankensteinEvent = mock(FrankensteinEvent.class);
+        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
+        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
+        frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
+        reporter.startTest("testName");
+        reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(),
+                new RuntimeException(new InvocationTargetException(new RuntimeException("Some Exception"))));
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
