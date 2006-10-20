@@ -147,6 +147,11 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals("ClickButton", defaultEventRegistry.convert("ClickButton"));
     }
 
+    public void testCreatesCloseAllDialogsEvent() {
+        defaultEventRegistry.registerEvent(CloseAllDialogsEvent.class);
+        assertEquals(new CloseAllDialogsEvent(""), defaultEventRegistry.createEvent("CloseAllDialogs \"\""));
+    }
+
     private class FakeFrankensteinEvent implements FrankensteinEvent {
 
         public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {

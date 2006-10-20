@@ -19,6 +19,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);
         registerEvent(ClickRadioButtonEvent.class);
+        registerEvent(CloseAllDialogsEvent.class);
         registerEvent(CloseInternalFrameEvent.class);
         registerEvent(DelayEvent.class);
         registerEvent(DialogClosedEvent.class);
@@ -58,10 +59,19 @@ public class DefaultEventRegistry implements EventRegistry{
 
     public FrankensteinEvent createEvent(String scriptLine) {
         int quoteIndex = scriptLine.indexOf("\"");
-        String line = scriptLine.substring(quoteIndex).replaceAll("\"\\s+,\\s+\"", " ").replaceAll("\"", "");
-        String action = convert(scriptLine.substring(0, quoteIndex-1));
-        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + action);
+        String line = "", action = "";
+        if (quoteIndex== -1) {
+            action = convert(scriptLine);
+        } else {
+            line = scriptLine.substring(quoteIndex).replaceAll("\"\\s+,\\s+\"", " ").replaceAll("\"", "");
+            action = convert(scriptLine.substring(0, quoteIndex-1));
+        }
+        verifyActionRegistered(action);
         return createEvent((Class) eventNameToEventClassMap.get(action), line);
+    }
+
+    private void verifyActionRegistered(String action) {
+        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + action);
     }
 
     private FrankensteinEvent createEvent(Class clazz, String string) {

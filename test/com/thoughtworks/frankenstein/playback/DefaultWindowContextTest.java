@@ -90,6 +90,17 @@ public class DefaultWindowContextTest extends TestCase {
         frame.dispose();
     }
 
+    public void testClosesOpenDialogs() {
+        final JDialog dialog = new JDialog();
+        windowContext.setActiveWindow(dialog);
+        new Thread(new Runnable() {
+            public void run() {
+                windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, dialog));
+            }
+        }).start();
+        windowContext.closeAllDialogs();
+    }
+
     private class TestKeyboardFocusManager extends DefaultKeyboardFocusManager {
         private Component focusOwner;
 

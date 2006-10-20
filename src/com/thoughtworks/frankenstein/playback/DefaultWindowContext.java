@@ -1,6 +1,8 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.awt.*;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
@@ -29,7 +31,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
 
     protected synchronized void setActiveWindow(Component focusOwner) {
         activeWindow = rootPaneContainer(focusOwner);
-        if (activeWindow instanceof JDialog) {
+        if (isDialogOpen()) {
             JDialog dialog = (JDialog) activeWindow;
             if (title != null && title.equals(dialog.getTitle())) {
                 notifyAll();
@@ -60,26 +62,45 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         if (isDialogOpen(title)) return;
         this.title = title;
         wait(timeoutInSeconds * 1000);
-//        if (!isDialogOpen(title)) throw //
+        if (!isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title +" not opened");
         this.title = null;
     }
 
     private boolean isDialogOpen(String title) {
-        if (activeWindow instanceof JDialog) {
+        if (isDialogOpen()) {
             JDialog dialog = (JDialog) activeWindow;
             return (title.equals(dialog.getTitle()));
         }
         return false;
     }
 
+    private boolean isDialogOpen() {
+        return activeWindow instanceof JDialog;
+    }
+
     public void waitForDialogClosing(String title, int timeout) {
         if (!isDialogOpen(title)) return;
-        while (isDialogOpen(title)) {
+        long currentTime = System.currentTimeMillis();
+        while (isDialogOpen(title) && (System.currentTimeMillis() - currentTime > timeout)) {
             ThreadUtil.sleep(100);
         }
+        if (isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title +" not closed");
     }
 
     public void close() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().removePropertyChangeListener("focusOwner", this);
+    }
+
+    public void closeAllDialogs() {
+        while (isDialogOpen()) {
+            closeDialog((JDialog) activeWindow);
+        }
+    }
+
+    private void closeDialog(final JDialog dialog) {
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
+        while(activeWindow == dialog) {
+            ThreadUtil.sleep(100);
+        }
     }
 }

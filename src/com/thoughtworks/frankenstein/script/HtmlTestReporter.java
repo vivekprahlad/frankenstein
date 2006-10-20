@@ -4,8 +4,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.awt.*;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.recorders.DefaultScreenShot;
+import com.thoughtworks.frankenstein.recorders.ScreenShot;
 
 /**
  * Understands creating html test reports
@@ -19,6 +22,12 @@ public class HtmlTestReporter implements TestReporter {
     private static final String GREEN = "#CFFFCF";
     private static final String INITIAL_BODY = "<table BORDER CELLSPACING=0 CELLPADDING=4>\n";
     private String testFileName = testName + ".html";
+    private static final String SCREENSHOT_DIRECTORY = "screenshots";
+    private ScreenShot screenShot;
+
+    public HtmlTestReporter(ScreenShot screenShot) {
+        this.screenShot = screenShot;
+    }
 
     public void startTest(String testName) {
         this.testName = extractTestName(testName);
@@ -40,8 +49,8 @@ public class HtmlTestReporter implements TestReporter {
                 + td(background, event.parameters()) + "</tr>\n";
     }
 
-    private String line(FrankensteinEvent event, String background, Exception cause) {
-        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br>" +exception(cause))
+    private String line(FrankensteinEvent event, String background, Exception cause, String imageFileName) {
+        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br><br><a href='" + imageFileName+"'>Screen shot</a>" + "<br><br>Cause: " +exception(cause))
                 + td(background, event.parameters()) + "</tr>\n";
     }
 
@@ -73,8 +82,9 @@ public class HtmlTestReporter implements TestReporter {
                 + "<h3>" + testName + "</h3>\n" + "<h4>Test Status</h4>\n";
     }
 
-    public void reportFailure(FrankensteinEvent event, Exception cause) {
-        body += line(event, RED, cause);
+    public void reportFailure(FrankensteinEvent event, Exception cause, Robot robot) {
+        File reportFile = new File(testFileName);
+        body += line(event, RED, cause, screenShot.capture(reportFile.getParent(), robot));
     }
 
     public String finishTest() throws IOException {
@@ -87,7 +97,9 @@ public class HtmlTestReporter implements TestReporter {
 
     private void writeReport() throws IOException {
         File reportFile = new File(testFileName);
-        if (reportFile.getParent()!=null) new File(reportFile.getParent()).mkdirs();
+        if (reportFile.getParent()!=null) {
+            new File(reportFile.getParent()).mkdirs();
+        }
         if (reportFile.exists()) {
             reportFile.delete();
             reportFile.createNewFile();

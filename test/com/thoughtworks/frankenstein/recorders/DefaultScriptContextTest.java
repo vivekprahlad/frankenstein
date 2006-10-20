@@ -84,7 +84,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
                 .with(same(windowContext), same(componentFinder), same(context), ANYTHING)
                 .will(throwException(exception));
         FrankensteinEvent event = (FrankensteinEvent) frankensteinEvent.proxy();
-        testReporter.expects(once()).method("reportFailure").with(same(event), same(exception));
+        testReporter.expects(once()).method("reportFailure").with(same(event), same(exception), ANYTHING);
         context.play(event);
     }
 

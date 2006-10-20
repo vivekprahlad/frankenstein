@@ -18,4 +18,6 @@ public interface WindowContext {
     void waitForDialogClosing(String title, int timeout);
 
     void close();
+
+    void closeAllDialogs();
 }

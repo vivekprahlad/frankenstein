@@ -7,16 +7,19 @@ import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.recorders.ScreenShot;
 
 /**
  * Ensures behaviour of HtmlTestReporter
  */
 public class HtmlTestReporterTest extends MockObjectTestCase {
     private HtmlTestReporter reporter;
+    private Mock screenShot;
 
     protected void setUp() throws Exception {
         super.setUp();
-        reporter = new HtmlTestReporter();
+        screenShot = mock(ScreenShot.class);
+        reporter = new HtmlTestReporter((ScreenShot) screenShot.proxy());
     }
 
     public void testReportsTestSuccess() throws IOException {
@@ -42,13 +45,16 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
         frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
         frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
+        screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.startTest("testName");
-        reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"));
+        reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
                 "<tr><td bgcolor=#FFCFCF><font size=2 color=black>Action</font></td>" +
-                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br>Some Exception</font></td>" +
+                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br>" +
+                "<br><a href='screenshot/screen1.png'>Screen shot</a><br>" +
+                "<br>Cause: Some Exception</font></td>" +
                 "<td bgcolor=#FFCFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
@@ -61,13 +67,15 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
         frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
         reporter.startTest("testName");
+        screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(),
-                new RuntimeException(new InvocationTargetException(new RuntimeException("Some Exception"))));
+                new RuntimeException(new InvocationTargetException(new RuntimeException("Some Exception"))), null);
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
                 "<tr><td bgcolor=#FFCFCF><font size=2 color=black>Action</font></td>" +
-                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br>Some Exception</font></td>" +
+                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br><br><a href='screenshot/screen1.png'>Screen shot</a><br><br>Cause: " +
+                "Some Exception</font></td>" +
                 "<td bgcolor=#FFCFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
@@ -80,12 +88,14 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
         frankensteinEvent.expects(once()).method("parameters").will(returnValue(""));
         reporter.startTest("testName");
-        reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"));
+        screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
+        reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
                 "<tr><td bgcolor=#FFCFCF><font size=2 color=black>Action</font></td>" +
-                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br>Some Exception</font></td>" +
+                "<td bgcolor=#FFCFCF><font size=2 color=black>Target<br><br><a href='screenshot/screen1.png'>" +
+                "Screen shot</a><br><br>Cause: Some Exception</font></td>" +
                 "<td bgcolor=#FFCFCF><font size=2 color=black>&nbsp;</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
