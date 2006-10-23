@@ -3,10 +3,9 @@ package com.thoughtworks.frankenstein.recorders;
 import java.awt.*;
 
 /**
- * Understands SOMETHING
- *
+ * Captures a screenshot into a specified folder.
  * @author vivek
  */
 public interface ScreenShot {
-    String capture(String parent, Robot robot);
+    String capture(String parentFolder, Robot robot);
 }

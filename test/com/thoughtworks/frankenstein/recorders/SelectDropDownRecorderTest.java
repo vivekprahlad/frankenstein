@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 /**
  * Ensures the behavior of the select recorder
  */
-public class SelectChoiceRecorderTest extends AbstractRecorderTestCase {
+public class SelectDropDownRecorderTest extends AbstractRecorderTestCase {
     private JComboBox comboBox;
     private SelectDropDownRecorder recorder;
     private Mock mockComponentVisibility;

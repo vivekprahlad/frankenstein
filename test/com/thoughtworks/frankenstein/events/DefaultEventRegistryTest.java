@@ -92,7 +92,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesSelectListEvent() {
         defaultEventRegistry.registerEvent(SelectListEvent.class);
-        assertEquals(new SelectListEvent("list", "value"), defaultEventRegistry.createEvent("SelectList \"list\" \"value\""));
+        assertEquals(new SelectListEvent("list", new String[]{"value"}), defaultEventRegistry.createEvent("SelectList \"list\" \"value\""));
     }
 
     public void testCreatesSelectTreeEvent() {

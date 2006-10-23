@@ -29,6 +29,10 @@ public class HtmlTestReporter implements TestReporter {
         this.screenShot = screenShot;
     }
 
+    public HtmlTestReporter() {
+        this(new DefaultScreenShot());
+    }
+
     public void startTest(String testName) {
         this.testName = extractTestName(testName);
         this.testFileName = testName + ".html";

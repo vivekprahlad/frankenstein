@@ -24,11 +24,11 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
     private DefaultPicoContainer container = new DefaultPicoContainer();
     private Recorder recorder;
 
-    public DefaultFrankensteinRecorder(Recorder recorder, ComponentDecoder decoder, ComponentVisibility componentVisibility, NamingStrategy namingStrategy) {
+    public DefaultFrankensteinRecorder(Recorder recorder, ComponentDecoder decoder, NamingStrategy namingStrategy) {
         this.recorder = recorder;
         container.registerComponentInstance(recorder);
         container.registerComponentInstance(decoder);
-        container.registerComponentInstance(componentVisibility);
+        container.registerComponentInstance(new DefaultComponentVisibility());
         container.registerComponentInstance(namingStrategy);
         container.start();
         script = new Script(registry);

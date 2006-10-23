@@ -1,5 +1,8 @@
 package com.thoughtworks.frankenstein.application;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 /**
  * Pipes to a designated main class.
  */

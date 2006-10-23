@@ -1,6 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
+import java.util.Map;
+import java.util.HashMap;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
@@ -11,19 +13,20 @@ import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
  */
 public class SelectListEvent extends AbstractFrankensteinEvent {
     private String listName;
-    private String choice;
+    private String[] choices;
+    private Map valueToString = new HashMap();
 
-    public SelectListEvent(String listName, String element) {
+    public SelectListEvent(String listName, String[] elements) {
         this.listName = listName;
-        this.choice = element;
+        this.choices = elements;
     }
 
     public SelectListEvent(String scriptLine) {
-        this(params(scriptLine)[0], params(scriptLine)[1]);
+        this(params(scriptLine)[0], params(scriptLine)[1].split("\\|"));
     }
 
     public String toString() {
-        return "SelectListEvent: List: " + listName + ", Value: " + choice;
+        return "SelectListEvent: List: " + listName + ", Values: " + parameters();
     }
 
     public String target() {
@@ -31,26 +34,43 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
     }
 
     public String parameters() {
-        return choice;
+        String params = "";
+        for (int i = 0; i < choices.length; i++) {
+            String s = choices[i];
+            params += s + ",";
+        }
+        return params.substring(0, params.length()-1);
     }
 
-    private Object value(JList list) {
+    private int value(JList list, String text) {
         ListModel model = list.getModel();
         for (int i=0; i<model.getSize(); i++) {
-            if (choice.equals(valueAsString(list, model.getElementAt(i), i)))
-                return model.getElementAt(i);
+            if (text.equals(valueAsString(list, model.getElementAt(i), i)))
+                return i;
         }
-        return null;
+        return -1;
     }
 
     private Object valueAsString(JList list, Object elementAt, int i) {
+        if (valueToString.containsKey(elementAt)) return valueToString.get(elementAt);
         ListCellRenderer renderer = list.getCellRenderer();
         Component component = renderer.getListCellRendererComponent(list, elementAt, i, true, true);
-        return new DefaultComponentDecoder().decode(component);
+        String string = new DefaultComponentDecoder().decode(component);
+        valueToString.put(elementAt, string);
+        return string;
     }
 
     public void run() {
+        valueToString.clear();
         JList list = (JList) finder.findComponent(context, listName);
-        list.setSelectedValue(value(list), true);
+        list.setSelectedIndices(indices(list));
+    }
+
+    private int[] indices(JList list) {
+        int[] indices = new int[choices.length];
+        for (int i = 0; i < choices.length; i++) {
+            indices[i] = value(list, choices[i]);
+        }
+        return indices;
     }
 }

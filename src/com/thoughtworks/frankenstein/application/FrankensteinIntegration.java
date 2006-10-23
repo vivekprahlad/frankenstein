@@ -6,10 +6,7 @@ import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.recorders.DefaultRecorder;
-import com.thoughtworks.frankenstein.recorders.Recorder;
-import com.thoughtworks.frankenstein.recorders.DefaultComponentVisibility;
-import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
+import com.thoughtworks.frankenstein.recorders.*;
 import com.thoughtworks.frankenstein.ui.DefaultFileDialogLauncher;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
 import com.thoughtworks.frankenstein.ui.RecorderTableModel;
@@ -18,6 +15,9 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 import spin.over.CheckingRepaintManager;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Facade for the framework.
@@ -48,11 +48,11 @@ public class FrankensteinIntegration {
         this.mainClass = mainClass;
         this.frame = frame;
         this.context = context;
-        eventRecorder = new DefaultRecorder(new DefaultScriptContext(new HtmlTestReporter(), monitor, context, finder));
-        recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), new DefaultComponentVisibility(), namingStrategy);
+        eventRecorder = new DefaultRecorder(monitor, context, finder);
+        recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
-        RepaintManager.setCurrentManager(new CheckingRepaintManager());
+//        RepaintManager.setCurrentManager(new CheckingRepaintManager());
     }
 
     public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {
@@ -60,7 +60,7 @@ public class FrankensteinIntegration {
     }
 
     public FrankensteinIntegration(Class mainClass) {
-        this(mainClass, new JFrame("Recorder"), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
+        this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
     public void registerEvent(Class eventClass) {
@@ -71,7 +71,16 @@ public class FrankensteinIntegration {
         recorder.registerRecorder(recorderClass);
     }
 
+    public void setLogLevel(Level level) {
+        Logger.getLogger("Frankenstein").setLevel(level);
+    }
+
+    public void logInfo() {
+        Logger.getLogger("Frankenstein").setLevel(Level.INFO);
+    }
+
     public void start(String[] args) {
+        logInfo();
         recorder.startRecording();
         socketListener.start();
         try {

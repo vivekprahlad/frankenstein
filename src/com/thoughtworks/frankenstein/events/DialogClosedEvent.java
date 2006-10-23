@@ -23,6 +23,6 @@ public class DialogClosedEvent extends AbstractFrankensteinEvent {
     }
 
     public void run() {
-        context.waitForDialogClosing(title, DialogClosedEvent.DEFAULT_TIMEOUT);
+        context.waitForDialogClosing(title, DEFAULT_TIMEOUT);
     }
 }

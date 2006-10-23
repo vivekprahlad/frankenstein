@@ -81,7 +81,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     public void waitForDialogClosing(String title, int timeout) {
         if (!isDialogOpen(title)) return;
         long currentTime = System.currentTimeMillis();
-        while (isDialogOpen(title) && (System.currentTimeMillis() - currentTime > timeout)) {
+        while (isDialogOpen(title) && (System.currentTimeMillis() - currentTime < timeout * 1000)) {
             ThreadUtil.sleep(100);
         }
         if (isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title +" not closed");

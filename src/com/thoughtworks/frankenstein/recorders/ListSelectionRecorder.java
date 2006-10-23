@@ -39,8 +39,18 @@ public class ListSelectionRecorder extends AbstractComponentRecorder implements 
         if (e.getValueIsAdjusting()) return;
         JList list = (JList) e.getSource();
         if (!visibility.isShowing(list) || list.getClass().getName().matches(".*Combo.*") || isFileChooserChild(list)) return;
-        Component rendererComponent = list.getCellRenderer().getListCellRendererComponent(list, list.getSelectedValue(), list.getSelectedIndex(), false, false);
-        recorder.record(new SelectListEvent(componentName(list), decoder.decode(rendererComponent)));
+        recorder.record(new SelectListEvent(componentName(list), values(list)));
+    }
+
+    private String[] values(JList list) {
+        Object[] selectedValues = list.getSelectedValues();
+        String[] values = new String[selectedValues.length];
+        for (int i = 0; i < values.length; i++) {
+            Component rendererComponent = list.getCellRenderer().getListCellRendererComponent(list, selectedValues[i],
+                    list.getSelectedIndices()[i], false, false);
+            values[i] = decoder.decode(rendererComponent);
+        }
+        return values;
     }
 
     private boolean isFileChooserChild(JList list) {

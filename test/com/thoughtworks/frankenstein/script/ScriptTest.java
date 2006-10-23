@@ -45,7 +45,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new KeyStrokeEvent(0, 48));
         eventList.add(new NavigateEvent("ab>ac>de"));
         eventList.add(new SelectDropDownEvent("combo", "text a"));
-        eventList.add(new SelectListEvent("list", "text a"));
+        eventList.add(new SelectListEvent("list", new String[] {"text a"}));
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
@@ -69,7 +69,7 @@ public class ScriptTest extends TestCase {
         assertEquals(new KeyStrokeEvent(0, 48), eventList.get(9));
         assertEquals(new NavigateEvent("ab>ac>de"), eventList.get(10));
         assertEquals(new SelectDropDownEvent("combo", "text a"), eventList.get(11));
-        assertEquals(new SelectListEvent("list", "text a"), eventList.get(12));
+        assertEquals(new SelectListEvent("list", new String[]{"text a"}), eventList.get(12));
         assertEquals(new StopTableEditEvent("table"), eventList.get(13));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(14));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(15));

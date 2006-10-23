@@ -8,12 +8,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
+import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Adds events to a list.
+ *
  * @author Vivek Prahlad
  */
-public class DefaultRecorder implements Recorder,EventList, Runnable {
+public class DefaultRecorder implements Recorder, EventList, Runnable {
     private List events = new ArrayList();
     private List scriptListeners = new ArrayList();
     private FrankensteinEvent lastEvent = FrankensteinEvent.NULL;
@@ -27,10 +31,16 @@ public class DefaultRecorder implements Recorder,EventList, Runnable {
         this.scriptContext = scriptContext;
     }
 
+    public DefaultRecorder(WorkerThreadMonitor monitor,
+                           WindowContext context,
+                           ComponentFinder finder) {
+        this(new DefaultScriptContext(monitor, context, finder));
+    }
+
     public void record(FrankensteinEvent event) {
         if (stopped) return;
         event.record(this, lastEvent);
-        lastEvent = events.isEmpty() ? FrankensteinEvent.NULL : (FrankensteinEvent)  events.get(events.size()-1);
+        lastEvent = events.isEmpty() ? FrankensteinEvent.NULL : (FrankensteinEvent) events.get(events.size() - 1);
         fireChangeEvent();
     }
 
@@ -69,11 +79,11 @@ public class DefaultRecorder implements Recorder,EventList, Runnable {
     }
 
     public void removeLastEvent() {
-        events.remove(events.size()-1);
+        events.remove(events.size() - 1);
     }
 
     public void replaceLastEvent(FrankensteinEvent event) {
-        events.set(events.size()-1, event);
+        events.set(events.size() - 1, event);
     }
 
     public void play() {

@@ -33,6 +33,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(SelectFileEvent.class);
         registerEvent(SelectFilesEvent.class);
         registerEvent(SelectListEvent.class);
+        registerEvent(SelectTableRowEvent.class);
         registerEvent(SelectTreeEvent.class);
         registerEvent(StartTestEvent.class);
         registerEvent(StopTableEditEvent.class);

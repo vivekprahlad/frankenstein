@@ -10,7 +10,6 @@ module FrankensteinDriver
   
   def append_to_script(script_line)
     @script += script_line + "\n"
-#    @script += "Delay 3\n"
   end
   
   def activate_window(title)
@@ -25,6 +24,10 @@ module FrankensteinDriver
     append_to_script "assert_text \"#{textfield}\" \"#{text}\""
   end
 
+  def cancel_table_edit(table)
+    append_to_script "cancel_table_edit \"#{table}\""
+  end
+
   def click_button(button)
     append_to_script "click_button \"#{button}\""
   end
@@ -37,8 +40,20 @@ module FrankensteinDriver
     append_to_script "click_radio_button \"#{button}\""
   end
 
-  def close_radiobutton(title)
+  def close_internal_frame(title)
     append_to_script "close_internal_frame \"#{title}\""
+  end
+
+  def close_all_dialogs
+    append_to_script "close_all_dialogs"
+  end
+
+  def delay(duration_in_milliseconds)
+    append_to_script "delay \"#{duration_in_milliseconds}\""
+  end
+
+  def dialog_closed(title)
+    append_to_script "dialog_closed \"#{title}\""
   end
 
   def dialog_shown(title)
@@ -72,9 +87,17 @@ module FrankensteinDriver
   def select_file(path)
     append_to_script "select_file \"#{path}\""
   end
-  
+
+  def select_files(paths)
+    append_to_script "select_files \"#{paths}\""
+  end
+
   def select_list(list, value)
     append_to_script "select_list \"#{list}\" \"#{value}\""
+  end
+
+  def select_table_row(table, rows)
+    append_to_script "select_table_row \"#{table}\" \"#{rows}\""
   end
 
   def select_tree(tree, path)

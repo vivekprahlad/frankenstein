@@ -15,34 +15,34 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 public class SelectListEventTest extends AbstractEventTestCase {
 
     public void testEqualsAndHashCode() {
-        SelectListEvent eventOne = new SelectListEvent("parent.listFieldName", "text");
-        SelectListEvent eventTwo = new SelectListEvent("parent.listFieldName", "text");
+        SelectListEvent eventOne = new SelectListEvent("parent.listFieldName", new String[] {"text"});
+        SelectListEvent eventTwo = new SelectListEvent("parent.listFieldName", new String[] {"text"});
         assertEquals(eventOne, eventTwo);
         assertEquals(eventOne.hashCode(), eventTwo.hashCode());
     }
 
     public void testToString() {
-        assertEquals("SelectListEvent: List: parent.listFieldName, Value: text", new SelectListEvent("parent.listFieldName", "text").toString());
+        assertEquals("SelectListEvent: List: parent.listFieldName, Values: text", new SelectListEvent("parent.listFieldName", new String[] {"text"}).toString());
     }
 
     public void testAction() {
-        assertEquals("SelectList", new SelectListEvent("parent.listFieldName", "text").action());
+        assertEquals("SelectList", new SelectListEvent("parent.listFieldName", new String[] {"text"}).action());
     }
 
     public void testTarget() {
-        assertEquals("parent.listFieldName", new SelectListEvent("parent.listFieldName", "text").target());
+        assertEquals("parent.listFieldName", new SelectListEvent("parent.listFieldName", new String[] {"text"}).target());
     }
 
     public void testParameters() {
-        assertEquals("text", new SelectListEvent("parent.listFieldName", "text").parameters());
+        assertEquals("text", new SelectListEvent("parent.listFieldName", new String[] {"text"}).parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("select_list \"parent.listFieldName\" , \"text\"", new SelectListEvent("parent.listFieldName", "text").scriptLine());
+        assertEquals("select_list \"parent.listFieldName\" , \"text\"", new SelectListEvent("parent.listFieldName", new String[] {"text"}).scriptLine());
     }
 
     public void testPlay() {
-        SelectListEvent event = new SelectListEvent("parent.listFieldName", "text");
+        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"text"});
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
@@ -52,12 +52,25 @@ public class SelectListEventTest extends AbstractEventTestCase {
         assertEquals("text", list.getSelectedValue());
     }
 
+    public void testPlayWithMultipleElementsSelected() {
+        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"one", "two"});
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
+        JList  list = new JList(new Object[]{"one", "two", "three"});
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.listFieldName")).will(returnValue(list));
+        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals(2, list.getSelectedValues().length);
+        assertEquals("one", list.getSelectedValues()[0]);
+        assertEquals("two", list.getSelectedValues()[1]);
+    }
+
     protected FrankensteinEvent createEvent() {
-        return new SelectListEvent("parent.listFieldName", "text");
+        return new SelectListEvent("parent.listFieldName", new String[] {"text"});
     }
 
     public void testPlayWithNonExistentListItemDoesNotSelect() {
-        SelectListEvent event = new SelectListEvent("parent.listFieldName", "nonexisten_text");
+        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"non_existent_text"});
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
