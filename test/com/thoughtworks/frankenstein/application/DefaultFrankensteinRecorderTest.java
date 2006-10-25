@@ -27,7 +27,7 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
         mockRecorder = mock(Recorder.class);
         mockRecorder.expects(once()).method("stop");
         compositeRecorder = new DefaultFrankensteinRecorder((Recorder) mockRecorder.proxy(), new DefaultComponentDecoder(),
-                new DefaultComponentVisibility(), new DefaultNamingStrategy());
+                new DefaultNamingStrategy());
     }
 
     public void testReset() {

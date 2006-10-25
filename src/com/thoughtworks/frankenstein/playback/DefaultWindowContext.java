@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
+import javax.swing.event.EventListenerList;
 
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 import com.thoughtworks.frankenstein.application.ThreadUtil;
@@ -18,6 +19,7 @@ import com.thoughtworks.frankenstein.application.ThreadUtil;
 public class DefaultWindowContext implements PropertyChangeListener, WindowContext {
     private Component activeWindow;
     private String title;
+    private EventListenerList listenerList = new EventListenerList();
 
     public DefaultWindowContext() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("focusOwner", this);
@@ -32,9 +34,19 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     protected synchronized void setActiveWindow(Component focusOwner) {
         activeWindow = rootPaneContainer(focusOwner);
         if (isDialogOpen()) {
+            fireDialogOpened();
             JDialog dialog = (JDialog) activeWindow;
             if (title != null && title.equals(dialog.getTitle())) {
                 notifyAll();
+            }
+        }
+    }
+
+    private void fireDialogOpened() {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == WindowContextListener.class) {
+                ((WindowContextListener) listeners[i + 1]).dialogShown();
             }
         }
     }
@@ -62,7 +74,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         if (isDialogOpen(title)) return;
         this.title = title;
         wait(timeoutInSeconds * 1000);
-        if (!isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title +" not opened");
+        if (!isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title + " not opened");
         this.title = null;
     }
 
@@ -84,7 +96,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         while (isDialogOpen(title) && (System.currentTimeMillis() - currentTime < timeout * 1000)) {
             ThreadUtil.sleep(100);
         }
-        if (isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title +" not closed");
+        if (isDialogOpen(title)) throw new RuntimeException("Dialog with title:" + title + " not closed");
     }
 
     public void close() {
@@ -97,9 +109,18 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         }
     }
 
+    public void addWindowContextListener(WindowContextListener listener) {
+        listenerList.add(WindowContextListener.class, listener);
+
+    }
+
+    public void removeWindowContextListener(WindowContextListener listener) {
+        listenerList.remove(WindowContextListener.class, listener);
+    }
+
     private void closeDialog(final JDialog dialog) {
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
-        while(activeWindow == dialog) {
+        while (activeWindow == dialog) {
             ThreadUtil.sleep(100);
         }
     }

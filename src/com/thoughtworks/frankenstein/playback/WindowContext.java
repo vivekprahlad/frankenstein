@@ -20,4 +20,8 @@ public interface WindowContext {
     void close();
 
     void closeAllDialogs();
+
+    void addWindowContextListener(WindowContextListener listener);
+
+    void removeWindowContextListener(WindowContextListener listener);
 }
