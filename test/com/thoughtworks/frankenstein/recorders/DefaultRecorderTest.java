@@ -81,20 +81,20 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         assertEquals(0, recorder.eventList().size());
     }
 
+    public void testWindowActivatedAfterDialogClosedIsNotRecorded() {
+        DialogClosedEvent dialogClosedEvent = new DialogClosedEvent("title");
+        recorder.record(dialogClosedEvent);
+        recorder.record(new ActivateWindowEvent("myWindow"));
+        assertEquals(1, recorder.eventList().size());
+        assertEquals(dialogClosedEvent, recorder.eventList().get(0));
+    }
+
     public void testWindowActivatedAfterDialogShownIsNotRecorded() {
-        DialogShownEvent dialogShownEvent = new DialogShownEvent("2");
+        DialogShownEvent dialogShownEvent = new DialogShownEvent("title");
         recorder.record(dialogShownEvent);
         recorder.record(new ActivateWindowEvent("myWindow"));
         assertEquals(1, recorder.eventList().size());
         assertEquals(dialogShownEvent, recorder.eventList().get(0));
-    }
-
-    public void testWindowActivatedAfterClickButtonIsNotRecorded() {
-        ClickButtonEvent clickButtonEvent = new ClickButtonEvent("button");
-        recorder.record(clickButtonEvent);
-        recorder.record(new ActivateWindowEvent("myWindow"));
-        assertEquals(1, recorder.eventList().size());
-        assertEquals(clickButtonEvent, recorder.eventList().get(0));
     }
 
     public void testDoesNotRemoveCancelEventAfterOtherEvents() {

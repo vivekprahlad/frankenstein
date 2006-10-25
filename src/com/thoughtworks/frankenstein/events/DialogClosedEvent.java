@@ -6,7 +6,7 @@ package com.thoughtworks.frankenstein.events;
  */
 public class DialogClosedEvent extends AbstractFrankensteinEvent {
     private String title;
-    public static final String DIALOG_SHOWN_ACTION = "DialogShown";
+    public static final String DIALOG_CLOSED_ACTION = "DialogClosed";
     static final int DEFAULT_TIMEOUT = 10;
 
     public DialogClosedEvent(String title) {

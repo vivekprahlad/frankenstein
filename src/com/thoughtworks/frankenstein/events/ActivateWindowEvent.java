@@ -5,13 +5,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.EventList;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Represents a top level frame being activated.
+ *
  * @author Vivek Prahlad
  */
 public class ActivateWindowEvent extends AbstractFrankensteinEvent implements FocusListener {
@@ -23,9 +21,10 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
-        if (!(lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION)
-                || lastEvent.action().equals(ClickButtonEvent.CLICK_BUTTON_ACTION)))
+        if (!(lastEvent.action().equals(DialogClosedEvent.DIALOG_CLOSED_ACTION) ||
+              lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION))) {
             super.record(list, lastEvent);
+        }
     }
 
     public String toString() {
