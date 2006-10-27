@@ -15,6 +15,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent implements Actio
     private String buttonName;
     public static final String CLICK_BUTTON_ACTION = "ClickButton";
     private static final Object LOCK = new Object();
+    private Exception exception;
 
     public ClickButtonEvent(String buttonName) {
         this.buttonName = buttonName;
@@ -30,15 +31,21 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent implements Actio
     }
 
     public synchronized void run() {
+        exception = null;
         context.addWindowContextListener(this);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AbstractButton button = (AbstractButton) finder.findComponent(context, buttonName);
-                addActionListener(button);
+                AbstractButton button = null;
                 try {
+                    button = (AbstractButton) finder.findComponent(context, buttonName);
+                    addActionListener(button);
                     button.doClick();
+                } catch (Exception e) {
+                    notifyException(e);
                 } finally {
-                    button.removeActionListener(ClickButtonEvent.this);
+                    if (button != null) {
+                        button.removeActionListener(ClickButtonEvent.this);
+                    }
                 }
             }
         });
@@ -52,6 +59,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent implements Actio
             throw new RuntimeException("Error waiting for click button event");
         }
         context.removeWindowContextListener(this);
+        if (exception!=null) throw new RuntimeException(exception);
     }
 
     private void addActionListener(AbstractButton button) {
@@ -60,6 +68,11 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent implements Actio
         //Add the ClickButtonEvent actionListener to the front of the listener list. It will then be the last to be notified.
         button.addActionListener(this);
         addAllActionListeners(listeners, button);
+    }
+
+    private synchronized void notifyException(Exception e) {
+        exception = e;
+        notifyAll();
     }
 
     private void addAllActionListeners(ActionListener[] listeners, AbstractButton button) {
