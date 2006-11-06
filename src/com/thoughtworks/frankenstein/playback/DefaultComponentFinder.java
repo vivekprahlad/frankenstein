@@ -1,6 +1,9 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.awt.*;
+import java.awt.event.AWTEventListener;
+import java.awt.event.HierarchyEvent;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.naming.*;
@@ -8,11 +11,13 @@ import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Default component finder implementation
+ *
  * @author Vivek Prahlad
  */
 public class DefaultComponentFinder implements ComponentFinder {
     private Component editor;
     private NamingStrategy namingStrategy;
+    private JPopupMenu popupMenu;
 
     public DefaultComponentFinder(NamingStrategy namingStrategy) {
         this.namingStrategy = namingStrategy;
@@ -44,21 +49,39 @@ public class DefaultComponentFinder implements ComponentFinder {
         return rule.matchingComponent();
     }
 
-    public JMenuItem findMenuItem(WindowContext context, String path) {
+    public synchronized JMenuItem findMenuItem(WindowContext context, String path) {
         String[] pathElements = path.split(">");
-        Frame[] frames = Frame.getFrames();
-        for (int i = 0; i < frames.length; i++) {
-            java.util.List menuBars = findMenuBar(frames, i);
-            if (!menuBars.isEmpty()) {
-                JMenuBar bar = (JMenuBar) menuBars.get(0);
-                JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
-                for (int j = 1; j < pathElements.length; j++) {
-                    menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+        if (popupMenu != null) {
+            JMenuItem menuItem = findTopLevelMenu(pathElements[0]);
+            for (int j = 1; j < pathElements.length; j++) {
+                menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+            }
+            return menuItem;
+        } else {
+            Frame[] frames = Frame.getFrames();
+            for (int i = 0; i < frames.length; i++) {
+                java.util.List menuBars = findMenuBar(frames, i);
+                if (!menuBars.isEmpty()) {
+                    JMenuBar bar = (JMenuBar) menuBars.get(0);
+                    JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
+                    for (int j = 1; j < pathElements.length; j++) {
+                        menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+                    }
+                    return menuItem;
                 }
-                return menuItem;
             }
         }
         throw new RuntimeException("Unable to find menu with path: " + path);
+    }
+
+    private JMenuItem findTopLevelMenu(String pathElement) {
+        for (int i=0; i<popupMenu.getComponentCount(); i++) {
+            if (popupMenu.getComponent(i) instanceof JMenuItem) {
+                JMenuItem item = (JMenuItem) popupMenu.getComponent(i);
+                if (pathElement.equals(item.getText())) return item;
+            }
+        }
+        throw new RuntimeException("Unable to find top level popup menu item: " + pathElement);
     }
 
     private java.util.List findMenuBar(Frame[] frames, int i) {
@@ -95,9 +118,9 @@ public class DefaultComponentFinder implements ComponentFinder {
     }
 
     public JInternalFrame findInternalFrame(WindowContext windowContext, String title) {
-            InternalFrameMatchingRule rule = new InternalFrameMatchingRule(title);
-            new ComponentHierarchyWalker().matchComponentsIn((Container) windowContext.activeTopLevelWindow(), rule);
-            return rule.matchingComponent();
+        InternalFrameMatchingRule rule = new InternalFrameMatchingRule(title);
+        new ComponentHierarchyWalker().matchComponentsIn((Container) windowContext.activeTopLevelWindow(), rule);
+        return rule.matchingComponent();
     }
 
     public JFileChooser findFileChooser(WindowContext context) {
@@ -105,4 +128,15 @@ public class DefaultComponentFinder implements ComponentFinder {
         new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
         return (JFileChooser) rule.unnamedComponents().get(0);
     }
+
+    public synchronized void menuDisplayed(JPopupMenu menu) {
+        popupMenu = menu;
+        Logger.getLogger("Frankenstein").info("Menu Displayed");
+    }
+
+    public void menuHidden() {
+        popupMenu = null;
+        Logger.getLogger("Frankenstein").info("Menu Hidden");
+    }
+
 }

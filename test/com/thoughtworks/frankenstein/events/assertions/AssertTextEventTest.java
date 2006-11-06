@@ -1,7 +1,10 @@
-package com.thoughtworks.frankenstein.events;
+package com.thoughtworks.frankenstein.events.assertions;
 
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.AbstractEventTestCase;
+import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 import javax.swing.*;
 

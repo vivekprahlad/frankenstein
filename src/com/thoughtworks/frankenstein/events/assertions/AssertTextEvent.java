@@ -1,4 +1,4 @@
-package com.thoughtworks.frankenstein.events;
+package com.thoughtworks.frankenstein.events.assertions;
 
 import java.awt.*;
 import javax.swing.*;
@@ -6,6 +6,7 @@ import javax.swing.*;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import com.thoughtworks.frankenstein.events.AbstractFrankensteinEvent;
 
 /**
  * Assert text event

@@ -13,6 +13,7 @@ import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.recorders.DefaultComponentVisibility;
 import com.thoughtworks.frankenstein.recorders.Recorder;
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
@@ -65,6 +66,15 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
         mockRecorder.expects(once()).method("setEventList").with(eq(eventList()));
         compositeRecorder.load(new FileReader(file));
         file.delete();
+    }
+
+    public void testRemoveScriptListener() {
+        ScriptListener listener = new ScriptListener() {
+            public void scriptCompleted(boolean passed) {
+            }
+        };
+        mockRecorder.expects(once()).method("removeScriptListener").with(same(listener));
+        compositeRecorder.removeScriptListener(listener);
     }
 
     private List eventList() {

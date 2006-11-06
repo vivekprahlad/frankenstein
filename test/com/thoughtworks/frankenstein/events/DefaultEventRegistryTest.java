@@ -7,6 +7,7 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
 
 /**
  * Ensures behaviour of the default event registry

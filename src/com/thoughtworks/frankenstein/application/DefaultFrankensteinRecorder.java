@@ -48,6 +48,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(MenuNavigationRecorder.class);
         registerRecorder(RadiobuttonRecorder.class);
         registerRecorder(SelectDropDownRecorder.class);
+        registerRecorder(SelectTableRecorder.class);
         registerRecorder(SelectTreeRecorder.class);
         registerRecorder(TableEditRecorder.class);
         registerRecorder(TabSwitchRecorder.class);

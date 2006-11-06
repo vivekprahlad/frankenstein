@@ -34,6 +34,8 @@ public class NavigateEventTest extends MockObjectTestCase {
         WindowContext context = (WindowContext) mockContext.proxy();
         JMenuItem item = new JMenuItem("thirdlevel");
         item.addActionListener((ActionListener) mockActionListener.proxy());
+        mockContext.expects(once()).method("addWindowContextListener");
+        mockContext.expects(once()).method("removeWindowContextListener");
         mockComponentFinder.expects(once()).method("findMenuItem").with(same(context), eq("toplevel>nextlevel>thirdlevel")).will(returnValue(item));
         expectActionPerformed(mockActionListener);
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);

@@ -1,10 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
-import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-import com.thoughtworks.frankenstein.events.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**

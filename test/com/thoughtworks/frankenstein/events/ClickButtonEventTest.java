@@ -54,8 +54,8 @@ public class ClickButtonEventTest extends AbstractEventTestCase {
         Mock mockActionListener = mock(ActionListener.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
-        mockContext.expects(once()).method("addWindowContextListener").with(same(event));
-        mockContext.expects(once()).method("removeWindowContextListener").with(same(event));
+        mockContext.expects(once()).method("addWindowContextListener");
+        mockContext.expects(once()).method("removeWindowContextListener");
         button.addActionListener((ActionListener) mockActionListener.proxy());
         mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.buttonName")).will(returnValue(button));
         mockActionListener.expects(once()).method("actionPerformed");

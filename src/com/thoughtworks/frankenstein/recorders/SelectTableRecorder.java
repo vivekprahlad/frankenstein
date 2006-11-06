@@ -66,9 +66,9 @@ public class SelectTableRecorder extends AbstractComponentRecorder implements Li
 
     public void columnSelectionChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting()) return;
-        JTable table = (JTable) e.getSource();
-        table.getSelectedRows();
-        table.getCellSelectionEnabled();
+//        JTable table = (JTable) e.getSource();
+//        table.getSelectedRows();
+//        table.getCellSelectionEnabled();
     }
 
     public void propertyChange(PropertyChangeEvent evt) {

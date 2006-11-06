@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.events.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**

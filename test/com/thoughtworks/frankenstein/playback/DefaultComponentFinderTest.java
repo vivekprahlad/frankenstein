@@ -71,7 +71,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         }
     }
 
-    public void testFindMenuItem() {
+    public void testFindsMenuItemFromMenuBars() {
         JFrame frame = new JFrame("testFrame");
         frame.getContentPane().add(createMenuBar());
         frame.setVisible(true);
@@ -80,7 +80,43 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         frame.dispose();
     }
 
-    public void testFailsIfTopLevelMenuNotFound() {
+    public void testFindsPopupMenuItems() {
+        JPopupMenu menu = new JPopupMenu("Test");
+        menu.add(createMenu("Top"));
+        finder.menuDisplayed(menu);
+        assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
+    }
+
+    public void testThrowsExceptionIfPopupMenuIsNotFound() {
+        JPopupMenu menu = new JPopupMenu("Test");
+        menu.add(createMenu("Top"));
+        finder.menuDisplayed(menu);
+        try {
+            finder.findMenuItem(null, "Bogus>Next>Third");
+            fail("Should have thrown an exception");
+        } catch (Exception e) {
+            //Expected
+        }
+    }
+
+    public void testFindsMenuItemFromFramesAfterPopupIsHidden() {
+        JPopupMenu menu = new JPopupMenu("Test");
+        menu.add(createMenu("TopPopup"));
+        finder.menuDisplayed(menu);
+        finder.menuHidden();
+        JFrame frame = new JFrame("testFrame");
+        frame.getContentPane().add(createMenuBar());
+        frame.setVisible(true);
+        assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
+    public void testNotifiesWhenMenuItemIsDisplayed() {
+        fail("Implement this test");
+    }
+
+    public void testFailsIfTopLevelMenuIsNotFound() {
         try {
             finder.findMenuItem(null, "abc>wrong");
             fail();
@@ -88,7 +124,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         }
     }
 
-    public void testFailsIfMenuItemNotFound() {
+    public void testFailsIfMenuItemIsNotFound() {
         try {
             finder.findMenuItem(null, "Top>Next>Wrong");
             fail();
@@ -96,7 +132,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         }
     }
 
-    public void testFaislIfNonExistedMenuPathSupplied() {
+    public void testFaislIfNonExistedMenuPathIsSupplied() {
         try {
             finder.findMenuItem(null, "path>doesnt>exist");
             fail();
@@ -133,12 +169,17 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     private JMenuBar createMenuBar() {
         JMenuBar menubar = new JMenuBar();
-        JMenu menu = new JMenu("Top");
+        JMenu menu = createMenu("Top");
+        menubar.add(menu);
+        return menubar;
+    }
+
+    private JMenu createMenu(String top) {
+        JMenu menu = new JMenu(top);
         JMenu nextMenu = new JMenu("Next");
         menuItem = new JMenuItem("Third");
         nextMenu.add(menuItem);
         menu.add(nextMenu);
-        menubar.add(menu);
-        return menubar;
+        return menu;
     }
 }

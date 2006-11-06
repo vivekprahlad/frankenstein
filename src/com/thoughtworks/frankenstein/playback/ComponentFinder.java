@@ -19,4 +19,8 @@ public interface ComponentFinder {
     JInternalFrame findInternalFrame(WindowContext windowContext, String title);
 
     JFileChooser findFileChooser(WindowContext context);
+
+    void menuDisplayed(JPopupMenu jPopupMenu);
+
+    void menuHidden();
 }
