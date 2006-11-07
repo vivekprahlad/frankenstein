@@ -45,6 +45,15 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         assertEquals(event, recorder.eventList().get(1));
     }
 
+    public void testDoesNotCoalesceButtonClicks() {
+        FrankensteinEvent event = new ClickButtonEvent("button");
+        recorder.record(event);
+        recorder.record(event);
+        assertEquals(2, recorder.eventList().size());
+        assertEquals(event, recorder.eventList().get(0));
+        assertEquals(event, recorder.eventList().get(1));
+    }
+
     public void testStopTableCellEditEventAfterCancelEventRemovesCancel() {
         recorder.record(new CancelTableEditEvent("tableName"));
         recorder.record(new StopTableEditEvent("tableName"));

@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.WindowContextListener;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -19,6 +20,10 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
     public ClickButtonEvent(String buttonName) {
         this.buttonName = buttonName;
         this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+    }
+
+    public void record(EventList list, FrankensteinEvent lastEvent) {
+        list.addEvent(this);
     }
 
     public String toString() {
