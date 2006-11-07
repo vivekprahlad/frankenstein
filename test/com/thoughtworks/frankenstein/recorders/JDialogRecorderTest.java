@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.DialogShownEvent;
@@ -29,6 +30,6 @@ public class JDialogRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsDialogClosedEventWhenDialogIsHidden() {
         mockRecorder.expects(once()).method("record").with(eq(new DialogClosedEvent("title")));
-        recorder.componentHidden(new JDialog(new JFrame(), "title"));
+        recorder.windowClosed(new WindowEvent(new JDialog(new JFrame(), "title"), WindowEvent.WINDOW_CLOSED));
     }
 }

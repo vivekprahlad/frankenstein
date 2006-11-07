@@ -210,7 +210,6 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         recorder.record(new ActivateWindowEvent("title"));
         Mock listener = mock(ScriptListener.class);
         recorder.addScriptListener((ScriptListener) listener.proxy());
-        recorder.addScriptListener((ScriptListener) listener.proxy());
         listener.expects(once()).method("scriptCompleted");
         recorder.run();
     }

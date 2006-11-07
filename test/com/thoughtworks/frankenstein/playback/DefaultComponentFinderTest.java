@@ -99,23 +99,6 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         }
     }
 
-    public void testFindsMenuItemFromFramesAfterPopupIsHidden() {
-        JPopupMenu menu = new JPopupMenu("Test");
-        menu.add(createMenu("TopPopup"));
-        finder.menuDisplayed(menu);
-        finder.menuHidden();
-        JFrame frame = new JFrame("testFrame");
-        frame.getContentPane().add(createMenuBar());
-        frame.setVisible(true);
-        assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
-        frame.setVisible(false);
-        frame.dispose();
-    }
-
-    public void testNotifiesWhenMenuItemIsDisplayed() {
-        fail("Implement this test");
-    }
-
     public void testFailsIfTopLevelMenuIsNotFound() {
         try {
             finder.findMenuItem(null, "abc>wrong");
