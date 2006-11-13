@@ -10,6 +10,8 @@ import java.io.File;
  */
 public class FileChooserRecorderTest extends AbstractRecorderTestCase {
 
+    static final String file="com"+File.separator+"thoughtworks"+File.separator+"frankenstein"+File.separator+"recorders"+File.separator+"FileChooserRecorderTest.java" ;
+
     public void testAddsPropertyChangeListenerWhenComponentIsShown() {
         FileChooserRecorder recorder = new FileChooserRecorder((EventRecorder) mockRecorder.proxy(), null);
         JFileChooser chooser = new JFileChooser(".");
@@ -34,8 +36,8 @@ public class FileChooserRecorderTest extends AbstractRecorderTestCase {
         recorder.componentShown(chooser);
         mockRecorder.expects(once())
                 .method("record")
-                .with(eq(new SelectFileEvent("com/thoughtworks/frankenstein/recorders/FileChooserRecorderTest.java")));
-        chooser.setSelectedFile(new File("com/thoughtworks/frankenstein/recorders/FileChooserRecorderTest.java"));
+                .with(eq(new SelectFileEvent(file )));
+        chooser.setSelectedFile(new File(file ));
         recorder.componentHidden(chooser);
     }
 

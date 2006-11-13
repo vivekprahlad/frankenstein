@@ -121,6 +121,11 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new AssertTextEvent("textField", "text"), defaultEventRegistry.createEvent("AssertText \"textField\" \"text\""));
     }
 
+    public void testCreatesAssertTableRowsEvent() {
+           defaultEventRegistry.registerEvent(AssertTableRowsEvent.class);
+           assertEquals(new AssertTableRowsEvent("table", 1), defaultEventRegistry.createEvent("AssertTableRows \"table\" \"1\""));
+    }
+
     public void testCreatesStartTestEvent() {
         defaultEventRegistry.registerEvent(StartTestEvent.class);
         assertEquals(new StartTestEvent("testName"), defaultEventRegistry.createEvent("StartTest \"testName\""));

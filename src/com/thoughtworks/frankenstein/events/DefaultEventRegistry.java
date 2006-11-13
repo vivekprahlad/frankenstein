@@ -20,6 +20,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(AssertTextEvent.class);
         registerEvent(AssertEnabledEvent.class);
         registerEvent(CancelTableEditEvent.class);
+        registerEvent(AssertTableRowsEvent.class);
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);
         registerEvent(ClickRadioButtonEvent.class);

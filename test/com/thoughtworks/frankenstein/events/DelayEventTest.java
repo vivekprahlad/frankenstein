@@ -14,28 +14,32 @@ public class DelayEventTest extends AbstractEventTestCase {
     }
 
     public void testToString() {
-
+        assertEquals("DelayEvent: 10", new DelayEvent("10").toString() );
     }
 
     public void testAction() {
+        assertEquals("Delay", new DelayEvent("10").action());
     }
 
     public void testTarget() {
+        assertEquals("10", new DelayEvent("10").target());
     }
 
     public void testParameters() {
+        assertEquals("", new DelayEvent("10").parameters());
     }
 
     public void testScriptLine() {
+        assertEquals("delay \"10\"", new DelayEvent("10").scriptLine());
     }
 
     public void testPlay() throws Exception {
         long currentTime = System.currentTimeMillis();
-        new DelayEvent("100").play(null, null, null, null);
+        new DelayEvent("300").play(null, null, null, null);
         long executionTime = System.currentTimeMillis() - currentTime;
-        assertTrue(executionTime > 100);
-        assertTrue(executionTime < 110);
-    }
+        assertTrue(executionTime > 250);
+        assertTrue(executionTime < 350);
+   }
 
     protected FrankensteinEvent createEvent() {
         return new DelayEvent("100");

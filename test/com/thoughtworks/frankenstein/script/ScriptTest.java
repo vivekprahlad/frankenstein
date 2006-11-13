@@ -29,7 +29,8 @@ public class ScriptTest extends TestCase {
     "select_list \"list\" , \"text a\"\n" +
     "stop_table_edit \"table\"\n" +
     "switch_tab \"tab\" , \"text a\"\n" +
-    "activate_window \"text a\"";
+    "activate_window \"text a\"\n"+
+    "assert_table_rows \"table\" , \"1\"";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
@@ -49,6 +50,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
+        eventList.add(new AssertTableRowsEvent("table",1));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -56,7 +58,7 @@ public class ScriptTest extends TestCase {
     public void testCreatesEventListFromScript() throws IOException {
         Script script = new Script(new DefaultEventRegistry());
         List eventList = script.parse(new StringReader(SCRIPT));
-        assertEquals(16, eventList.size());
+        assertEquals(17, eventList.size());
         assertEquals(new CancelTableEditEvent("tableName"), eventList.get(0));
         assertEquals(new ClickButtonEvent("click button"), eventList.get(1));
         assertEquals(new ClickCheckboxEvent("check Box", true), eventList.get(2));
@@ -73,5 +75,6 @@ public class ScriptTest extends TestCase {
         assertEquals(new StopTableEditEvent("table"), eventList.get(13));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(14));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(15));
+        assertEquals(new AssertTableRowsEvent("table",1),eventList.get(16));
     }
 }

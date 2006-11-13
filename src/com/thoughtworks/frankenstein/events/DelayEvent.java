@@ -14,6 +14,10 @@ public class DelayEvent extends AbstractFrankensteinEvent {
         eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
+    public String toString() {
+        return "DelayEvent: " + duration;
+    }
+
     public String target() {
         return String.valueOf(duration);
     }

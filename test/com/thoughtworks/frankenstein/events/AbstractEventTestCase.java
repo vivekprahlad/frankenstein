@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import org.jmock.MockObjectTestCase;
 
 import java.beans.PropertyVetoException;
+import java.io.File;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 
@@ -53,5 +54,9 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
 
     protected void waitForIdle() {
         new WaitForIdle().waitForIdle();
+    }
+
+    protected String file(String s) {
+          return s.replaceAll("/", (File.separator=="/")?File.separator:("\\"+File.separator));
     }
 }

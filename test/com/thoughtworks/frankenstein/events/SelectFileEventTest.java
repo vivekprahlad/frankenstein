@@ -6,27 +6,30 @@ import javax.swing.*;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
+import java.io.File;
+
 /**
  * Ensures behaviour of SelectFileEvent
  */
 public class SelectFileEventTest extends AbstractEventTestCase {
-    public void testEqualsAndHashCode() {
-        SelectFileEvent one = new SelectFileEvent("/home/test/file");
-        SelectFileEvent two = new SelectFileEvent("/home/test/file");
+
+      public void testEqualsAndHashCode() {
+        SelectFileEvent one = new SelectFileEvent(file("/home/test/file"));
+        SelectFileEvent two = new SelectFileEvent(file("/home/test/file"));
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
 
     public void testToString() {
-        assertEquals("SelectFileEvent: /home/test/file", new SelectFileEvent("/home/test/file").toString());
+        assertEquals("SelectFileEvent:"+file(" /home/test/file"), new SelectFileEvent(file("/home/test/file")).toString());
     }
 
     public void testAction() {
-        assertEquals("SelectFile", new SelectFileEvent("/home/test/file").action());
+        assertEquals("SelectFile", new SelectFileEvent(file("/home/test/file")).action());
     }
 
     public void testTarget() {
-        assertEquals("/home/test/file", new SelectFileEvent("/home/test/file").target());
+        assertEquals(file("/home/test/file"), new SelectFileEvent(file("/home/test/file")).target());
     }
 
     public void testParameters() {
@@ -34,23 +37,23 @@ public class SelectFileEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_file \"/home/test/file\"", new SelectFileEvent("/home/test/file").scriptLine());
+        assertEquals("select_file \""+file("/home/test/file")+"\"", new SelectFileEvent(file("/home/test/file")).scriptLine());
     }
 
     public void testDoesNotReplaceSInScriptLine() {
-        assertEquals("select_file \"/home/sabc/file\"", new SelectFileEvent("/home/sabc/file").scriptLine());
+        assertEquals("select_file \"" + file("/home/sabc/file") + "\"", new SelectFileEvent(file("/home/sabc/file")).scriptLine());
     }
 
     public void testPlay() throws Exception {
         JFileChooser chooser = new JFileChooser(".");
         Mock mockFinder = mock(ComponentFinder.class);
         mockFinder.expects(once()).method("findFileChooser").will(returnValue(chooser));
-        new SelectFileEvent("com/thoughtworks/frankenstein/events/SelectFileEvent.java").play(null,
+        new SelectFileEvent(file("com/thoughtworks/frankenstein/events/SelectFileEvent.java")).play(null,
                 (ComponentFinder) mockFinder.proxy(), null, null);
-        assertEquals("com/thoughtworks/frankenstein/events/SelectFileEvent.java", chooser.getSelectedFile().getPath());
+        assertEquals(file("com/thoughtworks/frankenstein/events/SelectFileEvent.java"), chooser.getSelectedFile().getPath());
     }
 
     protected FrankensteinEvent createEvent() {
-        return new SelectFileEvent("com/thoughtworks/frankenstein/events/SelectFileEvent.java");
+        return new SelectFileEvent(file("com/thoughtworks/frankenstein/events/SelectFileEvent.java"));
     }
 }
