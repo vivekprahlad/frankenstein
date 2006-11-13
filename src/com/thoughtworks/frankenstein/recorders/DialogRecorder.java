@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.recorders;
 import java.awt.*;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.AWTEventListener;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.DialogShownEvent;
@@ -13,27 +14,15 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * Understands recording dialog.
  * @author Vivek Prahlad
  */
-public class DialogRecorder extends AbstractComponentRecorder implements WindowListener {
+public class DialogRecorder implements ComponentRecorder, WindowListener, AWTEventListener {
+    private EventRecorder recorder;
 
-    public DialogRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
-        super(recorder, namingStrategy, JDialog.class);
-    }
-
-    void componentShown(Component component) {
-        JDialog dialog = dialog(component);
-        recorder.record(new DialogShownEvent(title(dialog)));
-        dialog.addWindowListener(this);
+    public DialogRecorder(EventRecorder recorder) {
+        this.recorder = recorder;
     }
 
     private String title(JDialog dialog) {
         return dialog.getTitle() == null ? "" : dialog.getTitle();
-    }
-
-    private JDialog dialog(Component component) {
-        return (JDialog) component;
-    }
-
-    void componentHidden(Component component) {
     }
 
     public void windowOpened(WindowEvent e) {
@@ -58,5 +47,24 @@ public class DialogRecorder extends AbstractComponentRecorder implements WindowL
     }
 
     public void windowDeactivated(WindowEvent e) {
+    }
+
+    public void register() {
+        Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.WINDOW_EVENT_MASK);
+    }
+
+    public void unregister() {
+        Toolkit.getDefaultToolkit().removeAWTEventListener(this);
+    }
+
+    private void dialogShown(JDialog dialog) {
+        recorder.record(new DialogShownEvent(title(dialog)));
+        dialog.addWindowListener(this);
+    }
+
+    public void eventDispatched(AWTEvent event) {
+        if (WindowEvent.WINDOW_OPENED == event.getID() && event.getSource() instanceof JDialog) {
+            dialogShown((JDialog) event.getSource());
+        }
     }
 }
