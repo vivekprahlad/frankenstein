@@ -52,11 +52,7 @@ public class DefaultComponentFinder implements ComponentFinder {
     public synchronized JMenuItem findMenuItem(WindowContext context, String path) {
         String[] pathElements = path.split(">");
         if (popupMenu != null) {
-            JMenuItem menuItem = findTopLevelMenu(pathElements[0]);
-            for (int j = 1; j < pathElements.length; j++) {
-                menuItem = findMenu((JMenu) menuItem, pathElements[j]);
-            }
-            return menuItem;
+            return findPopupMenu(pathElements);
         } else {
             Frame[] frames = Frame.getFrames();
             for (int i = 0; i < frames.length; i++) {
@@ -72,6 +68,15 @@ public class DefaultComponentFinder implements ComponentFinder {
             }
         }
         throw new RuntimeException("Unable to find menu with path: " + path);
+    }
+
+    private JMenuItem findPopupMenu(String[] pathElements) {
+        JMenuItem menuItem = findTopLevelMenu(pathElements[0]);
+        for (int j = 1; j < pathElements.length; j++) {
+            menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+        }
+        popupMenu = null;
+        return menuItem;
     }
 
     private JMenuItem findTopLevelMenu(String pathElement) {

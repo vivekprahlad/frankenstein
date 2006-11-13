@@ -77,6 +77,10 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
         compositeRecorder.removeScriptListener(listener);
     }
 
+    public void testCheckIfAllRecordersAreRegistered() {
+        assertEquals(17,compositeRecorder.recorders.size());
+    }
+
     private List eventList() {
         List eventList = new ArrayList();
         eventList.add(new ActivateWindowEvent("title"));

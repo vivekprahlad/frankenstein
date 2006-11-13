@@ -18,7 +18,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * @author Vivek Prahlad
  */
 public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
-    private List recorders = new ArrayList();
+    protected List recorders = new ArrayList();
     private DefaultEventRegistry registry = new DefaultEventRegistry();
     private Script script = new Script(registry);
     private DefaultPicoContainer container = new DefaultPicoContainer();

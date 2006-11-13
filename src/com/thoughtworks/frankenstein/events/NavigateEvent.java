@@ -31,6 +31,7 @@ public class NavigateEvent extends AbstractFrankensteinEvent {
         final JMenuItem menuItem = finder.findMenuItem(context, path);
         if (menuItem.isEnabled()) {
             new ClickButtonAction().execute(menuItem, context);
+            MenuSelectionManager.defaultManager().clearSelectedPath();
         } else {
             throw new RuntimeException("Menu item: "+ path + " is disabled");
         }

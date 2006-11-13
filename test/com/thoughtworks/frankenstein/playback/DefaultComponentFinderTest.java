@@ -87,6 +87,20 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
     }
 
+    public void testClearsPopupMenuOnceFound() {
+        //This is a temporary hack until we find a better way to clear the popup menu
+        JPopupMenu menu = new JPopupMenu("Test");
+        menu.add(createMenu("Top"));
+        finder.menuDisplayed(menu);
+        assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
+        try {
+            finder.findMenuItem(null, "Top>Next>Third");
+            fail("Should not have been able to find the menu item again");
+        } catch (Exception e) {
+            //Expected.
+        }
+    }
+
     public void testThrowsExceptionIfPopupMenuIsNotFound() {
         JPopupMenu menu = new JPopupMenu("Test");
         menu.add(createMenu("Top"));

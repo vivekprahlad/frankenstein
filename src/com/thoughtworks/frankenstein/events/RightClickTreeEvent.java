@@ -43,7 +43,6 @@ public class RightClickTreeEvent extends AbstractFrankensteinEvent implements AW
     public synchronized void run() {
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.HIERARCHY_EVENT_MASK);
         JTree tree = (JTree) finder.findComponent(context, treeName);
-        new SelectTreeEvent(treeName, path).play(context, finder, scriptContext, robot);
         rightClick(nodeLocation(tree), tree);
         try {
             wait(10000);
@@ -61,11 +60,11 @@ public class RightClickTreeEvent extends AbstractFrankensteinEvent implements AW
     }
 
     private Point nodeLocation(JTree tree) {
-        Point treeLocation = tree.getLocationOnScreen();
+        Point treeLocation = tree.getLocation();
         Rectangle pathBounds = tree.getPathBounds(tree.getSelectionPath());
-        Point nodeLocation = new Point(pathBounds.x + pathBounds.width/2, pathBounds.y +pathBounds.height/2);
-        nodeLocation.translate(treeLocation.x, treeLocation.y);
-        return nodeLocation;
+        Point nodeLocation = new Point(pathBounds.x + pathBounds.width/2, pathBounds.y + pathBounds.height/2);
+        treeLocation.translate(nodeLocation.x, nodeLocation.y);
+        return treeLocation;
     }
 
     public synchronized void eventDispatched(AWTEvent event) {
@@ -75,8 +74,6 @@ public class RightClickTreeEvent extends AbstractFrankensteinEvent implements AW
                 Component component = (Component) event.getSource();
                 if (component.isDisplayable()) {
                     finder.menuDisplayed((JPopupMenu) component);
-                } else {
-                    finder.menuHidden();
                 }
                 notifyAll();
             }
