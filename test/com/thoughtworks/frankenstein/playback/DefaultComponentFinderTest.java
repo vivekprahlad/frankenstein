@@ -82,17 +82,22 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     public void testFindsMenuItemsInMenusWithSeparators() {
         JFrame frame = new JFrame("testFrame");
+        JMenuBar menubar = createMenubarWithSeparatorAndMenuItem();
+        frame.getContentPane().add(menubar);
+        frame.setVisible(true);
+        assertSame(this.menuItem, finder.findMenuItem(null, "One>Two"));
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
+    private JMenuBar createMenubarWithSeparatorAndMenuItem() {
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("One");
         menu.addSeparator();
         menuItem = new JMenuItem("Two");
         menu.add(menuItem);
         menubar.add(menu);
-        frame.getContentPane().add(menubar);
-        frame.setVisible(true);
-        assertSame(this.menuItem, finder.findMenuItem(null, "One>Two"));
-        frame.setVisible(false);
-        frame.dispose();
+        return menubar;
     }
 
     public void testFindsNestedMenuItemsInMenusWithSeparators() {
