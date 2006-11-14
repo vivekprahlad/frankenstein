@@ -80,6 +80,44 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         frame.dispose();
     }
 
+    public void testFindsMenuItemsInMenusWithSeparators() {
+        JFrame frame = new JFrame("testFrame");
+        JMenuBar menubar = new JMenuBar();
+        JMenu menu = new JMenu("One");
+        menu.addSeparator();
+        menuItem = new JMenuItem("Two");
+        menu.add(menuItem);
+        menubar.add(menu);
+        frame.getContentPane().add(menubar);
+        frame.setVisible(true);
+        assertSame(this.menuItem, finder.findMenuItem(null, "One>Two"));
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
+    public void testFindsNestedMenuItemsInMenusWithSeparators() {
+        JFrame frame = new JFrame("testFrame");
+        JMenuBar menubar = createMenuBarWithNestedMenuItems();
+        frame.getContentPane().add(menubar);
+        frame.setVisible(true);
+        assertSame(this.menuItem, finder.findMenuItem(null, "One>Two>Three"));
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
+    private JMenuBar createMenuBarWithNestedMenuItems() {
+        JMenuBar menubar = new JMenuBar();
+        JMenu one = new JMenu("One");
+        one.addSeparator();
+        JMenu two = new JMenu("Two");
+        two.addSeparator();
+        menuItem = new JMenuItem("Three");
+        one.add(two);
+        two.add(menuItem);
+        menubar.add(one);
+        return menubar;
+    }
+
     public void testFindsPopupMenuItems() {
         JPopupMenu menu = new JPopupMenu("Test");
         menu.add(createMenu("Top"));

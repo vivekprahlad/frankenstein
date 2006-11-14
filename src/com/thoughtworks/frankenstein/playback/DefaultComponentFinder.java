@@ -105,8 +105,10 @@ public class DefaultComponentFinder implements ComponentFinder {
 
     private JMenuItem findMenu(JMenu menuItem, String pathElement) {
         for (int i = 0; i < menuItem.getMenuComponentCount(); i++) {
-            JMenuItem jmenuItem = (JMenuItem) menuItem.getMenuComponent(i);
-            if (jmenuItem.getText().equals(pathElement)) return jmenuItem;
+            if (menuItem.getMenuComponent(i) instanceof JMenuItem) {
+                JMenuItem jmenuItem = (JMenuItem) menuItem.getMenuComponent(i);
+                if (jmenuItem.getText().equals(pathElement)) return jmenuItem;
+            }
         }
         throw new RuntimeException("Unable to find menu" + pathElement);
     }

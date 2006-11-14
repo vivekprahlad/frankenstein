@@ -76,7 +76,7 @@ module FrankensteinDriver
     append_to_script "internal_frame_shown \"#{title}\""
   end
   
-  def keystroke(modifiers, keycode)
+  def key_stroke(modifiers, keycode)
     append_to_script "key_stroke \"#{modifiers},#{keycode}\""
   end
   
@@ -84,7 +84,11 @@ module FrankensteinDriver
     append_to_script "navigate \"#{path}\""
   end
 
-  def select_dropdown(combo, value)
+  def right_click_tree(tree, path)
+    append_to_script "right_click_tree \"#{tree}\" \"#{path}\""
+  end
+
+  def select_drop_down(combo, value)
     append_to_script "select_drop_down \"#{combo}\" \"#{value}\""
   end
 
