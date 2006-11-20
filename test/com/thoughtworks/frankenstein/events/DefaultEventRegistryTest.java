@@ -136,6 +136,10 @@ public class DefaultEventRegistryTest extends TestCase {
         defaultEventRegistry.registerEvent(DelayEvent.class);
         assertEquals(new DelayEvent("10"), defaultEventRegistry.createEvent("Delay \"10\""));
     }
+    public void testCreateDoubleClickListEvent() {
+        defaultEventRegistry.registerEvent(DoubleClickListEvent.class);
+        assertEquals(new DoubleClickListEvent("listone",0), defaultEventRegistry.createEvent("DoubleClickList \"listone\" 0"));
+    }
 
     public void testThrowsExceptionIfCreatingEventFails() {
         defaultEventRegistry.registerEvent(ExceptionThrowingEvent.class);

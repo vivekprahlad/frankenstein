@@ -5,6 +5,7 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.HierarchyEvent;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
+import com.thoughtworks.frankenstein.common.ComponentName;
 
 /**
  * Base class for all component event recorders

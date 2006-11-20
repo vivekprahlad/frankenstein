@@ -30,6 +30,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(DelayEvent.class);
         registerEvent(DialogClosedEvent.class);
         registerEvent(DialogShownEvent.class);
+        registerEvent(DoubleClickListEvent.class);
         registerEvent(EditTableCellEvent.class);
         registerEvent(EnterTextEvent.class);
         registerEvent(InternalFrameShownEvent.class);

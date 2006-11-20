@@ -135,7 +135,7 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTabbedPane_1", parent.getName());
     }
 
-    public void testNamesOptionpaneButtons() {
+    public void testNamesOptionpaneButtons() {                              
         JPanel container = new JPanel();
         JButton optionPaneButton = new JButton("Yes");
         optionPaneButton.setName("OptionPane.button");
@@ -144,4 +144,52 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("Yes", optionPaneButton.getName());
     }
 
+    public void testDoesNotNameSpinnerWhenAlreadyNamed() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSpinner first = new JSpinner();
+        first.setName("one");
+        panel.add(first);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("one", first.getName());
+    }
+
+    public void testNamesSpinnersWhenNotNamed() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSpinner first = new JSpinner();
+        panel.add(first);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JSpinner_1", first.getName());
+    }
+
+    public void testNamesTextFieldsInSpinner() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSpinner spinner = new JSpinner();
+        panel.add(spinner);
+        namingStrategy.nameComponentsIn(panel);
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) spinner.getEditor();
+        assertEquals("JSpinner_1.JFormattedTextField_1", editor.getTextField().getName());
+    }
+
+    public void testNamesTextFieldsInTwoSpinnersDifferently() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSpinner firstSpinner = new JSpinner();
+        JSpinner secondSpinner = new JSpinner();
+        panel.add(firstSpinner);
+        panel.add(secondSpinner);
+        namingStrategy.nameComponentsIn(panel);
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) firstSpinner.getEditor();
+        assertEquals("JSpinner_1.JFormattedTextField_1", editor.getTextField().getName());
+        editor = (JSpinner.DefaultEditor) secondSpinner.getEditor();
+        assertEquals("JSpinner_2.JFormattedTextField_1", editor.getTextField().getName());
+    }
+
+    public void testNamesArbitrarySpinnerEditors() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSpinner spinner = new JSpinner();
+        spinner.setEditor(new JTextField());
+        panel.add(spinner);
+        namingStrategy.nameComponentsIn(panel);
+        JTextField field = (JTextField) spinner.getEditor();
+        assertEquals("JSpinner_1.JTextField_1", field.getName());
+    }
 }

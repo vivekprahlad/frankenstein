@@ -13,17 +13,7 @@ import javax.swing.*;
 public class DefaultNamingStrategy implements NamingStrategy {
 
     public void nameComponentsIn(Container panel) {
-        nameComponentOfType(JTextField.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JTextArea.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JRadioButton.class, panel, new ButtonNamingStrategy());
-        nameComponentOfType(JCheckBox.class, panel, new ButtonNamingStrategy());
-        nameComponentOfType(JToggleButton.class, panel, new ButtonNamingStrategy());
-        nameComponentOfType(JButton.class, panel, new ButtonNamingStrategy());
-        nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JComboBox.class, panel, new CounterBasedNamingStrategy());
-        nameComponentOfType(JTable.class, panel, new CounterBasedNamingStrategy());
-        new SmartCounterNamingStrategy(panel, JTabbedPane.class, this).name();
-        nameComponentOfType(JTree.class, panel, new CounterBasedNamingStrategy());
+        nameComponentsIn("", panel);
     }
 
     private void nameComponentOfType(Class componentType, Container panel, ComponentNamingStrategy strategy) {
@@ -42,6 +32,21 @@ public class DefaultNamingStrategy implements NamingStrategy {
         for (Iterator iterator = components.iterator(); iterator.hasNext();) {
             strategy.name((Component) iterator.next());
         }
+    }
+
+    public void nameComponentsIn(String prefix, Container panel) {
+        nameComponentOfType(JSpinner.class, panel, new SpinnerNamingStrategy(prefix, this));
+        nameComponentOfType(JTextField.class, panel, new CounterBasedNamingStrategy(prefix));
+        nameComponentOfType(JTextArea.class, panel, new CounterBasedNamingStrategy(prefix));
+        nameComponentOfType(JRadioButton.class, panel, new ButtonNamingStrategy(prefix));
+        nameComponentOfType(JCheckBox.class, panel, new ButtonNamingStrategy(prefix));
+        nameComponentOfType(JToggleButton.class, panel, new ButtonNamingStrategy(prefix));
+        nameComponentOfType(JButton.class, panel, new ButtonNamingStrategy(prefix));
+        nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy(prefix));
+        nameComponentOfType(JComboBox.class, panel, new CounterBasedNamingStrategy(prefix));
+        nameComponentOfType(JTable.class, panel, new CounterBasedNamingStrategy(prefix));
+        new SmartCounterNamingStrategy(prefix, panel, JTabbedPane.class, this).name();
+        nameComponentOfType(JTree.class, panel, new CounterBasedNamingStrategy(prefix));
     }
 
 }

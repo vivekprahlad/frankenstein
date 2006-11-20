@@ -32,7 +32,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
         }
     }
 
-    private boolean isSameTargetAs(FrankensteinEvent lastEvent) {
+    protected boolean isSameTargetAs(FrankensteinEvent lastEvent) {
         return action().equals(lastEvent.action()) && target().equals(lastEvent.target());
     }
 

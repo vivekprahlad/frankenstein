@@ -52,6 +52,10 @@ module FrankensteinDriver
     append_to_script "click_radio_button \"#{button}\""
   end
 
+  def double_click_list(list,item_index)
+       append_to_script "double_click_list \"#{list}\" \"#{item_index}\""
+  end
+
   def close_internal_frame(title)
     append_to_script "close_internal_frame \"#{title}\""
   end

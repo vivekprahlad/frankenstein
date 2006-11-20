@@ -1,5 +1,6 @@
 package com.thoughtworks.frankenstein.naming;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
@@ -11,4 +12,6 @@ public interface NamingStrategy {
     void nameComponentsIn(Container panel);
 
     void nameComponentsIn(java.util.List components, ComponentNamingStrategy strategy);
+
+    void nameComponentsIn(String prefix, Container component);
 }

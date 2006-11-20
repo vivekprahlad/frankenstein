@@ -9,20 +9,29 @@ import javax.swing.border.TitledBorder;
  * @author Vivek Prahlad
  */
 public abstract class AbstractComponentNamingStrategy {
+    private String prefix;
 
-    protected String prefix(JComponent component) {
+    protected AbstractComponentNamingStrategy(String prefix) {
+        this.prefix = prefix;
+    }
+
+    protected String findPrefix(JComponent component) {
         if (component.getParent() == null || !(component.getParent() instanceof JComponent)) return "";
         JComponent parent = (JComponent) component.getParent();
         Border border = parent.getBorder();
         if (border != null && border instanceof TitledBorder) {
             TitledBorder titledBorder = (TitledBorder) border;
-            return prefix(parent, titledBorder).replaceAll("\\s", "");
+            return findPrefix(parent, titledBorder).replaceAll("\\s", "");
         } else {
-            return prefix(parent).replaceAll("\\s", "");
+            return findPrefix(parent).replaceAll("\\s", "");
         }
     }
 
-    private String prefix(JComponent parent, TitledBorder titledBorder) {
+    protected String prefix(JComponent component) {
+        return prefix + findPrefix(component);
+    }
+
+    private String findPrefix(JComponent parent, TitledBorder titledBorder) {
         return prefix(parent) + titledBorder.getTitle() + ".";
     }
 

@@ -10,6 +10,10 @@ import javax.swing.*;
 public class CounterBasedNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
     int counter = 1;
 
+    protected CounterBasedNamingStrategy(String prefix) {
+        super(prefix);
+    }
+
     public void name(Component component) {
         component.setName(prefix((JComponent) component) + type(component.getClass()) + "_" + counter++);
     }

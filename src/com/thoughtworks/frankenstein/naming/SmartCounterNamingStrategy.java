@@ -16,7 +16,8 @@ public class SmartCounterNamingStrategy extends AbstractComponentNamingStrategy 
     private NamingStrategy strategy;
     private List matchingComponents;
 
-    public SmartCounterNamingStrategy(Container container, Class componentClass, NamingStrategy strategy) {
+    public SmartCounterNamingStrategy(String prefix, Container container, Class componentClass, NamingStrategy strategy) {
+        super(prefix);
         this.container = container;
         this.componentClass = componentClass;
         this.strategy = strategy;

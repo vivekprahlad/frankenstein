@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
+import com.thoughtworks.frankenstein.common.ComponentName;
 
 /**
  * Base class for all assertion recorders.

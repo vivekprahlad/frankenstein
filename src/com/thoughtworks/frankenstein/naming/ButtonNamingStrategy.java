@@ -9,6 +9,11 @@ import javax.swing.*;
  */
 public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
     private int counter = 1;
+
+    protected ButtonNamingStrategy(String prefix) {
+        super(prefix);
+    }
+
     public void name(Component component) {
         if (!(component instanceof AbstractButton)) throw new IllegalArgumentException("Can only be used to name buttons");
         component.setName(prefix((JComponent) component) + buttonName(component).replaceAll("\\s+", ""));

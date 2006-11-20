@@ -40,6 +40,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(ButtonClickRecorder.class);
         registerRecorder(CheckBoxRecorder.class);
         registerRecorder(CheckTextRecorder.class);
+        registerRecorder(DoubleClickListRecorder.class);
         registerRecorder(DialogRecorder.class);
         registerRecorder(FileChooserRecorder.class);
         registerRecorder(InternalFrameRecorder.class);
@@ -50,6 +51,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(SelectDropDownRecorder.class);
         registerRecorder(SelectTableRecorder.class);
         registerRecorder(SelectTreeRecorder.class);
+        registerRecorder(SpinnerRecorder.class);
         registerRecorder(TableEditRecorder.class);
         registerRecorder(TabSwitchRecorder.class);
         registerRecorder(TextFieldRecorder.class);

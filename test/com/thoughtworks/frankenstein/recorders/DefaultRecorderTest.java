@@ -85,7 +85,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     }
 
     public void testEditTableCellFollowedByCancelTableCellEditRemovesBoth() {
-        recorder.record(new EditTableCellEvent("testTable", 1,1));
+        recorder.record(new EditTableCellEvent("testTable", 1, 1));
         recorder.record(new CancelTableEditEvent("testTable"));
         assertEquals(0, recorder.eventList().size());
     }

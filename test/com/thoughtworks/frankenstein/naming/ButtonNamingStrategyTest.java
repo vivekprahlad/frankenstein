@@ -10,12 +10,12 @@ import javax.swing.*;
 public class ButtonNamingStrategyTest extends TestCase {
 
     public void testSimpleIconName() {
-        assertEquals("Icon", new ButtonNamingStrategy().simpleIconName("jar:/path/to/something/jar!/resources/icons/Icon.gif"));
+        assertEquals("Icon", new ButtonNamingStrategy("").simpleIconName("jar:/path/to/something/jar!/resources/icons/Icon.gif"));
     }
 
     public void testStripsSpacesFromButtonName() {
         JButton button = new JButton("Button Space");
-        new ButtonNamingStrategy().name(button);
+        new ButtonNamingStrategy("").name(button);
         assertEquals("ButtonSpace", button.getName());
     }
 }
