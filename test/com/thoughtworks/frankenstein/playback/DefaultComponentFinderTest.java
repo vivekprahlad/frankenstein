@@ -23,6 +23,10 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         mockWindowContext = mock(WindowContext.class);
     }
 
+    protected void tearDown() throws Exception {
+        finder.menuHidden();
+    }
+
     public void testFindsComponentsByName() throws InterruptedException, InvocationTargetException {
         JPanel panel = new JPanel();
         JTextField textField = createTextField();
@@ -73,11 +77,25 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     public void testFindsMenuItemFromMenuBars() {
         JFrame frame = new JFrame("testFrame");
-        frame.getContentPane().add(createMenuBar());
+        frame.getContentPane().add(createMenuBar("Top"));
         frame.setVisible(true);
         assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
         frame.setVisible(false);
         frame.dispose();
+    }
+
+    public void testFindsMenuItemFromMultipleFrames() {
+        JFrame frameOne = new JFrame("one");
+        frameOne.getContentPane().add(new JMenuBar());
+        frameOne.setVisible(true);
+        JFrame frameTwo = new JFrame("two");
+        frameTwo.getContentPane().add(createMenuBar("SecondWindow"));
+        frameTwo.setVisible(true);
+        assertSame(menuItem, finder.findMenuItem(null, "SecondWindow>Next>Third"));
+        frameOne.setVisible(false);
+        frameOne.dispose();
+        frameTwo.setVisible(false);
+        frameTwo.dispose();
     }
 
     public void testFindsMenuItemsInMenusWithSeparators() {
@@ -133,11 +151,11 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
     public void testClearsPopupMenuOnceFound() {
         //This is a temporary hack until we find a better way to clear the popup menu
         JPopupMenu menu = new JPopupMenu("Test");
-        menu.add(createMenu("Top"));
+        menu.add(createMenu("Popup"));
         finder.menuDisplayed(menu);
-        assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));
+        assertSame(menuItem, finder.findMenuItem(null, "Popup>Next>Third"));
         try {
-            finder.findMenuItem(null, "Top>Next>Third");
+            finder.findMenuItem(null, "Popup>Next>Third");
             fail("Should not have been able to find the menu item again");
         } catch (Exception e) {
             //Expected.
@@ -207,9 +225,9 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         assertSame(chooser, finder.findFileChooser((WindowContext) mockWindowContext.proxy()));
     }
 
-    private JMenuBar createMenuBar() {
+    private JMenuBar createMenuBar(String top) {
         JMenuBar menubar = new JMenuBar();
-        JMenu menu = createMenu("Top");
+        JMenu menu = createMenu(top);
         menubar.add(menu);
         return menubar;
     }

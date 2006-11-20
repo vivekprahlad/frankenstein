@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.frankenstein.events.*;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import junit.framework.TestCase;
 
 
@@ -14,7 +15,9 @@ import junit.framework.TestCase;
  * tests.
  */
 public class ScriptTest extends TestCase {
-    private static final String SCRIPT = "cancel_table_edit \"tableName\"\n" +
+    private static final String SCRIPT = 
+    "assert \"table\" , \"enabled:true\"\n"+
+    "cancel_table_edit \"tableName\"\n"+
     "click_button \"click button\"\n" +
     "click_checkbox \"check Box\" , \"true\"\n" +
     "click_radio_button \"radio button\"\n" +
@@ -29,11 +32,11 @@ public class ScriptTest extends TestCase {
     "select_list \"list\" , \"text a\"\n" +
     "stop_table_edit \"table\"\n" +
     "switch_tab \"tab\" , \"text a\"\n" +
-    "activate_window \"text a\"\n"+
-    "assert_table_rows \"table\" , \"1\"";
+    "activate_window \"text a\"";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
+        eventList.add(new AssertEvent("table","enabled", "true"));
         eventList.add(new CancelTableEditEvent("tableName"));
         eventList.add(new ClickButtonEvent("click button"));
         eventList.add(new ClickCheckboxEvent("check Box", true));
@@ -50,7 +53,6 @@ public class ScriptTest extends TestCase {
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
-        eventList.add(new AssertTableRowsEvent("table",1));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -59,22 +61,22 @@ public class ScriptTest extends TestCase {
         Script script = new Script(new DefaultEventRegistry());
         List eventList = script.parse(new StringReader(SCRIPT));
         assertEquals(17, eventList.size());
-        assertEquals(new CancelTableEditEvent("tableName"), eventList.get(0));
-        assertEquals(new ClickButtonEvent("click button"), eventList.get(1));
-        assertEquals(new ClickCheckboxEvent("check Box", true), eventList.get(2));
-        assertEquals(new ClickRadioButtonEvent("radio button"), eventList.get(3));
-        assertEquals(new DialogShownEvent("2"), eventList.get(4));
-        assertEquals(new EnterTextEvent("textFieldName", "text"), eventList.get(5));
-        assertEquals(new EditTableCellEvent("tableName", 1, 1), eventList.get(6));
-        assertEquals(new EnterTextEvent("textBox", "text"), eventList.get(7));
-        assertEquals(new InternalFrameShownEvent("title a"), eventList.get(8));
-        assertEquals(new KeyStrokeEvent(0, 48), eventList.get(9));
-        assertEquals(new NavigateEvent("ab>ac>de"), eventList.get(10));
-        assertEquals(new SelectDropDownEvent("combo", "text a"), eventList.get(11));
-        assertEquals(new SelectListEvent("list", new String[]{"text a"}), eventList.get(12));
-        assertEquals(new StopTableEditEvent("table"), eventList.get(13));
-        assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(14));
-        assertEquals(new ActivateWindowEvent("text a"), eventList.get(15));
-        assertEquals(new AssertTableRowsEvent("table",1),eventList.get(16));
+        assertEquals(new AssertEvent("table","enabled", "true"),eventList.get(0));
+        assertEquals(new CancelTableEditEvent("tableName"), eventList.get(1));
+        assertEquals(new ClickButtonEvent("click button"), eventList.get(2));
+        assertEquals(new ClickCheckboxEvent("check Box", true), eventList.get(3));
+        assertEquals(new ClickRadioButtonEvent("radio button"), eventList.get(4));
+        assertEquals(new DialogShownEvent("2"), eventList.get(5));
+        assertEquals(new EnterTextEvent("textFieldName", "text"), eventList.get(6));
+        assertEquals(new EditTableCellEvent("tableName", 1, 1), eventList.get(7));
+        assertEquals(new EnterTextEvent("textBox", "text"), eventList.get(8));
+        assertEquals(new InternalFrameShownEvent("title a"), eventList.get(9));
+        assertEquals(new KeyStrokeEvent(0, 48), eventList.get(10));
+        assertEquals(new NavigateEvent("ab>ac>de"), eventList.get(11));
+        assertEquals(new SelectDropDownEvent("combo", "text a"), eventList.get(12));
+        assertEquals(new SelectListEvent("list", new String[]{"text a"}), eventList.get(13));
+        assertEquals(new StopTableEditEvent("table"), eventList.get(14));
+        assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(15));
+        assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
     }
 }

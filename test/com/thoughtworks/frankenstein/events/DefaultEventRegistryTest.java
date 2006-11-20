@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 
 /**
  * Ensures behaviour of the default event registry
@@ -121,9 +122,9 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new AssertTextEvent("textField", "text"), defaultEventRegistry.createEvent("AssertText \"textField\" \"text\""));
     }
 
-    public void testCreatesAssertTableRowsEvent() {
-           defaultEventRegistry.registerEvent(AssertTableRowsEvent.class);
-           assertEquals(new AssertTableRowsEvent("table", 1), defaultEventRegistry.createEvent("AssertTableRows \"table\" \"1\""));
+    public void testCreatesAssertEvent() {
+           defaultEventRegistry.registerEvent(AssertEvent.class);
+           assertEquals(new AssertEvent("table", "enabled", "true"), defaultEventRegistry.createEvent("Assert \"table\" \"enabled:true\""));
     }
 
     public void testCreatesStartTestEvent() {

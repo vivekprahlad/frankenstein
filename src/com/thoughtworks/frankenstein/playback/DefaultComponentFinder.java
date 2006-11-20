@@ -54,20 +54,27 @@ public class DefaultComponentFinder implements ComponentFinder {
         if (popupMenu != null) {
             return findPopupMenu(pathElements);
         } else {
-            Frame[] frames = Frame.getFrames();
-            for (int i = 0; i < frames.length; i++) {
-                java.util.List menuBars = findMenuBar(frames, i);
-                if (!menuBars.isEmpty()) {
-                    JMenuBar bar = (JMenuBar) menuBars.get(0);
-                    JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
-                    for (int j = 1; j < pathElements.length; j++) {
-                        menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+            for (int i = 0; i < Frame.getFrames().length; i++) {
+                try {
+                    java.util.List menuBars = findMenuBar(Frame.getFrames(), i);
+                    if (!menuBars.isEmpty()) {
+                        return findMenuItem(menuBars, pathElements);
                     }
-                    return menuItem;
+                } catch (Exception e) {
+                    //Ignore
                 }
             }
         }
         throw new RuntimeException("Unable to find menu with path: " + path);
+    }
+
+    private JMenuItem findMenuItem(java.util.List menuBars, String[] pathElements) {
+        JMenuBar bar = (JMenuBar) menuBars.get(0);
+        JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
+        for (int j = 1; j < pathElements.length; j++) {
+            menuItem = findMenu((JMenu) menuItem, pathElements[j]);
+        }
+        return menuItem;
     }
 
     private JMenuItem findPopupMenu(String[] pathElements) {
@@ -110,7 +117,7 @@ public class DefaultComponentFinder implements ComponentFinder {
                 if (jmenuItem.getText().equals(pathElement)) return jmenuItem;
             }
         }
-        throw new RuntimeException("Unable to find menu" + pathElement);
+        throw new RuntimeException  ("Unable to find menu" + pathElement);
     }
 
     public Window findWindow(String title) {

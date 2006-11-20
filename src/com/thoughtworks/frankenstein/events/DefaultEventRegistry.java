@@ -1,11 +1,13 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
-import com.thoughtworks.frankenstein.events.assertions.AssertEnabledEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+
+import junit.framework.Assert;
 
 /**
  * The default event registry
@@ -17,10 +19,9 @@ public class DefaultEventRegistry implements EventRegistry{
     public DefaultEventRegistry() {
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateWindowEvent.class);
+        registerEvent(AssertEvent.class);
         registerEvent(AssertTextEvent.class);
-        registerEvent(AssertEnabledEvent.class);
         registerEvent(CancelTableEditEvent.class);
-        registerEvent(AssertTableRowsEvent.class);
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);
         registerEvent(ClickRadioButtonEvent.class);
