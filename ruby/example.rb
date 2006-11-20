@@ -7,8 +7,10 @@ module SwingSetTests
     click_button "Printing.Print"
     dialog_shown "Print"
     click_button "Cancel"
+    dialog_closed "Print"
     dialog_shown "Printing Result"
     click_button "OptionPane.button"
+    dialog_closed "Printing Result"
   end
 end
  	
@@ -25,8 +27,11 @@ class TestPrintDialog
     click_button "Printing.Print"
     dialog_shown "Print"
     click_button "Cancel"
+    dialog_closed "Print"
     dialog_shown "Printing Result"
     click_button "OptionPane.button"
+    dialog_closed "Printing Result"
+    assert_table_rows "JTable_1",46
   end
 end
 

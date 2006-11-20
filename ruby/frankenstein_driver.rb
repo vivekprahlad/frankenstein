@@ -20,8 +20,16 @@ module FrankensteinDriver
     append_to_script "activate_internal_frame \"#{title}\""
   end
 
+  def assert_enabled(component_name)
+    append_to_script "assert \"#{component_name}\" \"enabled:true\""
+  end
+
+  def assert_disabled(component_name)
+    append_to_script "assert \"#{component_name}\" \"enabled:false\""
+  end
+
   def assert_table_rows(table, number_of_rows)
-    append_to_script "assert_table_rows \"#{table}\" \"#{number_of_rows}\""
+    append_to_script "assert \"#{table}\" \"rowCount:#{number_of_rows}\""
   end
 
   def assert_text(textfield, text)

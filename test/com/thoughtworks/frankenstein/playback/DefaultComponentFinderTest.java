@@ -86,7 +86,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     public void testFindsMenuItemFromMultipleFrames() {
         JFrame frameOne = new JFrame("one");
-        frameOne.getContentPane().add(new JMenuBar());
+        frameOne.getContentPane().add(createMenuBar("FirstWindow"));
         frameOne.setVisible(true);
         JFrame frameTwo = new JFrame("two");
         frameTwo.getContentPane().add(createMenuBar("SecondWindow"));
