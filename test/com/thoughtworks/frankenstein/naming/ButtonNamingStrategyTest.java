@@ -10,7 +10,7 @@ import javax.swing.*;
 public class ButtonNamingStrategyTest extends TestCase {
 
     public void testSimpleIconName() {
-        assertEquals("resources/icons/Icon.gif", new ButtonNamingStrategy().simpleIconName("jar:/path/to/something/jar!/resources/icons/Icon.gif"));
+        assertEquals("Icon", new ButtonNamingStrategy().simpleIconName("jar:/path/to/something/jar!/resources/icons/Icon.gif"));
     }
 
     public void testStripsSpacesFromButtonName() {

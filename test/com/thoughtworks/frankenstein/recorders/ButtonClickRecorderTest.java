@@ -50,7 +50,7 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         button = new JButton(new ImageIcon("icons/list-add.png"));
         new JFrame().getContentPane().add(button);
         recorder.componentShown(button);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickButtonEvent("icons/list-add.png")));
+        mockRecorder.expects(once()).method("record").with(eq(new ClickButtonEvent("list-add")));
         button.doClick();
     }
 

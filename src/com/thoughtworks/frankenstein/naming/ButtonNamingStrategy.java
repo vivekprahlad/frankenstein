@@ -24,7 +24,7 @@ public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implem
     }
 
     protected String simpleIconName(String iconPath) {
-        return iconPath.replaceAll("(.*)jar!(.*)", "$2").replaceAll("^/", "");
+        return iconPath.replaceAll("(.*)jar!(.*)", "$2").replaceAll("^/", "").replaceAll(".*/(.*)\\..*", "$1");
     }
 
     private boolean isButtonTextEmpty(AbstractButton button) {

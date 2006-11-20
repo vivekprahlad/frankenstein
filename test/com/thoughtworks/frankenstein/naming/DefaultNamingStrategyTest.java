@@ -75,7 +75,7 @@ public class DefaultNamingStrategyTest extends TestCase {
         JRadioButton first = new JRadioButton(icon);
         panel.add(first);
         namingStrategy.nameComponentsIn(panel);
-        assertEquals("icons/list-add.png", first.getName());
+        assertEquals("list-add", first.getName());
     }
 
     public void testNamesTrees() {
