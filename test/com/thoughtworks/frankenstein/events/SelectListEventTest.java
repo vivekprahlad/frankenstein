@@ -50,6 +50,17 @@ public class SelectListEventTest extends AbstractEventTestCase {
         assertEquals("text", list.getSelectedValue());
     }
 
+    public void testPlaysEventWithRegularExpression() {
+        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"tex.*"});
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
+        JList  list = new JList(new Object[]{"one", "text", "three"});
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.listFieldName")).will(returnValue(list));
+        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals("text", list.getSelectedValue());
+    }
+
     public void testPlayWithMultipleElementsSelected() {
         SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"one", "two"});
         Mock mockComponentFinder = mock(ComponentFinder.class);

@@ -54,6 +54,17 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         assertEquals(node(selectionPath, 2).getUserObject(), "three");
     }
 
+    public void testPlaysEventWithRegularExpression() {
+        Mock componentFinder = mock(ComponentFinder.class);
+        JTree tree = tree();
+        componentFinder.expects(once()).method("findComponent").will(returnValue(tree));
+        new SelectTreeEvent("treeName", "o.*>tw.*>thr.*").play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+        TreePath selectionPath = tree.getSelectionPath();
+        assertEquals(node(selectionPath, 0).getUserObject(), "one");
+        assertEquals(node(selectionPath, 1).getUserObject(), "two");
+        assertEquals(node(selectionPath, 2).getUserObject(), "three");
+    }
+
     public void testPlayWithNonExistentRootNode() {
         Mock componentFinder = mock(ComponentFinder.class);
         JTree tree = tree();

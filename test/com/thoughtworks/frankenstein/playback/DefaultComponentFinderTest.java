@@ -67,6 +67,13 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         frame.dispose();
     }
 
+    public void testFindsWindowWithRegularExpression() {
+        JFrame frame = new JFrame("testRegexFrame");
+        frame.setVisible(true);
+        assertSame(frame, finder.findWindow("testR.*"));
+        frame.dispose();
+    }
+
     public void testFailsIfThereIsNoWindowWithSuppliedTitle() {
         try {
             finder.findWindow("nonexistent");

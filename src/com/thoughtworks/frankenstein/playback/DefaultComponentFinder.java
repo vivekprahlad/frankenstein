@@ -124,11 +124,15 @@ public class DefaultComponentFinder implements ComponentFinder {
         Frame[] frames = Frame.getFrames();
         for (int i = 0; i < frames.length; i++) {
             Frame frame = frames[i];
-            if (title.equals(frame.getTitle())) {
+            if (title(frame).matches(title)) {
                 return frame;
             }
         }
         throw new RuntimeException("Could not find window with title: " + title);
+    }
+
+    private String title(Frame frame) {
+        return frame.getTitle() == null ? "" : frame.getTitle();
     }
 
     public JInternalFrame findInternalFrame(WindowContext windowContext, String title) {

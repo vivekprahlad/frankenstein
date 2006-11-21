@@ -61,7 +61,18 @@ public class DefaultWindowContextTest extends TestCase {
         KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
         windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
         windowContext.waitForDialogOpening("testDialog", 10);
-        assertEquals(testDialog, windowContext.activeWindow());
+        assertSame(testDialog, windowContext.activeWindow());
+        testDialog.dispose();
+        frame.dispose();
+    }
+
+    public void testWaitForDialogWithRegularExpression() throws InterruptedException {
+        JFrame frame = new JFrame();
+        JDialog testDialog = new JDialog(frame, "testDialog");
+        KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
+        windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
+        windowContext.waitForDialogOpening("test.*", 10);
+        assertSame(testDialog, windowContext.activeWindow());
         testDialog.dispose();
         frame.dispose();
     }

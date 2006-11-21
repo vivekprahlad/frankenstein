@@ -43,7 +43,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
 
     private TreePath findRoot(JTree tree, String rootPath) {
         Object root = tree.getModel().getRoot();
-        if (root.toString().equalsIgnoreCase(rootPath)) {
+        if (root.toString().matches(rootPath)) {
             return new TreePath(root);
         }
         throw new RuntimeException("Root does not exist. Test specified " + rootPath + " but was " + root.toString());
@@ -55,7 +55,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
         int childCount = model.getChildCount(lastPathComponent);
         for(int j=0; j < childCount;j++){
             Object child = model.getChild(lastPathComponent,j);
-            if(child.toString().equalsIgnoreCase(path)) {
+            if(child.toString().matches(path)) {
                 TreePath newPath = currentPath.pathByAddingChild(child);
                 tree.expandPath(newPath);
                 return newPath;

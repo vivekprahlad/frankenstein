@@ -46,7 +46,7 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
         Object selectValue=null;
         for (int i=0; i< model.getSize(); i++) {
             Object element = model.getElementAt(i);
-            if (choice.equals(valueToString(renderer, element, i))) {
+            if (valueToString(renderer, element, i).matches(choice)) {
                 selectValue = element;
                 break;
             }

@@ -45,14 +45,14 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
     private int value(JList list, String text) {
         ListModel model = list.getModel();
         for (int i=0; i<model.getSize(); i++) {
-            if (text.equals(valueAsString(list, model.getElementAt(i), i)))
+            if (valueAsString(list, model.getElementAt(i), i).matches(text))
                 return i;
         }
         return -1;
     }
 
-    private Object valueAsString(JList list, Object elementAt, int i) {
-        if (valueToString.containsKey(elementAt)) return valueToString.get(elementAt);
+    private String valueAsString(JList list, Object elementAt, int i) {
+        if (valueToString.containsKey(elementAt)) return (String) valueToString.get(elementAt);
         ListCellRenderer renderer = list.getCellRenderer();
         Component component = renderer.getListCellRendererComponent(list, elementAt, i, true, true);
         String string = new DefaultComponentDecoder().decode(component);
