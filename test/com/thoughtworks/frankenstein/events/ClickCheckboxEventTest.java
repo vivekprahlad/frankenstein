@@ -1,9 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
@@ -41,7 +39,7 @@ public class ClickCheckboxEventTest extends AbstractEventTestCase {
         assertEquals("click_checkbox \"testButton\" , \"true\"", new ClickCheckboxEvent("testButton", true).scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         ClickCheckboxEvent event = new ClickCheckboxEvent("parent.buttonName", true);
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);

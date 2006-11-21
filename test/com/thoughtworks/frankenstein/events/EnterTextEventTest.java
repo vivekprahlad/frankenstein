@@ -1,10 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
 
 import javax.swing.*;
 
@@ -40,7 +38,7 @@ public class EnterTextEventTest extends AbstractEventTestCase {
         assertEquals("enter_text \"parent.textFieldName\" , \"text\"", new EnterTextEvent("parent.textFieldName", "text").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         EnterTextEvent event = new EnterTextEvent("parent.textFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);

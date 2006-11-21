@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
@@ -42,7 +41,7 @@ public class CancelTableEditEventTest extends AbstractEventTestCase {
         assertEquals("cancel_table_edit \"testTarget\"", new CancelTableEditEvent("testTarget").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         CancelTableEditEvent event = new CancelTableEditEvent("parent.tableName");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);

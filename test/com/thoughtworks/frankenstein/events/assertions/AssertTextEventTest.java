@@ -39,7 +39,7 @@ public class AssertTextEventTest extends AbstractEventTestCase {
     public void testScriptLine() {
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
     }
 
     protected FrankensteinEvent createEvent() {

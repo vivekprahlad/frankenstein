@@ -1,16 +1,12 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.*;
 import javax.swing.*;
 
 import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.common.RobotFactory;
 
@@ -46,7 +42,7 @@ public class ClickButtonEventTest extends AbstractEventTestCase {
         assertEquals("click_button \"testButton\"", new ClickButtonEvent("testButton").scriptLine());
     }
 
-    public void testPlay() throws InterruptedException, AWTException {
+    public void testPlaysEvent() throws InterruptedException, AWTException {
         JButton button = new JButton("abc");
         button.setName("parent.buttonName");
         ClickButtonEvent event = new ClickButtonEvent("parent.buttonName");

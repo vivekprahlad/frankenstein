@@ -48,7 +48,7 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
         JTabbedPane pane = (JTabbedPane) finder.findComponent(context, tabbedPaneName);
         int count = pane.getTabCount();
         for (int i=0 ; i<count; i++) {
-            if (tabTitle.equals(pane.getTitleAt(i))) {
+            if (pane.getTitleAt(i).matches(tabTitle)) {
                 pane.setSelectedIndex(i);
                 return;
             }

@@ -43,7 +43,7 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         assertEquals("select_tree \"treeName\" , \"one>two>three\"", new SelectTreeEvent("treeName", "one>two>three").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         Mock componentFinder = mock(ComponentFinder.class);
         JTree tree = tree();
         componentFinder.expects(once()).method("findComponent").will(returnValue(tree));

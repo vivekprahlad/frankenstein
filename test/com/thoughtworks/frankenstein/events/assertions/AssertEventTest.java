@@ -41,7 +41,7 @@ public class AssertEventTest extends AbstractEventTestCase {
         assertEquals("assert \"table\" , \"enabled:true\"", new AssertEvent("table", "enabled", "true").scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         AssertEvent event = new AssertEvent("table", "rowCount", "3");
         JTable table = new JTable(3, 3);
         Mock componentFinder = mock(ComponentFinder.class);

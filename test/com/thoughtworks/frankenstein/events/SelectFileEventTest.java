@@ -6,8 +6,6 @@ import javax.swing.*;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
-import java.io.File;
-
 /**
  * Ensures behaviour of SelectFileEvent
  */
@@ -44,7 +42,7 @@ public class SelectFileEventTest extends AbstractEventTestCase {
         assertEquals("select_file \"" + file("/home/sabc/file") + "\"", new SelectFileEvent(file("/home/sabc/file")).scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         JFileChooser chooser = new JFileChooser(".");
         Mock mockFinder = mock(ComponentFinder.class);
         mockFinder.expects(once()).method("findFileChooser").will(returnValue(chooser));

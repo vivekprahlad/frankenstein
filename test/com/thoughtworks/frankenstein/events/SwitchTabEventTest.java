@@ -1,10 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
 
 import javax.swing.*;
 
@@ -40,8 +38,22 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
         assertEquals("switch_tab \"parent.testTabName\" , \"tabTwo\"", new SwitchTabEvent("parent.testTabName", "tabTwo").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", "tabTwo");
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
+        JTabbedPane pane = new JTabbedPane();
+        pane.addTab("tabOne", new JPanel());
+        pane.addTab("tabTwo", new JPanel());
+        assertEquals(0, pane.getSelectedIndex());
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.testTabName")).will(returnValue(pane));
+        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals(1, pane.getSelectedIndex());
+    }
+
+    public void testSwitchesTabWithRegularExpression() {
+        SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", ".*Two");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();

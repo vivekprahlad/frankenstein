@@ -3,10 +3,8 @@ package com.thoughtworks.frankenstein.events;
 import javax.swing.*;
 
 import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
@@ -41,7 +39,7 @@ public class SelectListEventTest extends AbstractEventTestCase {
         assertEquals("select_list \"parent.listFieldName\" , \"text\"", new SelectListEvent("parent.listFieldName", new String[] {"text"}).scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"text"});
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);

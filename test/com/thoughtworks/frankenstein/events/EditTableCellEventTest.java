@@ -1,12 +1,10 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
 
 import javax.swing.*;
 
@@ -43,7 +41,7 @@ public class EditTableCellEventTest extends AbstractEventTestCase {
         assertEquals("edit_table_cell \"testTableName\" , \"1,2\"", new EditTableCellEvent("testTableName", 1, 2).scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         EditTableCellEvent event = new EditTableCellEvent("parent.tableName", 1, 1);
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);

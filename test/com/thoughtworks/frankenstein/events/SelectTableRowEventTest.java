@@ -4,10 +4,7 @@ import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Ensures behaviour of SelectTableRowEvent
@@ -41,7 +38,7 @@ public class SelectTableRowEventTest extends AbstractEventTestCase {
         assertEquals("select_table_row \"table\" , \"1,3,8\"", new SelectTableRowEvent("table", new int[]{1, 3, 8}).scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         JTable table = new JTable();
         SelectTableRowEvent event = new SelectTableRowEvent("table", new int[] {1,2,4});
         Mock componentFinder = mock(ComponentFinder.class);

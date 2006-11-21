@@ -27,7 +27,7 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
 
     public abstract void testScriptLine();
 
-    public abstract void testPlay() throws Exception;
+    public abstract void testPlaysEvent() throws Exception;
 
 
     protected void setUp() throws Exception {

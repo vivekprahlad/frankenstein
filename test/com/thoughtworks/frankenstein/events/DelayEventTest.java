@@ -33,7 +33,7 @@ public class DelayEventTest extends AbstractEventTestCase {
         assertEquals("delay \"10\"", new DelayEvent("10").scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         long currentTime = System.currentTimeMillis();
         new DelayEvent("300").play(null, null, null, null);
         long executionTime = System.currentTimeMillis() - currentTime;

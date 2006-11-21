@@ -32,7 +32,7 @@ public class CloseAllDialogsEventTest extends AbstractEventTestCase{
         assertEquals("close_all_dialogs", new CloseAllDialogsEvent("").scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
     }
 
     protected FrankensteinEvent createEvent() {

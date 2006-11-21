@@ -8,8 +8,6 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.common.RobotFactory;
 
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -48,7 +46,7 @@ public class DoubleClickListEventTest extends AbstractEventTestCase {
         assertEquals("double_click_list \"list\" , \"0\"", new DoubleClickListEvent("list", 0).scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         String[] listOfStrings = {"one", "two", "three", "four", "five"};
         JList list = new JList(listOfStrings);
         list.setName("listName");

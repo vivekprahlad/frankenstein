@@ -38,7 +38,7 @@ public class CloseInternalFrameEventTest extends AbstractEventTestCase {
         assertEquals("close_internal_frame \"title\"", new CloseInternalFrameEvent("title").scriptLine());
     }
 
-    public void testPlay() throws Exception {
+    public void testPlaysEvent() throws Exception {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         JInternalFrame internalFrame = createInternalFrame();
         mockComponentFinder.expects(once()).method("findInternalFrame").will(returnValue(internalFrame));

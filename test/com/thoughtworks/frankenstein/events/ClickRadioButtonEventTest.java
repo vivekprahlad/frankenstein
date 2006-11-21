@@ -1,9 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
@@ -41,7 +39,7 @@ public class ClickRadioButtonEventTest extends AbstractEventTestCase {
         assertEquals("click_radio_button \"testButton\"", new ClickRadioButtonEvent("testButton").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         ClickRadioButtonEvent event = new ClickRadioButtonEvent("parent.buttonName");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockActionListener = mock(ActionListener.class);

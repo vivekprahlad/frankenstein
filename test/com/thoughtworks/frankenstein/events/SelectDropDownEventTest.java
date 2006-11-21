@@ -1,9 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
@@ -40,7 +38,7 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
         assertEquals("select_drop_down \"parent.comboFieldName\" , \"text\"", new SelectDropDownEvent("parent.comboFieldName", "text").scriptLine());
     }
 
-    public void testPlay() {
+    public void testPlaysEvent() {
         SelectDropDownEvent event = new SelectDropDownEvent("parent.comboFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
