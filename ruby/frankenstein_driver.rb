@@ -21,15 +21,27 @@ module FrankensteinDriver
   end
 
   def assert_enabled(component_name)
-    append_to_script "assert \"#{component_name}\" \"enabled:true\""
+    assert component_name,"enabled","true"
   end
 
   def assert_disabled(component_name)
-    append_to_script "assert \"#{component_name}\" \"enabled:false\""
+    assert component_name,"enabled","false"
   end
 
-  def assert_table_rows(table, number_of_rows)
-    append_to_script "assert \"#{table}\" \"rowCount:#{number_of_rows}\""
+  def assert_number_of_table_rows(table_name, number_of_rows)
+    assert table_name,"rowCount",number_of_rows
+  end
+
+  def assert_table_cell(table_name, row, column, value)
+    assert table_name, "getValueAt(#{row},#{column})", value
+  end
+
+  def assert_table_row(table, row, *cell_values)
+    cell_values.each_index {|index| assert_table_cell(table, row, index, cell_values[index])}
+  end
+
+  def assert(component_name,ognl_expression,expected_value)
+    append_to_script "assert \"#{component_name}\" \"#{ognl_expression}:#{expected_value}\""
   end
 
   def assert_text(textfield, text)

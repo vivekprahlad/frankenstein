@@ -31,7 +31,7 @@ class TestPrintDialog
     dialog_shown "Printing Result"
     click_button "OptionPane.button"
     dialog_closed "Printing Result"
-    assert_table_rows "JTable_1",46
+    assert_number_of_table_rows "JTable_1",46
   end
 end
 

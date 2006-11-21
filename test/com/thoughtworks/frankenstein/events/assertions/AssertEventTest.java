@@ -87,7 +87,6 @@ public class AssertEventTest extends AbstractEventTestCase {
                 return "not defined";
             }
         };
-        table.setEnabled(false);
         Mock componentFinder = mock(ComponentFinder.class);
         componentFinder.expects(once()).method("findComponent").will(returnValue(table));
         event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
