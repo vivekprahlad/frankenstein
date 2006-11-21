@@ -92,6 +92,14 @@ public class AssertEventTest extends AbstractEventTestCase {
         event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
     }
 
+    public void testAssertsRegularExpressions() {
+        AssertEvent event = new AssertEvent("table", "rowCount", "[0-9]");
+        JTable table = new JTable(3, 3);
+        Mock componentFinder = mock(ComponentFinder.class);
+        componentFinder.expects(once()).method("findComponent").will(returnValue(table));
+        event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+    }
+
     protected FrankensteinEvent createEvent() {
         return new AssertEvent("table", "enabled", "false");
     }

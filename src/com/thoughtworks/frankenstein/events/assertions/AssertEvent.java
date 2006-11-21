@@ -49,7 +49,7 @@ public class AssertEvent extends AbstractFrankensteinEvent {
     public void run() {
         try {
             String actual = expression.getValue(OGNL_CONTEXT, finder.findComponent(context, componentName));
-            if (!expectedValue.equals(actual)) {
+            if (!actual.matches(expectedValue)) {
                 throw new RuntimeException("Expected: " + expectedValue + ", but was: " + actual);
             }
         } catch (OgnlException e) {

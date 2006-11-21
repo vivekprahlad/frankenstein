@@ -21,11 +21,11 @@ module FrankensteinDriver
   end
 
   def assert_enabled(component_name)
-    assert component_name,"enabled","true"
+    assert_true component_name,"enabled"
   end
 
   def assert_disabled(component_name)
-    assert component_name,"enabled","false"
+    assert_false component_name,"enabled"
   end
 
   def assert_number_of_table_rows(table_name, number_of_rows)
@@ -42,6 +42,14 @@ module FrankensteinDriver
 
   def assert(component_name,ognl_expression,expected_value)
     append_to_script "assert \"#{component_name}\" \"#{ognl_expression}:#{expected_value}\""
+  end
+
+  def assert_true(component_name,ognl_expression)
+    assert component_name,ognl_expression,"true"
+  end
+
+  def assert_false(component_name,ognl_expression)
+    assert component_name,ognl_expression,"false"
   end
 
   def assert_text(textfield, text)
