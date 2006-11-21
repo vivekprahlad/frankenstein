@@ -1,6 +1,5 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 
 import java.lang.reflect.Constructor;
@@ -20,7 +19,6 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateWindowEvent.class);
         registerEvent(AssertEvent.class);
-        registerEvent(AssertTextEvent.class);
         registerEvent(CancelTableEditEvent.class);
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);

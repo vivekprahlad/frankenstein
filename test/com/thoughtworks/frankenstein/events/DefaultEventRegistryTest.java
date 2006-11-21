@@ -7,7 +7,6 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
-import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 
 /**
@@ -115,11 +114,6 @@ public class DefaultEventRegistryTest extends TestCase {
     public void testCreatesWindowActivatedEvent() {
         defaultEventRegistry.registerEvent(ActivateWindowEvent.class);
         assertEquals(new ActivateWindowEvent("title"), defaultEventRegistry.createEvent("ActivateWindow \"title\""));
-    }
-
-    public void testCreatesAssertTextEvent() {
-        defaultEventRegistry.registerEvent(AssertTextEvent.class);
-        assertEquals(new AssertTextEvent("textField", "text"), defaultEventRegistry.createEvent("AssertText \"textField\" \"text\""));
     }
 
     public void testCreatesAssertEvent() {

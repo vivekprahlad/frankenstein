@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
@@ -61,7 +61,7 @@ public class CheckTextRecorderTest extends AbstractRecorderTestCase{
     }
 
     private void expectCheckEvent(Mock mockEventRecorder) {
-        mockEventRecorder.expects(once()).method("record").with(eq(new AssertTextEvent("textField", "abc")));
+        mockEventRecorder.expects(once()).method("record").with(eq(new AssertEvent("textField", "text", "abc")));
     }
 
     private JTextField createTextField() {

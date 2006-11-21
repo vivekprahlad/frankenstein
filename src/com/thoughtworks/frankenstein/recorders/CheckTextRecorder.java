@@ -3,7 +3,7 @@ package com.thoughtworks.frankenstein.recorders;
 import java.awt.*;
 import javax.swing.text.JTextComponent;
 
-import com.thoughtworks.frankenstein.events.assertions.AssertTextEvent;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -18,6 +18,6 @@ public class CheckTextRecorder extends AbstractCheckRecorder {
 
     protected void check(Component source) {
         JTextComponent component = (JTextComponent) source;
-        recorder.record(new AssertTextEvent(componentName(component), component.getText()));
+        recorder.record(new AssertEvent(componentName(component), "text", component.getText()));
     }
 }
