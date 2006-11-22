@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
+import com.thoughtworks.frankenstein.playback.MatchStrategy;
 
 /**
  * Represents a combo box selection event.
@@ -46,7 +47,7 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
         Object selectValue=null;
         for (int i=0; i< model.getSize(); i++) {
             Object element = model.getElementAt(i);
-            if (valueToString(renderer, element, i).matches(choice)) {
+            if (MatchStrategy.matchValues(valueToString(renderer, element, i),choice)) {
                 selectValue = element;
                 break;
             }

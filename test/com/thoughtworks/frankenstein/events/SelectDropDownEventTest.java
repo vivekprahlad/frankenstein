@@ -50,7 +50,7 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
     }
 
     public void testPlaysWithRegularExpression() {
-        SelectDropDownEvent event = new SelectDropDownEvent("parent.comboFieldName", "tex.*");
+        SelectDropDownEvent event = new SelectDropDownEvent("parent.comboFieldName", "regex:tex.*");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();

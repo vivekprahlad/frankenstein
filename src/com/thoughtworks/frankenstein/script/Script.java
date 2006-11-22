@@ -16,6 +16,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
  */
 public class Script {
     private EventRegistry registry;
+    public static final String NEW_LINE = "&#xA;";
 
     public Script(EventRegistry registry) {
         this.registry = registry;

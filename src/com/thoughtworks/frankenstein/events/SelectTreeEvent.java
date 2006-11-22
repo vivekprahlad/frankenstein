@@ -8,6 +8,7 @@ import javax.swing.tree.TreeModel;
 
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.MatchStrategy;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
@@ -43,7 +44,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
 
     private TreePath findRoot(JTree tree, String rootPath) {
         Object root = tree.getModel().getRoot();
-        if (root.toString().matches(rootPath)) {
+        if (MatchStrategy.matchValues(root.toString(),rootPath)) {
             return new TreePath(root);
         }
         throw new RuntimeException("Root does not exist. Test specified " + rootPath + " but was " + root.toString());
@@ -55,7 +56,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
         int childCount = model.getChildCount(lastPathComponent);
         for(int j=0; j < childCount;j++){
             Object child = model.getChild(lastPathComponent,j);
-            if(child.toString().matches(path)) {
+            if(MatchStrategy.matchValues(child.toString(),path)) {
                 TreePath newPath = currentPath.pathByAddingChild(child);
                 tree.expandPath(newPath);
                 return newPath;

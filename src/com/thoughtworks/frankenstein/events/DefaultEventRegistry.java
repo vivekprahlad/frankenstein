@@ -1,12 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
+import com.thoughtworks.frankenstein.script.Script;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.Assert;
 
 /**
  * The default event registry
@@ -64,7 +63,8 @@ public class DefaultEventRegistry implements EventRegistry{
         }
     }
 
-    public FrankensteinEvent createEvent(String scriptLine) {
+    public FrankensteinEvent createEvent(String rawLine) {
+        String scriptLine = unescape(rawLine);
         int quoteIndex = scriptLine.indexOf("\"");
         String line = "", action = "";
         if (quoteIndex== -1) {
@@ -75,6 +75,10 @@ public class DefaultEventRegistry implements EventRegistry{
         }
         verifyActionRegistered(action);
         return createEvent((Class) eventNameToEventClassMap.get(action), line);
+    }
+
+    private String unescape(String rawLine) {
+        return rawLine.replaceAll(Script.NEW_LINE, "\n");
     }
 
     private void verifyActionRegistered(String action) {

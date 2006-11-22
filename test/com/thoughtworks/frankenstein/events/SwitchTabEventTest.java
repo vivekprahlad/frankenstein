@@ -53,7 +53,7 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
     }
 
     public void testSwitchesTabWithRegularExpression() {
-        SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", ".*Two");
+        SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", "regex:.*Two");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();

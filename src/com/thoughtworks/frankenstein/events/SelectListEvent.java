@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
+import com.thoughtworks.frankenstein.playback.MatchStrategy;
 
 /**
  * Represents a List selection event.
@@ -45,7 +46,7 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
     private int value(JList list, String text) {
         ListModel model = list.getModel();
         for (int i=0; i<model.getSize(); i++) {
-            if (valueAsString(list, model.getElementAt(i), i).matches(text))
+            if (MatchStrategy.matchValues(valueAsString(list, model.getElementAt(i), i),text))
                 return i;
         }
         return -1;

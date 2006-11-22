@@ -124,7 +124,7 @@ public class DefaultComponentFinder implements ComponentFinder {
         Frame[] frames = Frame.getFrames();
         for (int i = 0; i < frames.length; i++) {
             Frame frame = frames[i];
-            if (title(frame).matches(title)) {
+            if (MatchStrategy.matchValues(title(frame),title)) {
                 return frame;
             }
         }

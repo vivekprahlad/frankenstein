@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.MatchStrategy;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
@@ -48,7 +49,7 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
         JTabbedPane pane = (JTabbedPane) finder.findComponent(context, tabbedPaneName);
         int count = pane.getTabCount();
         for (int i=0 ; i<count; i++) {
-            if (pane.getTitleAt(i).matches(tabTitle)) {
+            if (MatchStrategy.matchValues(pane.getTitleAt(i),tabTitle)) {
                 pane.setSelectedIndex(i);
                 return;
             }

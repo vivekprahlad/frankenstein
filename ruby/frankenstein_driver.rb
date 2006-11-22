@@ -1,15 +1,25 @@
 require  'socket'
+require 'test/unit'
+
+class Regexp
+  def to_s
+    "regex:" + source
+  end
+end
+
 module FrankensteinDriver
   @@test_dir =""
   attr_accessor :test_status
-  def initialize(port = 5678)
+
+  def init(host,port)
     @test_name = self.class.to_s
+    @host = host
     @port = port
     @script = ""
   end
   
   def append_to_script(script_line)
-    @script += script_line + "\n"
+    @script += script_line.gsub("\n", "&#xA;") + "\n"
   end
   
   def activate_window(title)
@@ -18,6 +28,14 @@ module FrankensteinDriver
   
   def activate_internal_frame(title)
     append_to_script "activate_internal_frame \"#{title}\""
+  end
+
+  def assert_checkbox_selected(checkbox_name)
+    assert_true checkbox_name,"selected"
+  end
+
+  def assert_checkbox_not_selected(checkbox_name)
+    assert_false checkbox_name,"selected"
   end
 
   def assert_enabled(component_name)
@@ -73,7 +91,7 @@ module FrankensteinDriver
   end
 
   def double_click_list(list,item_index)
-       append_to_script "double_click_list \"#{list}\" \"#{item_index}\""
+    append_to_script "double_click_list \"#{list}\" \"#{item_index}\""
   end
 
   def close_internal_frame(title)
@@ -140,7 +158,8 @@ module FrankensteinDriver
     append_to_script "select_table_row \"#{table}\" \"#{rows}\""
   end
 
-  def select_tree(tree, path)
+  def select_tree(tree, *path_elements)
+    path = path_elements.join(">")
     append_to_script "select_tree \"#{tree}\" \"#{path}\""
   end
   
@@ -157,7 +176,7 @@ module FrankensteinDriver
   end
 
   def finish_test
-    socket = TCPSocket.new("localhost", @port)
+    socket = TCPSocket.new(@host,@port)
     socket.write @script
     socket.close_write
     recvthread = Thread.start do
@@ -167,7 +186,8 @@ module FrankensteinDriver
     socket.close
   end
 
- def run
+ def run_frankenstein_test(host,port)
+    init host,port
     start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
     test
     finish_test
@@ -186,12 +206,14 @@ module FrankensteinDriver
 end
 
 class TestRunner
-  def initialize
+  def initialize(host="localhost",port=5678)
     @test_reporter = TestReporter.new
+    @host = host
+    @port = port
   end
 
   def run(*args)
-    args.each {|test| @test_reporter.report_test_result(test,test.new.run)}
+    args.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(host,port))}
     @test_reporter.report
   end
 end
@@ -230,5 +252,30 @@ class TestReporter
     index_file.puts "</body>"
     index_file.puts "</html>"
     index_file.close
-  end    
+  end   
+end
+
+class RegexTest < Test::Unit::TestCase
+  def test_prefixes_regular_expressions_with_regex
+    regex = /test.*/
+    assert_equal("regex:test.*", "#{regex}")
+  end 
+end
+
+class FrankensteinDriverTest < Test::Unit::TestCase
+  include FrankensteinDriver
+
+  def setup
+    init("localhost",5678)
+  end
+
+  def test_escapes_newlines
+    append_to_script "foo\n"
+    assert_equal("foo&#xA;\n",@script)
+  end
+
+  def test_creates_tree_path_with_regex
+    select_tree("tree",/.*/,"two","three")
+    assert_equal("select_tree \"tree\" \"regex:.*>two>three\"\n", @script)
+  end
 end

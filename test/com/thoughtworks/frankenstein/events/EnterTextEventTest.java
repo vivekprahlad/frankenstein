@@ -51,6 +51,6 @@ public class EnterTextEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new EnterTextEvent("parent.textFieldName", "text");
+        return new EnterTextEvent("parent.textFieldName", "line one\nlinetwo\n");
     }
 }

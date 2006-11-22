@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.script.Script;
 
 /**
  * Base class for all events
@@ -42,7 +43,11 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " \"" + target() + "\"" +  (parameters().equals("") ? "": " , \"" + parameters() + "\"")).replaceAll("\\s", " ").trim();
+        return (underscore(action()) + " \"" + target() + "\"" +  (parameters().equals("") ? "": " , \"" + escapeNewLines(parameters()) + "\"")).replaceAll("\\s", " ").trim();
+    }
+
+    private String escapeNewLines(String string) {
+        return string.replaceAll("\n", Script.NEW_LINE);
     }
 
     protected String underscore(String action) {

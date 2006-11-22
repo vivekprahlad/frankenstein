@@ -51,7 +51,7 @@ public class SelectListEventTest extends AbstractEventTestCase {
     }
 
     public void testPlaysEventWithRegularExpression() {
-        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"tex.*"});
+        SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[] {"regex:tex.*"});
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();

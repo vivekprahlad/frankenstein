@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events.assertions;
 
 import com.thoughtworks.frankenstein.events.AbstractFrankensteinEvent;
+import com.thoughtworks.frankenstein.playback.MatchStrategy;
 import ognl.OgnlContext;
 import ognl.OgnlException;
 
@@ -49,7 +50,7 @@ public class AssertEvent extends AbstractFrankensteinEvent {
     public void run() {
         try {
             String actual = expression.getValue(OGNL_CONTEXT, finder.findComponent(context, componentName));
-            if (!actual.matches(expectedValue)) {
+            if (!MatchStrategy.matchValues(actual,expectedValue)) {
                 throw new RuntimeException("Expected: " + expectedValue + ", but was: " + actual);
             }
         } catch (OgnlException e) {

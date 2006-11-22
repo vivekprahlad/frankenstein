@@ -71,7 +71,7 @@ public class DefaultWindowContextTest extends TestCase {
         JDialog testDialog = new JDialog(frame, "testDialog");
         KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
         windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
-        windowContext.waitForDialogOpening("test.*", 10);
+        windowContext.waitForDialogOpening("regex:test.*", 10);
         assertSame(testDialog, windowContext.activeWindow());
         testDialog.dispose();
         frame.dispose();

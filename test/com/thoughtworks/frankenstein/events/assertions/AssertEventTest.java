@@ -93,7 +93,7 @@ public class AssertEventTest extends AbstractEventTestCase {
     }
 
     public void testAssertsRegularExpressions() {
-        AssertEvent event = new AssertEvent("table", "rowCount", "[0-9]");
+        AssertEvent event = new AssertEvent("table", "rowCount", "regex:[0-9]");
         JTable table = new JTable(3, 3);
         Mock componentFinder = mock(ComponentFinder.class);
         componentFinder.expects(once()).method("findComponent").will(returnValue(table));

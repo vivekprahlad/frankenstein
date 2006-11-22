@@ -36,7 +36,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         if (isDialogOpen()) {
             fireDialogOpened();
             JDialog dialog = (JDialog) activeWindow;
-            if (title != null && title(dialog).matches(title)) {
+            if (title != null && MatchStrategy.matchValues(title(dialog),title)) {
                 notifyAll();
             }
         }
@@ -85,7 +85,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     private boolean isDialogOpen(String title) {
         if (isDialogOpen()) {
             JDialog dialog = (JDialog) activeWindow;
-            return (title(dialog).matches(title));
+            return (MatchStrategy.matchValues(title(dialog),title));
         }
         return false;
     }

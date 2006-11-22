@@ -70,7 +70,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
     public void testFindsWindowWithRegularExpression() {
         JFrame frame = new JFrame("testRegexFrame");
         frame.setVisible(true);
-        assertSame(frame, finder.findWindow("testR.*"));
+        assertSame(frame, finder.findWindow("regex:testR.*"));
         frame.dispose();
     }
 
