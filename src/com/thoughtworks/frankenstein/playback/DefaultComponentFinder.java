@@ -1,13 +1,10 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.awt.*;
-import java.awt.event.AWTEventListener;
-import java.awt.event.HierarchyEvent;
 import java.util.logging.Logger;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.naming.*;
-import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Default component finder implementation
@@ -147,6 +144,12 @@ public class DefaultComponentFinder implements ComponentFinder {
         return (JFileChooser) rule.unnamedComponents().get(0);
     }
 
+    public JLabel findLabel(WindowContext context,String labelValue) {
+        LabelMatchingRule rule = new LabelMatchingRule(labelValue);
+        new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
+        return rule.matchingComponent();
+    }
+
     public synchronized void menuDisplayed(JPopupMenu menu) {
         popupMenu = menu;
         Logger.getLogger("Frankenstein").info("Menu Displayed");
@@ -156,5 +159,6 @@ public class DefaultComponentFinder implements ComponentFinder {
         popupMenu = null;
         Logger.getLogger("Frankenstein").info("Menu Hidden");
     }
+
 
 }

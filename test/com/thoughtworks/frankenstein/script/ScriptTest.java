@@ -15,7 +15,7 @@ import junit.framework.TestCase;
  * tests.
  */
 public class ScriptTest extends TestCase {
-    private static final String SCRIPT = 
+    private static final String SCRIPT =
     "assert \"table\" , \"enabled:true\"\n"+
     "cancel_table_edit \"tableName\"\n"+
     "click_button \"click button\"\n" +
@@ -32,7 +32,11 @@ public class ScriptTest extends TestCase {
     "select_list \"list\" , \"text a\"\n" +
     "stop_table_edit \"table\"\n" +
     "switch_tab \"tab\" , \"text a\"\n" +
-    "activate_window \"text a\"";
+    "activate_window \"text a\"\n"+
+    "double_click_list \"list\" , \"0\"\n"+
+    "click_table_header \"header\" , \"one\"\n"+
+    "right_click_table_rows \"table\" , \"1\"\n"+
+    "assert_label \"label\" , \"labelValue\"";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
@@ -53,6 +57,10 @@ public class ScriptTest extends TestCase {
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
+        eventList.add(new DoubleClickListEvent("list",0));
+        eventList.add(new ClickTableHeaderEvent("header","one"));
+        eventList.add(new RightClickTableRowsEvent("table",1));
+        eventList.add(new AssertLabelEvent("label","labelValue"));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -60,7 +68,7 @@ public class ScriptTest extends TestCase {
     public void testCreatesEventListFromScript() throws IOException {
         Script script = new Script(new DefaultEventRegistry());
         List eventList = script.parse(new StringReader(SCRIPT));
-        assertEquals(17, eventList.size());
+        assertEquals(21, eventList.size());
         assertEquals(new AssertEvent("table","enabled", "true"),eventList.get(0));
         assertEquals(new CancelTableEditEvent("tableName"), eventList.get(1));
         assertEquals(new ClickButtonEvent("click button"), eventList.get(2));
@@ -78,5 +86,9 @@ public class ScriptTest extends TestCase {
         assertEquals(new StopTableEditEvent("table"), eventList.get(14));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(15));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
+        assertEquals(new DoubleClickListEvent("list",0),eventList.get(17));
+        assertEquals(new ClickTableHeaderEvent("header","one"),eventList.get(18));
+        assertEquals(new RightClickTableRowsEvent("table",1),eventList.get(19));
+        assertEquals(new AssertLabelEvent("label","labelValue"),eventList.get(20));
     }
 }

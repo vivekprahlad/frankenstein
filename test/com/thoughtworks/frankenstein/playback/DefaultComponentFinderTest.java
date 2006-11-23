@@ -232,6 +232,15 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         assertSame(chooser, finder.findFileChooser((WindowContext) mockWindowContext.proxy()));
     }
 
+    public void testFindsLabel(){
+        JLabel label=new JLabel("label");
+        label.setVisible(true);
+        JPanel panel = new JPanel();
+        panel.add(label);
+        mockWindowContext.expects(once()).method("activeWindow").will(returnValue(panel));
+        assertSame(label, finder.findLabel((WindowContext) mockWindowContext.proxy(),"label"));
+    }
+
     private JMenuBar createMenuBar(String top) {
         JMenuBar menubar = new JMenuBar();
         JMenu menu = createMenu(top);

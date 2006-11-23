@@ -8,5 +8,5 @@ import java.awt.*;
  */
 public interface ComponentMatchingRule {
     public boolean matchAndContinue(Component component);
-    public boolean hasNoMatches();
+    public boolean hasMatches();
 }

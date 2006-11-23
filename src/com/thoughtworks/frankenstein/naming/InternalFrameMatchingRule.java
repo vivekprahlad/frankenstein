@@ -1,7 +1,6 @@
 package com.thoughtworks.frankenstein.naming;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.awt.*;
 
 /**
@@ -35,7 +34,7 @@ public class InternalFrameMatchingRule implements ComponentMatchingRule{
         return frame;
     }
 
-    public boolean hasNoMatches() {
-        return frame == null;
+    public boolean hasMatches() {
+        return frame != null;
     }
 }

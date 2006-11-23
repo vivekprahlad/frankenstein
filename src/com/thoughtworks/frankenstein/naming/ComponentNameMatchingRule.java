@@ -22,9 +22,9 @@ public class ComponentNameMatchingRule implements ComponentMatchingRule {
             return true;
         }
     }
-
-    public boolean hasNoMatches() {
-        return matchingComponent == null;
+                           
+    public boolean hasMatches() {
+        return matchingComponent != null;
     }
 
     public Component matchingComponent() {

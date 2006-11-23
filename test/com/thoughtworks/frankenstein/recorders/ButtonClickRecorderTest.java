@@ -89,7 +89,7 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         new JFrame().getContentPane().add(pane);
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JButton.class);
         new ComponentHierarchyWalker().matchComponentsIn(pane, rule);
-        assertFalse(rule.hasNoMatches());
+        assertFalse(rule.hasMatches());
         JButton startButton = (JButton) rule.unnamedComponents().get(0);
         recorder.componentShown(startButton);
         startButton.doClick();

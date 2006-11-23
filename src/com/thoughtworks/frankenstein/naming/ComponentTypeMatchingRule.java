@@ -30,7 +30,7 @@ public class ComponentTypeMatchingRule implements ComponentMatchingRule{
         return matchingComponents;
     }
 
-    public boolean hasNoMatches() {
-        return matchingComponents.isEmpty();
+    public boolean hasMatches() {
+        return !matchingComponents.isEmpty();
     }
 }

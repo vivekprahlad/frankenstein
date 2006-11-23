@@ -9,19 +9,22 @@ import java.util.Map;
 
 /**
  * The default event registry
+ *
  * @author Vivek Prahlad
  */
-public class DefaultEventRegistry implements EventRegistry{
+public class DefaultEventRegistry implements EventRegistry {
     private Map eventNameToEventClassMap = new HashMap();
 
     public DefaultEventRegistry() {
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateWindowEvent.class);
         registerEvent(AssertEvent.class);
+        registerEvent(AssertLabelEvent.class);
         registerEvent(CancelTableEditEvent.class);
         registerEvent(ClickButtonEvent.class);
         registerEvent(ClickCheckboxEvent.class);
         registerEvent(ClickRadioButtonEvent.class);
+        registerEvent(ClickTableHeaderEvent.class);
         registerEvent(CloseAllDialogsEvent.class);
         registerEvent(CloseInternalFrameEvent.class);
         registerEvent(DelayEvent.class);
@@ -33,6 +36,7 @@ public class DefaultEventRegistry implements EventRegistry{
         registerEvent(InternalFrameShownEvent.class);
         registerEvent(KeyStrokeEvent.class);
         registerEvent(NavigateEvent.class);
+        registerEvent(RightClickTableRowsEvent.class);
         registerEvent(RightClickTreeEvent.class);
         registerEvent(SelectDropDownEvent.class);
         registerEvent(SelectFileEvent.class);
@@ -51,13 +55,14 @@ public class DefaultEventRegistry implements EventRegistry{
     }
 
     private void checkClass(Class eventClass) {
-        if (!FrankensteinEvent.class.isAssignableFrom(eventClass)) throw new IllegalArgumentException("Registered class is not a FrankensteinEvent");
+        if (!FrankensteinEvent.class.isAssignableFrom(eventClass))
+            throw new IllegalArgumentException("Registered class is not a FrankensteinEvent");
         checkHasStringConstructor(eventClass);
     }
 
     private void checkHasStringConstructor(Class eventClass) {
         try {
-            eventClass.getConstructor(new Class[] {String.class});
+            eventClass.getConstructor(new Class[]{String.class});
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException("Event class does not have string constructor");
         }
@@ -67,11 +72,11 @@ public class DefaultEventRegistry implements EventRegistry{
         String scriptLine = unescape(rawLine);
         int quoteIndex = scriptLine.indexOf("\"");
         String line = "", action = "";
-        if (quoteIndex== -1) {
+        if (quoteIndex == -1) {
             action = convert(scriptLine);
         } else {
             line = scriptLine.substring(quoteIndex).replaceAll("\"\\s+,\\s+\"", " ").replaceAll("\"", "");
-            action = convert(scriptLine.substring(0, quoteIndex-1));
+            action = convert(scriptLine.substring(0, quoteIndex - 1));
         }
         verifyActionRegistered(action);
         return createEvent((Class) eventNameToEventClassMap.get(action), line);
@@ -82,7 +87,8 @@ public class DefaultEventRegistry implements EventRegistry{
     }
 
     private void verifyActionRegistered(String action) {
-        if (!eventNameToEventClassMap.containsKey(action)) throw new RuntimeException("Could not find event for action :" + action);
+        if (!eventNameToEventClassMap.containsKey(action))
+            throw new RuntimeException("Could not find event for action :" + action);
     }
 
     private FrankensteinEvent createEvent(Class clazz, String string) {

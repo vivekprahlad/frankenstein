@@ -69,6 +69,6 @@ public class ComponentHierarchyWalkerTest extends TestCase {
     }
 
     public void testHasNoMatches() {
-        assertTrue(factory.matchComponentsIn(new JPanel(), new ComponentNameMatchingRule("testName")).hasNoMatches());
+        assertFalse(factory.matchComponentsIn(new JPanel(), new ComponentNameMatchingRule("testName")).hasMatches());
     }
 }

@@ -135,6 +135,21 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new DoubleClickListEvent("listone",0), defaultEventRegistry.createEvent("DoubleClickList \"listone\" 0"));
     }
 
+    public void testCreateClickTableHeaderEvent() {
+        defaultEventRegistry.registerEvent(ClickTableHeaderEvent.class);
+        assertEquals(new ClickTableHeaderEvent("header","one"), defaultEventRegistry.createEvent( "click_table_header \"header\" , \"one\""));
+    }
+
+    public void testCreateRightClickTableRows() {
+        defaultEventRegistry.registerEvent(RightClickTableRowsEvent.class);
+        assertEquals(new RightClickTableRowsEvent("table",1), defaultEventRegistry.createEvent( "right_click_table_rows \"table\" , \"1\""));
+    }
+
+     public void testCreateAssertLabel() {
+        defaultEventRegistry.registerEvent(AssertLabelEvent.class);
+        assertEquals(new AssertLabelEvent("label","labelValue"), defaultEventRegistry.createEvent("assert_label \"label\" , \"labelValue\""));
+    }
+
     public void testThrowsExceptionIfCreatingEventFails() {
         defaultEventRegistry.registerEvent(ExceptionThrowingEvent.class);
         try {

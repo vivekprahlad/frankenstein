@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 
 /**
  * Understands naming components.
+ *
  * @author Vivek Prahlad
  */
 public class DefaultNamingStrategy implements NamingStrategy {
@@ -36,6 +38,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
 
     public void nameComponentsIn(String prefix, Container panel) {
         nameComponentOfType(JSpinner.class, panel, new SpinnerNamingStrategy(prefix, this));
+        nameComponentOfType(JTableHeader.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTextField.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTextArea.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JRadioButton.class, panel, new ButtonNamingStrategy(prefix));

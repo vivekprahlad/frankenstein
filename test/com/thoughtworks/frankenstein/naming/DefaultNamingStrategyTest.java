@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.naming;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 
 import junit.framework.TestCase;
 
@@ -135,7 +136,7 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTabbedPane_1", parent.getName());
     }
 
-    public void testNamesOptionpaneButtons() {                              
+    public void testNamesOptionpaneButtons() {
         JPanel container = new JPanel();
         JButton optionPaneButton = new JButton("Yes");
         optionPaneButton.setName("OptionPane.button");
@@ -191,5 +192,13 @@ public class DefaultNamingStrategyTest extends TestCase {
         namingStrategy.nameComponentsIn(panel);
         JTextField field = (JTextField) spinner.getEditor();
         assertEquals("JSpinner_1.JTextField_1", field.getName());
+    }
+
+    public void testNamesTableHeader() {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JTableHeader header = new JTableHeader();
+        panel.add(header);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTableHeader_1", header.getName());
     }
 }

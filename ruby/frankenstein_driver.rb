@@ -106,6 +106,10 @@ module FrankensteinDriver
     append_to_script "click_radio_button \"#{button}\""
   end
 
+  def click_table_header(headerName,columnName)
+    append_to_script "click_table_header \"#(headerName)\" \"#(columnName)\""
+  end
+
   def double_click_list(list,item_index)
     append_to_script "double_click_list \"#{list}\" \"#{item_index}\""
   end

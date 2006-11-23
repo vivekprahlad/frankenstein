@@ -35,7 +35,7 @@ public class UnnamedComponentMatchingRule implements ComponentMatchingRule{
         return matchingComponents;
     }
 
-    public boolean hasNoMatches() {
-        return matchingComponents.isEmpty();
+    public boolean hasMatches() {
+        return false;
     }
 }

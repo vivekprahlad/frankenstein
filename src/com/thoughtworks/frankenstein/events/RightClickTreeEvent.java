@@ -45,7 +45,7 @@ public class RightClickTreeEvent extends AbstractFrankensteinEvent implements AW
         JTree tree = (JTree) finder.findComponent(context, treeName);
         rightClick(nodeLocation(tree), tree);
         try {
-            wait(10000);
+            wait(1000);
             Toolkit.getDefaultToolkit().removeAWTEventListener(this);            
         } catch (InterruptedException e) {
             e.printStackTrace();

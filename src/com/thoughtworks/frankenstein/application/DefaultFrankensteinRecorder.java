@@ -56,6 +56,9 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(TabSwitchRecorder.class);
         registerRecorder(TextFieldRecorder.class);
         registerRecorder(WindowActivationRecorder.class);
+        registerRecorder(ClickTableHeaderRecorder.class);
+        registerRecorder(RightClickTableRowsRecorder.class);
+        registerRecorder(AssertLabelRecorder.class);
     }
 
     public void registerRecorder(Class recorderClass) {

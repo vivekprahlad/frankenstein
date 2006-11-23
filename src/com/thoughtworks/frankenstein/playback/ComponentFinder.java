@@ -20,6 +20,8 @@ public interface ComponentFinder {
 
     JFileChooser findFileChooser(WindowContext context);
 
+    JLabel findLabel(WindowContext context,String labelValue);
+
     void menuDisplayed(JPopupMenu jPopupMenu);
 
     void menuHidden();

@@ -13,8 +13,8 @@ public class InternalFrameMatchingRuleTest extends TestCase {
     public void testMatchesInternalFrame() {
         JInternalFrame frame = new JInternalFrame("Test Title");
         InternalFrameMatchingRule rule = new InternalFrameMatchingRule("Test Title");
-        assertTrue(rule.hasNoMatches());
+        assertFalse(rule.hasMatches());
         assertFalse(rule.matchAndContinue(frame));
-        assertFalse(rule.hasNoMatches());
+        assertTrue(rule.hasMatches());
     }
 }
