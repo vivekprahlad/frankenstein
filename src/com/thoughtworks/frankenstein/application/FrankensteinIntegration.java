@@ -13,8 +13,6 @@ import com.thoughtworks.frankenstein.ui.RecorderTableModel;
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.script.HtmlTestReporter;
-import spin.over.CheckingRepaintManager;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +50,7 @@ public class FrankensteinIntegration {
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
-//        RepaintManager.setCurrentManager(new CheckingRepaintManager());
+        RepaintManager.setCurrentManager(new EDTRuleViolationLoggingRepaintManager());
     }
 
     public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {

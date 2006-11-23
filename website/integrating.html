@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+    <title>Integrating Frankenstein</title>
+</head>
+
+<body>
+<p>
+    The application under test is likely to be launched by a shell script or batch file.
+    In order to integrate, Frankenstein, you'll need to locate the line in the script that launches the application under test. This will typically look like this<br>
+          <code>java ... com.your.package.Application</code><br>
+          Change this to look like this:<br>
+          <code>java ... com.thoughtworks.frankenstein.application.PipingMain com.your.package.Application</code><br>
+<p>
+<p>In case the application under test requires custom events and / or custom recorders, then you'll need to
+    write your own main class. You'll then need to change the line that looks like<br>
+    <code>java ... com.your.package.Application</code><br>
+    to look this:<br>
+    <code>java ... com.your.custom.FrankensteinMain com.your.package.Application</code>
+</p>
+</body>
+</html>

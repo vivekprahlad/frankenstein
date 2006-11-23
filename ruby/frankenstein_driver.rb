@@ -31,11 +31,27 @@ module FrankensteinDriver
   end
 
   def assert_checkbox_selected(checkbox_name)
-    assert_true checkbox_name,"selected"
+    assert_togglebutton_selected checkbox_name
   end
 
   def assert_checkbox_not_selected(checkbox_name)
-    assert_false checkbox_name,"selected"
+    assert_togglebutton_not_selected checkbox_name
+  end
+
+  def assert_radiobutton_selected(radiobutton_name)
+    assert_togglebutton_selected radiobutton_name
+  end
+
+  def assert_radiobutton_not_selected(radiobutton_name)
+    assert_togglebutton_not_selected radiobutton_name
+  end
+
+  def assert_togglebutton_selected(togglebutton_name)
+    assert_true togglebutton_name,"selected"
+  end
+
+  def assert_togglebutton_not_selected(togglebutton_name)
+    assert_false togglebutton_name,"selected"
   end
 
   def assert_enabled(component_name)
@@ -70,8 +86,8 @@ module FrankensteinDriver
     assert component_name,ognl_expression,"false"
   end
 
-  def assert_text(textfield, text)
-    append_to_script "assert_text \"#{textfield}\" \"#{text}\""
+  def assert_text(text_component, expected_text)
+    assert text_component,"text",expected_text
   end
 
   def cancel_table_edit(table)
