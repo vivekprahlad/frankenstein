@@ -11,7 +11,7 @@ import java.util.*;
 public interface NamingStrategy {
     void nameComponentsIn(Container panel);
 
-    void nameComponentsIn(java.util.List components, ComponentNamingStrategy strategy);
+    void nameComponentsIn(java.util.List components, ComponentNamingStrategy strategy, int counter);
 
     void nameComponentsIn(String prefix, Container component);
 }

@@ -10,8 +10,6 @@ import java.awt.*;
  */
 public class SpinnerNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
 
-    int counter = 1;
-
     private NamingStrategy strategy;
 
     public SpinnerNamingStrategy(String prefix, NamingStrategy strategy) {
@@ -19,7 +17,7 @@ public class SpinnerNamingStrategy extends AbstractComponentNamingStrategy imple
         this.strategy = strategy;
     }
 
-    public void name(Component component) {
+    public void name(Component component, int counter) {
         component.setName(prefix((JComponent) component) + type(component.getClass()) + "_" + counter++);
         JSpinner spinner = (JSpinner) component;
         JComponent editor = spinner.getEditor();

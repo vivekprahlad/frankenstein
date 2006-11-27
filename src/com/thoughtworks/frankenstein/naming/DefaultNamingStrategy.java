@@ -19,20 +19,21 @@ public class DefaultNamingStrategy implements NamingStrategy {
     }
 
     private void nameComponentOfType(Class componentType, Container panel, ComponentNamingStrategy strategy) {
-        List components = matchedComponents(componentType, new ComponentHierarchyWalker(), panel);
-        nameComponentsIn(components, strategy);
+        UnnamedComponentMatchingRule rule = matchedComponents(componentType, new ComponentHierarchyWalker(), panel);
+        List components = rule.unnamedComponents();
+        nameComponentsIn(components, strategy, rule.counter());
     }
 
-    private List matchedComponents(Class componentType, ComponentHierarchyWalker componentHierarchyWalker, Container panel) {
+    private UnnamedComponentMatchingRule matchedComponents(Class componentType, ComponentHierarchyWalker componentHierarchyWalker, Container panel) {
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(componentType);
         componentHierarchyWalker.matchComponentsIn(panel, rule);
-        return rule.unnamedComponents();
+        return rule;
     }
 
-    public void nameComponentsIn(List components, ComponentNamingStrategy strategy) {
+    public void nameComponentsIn(List components, ComponentNamingStrategy strategy, int counter) {
         Collections.sort(components, new ComponentPositionComparator());
         for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-            strategy.name((Component) iterator.next());
+            strategy.name((Component) iterator.next(), counter++);
         }
     }
 
@@ -48,8 +49,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
         nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JComboBox.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTable.class, panel, new CounterBasedNamingStrategy(prefix));
-        new SmartCounterNamingStrategy(prefix, panel, JTabbedPane.class, this).name();
+        nameComponentOfType(JTabbedPane.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTree.class, panel, new CounterBasedNamingStrategy(prefix));
     }
-
 }

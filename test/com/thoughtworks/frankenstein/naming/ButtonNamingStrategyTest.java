@@ -15,7 +15,7 @@ public class ButtonNamingStrategyTest extends TestCase {
 
     public void testStripsSpacesFromButtonName() {
         JButton button = new JButton("Button Space");
-        new ButtonNamingStrategy("").name(button);
+        new ButtonNamingStrategy("").name(button, 1);
         assertEquals("ButtonSpace", button.getName());
     }
 }

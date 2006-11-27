@@ -87,8 +87,19 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTree_1", tree.getName());
     }
 
+    public void testNamesMultipleTextFields() {
+        JTextField one = new JTextField();
+        JTextField two = new JTextField();
+        JPanel panel = new JPanel();
+        panel.add(one);
+        panel.add(two);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_1", one.getName());
+        assertEquals("JTextField_2", two.getName());
+    }
+
     public void testNamesJTabbedPaneNestedInATabbedPane() throws InterruptedException, InvocationTargetException {
-        final JTabbedPane parent = createTabbedPane();
+        final JTabbedPane parent =  new JTabbedPane();
         parent.setName("JTabbedPane_1");
         final JTabbedPane child = new JTabbedPane();
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -113,7 +124,6 @@ public class DefaultNamingStrategyTest extends TestCase {
                 };
             }
         });
-        ;
         return tabbedPane[0];
     }
 
@@ -200,5 +210,68 @@ public class DefaultNamingStrategyTest extends TestCase {
         panel.add(header);
         namingStrategy.nameComponentsIn(panel);
         assertEquals("JTableHeader_1", header.getName());
+    }
+
+    public void testUnnamedComponentsContinueCounterProgression() {
+        JTextField firstText = new JTextField();
+        JTextField secondtText = new JTextField();
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        firstText.setName("JTextField_1");
+        panel.add(firstText);
+        panel.add(secondtText);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_1", firstText.getName());
+        assertEquals("JTextField_2", secondtText.getName());
+    }
+
+    public void testNamesComponentsWithCorrectCounterWhenComponentIsAddedLater() {
+        JTextField firstText = new JTextField();
+        JTextField secondtText = new JTextField();
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        panel.add(firstText);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_1", firstText.getName());
+        panel.add(secondtText);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_2", secondtText.getName());
+    }
+
+    public void testNamesUnnamedComponentWhenTheCounterIsALargeNumber() {
+        JTextField firstText = new JTextField();
+        JTextField secondtText = new JTextField();
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        firstText.setName("JTextField_1000");
+        panel.add(firstText);
+        panel.add(secondtText);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_1000", firstText.getName());
+        assertEquals("JTextField_1001", secondtText.getName());
+    }
+
+    public void testNamesComponentsOfTheRightType() {
+        JTextField firstComponent = new JTextField();
+        JButton secondComponent = new JButton("abc");
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        firstComponent.setName("JTextField_1000");
+        secondComponent.setName("JButton_1001");
+        panel.add(firstComponent);
+        panel.add(secondComponent);
+        JTextField unnamedComponent = new JTextField();
+        panel.add(unnamedComponent);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JTextField_1000", firstComponent.getName());
+        assertEquals("JTextField_1001", unnamedComponent.getName());
+    }
+
+    public void testAutomaticallyNamesComponentsWhenOtherComponentsAreLogicallyNamed() {
+        JTextField one = new JTextField();
+        JTextField two = new JTextField();
+        one.setName("one");
+        JPanel panel = new JPanel();
+        panel.add(one);
+        panel.add(two);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("one", one.getName());
+        assertEquals("JTextField_1", two.getName());
     }
 }

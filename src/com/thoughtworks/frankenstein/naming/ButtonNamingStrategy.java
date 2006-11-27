@@ -8,23 +8,22 @@ import javax.swing.*;
  * @author Vivek Prahlad
  */
 public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
-    private int counter = 1;
 
     protected ButtonNamingStrategy(String prefix) {
         super(prefix);
     }
 
-    public void name(Component component) {
+    public void name(Component component, int counter) {
         if (!(component instanceof AbstractButton)) throw new IllegalArgumentException("Can only be used to name buttons");
-        component.setName(prefix((JComponent) component) + buttonName(component).replaceAll("\\s+", ""));
+        component.setName(prefix((JComponent) component) + buttonName(component, counter).replaceAll("\\s+", ""));
     }
 
-    private String buttonName(Component component) {
+    private String buttonName(Component component, int counter) {
         AbstractButton button = (AbstractButton) component;
-        return isButtonTextEmpty(button) ? iconName(button) : button.getText();
+        return isButtonTextEmpty(button) ? iconName(button, counter) : button.getText();
     }
 
-    private String iconName(AbstractButton button) {
+    private String iconName(AbstractButton button, int counter) {
         return button.getIcon() == null ? String.valueOf(counter++) : simpleIconName(button.getIcon().toString());
     }
 

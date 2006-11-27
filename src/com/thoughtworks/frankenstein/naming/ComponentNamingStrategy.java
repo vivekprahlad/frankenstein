@@ -7,5 +7,5 @@ import java.awt.*;
  * @author Vivek Prahlad
  */
 public interface ComponentNamingStrategy {
-    public void name(Component component);
+    public void name(Component component, int counter);
 }
