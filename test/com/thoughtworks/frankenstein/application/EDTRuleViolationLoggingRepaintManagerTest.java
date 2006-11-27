@@ -2,10 +2,7 @@ package com.thoughtworks.frankenstein.application;
 
 import junit.framework.TestCase;
 
-import java.util.logging.Logger;
-import java.util.logging.MemoryHandler;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+import java.util.logging.*;
 
 import spin.over.EDTRuleViolation;
 
@@ -22,14 +19,14 @@ public class EDTRuleViolationLoggingRepaintManagerTest extends MockObjectTestCas
 
     public void testLogsEdtViolationsToFrankensteinLogger() {
         MockHandler handler = new MockHandler();
+        Logger.getLogger("Frankenstein").setLevel(Level.ALL);
         Logger.getLogger("Frankenstein").addHandler(handler);
         EDTRuleViolation ruleViolation = violation();
         new EDTRuleViolationLoggingRepaintManager().indicate(ruleViolation);
         assertNotNull(handler.record);
         assertEquals("Frankenstein", handler.record.getLoggerName());
-        assertEquals("com.thoughtworks.frankenstein.application.EDTRuleViolationLoggingRepaintManager",
-                handler.record.getSourceClassName());
         assertSame(ruleViolation, handler.record.getThrown());
+        Logger.getLogger("Frankenstein").removeHandler(handler);
     }
 
     private EDTRuleViolation violation() {
