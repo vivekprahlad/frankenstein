@@ -5,7 +5,7 @@ package com.thoughtworks.frankenstein.playback;
  *
  * @author vivek
  */
-public abstract class MatchStrategy {
+public class MatchStrategy {
 
     public static boolean matchValues(String actual, String expected) {
         return expected.startsWith("regex:") ? matchRegularExpression(actual, expected) : actual.equals(expected);

@@ -9,8 +9,15 @@
 <h3>Extending the core test vocabulary</h3>
 Frankenstein is an event-driven framework. It is possible to extend the core event vocabulary by creating new event classes.
 Custom events need to implement the <code>FrankensteinEvent</code> interface. (For most custom events, it will be sufficient to
-extend from <code>AbstractFrankensteinEvent</code>)
+extend from <code>AbstractFrankensteinEvent</code>). You'll need to explicitly register a custom event with Frankenstein
 <h3>Custom components</h3>
 Custom components will require custom recorders to be written.
+
+Most component recorders work in the following way:
+<ul>
+    <li>Attach a component specific listener when a component is shown (for example, the textComponentRecorder attaches a document listener)<li>
+    <li>Record a Frankenstein event when the component specific listener is triggered</li>
+    <li>Detach the listener when the component is hidden</li>
+</ul>
 </body>
 </html>

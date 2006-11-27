@@ -8,16 +8,23 @@
 <body>
 <p>
     The application under test is likely to be launched by a shell script or batch file.
-    In order to integrate, Frankenstein, you'll need to locate the line in the script that launches the application under test. This will typically look like this<br>
+    In order to integrate Frankenstein, you'll need to locate the line in the script that launches the application under test. This will typically look like this<br>
           <code>java ... com.your.package.Application</code><br>
           Change this to look like this:<br>
           <code>java ... com.thoughtworks.frankenstein.application.PipingMain com.your.package.Application</code><br>
 <p>
-<p>In case the application under test requires custom events and / or custom recorders, then you'll need to
-    write your own main class. You'll then need to change the line that looks like<br>
-    <code>java ... com.your.package.Application</code><br>
-    to look this:<br>
-    <code>java ... com.your.custom.FrankensteinMain com.your.package.Application</code>
+<p>If you're extending Frankenstein, you'll need to write your own main class.
+<code><br>
+public class FrankensteinWrapper {<br>
+    public static void main(String[] args) {<br>
+         FrankensteinIntegration integration = new FrankensteinIntegration(YourMainClass.class);<br>
+         integration.registerEvent(YourEvent.class); //Register events, if required<br>
+         integration.registerRecorder(YourRecorder.class); //Register recorder, if required<br>
+         integration.start(args); //Finally, get Frankenstein to launch your application.<br>
+    }<br>
+}<br>
+</code>
+
 </p>
 </body>
 </html>
