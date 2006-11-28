@@ -25,4 +25,6 @@ public interface ComponentFinder {
     void menuDisplayed(JPopupMenu jPopupMenu);
 
     void menuHidden();
+
+    JDialog findDialog(String title);
 }

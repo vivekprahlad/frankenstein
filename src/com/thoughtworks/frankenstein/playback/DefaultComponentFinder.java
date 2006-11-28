@@ -14,7 +14,8 @@ import com.thoughtworks.frankenstein.naming.*;
 public class DefaultComponentFinder implements ComponentFinder {
     private Component editor;
     private NamingStrategy namingStrategy;
-    private JPopupMenu popupMenu;
+    private DialogList dialogList = new DialogList();
+    private MenuFinder menuFinder = new MenuFinder();
 
     public DefaultComponentFinder(NamingStrategy namingStrategy) {
         this.namingStrategy = namingStrategy;
@@ -47,82 +48,22 @@ public class DefaultComponentFinder implements ComponentFinder {
     }
 
     public synchronized JMenuItem findMenuItem(WindowContext context, String path) {
-        String[] pathElements = path.split(">");
-        if (popupMenu != null) {
-            return findPopupMenu(pathElements);
-        } else {
-            for (int i = 0; i < Frame.getFrames().length; i++) {
-                try {
-                    java.util.List menuBars = findMenuBar(Frame.getFrames(), i);
-                    if (!menuBars.isEmpty()) {
-                        return findMenuItem(menuBars, pathElements);
-                    }
-                } catch (Exception e) {
-                    //Ignore
-                }
-            }
-        }
-        throw new RuntimeException("Unable to find menu with path: " + path);
+        return menuFinder.find(path);
     }
 
-    private JMenuItem findMenuItem(java.util.List menuBars, String[] pathElements) {
-        JMenuBar bar = (JMenuBar) menuBars.get(0);
-        JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
-        for (int j = 1; j < pathElements.length; j++) {
-            menuItem = findMenu((JMenu) menuItem, pathElements[j]);
-        }
-        return menuItem;
+    public synchronized void menuDisplayed(JPopupMenu menu) {
+        menuFinder.menuDisplayed(menu);
     }
 
-    private JMenuItem findPopupMenu(String[] pathElements) {
-        JMenuItem menuItem = findTopLevelMenu(pathElements[0]);
-        for (int j = 1; j < pathElements.length; j++) {
-            menuItem = findMenu((JMenu) menuItem, pathElements[j]);
-        }
-        popupMenu = null;
-        return menuItem;
-    }
-
-    private JMenuItem findTopLevelMenu(String pathElement) {
-        for (int i=0; i<popupMenu.getComponentCount(); i++) {
-            if (popupMenu.getComponent(i) instanceof JMenuItem) {
-                JMenuItem item = (JMenuItem) popupMenu.getComponent(i);
-                if (pathElement.equals(item.getText())) return item;
-            }
-        }
-        throw new RuntimeException("Unable to find top level popup menu item: " + pathElement);
-    }
-
-    private java.util.List findMenuBar(Frame[] frames, int i) {
-        Frame frame = frames[i];
-        UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JMenuBar.class);
-        new ComponentHierarchyWalker().matchComponentsIn(frame, rule);
-        return rule.unnamedComponents();
-    }
-
-    private JMenu findTopLevelMenu(JMenuBar bar, String pathElement) {
-        for (int i = 0; i < bar.getMenuCount(); i++) {
-            if (bar.getMenu(i).getText().equals(pathElement)) return bar.getMenu(i);
-        }
-        throw new RuntimeException("Unable to find top level menu" + pathElement);
-    }
-
-    private JMenuItem findMenu(JMenu menuItem, String pathElement) {
-        for (int i = 0; i < menuItem.getMenuComponentCount(); i++) {
-            if (menuItem.getMenuComponent(i) instanceof JMenuItem) {
-                JMenuItem jmenuItem = (JMenuItem) menuItem.getMenuComponent(i);
-                if (jmenuItem.getText().equals(pathElement)) return jmenuItem;
-            }
-        }
-        throw new RuntimeException  ("Unable to find menu" + pathElement);
+    public void menuHidden() {
+        menuFinder.menuHidden();
     }
 
     public Window findWindow(String title) {
         Frame[] frames = Frame.getFrames();
         for (int i = 0; i < frames.length; i++) {
-            Frame frame = frames[i];
-            if (MatchStrategy.matchValues(title(frame),title)) {
-                return frame;
+            if (MatchStrategy.matchValues(title(frames[i]),title)) {
+                return frames[i];
             }
         }
         throw new RuntimeException("Could not find window with title: " + title);
@@ -147,18 +88,11 @@ public class DefaultComponentFinder implements ComponentFinder {
     public JLabel findLabel(WindowContext context,String labelValue) {
         LabelMatchingRule rule = new LabelMatchingRule(labelValue);
         new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
-        return rule.matchingComponent();
+        if (rule.matchingLabel() == null) throw new RuntimeException("Unable to find label: " + labelValue);
+        return rule.matchingLabel();
     }
 
-    public synchronized void menuDisplayed(JPopupMenu menu) {
-        popupMenu = menu;
-        Logger.getLogger("Frankenstein").info("Menu Displayed");
+    public JDialog findDialog(String title) {
+        return dialogList.findDialog(title);
     }
-
-    public void menuHidden() {
-        popupMenu = null;
-        Logger.getLogger("Frankenstein").info("Menu Hidden");
-    }
-
-
 }
