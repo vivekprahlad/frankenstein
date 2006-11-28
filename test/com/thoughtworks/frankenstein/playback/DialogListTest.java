@@ -16,25 +16,26 @@ public class DialogListTest extends TestCase {
 
     public void testRecordsDialogWhenDialogIsOpened() {
         DialogList list = new DialogList();
-        JDialog dialog = dialog();
+        JDialog dialog = dialog("title");
+        list.eventDispatched(new WindowEvent(dialog("anothertitle"), WindowEvent.WINDOW_OPENED));
         list.eventDispatched(new WindowEvent(dialog, WindowEvent.WINDOW_OPENED));
         assertSame(dialog, list.findDialog("title"));
     }
 
     public void testFindsDialogWithRegularExpression() {
         DialogList list = new DialogList();
-        JDialog dialog = dialog();
+        JDialog dialog = dialog("title");
         list.eventDispatched(new WindowEvent(dialog, WindowEvent.WINDOW_OPENED));
         assertSame(dialog, list.findDialog("regex:t.*"));
     }
 
-    private JDialog dialog() {
-        return new JDialog((Frame) null, "title");
+    private JDialog dialog(String title) {
+        return new JDialog((Frame) null, title);
     }
 
     public void testDoesNotFindDialogOnceDialogIsClosed() {
         DialogList list = new DialogList();
-        JDialog dialog = dialog();
+        JDialog dialog = dialog("title");
         list.eventDispatched(new WindowEvent(dialog, WindowEvent.WINDOW_OPENED));
         dialog.dispose();
         new WaitForIdle().waitForIdle();

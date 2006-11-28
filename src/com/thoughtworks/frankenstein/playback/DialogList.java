@@ -38,7 +38,9 @@ public class DialogList  extends WindowAdapter implements AWTEventListener {
     public JDialog findDialog(String title) {
         for (Iterator iterator = dialogs.iterator(); iterator.hasNext();) {
             JDialog dialog = (JDialog) iterator.next();
-            if (MatchStrategy.matchValues(title(dialog), title)) return dialog;
+            if (MatchStrategy.matchValues(title(dialog), title)) {
+                return dialog;
+            }
         }
         throw new RuntimeException("Could not find dialog with title: " + title);
     }

@@ -6,10 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 
+import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
+
 /**
  * Ensures behaviour of the window context.
  */
-public class DefaultWindowContextTest extends TestCase {
+public class DefaultWindowContextTest extends MockObjectTestCase {
     private DefaultWindowContext windowContext;
     private KeyboardFocusManager defaultKeyboardFocusManager;
 
@@ -41,6 +44,18 @@ public class DefaultWindowContextTest extends TestCase {
         assertSame(dialog, windowContext.activeWindow());
     }
 
+    public void testContextIsJFrameWhenInternalFrameIsShown() {
+        JFrame frame = new JFrame();
+        JInternalFrame internalFrame = new JInternalFrame();
+        JTextField textField = new JTextField();
+        setFocusManager(textField);
+        internalFrame.getContentPane().add(textField);
+        frame.getContentPane().add(internalFrame);
+        windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, textField));
+        assertSame(frame, windowContext.activeWindow());
+        assertSame(frame, windowContext.activeTopLevelWindow());
+    }
+
     public void testSetsActiveWindowWhenFocusChanges() {
         JFrame frame = new JFrame();
         KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(frame));
@@ -58,7 +73,7 @@ public class DefaultWindowContextTest extends TestCase {
     public void testWaitForDialogWithActiveWindowAsTargetDialog() throws InterruptedException {
         JFrame frame = new JFrame();
         JDialog testDialog = new JDialog(frame, "testDialog");
-        KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
+        setFocusManager(testDialog);
         windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
         windowContext.waitForDialogOpening("testDialog", 10);
         assertSame(testDialog, windowContext.activeWindow());
@@ -69,7 +84,7 @@ public class DefaultWindowContextTest extends TestCase {
     public void testWaitForDialogWithRegularExpression() throws InterruptedException {
         JFrame frame = new JFrame();
         JDialog testDialog = new JDialog(frame, "testDialog");
-        KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
+        setFocusManager(testDialog);
         windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
         windowContext.waitForDialogOpening("regex:test.*", 10);
         assertSame(testDialog, windowContext.activeWindow());
@@ -77,9 +92,13 @@ public class DefaultWindowContextTest extends TestCase {
         frame.dispose();
     }
 
+    private void setFocusManager(Component component) {
+        KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(component));
+    }
+
     public void testWaitForActiveDialogWhenDialogIsNotReady() throws InterruptedException {
         final JDialog testDialog = new JDialog(new JFrame(), "testDialog");
-        KeyboardFocusManager.setCurrentKeyboardFocusManager(new TestKeyboardFocusManager(testDialog));
+        setFocusManager(testDialog);
         new Thread(new Runnable() {
             public void run() {
                 windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, testDialog));
@@ -110,6 +129,42 @@ public class DefaultWindowContextTest extends TestCase {
             }
         }).start();
         windowContext.closeAllDialogs();
+    }
+
+    public void testReturnsCurrentFocusOwner() {
+        JLabel focusOwner = new JLabel("test");
+        setFocusManager(focusOwner);
+        assertSame(focusOwner, windowContext.focusOwner());
+    }
+
+    public void testFiresDialogOpenedEventWhenDialogIsShown() {
+        Mock mockWindowContextListener = mock(WindowContextListener.class);
+        windowContext.addWindowContextListener((WindowContextListener) mockWindowContextListener.proxy());
+        mockWindowContextListener.expects(once()).method("dialogShown");
+        windowContext.setActiveWindow(new JDialog((Frame) null, "test"));
+    }
+
+    public void testListenerIsNotNotifiedWhenRemoved() {
+        Mock mockWindowContextListener = mock(WindowContextListener.class);
+        WindowContextListener listener = (WindowContextListener) mockWindowContextListener.proxy();
+        windowContext.addWindowContextListener(listener);
+        windowContext.removeWindowContextListener(listener);
+        mockWindowContextListener.expects(never()).method("dialogShown");
+        windowContext.setActiveWindow(new JDialog((Frame) null, "test"));
+    }
+
+    public void testWaitsForDialogToClose() {
+        final JDialog dialog = new JDialog((Frame) null, "title");
+        setFocusManager(dialog);
+        windowContext.setActiveWindow(dialog);
+        final JFrame frame = new JFrame("newFocusOwner");
+        new Thread(new Runnable() {
+            public void run() {
+                windowContext.setActiveWindow(frame);
+            }
+        }).start();
+        windowContext.waitForDialogClosing("title", 1000);
+        assertSame(frame, windowContext.activeWindow());
     }
 
     private class TestKeyboardFocusManager extends DefaultKeyboardFocusManager {
