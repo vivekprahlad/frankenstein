@@ -30,7 +30,7 @@ public class LabelMatchingRule implements ComponentMatchingRule {
         return matchingLabel != null;
     }
 
-    public JLabel matchingComponent() {
+    public JLabel matchingLabel() {
         return (JLabel) matchingLabel;
     }
 }

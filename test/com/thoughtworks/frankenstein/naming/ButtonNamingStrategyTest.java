@@ -18,4 +18,13 @@ public class ButtonNamingStrategyTest extends TestCase {
         new ButtonNamingStrategy("").name(button, 1);
         assertEquals("ButtonSpace", button.getName());
     }
+
+    public void testThrowsExceptionWhenUsedToNameOtherComponents() {
+        try {
+            new ButtonNamingStrategy("").name(new JTextField(), 1);
+            fail("Should not be able to name text field");
+        } catch (IllegalArgumentException exception) {
+            //Expected
+        }
+    }
 }

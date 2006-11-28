@@ -26,10 +26,6 @@ public class ComponentTypeMatchingRule implements ComponentMatchingRule{
         return true;
     }
 
-    public java.util.List components() {
-        return matchingComponents;
-    }
-
     public boolean hasMatches() {
         return !matchingComponents.isEmpty();
     }

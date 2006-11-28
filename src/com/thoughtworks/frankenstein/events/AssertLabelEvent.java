@@ -38,10 +38,7 @@ public class AssertLabelEvent extends AbstractFrankensteinEvent {
     }
 
     public void run() {
-        JLabel label = finder.findLabel(context, labelValue);
-        if (label == null) {
-            throw new RuntimeException("Expected: " + labelValue + ",was not fouund");
-        }
+        finder.findLabel(context, labelValue);
     }
 }
 
