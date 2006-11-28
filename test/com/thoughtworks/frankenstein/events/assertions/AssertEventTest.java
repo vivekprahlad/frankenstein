@@ -49,6 +49,28 @@ public class AssertEventTest extends AbstractEventTestCase {
         event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
     }
 
+    public void testDoesNotAcceptInvalidOGNLExpressions() {
+        try {
+            AssertEvent event = new AssertEvent("table", "rowCount.", "abc");
+            fail("Should not have been able to create event with invalid OGNL expression");
+        } catch (Exception e) {
+            //Expected
+        }
+    }
+
+    public void testShouldThrowExceptionWhenOGNLExpressionCannotBeEvaluated() {
+        AssertEvent event = new AssertEvent("table", "fooCount", "3");
+        JTable table = new JTable(3, 3);
+        Mock componentFinder = mock(ComponentFinder.class);
+        componentFinder.expects(once()).method("findComponent").will(returnValue(table));
+        try {
+            event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+            fail("Playing event should have thrown an exception");
+        } catch (Exception e) {
+            //Expected
+        }
+    }
+
     public void testAssertWithWrongRowCount() {
         AssertEvent event = new AssertEvent("table", "rowCount", "2");
         JTable table = new JTable(3, 3);
