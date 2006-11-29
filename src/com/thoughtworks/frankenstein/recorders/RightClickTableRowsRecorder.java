@@ -1,16 +1,13 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.RightClickTableRowsEvent;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
+import com.thoughtworks.frankenstein.events.TableRowEvent;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.AWTEventListener;
 
 /**
  * Ensures RightClcikTableRowsRecorder works as expected
@@ -51,7 +48,7 @@ public class RightClickTableRowsRecorder extends AbstractComponentRecorder imple
         if (e.getButton() == MouseEvent.BUTTON3) {
             JTable table = (JTable) e.getSource();
             int rowIndex = table.rowAtPoint(e.getPoint());
-            recorder.record(new RightClickTableRowsEvent(componentName(table), rowIndex));
+            recorder.record(new TableRowEvent(componentName(table), rowIndex, new RightClickAction()));
         }
     }
 

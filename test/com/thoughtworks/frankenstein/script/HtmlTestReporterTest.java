@@ -24,9 +24,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
 
     public void testReportsTestSuccess() throws IOException {
         Mock frankensteinEvent = mock(FrankensteinEvent.class);
-        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
-        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
-        frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
+        expectActionTargetAndParameters(frankensteinEvent, "Parameters");
         reporter.startTest("testName");
         reporter.reportSuccess((FrankensteinEvent) frankensteinEvent.proxy());
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
@@ -42,9 +40,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
 
     public void testReportsTestFailure() throws IOException {
         Mock frankensteinEvent = mock(FrankensteinEvent.class);
-        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
-        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
-        frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
+        expectActionTargetAndParameters(frankensteinEvent, "Parameters");
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.startTest("testName");
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
@@ -63,9 +59,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
 
     public void testReportsCauseFromInvocationTargetException() throws IOException {
         Mock frankensteinEvent = mock(FrankensteinEvent.class);
-        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
-        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
-        frankensteinEvent.expects(once()).method("parameters").will(returnValue("Parameters"));
+        expectActionTargetAndParameters(frankensteinEvent, "Parameters");
         reporter.startTest("testName");
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(),
@@ -84,9 +78,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
 
     public void testSubstitutesNbspForEmptyStrings() throws IOException {
         Mock frankensteinEvent = mock(FrankensteinEvent.class);
-        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
-        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
-        frankensteinEvent.expects(once()).method("parameters").will(returnValue(""));
+        expectActionTargetAndParameters(frankensteinEvent, "");
         reporter.startTest("testName");
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
@@ -100,6 +92,12 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "</table>\n" +
                 "</body>\n" +
                 "</html>", reporter.finishTest());
+    }
+
+    private void expectActionTargetAndParameters(Mock frankensteinEvent, String parameters) {
+        frankensteinEvent.expects(once()).method("action").will(returnValue("Action"));
+        frankensteinEvent.expects(once()).method("target").will(returnValue("Target"));
+        frankensteinEvent.expects(once()).method("parameters").will(returnValue(parameters));
     }
 
     public void testExtractsNameWhenNoPatchIsSpecified() {

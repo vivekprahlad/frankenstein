@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 
 /**
  * Ensures behaviour of the default event registry
@@ -141,8 +142,44 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreateRightClickTableRows() {
-        defaultEventRegistry.registerEvent(RightClickTableRowsEvent.class);
-        assertEquals(new RightClickTableRowsEvent("table",1), defaultEventRegistry.createEvent( "right_click_table_rows \"table\" , \"1\""));
+        defaultEventRegistry.registerEvent(TableRowEvent.class);
+        assertEquals(new TableRowEvent("table",1, new RightClickAction()), defaultEventRegistry.createEvent( "right_click_table_row \"table\" , \"1\""));
+    }
+
+    public void testRegisteringValidAction() {
+        defaultEventRegistry.registerAction(RightClickAction.class);
+    }
+
+    public void testDoesNotAllowInvalidActionsToBeRegistered() {
+        try {
+            defaultEventRegistry.registerAction(AssertEvent.class);
+            fail("Should not have been able to register an invalid eventActionName");
+        } catch (Exception e) {
+            //Expected
+        }
+    }
+
+    public void testIdentifiesCompoundEventBasedOnRegisteredActions() {
+        defaultEventRegistry.registerAction(RightClickAction.class);
+        assertTrue(defaultEventRegistry.isCompoundEvent("RightClickTree"));
+    }
+
+    public void testCreatesAction() {
+        defaultEventRegistry.registerAction(RightClickAction.class);
+        assertNotNull(defaultEventRegistry.createAction("RightClickTree"));
+    }
+
+    public void testSplitsScriptLineIntoActionAndEvent() {
+        defaultEventRegistry.registerAction(RightClickAction.class);
+        String[] scriptLine = defaultEventRegistry.split("RightClickTree foo bar");
+        assertEquals("RightClick", scriptLine[0]);
+        assertEquals("Tree foo bar", scriptLine[1]);
+    }
+
+    public void testCreatesRightClickTreeEvent() {
+        defaultEventRegistry.registerAction(RightClickAction.class);
+        defaultEventRegistry.registerEvent(TreeEvent.class);
+        assertEquals(new TreeEvent("tree", "a>b>c", new RightClickAction()), defaultEventRegistry.createEvent("right_click_tree \"tree\" , \"a>b>c\""));
     }
 
      public void testCreateAssertLabel() {

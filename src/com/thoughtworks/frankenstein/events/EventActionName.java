@@ -1,13 +1,25 @@
 package com.thoughtworks.frankenstein.events;
 
 /**
- * Creates action names from event names.
+ * Creates eventActionName names from event names.
  * @author Vivek Prahlad
  */
 public class EventActionName {
 
+    public static String eventActionName(Class eventClass) {
+        return actionInternal(eventClass, "Event");
+    }
+
     public static String action(Class eventClass) {
-        String[] strings = eventClass.getName().split("\\.");
-        return strings[strings.length-1].replaceAll("Event", "");
+        return actionInternal(eventClass, "Action");
+    }
+
+    private static String actionInternal(Class actionClass, String suffix) {
+        String[] strings = className(actionClass);
+        return strings[strings.length-1].replaceAll(suffix, "");
+    }
+
+    private static String[] className(Class actionClass) {
+        return actionClass.getName().split("\\.");
     }
 }

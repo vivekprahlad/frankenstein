@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.frankenstein.events.*;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import junit.framework.TestCase;
 
@@ -35,7 +36,7 @@ public class ScriptTest extends TestCase {
     "activate_window \"text a\"\n"+
     "double_click_list \"list\" , \"0\"\n"+
     "click_table_header \"header\" , \"one\"\n"+
-    "right_click_table_rows \"table\" , \"1\"\n"+
+    "right_click_table_row \"table\" , \"1\"\n"+
     "assert_label \"label\" , \"labelValue\"";
 
     public void testCreatesScriptFromEventList() {
@@ -59,7 +60,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new ActivateWindowEvent("text a"));
         eventList.add(new DoubleClickListEvent("list",0));
         eventList.add(new ClickTableHeaderEvent("header","one"));
-        eventList.add(new RightClickTableRowsEvent("table",1));
+        eventList.add(new TableRowEvent("table",1, new RightClickAction()));
         eventList.add(new AssertLabelEvent("label","labelValue"));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
@@ -88,7 +89,7 @@ public class ScriptTest extends TestCase {
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
         assertEquals(new DoubleClickListEvent("list",0),eventList.get(17));
         assertEquals(new ClickTableHeaderEvent("header","one"),eventList.get(18));
-        assertEquals(new RightClickTableRowsEvent("table",1),eventList.get(19));
+        assertEquals(new TableRowEvent("table",1, new RightClickAction()),eventList.get(19));
         assertEquals(new AssertLabelEvent("label","labelValue"),eventList.get(20));
     }
 }

@@ -7,4 +7,6 @@ package com.thoughtworks.frankenstein.events;
 public interface EventRegistry {
     void registerEvent(Class eventClass);
     FrankensteinEvent createEvent(String scriptLine);
+
+    void registerAction(Class actionClazz);
 }

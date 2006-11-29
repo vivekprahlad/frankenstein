@@ -38,7 +38,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String action() {
-        if (!actionNameMap.containsKey(getClass())) actionNameMap.put(getClass(), EventActionName.action(getClass()));
+        if (!actionNameMap.containsKey(getClass())) actionNameMap.put(getClass(), EventActionName.eventActionName(getClass()));
         return (String) actionNameMap.get(getClass());
     }
 

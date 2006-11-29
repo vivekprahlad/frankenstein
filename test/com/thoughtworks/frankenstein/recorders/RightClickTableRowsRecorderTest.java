@@ -1,7 +1,8 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.RightClickTableRowsEvent;
+import com.thoughtworks.frankenstein.events.TableRowEvent;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class RightClickTableRowsRecorderTest extends AbstractRecorderTestCase {
 
      public void testRecordsClickOnTableHeader() {
         recorder.componentShown(table);
-        mockRecorder.expects(once()).method("record").with(eq(new RightClickTableRowsEvent("table",0)));
+        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table",0, new RightClickAction())));
         Point point = LocationForFirstRow();
         recorder.mouseClicked(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, false,MouseEvent.BUTTON3));
     }
