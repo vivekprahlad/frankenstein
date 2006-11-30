@@ -13,11 +13,11 @@ extend from <code>AbstractFrankensteinEvent</code>). You'll need to explicitly r
 <h3>Custom components</h3>
 Custom components will require custom recorders to be written.
 
-Most component recorders work in the following way:
+Most component recorders work in the following manner:
 <ul>
     <li>Attach a component specific listener when a component is shown (for example, the textComponentRecorder attaches a document listener)<li>
     <li>Record a Frankenstein event when the component specific listener is triggered</li>
-    <li>Detach the listener when the component is hidden</li>
+    <li>Detach the listener when the component is hidden.It is critical to ensure that your listeners get detached at the right time to avoid memory leaks</li>
 </ul>
 </body>
 </html>

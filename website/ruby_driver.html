@@ -9,10 +9,24 @@
 <h3>Extending core test vocabulary</h3>
 Using Frankenstein's ruby driver allows test suites to be created.
 <h2>Writing a test</h2>
+class YourTest
+include FrankensteinDriver
+  def test
+
+  end
+end
 <h2>Refactoring functions</h2>
 <h2>Regular expression support</h2>
+most of the driver functions 
 <h2>Driver reference</h2>
 <h2>Running tests in a suite</h2>
+To run multiple tests:
+<code>TestRunner.new.run comma separated list of tests></code>
+For example, if you'd like to run two tests, TestOne and TestTwo:
+<code>TestRunner.new.run TestOne,TestTwo</code>
 <h2>Changing the reporting directory</h2>
+To change the directory where reports are generated, add a line in your test script:<br>
+<code>FrankensteinDriver.report_dir="C:\your\report\dir"</code>
+<h2>Ruby references</h2>
 </body>
 </html>

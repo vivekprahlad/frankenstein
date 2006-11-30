@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * @author Vivek Prahlad
  */
 public class FrankensteinIntegration {
-    private Recorder eventRecorder;
+    protected Recorder eventRecorder;
     private DefaultFrankensteinRecorder recorder;
     private Class mainClass;
     private JFrame frame;
@@ -99,5 +99,9 @@ public class FrankensteinIntegration {
         recorder.stopRecording();
         socketListener.stop();
         frame.dispose();
+    }
+
+    public void record() {
+        recorder.start();
     }
 }

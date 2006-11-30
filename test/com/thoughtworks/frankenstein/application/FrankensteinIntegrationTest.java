@@ -7,6 +7,10 @@ import org.jmock.MockObjectTestCase;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.recorders.ComponentRecorder;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Ensures behaviour of FrankensteinIntegration
@@ -22,7 +26,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
     }
 
     protected void tearDown() throws Exception {
-        if (integration!= null) {
+        if (integration != null) {
             integration.stop();
         }
         frame.dispose();
@@ -65,6 +69,17 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         integration = null;
     }
 
+    public void testChangesLogLevel() {
+        integration.setLogLevel(Level.WARNING);
+        assertEquals(Level.WARNING, Logger.getLogger("Frankenstein").getLevel());
+    }
+
+    public void testStartsRecorder() {
+        integration.record();
+        integration.eventRecorder.record(new ActivateWindowEvent("test"));
+        assertEquals(1, integration.eventRecorder.eventList().size());
+    }
+
     private class MockJFrame extends JFrame {
         public void setVisible(boolean b) {
         }
@@ -76,6 +91,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         static String[] args() {
             return arg;
         }
+
         public static void main(String[] args) {
             arg = args;
         }

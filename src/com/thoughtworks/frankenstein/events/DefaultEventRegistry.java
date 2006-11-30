@@ -1,11 +1,15 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
+import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.script.Script;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
 
 /**
  * The default event registry
@@ -14,8 +18,10 @@ import java.util.Map;
  */
 public class DefaultEventRegistry implements EventRegistry {
     private Map eventNameToEventClassMap = new HashMap();
+    private Map actionNameToActionClassMap = new HashMap();
 
     public DefaultEventRegistry() {
+        registerAction(RightClickAction.class);
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateWindowEvent.class);
         registerEvent(AssertEvent.class);
@@ -36,8 +42,8 @@ public class DefaultEventRegistry implements EventRegistry {
         registerEvent(InternalFrameShownEvent.class);
         registerEvent(KeyStrokeEvent.class);
         registerEvent(NavigateEvent.class);
-        registerEvent(RightClickTableRowsEvent.class);
-        registerEvent(RightClickTreeEvent.class);
+        registerEvent(TableRowEvent.class);
+        registerEvent(TreeEvent.class);
         registerEvent(SelectDropDownEvent.class);
         registerEvent(SelectFileEvent.class);
         registerEvent(SelectFilesEvent.class);
@@ -51,7 +57,17 @@ public class DefaultEventRegistry implements EventRegistry {
 
     public void registerEvent(Class eventClass) {
         checkClass(eventClass);
-        eventNameToEventClassMap.put(EventActionName.action(eventClass), eventClass);
+        eventNameToEventClassMap.put(EventActionName.eventActionName(eventClass), eventClass);
+    }
+
+    public void registerAction(Class actionClazz) {
+        checkActionClass(actionClazz);
+        actionNameToActionClassMap.put(EventActionName.action(actionClazz), actionClazz);
+    }
+
+    private void checkActionClass(Class actionClass) {
+        if (!Action.class.isAssignableFrom(actionClass))
+            throw new IllegalArgumentException("Registered class " + actionClass.getClass().getName() + " is not an Action");
     }
 
     private void checkClass(Class eventClass) {
@@ -64,22 +80,84 @@ public class DefaultEventRegistry implements EventRegistry {
         try {
             eventClass.getConstructor(new Class[]{String.class});
         } catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException("Event class does not have string constructor");
+            checkHasCompoundConstructor(eventClass);
+        }
+    }
+
+    private void checkHasCompoundConstructor(Class eventClass) {
+        try {
+            eventClass.getConstructor(new Class[]{String.class, Action.class});
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException("Event class does not have string or compound constructor");
         }
     }
 
     public FrankensteinEvent createEvent(String rawLine) {
+        String scriptLine = convert(rawLine);
+        if (isCompoundEvent(scriptLine)) {
+            return createCompoundEvent(scriptLine);
+        } else {
+            return createEvent(scriptLine, EventCreationStrategy.SIMPLE_EVENT_CREATION_STRATEGY);
+        }
+    }
+
+    private FrankensteinEvent createCompoundEvent(String rawLine) {
+        String[] scriptLine = split(rawLine);
+        Action action = createAction(scriptLine[0]);
+        return createEvent(action, scriptLine[1], EventCreationStrategy.COMPOUND_EVENT_CREATION_STRATEGY);
+    }
+
+    private FrankensteinEvent createEvent(String rawLine, EventCreationStrategy strategy) {
+        return createEvent(null, rawLine, strategy);
+    }
+
+    private FrankensteinEvent createEvent(Action action, String rawLine, EventCreationStrategy strategy) {
         String scriptLine = unescape(rawLine);
         int quoteIndex = scriptLine.indexOf("\"");
-        String line = "", action = "";
+        String line = "", actionName = "";
         if (quoteIndex == -1) {
-            action = convert(scriptLine);
+            actionName = scriptLine;
         } else {
             line = scriptLine.substring(quoteIndex).replaceAll("\"\\s+,\\s+\"", " ").replaceAll("\"", "");
-            action = convert(scriptLine.substring(0, quoteIndex - 1));
+            actionName = scriptLine.substring(0, quoteIndex - 1);
         }
-        verifyActionRegistered(action);
-        return createEvent((Class) eventNameToEventClassMap.get(action), line);
+        verifyActionRegistered(actionName);
+        return strategy.createEvent((Class) eventNameToEventClassMap.get(actionName), line, action);
+    }
+
+    protected String[] split(String scriptLine) {
+        Set set = actionNameToActionClassMap.keySet();
+        for (Iterator iterator = set.iterator(); iterator.hasNext();) {
+            String actionName =  (String) iterator.next();
+            if (scriptLine.startsWith(actionName)) {
+                return new String[] {actionName, scriptLine.substring(actionName.length(), scriptLine.length())};
+            }
+        }
+        throw new RuntimeException("No matching action found");
+    }
+
+    protected Action createAction(String scriptLine) {
+        for (Iterator iterator = actionNameToActionClassMap.keySet().iterator(); iterator.hasNext();) {
+            String actionName =  (String) iterator.next();
+            if (scriptLine.startsWith(actionName)) return createAction((Class)actionNameToActionClassMap.get(actionName));
+        }
+        throw new RuntimeException("Could not create action from scriptline: " + scriptLine);
+    }
+
+    private Action createAction(Class actionClass) {
+        try {
+            Constructor constructor = actionClass.getConstructor(new Class[]{});
+            return (Action) constructor.newInstance(new Object[]{});
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create action: ", e);
+        }
+    }
+
+    protected boolean isCompoundEvent(String scriptLine) {
+        for (Iterator iterator = actionNameToActionClassMap.keySet().iterator(); iterator.hasNext();) {
+            if (scriptLine.startsWith((String) iterator.next())) return true;
+        }
+        return false;
     }
 
     private String unescape(String rawLine) {
@@ -88,16 +166,7 @@ public class DefaultEventRegistry implements EventRegistry {
 
     private void verifyActionRegistered(String action) {
         if (!eventNameToEventClassMap.containsKey(action))
-            throw new RuntimeException("Could not find event for action :" + action);
-    }
-
-    private FrankensteinEvent createEvent(Class clazz, String string) {
-        try {
-            Constructor constructor = clazz.getConstructor(new Class[]{String.class});
-            return (FrankensteinEvent) constructor.newInstance(new Object[]{string});
-        } catch (Exception e) {
-            throw new RuntimeException("Unexpected error", e);
-        }
+            throw new RuntimeException("Could not find event for eventActionName :" + action);
     }
 
     protected String convert(String scriptAction) {

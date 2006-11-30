@@ -7,14 +7,19 @@
 
 <body>
 <p>
+    <h2>Typical usage</h2>
     The application under test is likely to be launched by a shell script or batch file.
     In order to integrate Frankenstein, you'll need to locate the line in the script that launches the application under test. This will typically look like this<br>
           <code>java ... com.your.package.Application</code><br>
-          Change this to look like this:<br>
-          <code>java ... com.thoughtworks.frankenstein.application.PipingMain com.your.package.Application</code><br>
+          Change the line so that it looks like this:<br>
+          <code>java ... <b>com.thoughtworks.frankenstein.application.PipingMain</b> com.your.package.Application</code><br>
 <p>
-<p>If you're extending Frankenstein, you'll need to write your own main class.
+<p>
+    <h2>Customization</h2>    
+    If you're extending Frankenstein, you'll need to write your own main class.
 <code><br>
+package com.your.package;
+<br><br>
 public class FrankensteinWrapper {<br>
     public static void main(String[] args) {<br>
          FrankensteinIntegration integration = new FrankensteinIntegration(YourMainClass.class);<br>
@@ -23,6 +28,9 @@ public class FrankensteinWrapper {<br>
          integration.start(args); //Finally, get Frankenstein to launch your application.<br>
     }<br>
 }<br>
+
+Your application's launch line will now need to look like this:<br>
+    <code>java ... <b>com.your.package.FrankensteinWrapper</b></code><br>
 </code>
 
 </p>

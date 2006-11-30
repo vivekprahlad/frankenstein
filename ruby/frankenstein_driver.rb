@@ -22,6 +22,10 @@ module FrankensteinDriver
     @script += script_line.gsub("\n", "&#xA;") + "\n"
   end
   
+  def activate_dialog(title)
+    append_to_script "activate_dialog \"#{title}\""
+  end
+  
   def activate_window(title)
     append_to_script "activate_window \"#{title}\""
   end
@@ -233,7 +237,7 @@ class TestRunner
   end
 
   def run(*args)
-    args.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(host,port))}
+    args.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(@host,@port))}
     @test_reporter.report
   end
 end
