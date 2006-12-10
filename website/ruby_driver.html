@@ -3,26 +3,91 @@
 <head>
     <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
     <title>Ruby Driver</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
-<h3>Extending core test vocabulary</h3>
-Using Frankenstein's ruby driver allows test suites to be created.
+<h2>How much Ruby should you know to get started?</h2>
+Learning how to define functions and classes in Ruby should be sufficient to get started. Check out the excellent open source course,
+<a href="link">Ruby for Testers</a> for a quick, concise introduction to Ruby.
 <h2>Writing a test</h2>
-class YourTest
-include FrankensteinDriver
-  def test
+<pre>
+    <span class="s0">require</span> 'frankenstein_driver'
 
-  end
-end
+    <span class="s0">class</span> YourTest
+      <span class="s0">include</span> FrankensteinDriver
+
+      <span class="s0">def</span> test
+        #Steps go here
+      <span class="s0">end</span>
+    <span class="s0">end</span>
+</pre>
 <h2>Refactoring functions</h2>
+A series of logical steps can be grouped together into functions. <br>
+For example, a test may start off looking like this:<br>
+<pre>
+    <span class="s0">class</span> LoginTest
+      <span class="s0">include</span> FrankensteinDriver
+
+      <span class="s0">def</span> test
+        enter_text "login" , "foo"
+        enter_text "password", "bar"
+        click_button "login"
+        # Remaining steps
+        ...
+      <span class="s0">end</span>
+    <span class="s0">end</span>
+</pre>
+
+could be refactored to this:
+<pre>
+    <span class="s0">class</span> LoginTest
+      <span class="s0">include</span> FrankensteinDriver
+
+      <span class="s0">def</span> test
+        login("foo","bar")
+        # Remaining steps
+        ...
+      <span class="s0">end</span>
+
+      <span class="s0">def</span> login(username,password)
+        #Parameterize the username
+        enter_text "login" , "#{username}"
+        #Parameterize the password
+        enter_text "password", "#{password}"
+        click_button "login"
+      <span class="s0">end</span>
+    <span class="s0">end</span>
+</pre>
+
+Refactoring logical chunks of a user's workflow into functions allow you to create a test library. The library
+can then be used to create new tests.    As the application evolves, changes to a specific workflow will
+require localized changes to a test library function, and will avoid having to make drastic changes to your test scripts.<br>
+<br>
+In other words, creating a library of test functions at the right level of abstraction can significantly reduce maintenance effort.<br><br>
+For example, let's see what happens if the login process changes slightly - a change to the user interface adds a new checkbox
+called 'Remember Me'. As part of the testing strategy, we may want to ensure that this button is never selected.
+
+The login function we defined above would now change to:
+
+<pre>
+    <span class="s0">def</span> login(username,password)
+      #Parameterize the username
+      enter "login" , "#{username}"
+      #Parameterize the password
+      enter "password", "#{password}"
+      <b>click_checkbox "Remember Me" , "false"</b>
+      click_button "login"
+    <span class="s0">end</span>
+</pre>
+
 <h2>Regular expression support</h2>
-most of the driver functions 
-<h2>Driver reference</h2>
+Most of the driver functions support regular expressions. Please refer to the driver documentation for more.  
+<h2>Driver reference</h2>   
 <h2>Running tests in a suite</h2>
 To run multiple tests:
-<code>TestRunner.new.run comma separated list of tests></code>
-For example, if you'd like to run two tests, TestOne and TestTwo:
+<code>TestRunner.new.run < comma separated list of tests ></code><br><br>
+For example, if you'd like to run two tests, which are in classes named TestOne and TestTwo:<br><br>
 <code>TestRunner.new.run TestOne,TestTwo</code>
 <h2>Changing the reporting directory</h2>
 To change the directory where reports are generated, add a line in your test script:<br>

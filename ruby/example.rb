@@ -5,11 +5,11 @@ module SwingSetTests
     activate_window "#{window_name}"
     click_button "JTable"
     click_button "Printing.Print"
-    dialog_shown "Print"
-    click_button "Cancel"
-    dialog_closed "Print"
+    dialog_shown "Message"
+    click_button "OK"
+    dialog_closed "Message"
     dialog_shown "Printing Result"
-    click_button "OptionPane.button"
+    click_button "OK"
     dialog_closed "Printing Result"
   end
 end
@@ -25,13 +25,14 @@ class TestPrintDialog
     click_button "Table"
     click_button "JTable"
     click_button "Printing.Print"
-    dialog_shown "Print"
-    click_button "Cancel"
-    dialog_closed "Print"
+    dialog_shown "Message"
+    click_button "OK"
+    dialog_closed "Message"
     dialog_shown "Printing Result"
-    click_button "OptionPane.button"
+    click_button "OK"
     dialog_closed "Printing Result"
     assert_number_of_table_rows "JTable_1",46
+    assert_table_row "JTable_1", 1, "Mark", "Andrews", ANYTHING, "Curse of the Demon", "3.0", ANYTHING
   end
 end
 

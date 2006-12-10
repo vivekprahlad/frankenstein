@@ -16,8 +16,18 @@ Custom components will require custom recorders to be written.
 Most component recorders work in the following manner:
 <ul>
     <li>Attach a component specific listener when a component is shown (for example, the textComponentRecorder attaches a document listener)<li>
-    <li>Record a Frankenstein event when the component specific listener is triggered</li>
+    <li>Record a custom event when the component specific listener is triggered.</li>
     <li>Detach the listener when the component is hidden.It is critical to ensure that your listeners get detached at the right time to avoid memory leaks</li>
+</ul>
+<h3>What to record</h3>
+Let's look at what it would take to write a custom recorder for a Map widget, where the user can select locations on a map.
+It would be advisable to avoid recording raw mouse coordinates. <br>Which would you prefer?<br><br>
+<code>Click map 100,100</code>, or<br>
+<code>Click map Bangalore, 83E 92N</code>?<br><br>
+Transforming low level actions into high level events:
+<ul>
+    <li>Allows tests to be readable and meaningful</li>
+    <li>The tests tend to be relatively stable. Coordinate based testing is notorious for creating fragile tests.</li>
 </ul>
 </body>
 </html>

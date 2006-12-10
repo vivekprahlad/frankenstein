@@ -3,25 +3,66 @@
 <head>
     <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
     <title>Testing Multithreaded Applications</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
 <p>
     <h2>Testing Multithreaded Applications</h2>
 Frankenstein makes it easy to test multithreaded applications. In a multithreaded swing application, worker threads are
-usually spawned as the result of a user action. At the end of every step, Frankenstein can wait until all worker thread
+usually spawned after a user action. At the end of every test step, Frankenstein can wait until all worker thread
 activity ceases.</p>
 <p>
-The basic approach is to:
+<h2>A Thread naming convention based approach</h2>
 <ul>
     <li>Choose a Worker Thread naming convention. (For example, you could choose a naming convention that names all worker
         threads with a prefix and a counter: <code>UIWorker-1</code>, <code>UIWorker-2</code>, etc.)</li>
     <li>Create a regular expression that matches the naming convention</li>
     <li>Create a <code>RegexWorkerThreadMonitor</code> with the regular expression, and supply it to
         a <code>FrankensteinIntegration</code> instance</li>
-</ul>
 
+    <code><pre>
+
+<a name="l1"><span class="s0">import </span><span class="s1">com.thoughtworks.frankenstein.application.FrankensteinIntegration;
+<a name="l1"><span class="s0">import </span><span class="s1">com.thoughtworks.frankenstein.application.RegexWorkerThreadMonitor;
+<a name="l2">
+<a name="l3"></span><span class="s2">/**
+<a name="l4"> * Launches the application under test via Frankenstein.
+<a name="l5"> */</span><span class="s1">
+<a name="l6"></span><span class="s0">public class </span><span class="s1">FrankensteinLauncher {
+<a name="l7">    </span><span class="s0">public static void </span><span class="s1">main(String[] args) {
+    <a name="l8"> FrankensteinIntegration integration = </span><span class="s0">new </span><span class="s1">FrankensteinIntegration(YouMainClass.</span><span
+        class="s0">class</span><span class="s1">, <span class="s0">new</span> RegexWorkerThreadMonitor("UIWorker"));
+    <a name="l10"> integration.start(args);
+  <a name="l11"> }
+<a name="l12">}
+<a name="l13"></span></pre>
+</code>
+
+</ul>
+<h2>An alternate approach: implement the WorkerThreadMonitor interface</h2>
 Another approach is to implement the <code>WorkerThreadMonitor</code> interface.
+    <pre>
+
+    <a name="l1"><span class="s0">package </span><span class="s1">com.thoughtworks.frankenstein.application;
+    <a name="l2">
+    <a name="l3"></span><span class="s2">/**
+    <a name="l4"> * Monitor worker thread activity.
+    <a name="l6"> */</span><span class="s1">
+    <a name="l7"></span><span class="s0">public interface </span><span class="s1">WorkerThreadMonitor {
+    <a name="l8">    </span><span class="s2">/**
+
+    <a name="l9">     * Called at the start of a test run.
+    <a name="l10">     */</span><span class="s1">
+    <a name="l11">    </span><span class="s0">public void </span><span class="s1">start();
+    <a name="l12">
+    <a name="l13">    </span><span class="s2">/**
+    <a name="l14">     * Blocking call, that returns after worker thread activity ceases.
+    <a name="l15">     */</span><span class="s1">
+    <a name="l16">    </span><span class="s0">public void </span><span class="s1">waitForIdle();
+
+    <a name="l17">}
+    <a name="l18"></span></pre>
 
     
 </p>
