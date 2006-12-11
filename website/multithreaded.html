@@ -9,11 +9,12 @@
 <body>
 <p>
     <h2>Testing Multithreaded Applications</h2>
-Frankenstein makes it easy to test multithreaded applications. In a multithreaded swing application, worker threads are
+Frankenstein makes it easy to test multithreaded applications. In a multithreaded Swing application, worker threads are
 usually spawned after a user action. At the end of every test step, Frankenstein can wait until all worker thread
 activity ceases.</p>
 <p>
 <h2>A Thread naming convention based approach</h2>
+Using a thread naming convention based approach requires minimal code changes, and should work well for most cases. <br><br>The basic approach is as follows:     
 <ul>
     <li>Choose a Worker Thread naming convention. (For example, you could choose a naming convention that names all worker
         threads with a prefix and a counter: <code>UIWorker-1</code>, <code>UIWorker-2</code>, etc.)</li>

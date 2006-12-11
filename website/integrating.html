@@ -16,7 +16,15 @@ test. This will typically look like this<br>
 <code>java ... com.your.package.Application</code><br>
 Change the line so that it looks like this:<br>
 <code>java ... <b>com.thoughtworks.frankenstein.application.PipingMain</b> com.your.package.Application</code><br>
-
+<br><br>
+The following jar files will need to be added to the classpath of the application under test:
+<ul>
+    <li>frankenstein.jar</li>
+    <li>commons-lang-2.2.jar</li>
+    <li>spin-1.4.jar</li>
+    <li>ognl-2.6.9.jar</li>
+    <li>picocontainer-1.2.jar</li>
+</ul>
 <p>
 
 <p>
