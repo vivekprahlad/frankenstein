@@ -27,6 +27,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         expectActionTargetAndParameters(frankensteinEvent, "Parameters");
         reporter.startTest("testName");
         reporter.reportSuccess((FrankensteinEvent) frankensteinEvent.proxy());
+        reporter.finishTest();
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
@@ -35,7 +36,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "<td bgcolor=#CFFFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
-                "</html>", reporter.finishTest());
+                "</html>", reporter.report);
     }
 
     public void testReportsTestFailure() throws IOException {
@@ -44,6 +45,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.startTest("testName");
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
+        reporter.finishTest();
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
@@ -54,7 +56,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "<td bgcolor=#FFCFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
-                "</html>", reporter.finishTest());
+                "</html>", reporter.report);
     }
 
     public void testReportsCauseFromInvocationTargetException() throws IOException {
@@ -64,6 +66,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(),
                 new RuntimeException(new InvocationTargetException(new RuntimeException("Some Exception"))), null);
+        reporter.finishTest();
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
@@ -73,7 +76,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "<td bgcolor=#FFCFCF><font size=2 color=black>Parameters</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
-                "</html>", reporter.finishTest());
+                "</html>", reporter.report);
     }
 
     public void testSubstitutesNbspForEmptyStrings() throws IOException {
@@ -82,6 +85,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
         reporter.startTest("testName");
         screenShot.expects(once()).method("capture").will(returnValue("screenshot/screen1.png"));
         reporter.reportFailure((FrankensteinEvent) frankensteinEvent.proxy(), new RuntimeException("Some Exception"), null);
+        reporter.finishTest();
         assertEquals("<html>\n<head><title>testName</title></head>\n<body>\n<h3>testName</h3>\n" +
                 "<h4>Test Status</h4>\n" +
                 "<table BORDER CELLSPACING=0 CELLPADDING=4>\n" +
@@ -91,7 +95,7 @@ public class HtmlTestReporterTest extends MockObjectTestCase {
                 "<td bgcolor=#FFCFCF><font size=2 color=black>&nbsp;</font></td></tr>\n" +
                 "</table>\n" +
                 "</body>\n" +
-                "</html>", reporter.finishTest());
+                "</html>", reporter.report);
     }
 
     private void expectActionTargetAndParameters(Mock frankensteinEvent, String parameters) {

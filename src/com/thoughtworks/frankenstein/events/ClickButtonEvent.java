@@ -1,10 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.WindowContextListener;
 import com.thoughtworks.frankenstein.recorders.EventList;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 /**
  * Understands recording button clicks.

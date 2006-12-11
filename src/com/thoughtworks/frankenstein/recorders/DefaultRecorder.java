@@ -8,9 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
-import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Adds events to a list.
@@ -29,12 +26,6 @@ public class DefaultRecorder implements Recorder, EventList, Runnable {
 
     public DefaultRecorder(ScriptContext scriptContext) {
         this.scriptContext = scriptContext;
-    }
-
-    public DefaultRecorder(WorkerThreadMonitor monitor,
-                           WindowContext context,
-                           ComponentFinder finder) {
-        this(new DefaultScriptContext(monitor, context, finder));
     }
 
     public void record(FrankensteinEvent event) {

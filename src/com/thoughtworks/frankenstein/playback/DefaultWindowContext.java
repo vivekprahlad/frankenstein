@@ -1,7 +1,6 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.awt.*;
-import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

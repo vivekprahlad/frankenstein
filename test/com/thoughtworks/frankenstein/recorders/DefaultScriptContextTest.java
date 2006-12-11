@@ -1,7 +1,6 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
@@ -13,7 +12,6 @@ import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.events.SelectDropDownEvent;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.script.TestReporter;
 
@@ -40,7 +38,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     }
 
     public void testPropogatesExceptionIfFinishingTestFails() {
-        testReporter.expects(once()).method("finishTest").will(throwException(new IOException()));
+        testReporter.expects(once()).method("finishTest").will(throwException(new RuntimeException()));
         try {
             context.finishTest();
             fail();

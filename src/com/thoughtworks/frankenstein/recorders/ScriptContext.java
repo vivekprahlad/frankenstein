@@ -1,5 +1,7 @@
 package com.thoughtworks.frankenstein.recorders;
 
+import com.thoughtworks.frankenstein.script.TestReporter;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,8 @@ import java.util.List;
  */
 public interface ScriptContext {
     void startTest(String testName);
+
     void play(List events);
+
     boolean isScriptPassed();
 }

@@ -22,8 +22,8 @@ public class HtmlTestReporter implements TestReporter {
     private static final String GREEN = "#CFFFCF";
     private static final String INITIAL_BODY = "<table BORDER CELLSPACING=0 CELLPADDING=4>\n";
     private String testFileName = testName + ".html";
-    private static final String SCREENSHOT_DIRECTORY = "screenshots";
     private ScreenShot screenShot;
+    protected String report;
 
     public HtmlTestReporter(ScreenShot screenShot) {
         this.screenShot = screenShot;
@@ -91,12 +91,15 @@ public class HtmlTestReporter implements TestReporter {
         body += line(event, RED, cause, screenShot.capture(reportFile.getParent(), robot));
     }
 
-    public String finishTest() throws IOException {
+    public void finishTest() {
         body += "</table>\n</body>\n</html>";
-        writeReport();
-        String retVal = report();
+        try {
+            writeReport();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        report = report();
         body = INITIAL_BODY;
-        return retVal;
     }
 
     private void writeReport() throws IOException {

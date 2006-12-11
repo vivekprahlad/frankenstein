@@ -1,6 +1,5 @@
 package com.thoughtworks.frankenstein.application;
 
-import junit.framework.TestCase;
 
 import java.util.logging.*;
 
@@ -9,7 +8,6 @@ import spin.over.EDTRuleViolation;
 import javax.swing.*;
 
 import org.jmock.MockObjectTestCase;
-import org.jmock.Mock;
 
 /**
  * Ensures behaviour of EDTRuleViolationLoggingRepaintManager

@@ -11,7 +11,6 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.script.TestReporter;
-import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 
 /**
  * Takes care of test reporting etc.
@@ -41,12 +40,6 @@ public class DefaultScriptContext implements ScriptContext {
             throw new RuntimeException(e);
         }
         createLogger();
-    }
-
-    public DefaultScriptContext(WorkerThreadMonitor monitor,
-                                WindowContext context,
-                                ComponentFinder finder) {
-        this(new HtmlTestReporter(), monitor, context, finder);
     }
 
     private void createLogger() {
@@ -101,11 +94,7 @@ public class DefaultScriptContext implements ScriptContext {
     }
 
     protected void finishTest() {
-        try {
-            reporter.finishTest();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        reporter.finishTest();
     }
 
     private void waitForIdle() {

@@ -5,8 +5,7 @@ import com.thoughtworks.frankenstein.events.actions.Action;
 import java.lang.reflect.Constructor;
 
 /**
- * Understands SOMETHING
- *
+ * Understands creating FrankensteinEvents.
  * @author vivek
  */
 abstract class EventCreationStrategy {

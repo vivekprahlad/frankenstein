@@ -1,5 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
+import org.jmock.Mock;
+import com.thoughtworks.frankenstein.playback.WindowContext;
+
 /**
  * Ensures behaviour of CloseAllDialogsEvent
  * @author vivek
@@ -33,6 +36,9 @@ public class CloseAllDialogsEventTest extends AbstractEventTestCase{
     }
 
     public void testPlaysEvent() throws Exception {
+        Mock mockWindowContext = mock(WindowContext.class);
+        mockWindowContext.expects(once()).method("closeAllDialogs");
+        new CloseAllDialogsEvent("").play((WindowContext) mockWindowContext.proxy(), null, null, null);
     }
 
     protected FrankensteinEvent createEvent() {

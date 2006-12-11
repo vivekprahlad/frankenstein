@@ -1,12 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import java.awt.*;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.MatchStrategy;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Understands switches in tabs.

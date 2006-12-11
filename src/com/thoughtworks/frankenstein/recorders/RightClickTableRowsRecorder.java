@@ -8,11 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 /**
  * Ensures RightClcikTableRowsRecorder works as expected
  */
-public class RightClickTableRowsRecorder extends AbstractComponentRecorder implements MouseListener {
+public class RightClickTableRowsRecorder extends AbstractComponentRecorder {
+    private MouseListener tableListener = new TableMouseListener();
+
     public RightClickTableRowsRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
         super(recorder, namingStrategy, JTable.class);
     }
@@ -20,7 +23,7 @@ public class RightClickTableRowsRecorder extends AbstractComponentRecorder imple
     void componentShown(Component component) {
         MouseListener[] listeners = table(component).getMouseListeners();
         removeAllMouseListeners(listeners, table(component));
-        table(component).addMouseListener(this);
+        table(component).addMouseListener(tableListener);
         addAllMouseListeners(listeners, table(component));
     }
 
@@ -41,10 +44,14 @@ public class RightClickTableRowsRecorder extends AbstractComponentRecorder imple
     }
 
     void componentHidden(Component component) {
-        table(component).removeMouseListener(this);
+        table(component).removeMouseListener(tableListener);
     }
 
     public void mouseClicked(MouseEvent e) {
+        recordTableRowEvent(e);
+    }
+
+    private void recordTableRowEvent(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) {
             JTable table = (JTable) e.getSource();
             int rowIndex = table.rowAtPoint(e.getPoint());
@@ -52,21 +59,9 @@ public class RightClickTableRowsRecorder extends AbstractComponentRecorder imple
         }
     }
 
-    public void mousePressed(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    private class TableMouseListener extends MouseAdapter {
+        public void mouseClicked(MouseEvent e) {
+            recordTableRowEvent(e);
+        }
     }
-
-    public void mouseReleased(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void mouseExited(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-
 }

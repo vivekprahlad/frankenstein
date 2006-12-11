@@ -13,6 +13,7 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.recorders.MenuNavigationRecorder;
 import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  *
@@ -53,6 +54,13 @@ public class MenuSelectionSpike {
             }
 
             public void setEventList(List events) {
+            }
+
+
+            public void addTestReporter(TestReporter reporter) {
+            }
+
+            public void removeAllTestReporters() {
             }
         }, new DefaultNamingStrategy());
         recorder.register();

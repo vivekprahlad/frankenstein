@@ -3,9 +3,6 @@ package com.thoughtworks.frankenstein.events;
 import com.thoughtworks.frankenstein.events.actions.Action;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.AWTEventListener;
-import java.awt.event.HierarchyEvent;
 import java.awt.*;
 
 /**
@@ -45,7 +42,7 @@ public class TableRowEvent extends AbstractFrankensteinEvent {
 
     public synchronized void run() {
         JTable table = (JTable) finder.findComponent(context, tableName);
-        action.execute(getLocation(table), table, finder);
+        action.execute(getLocation(table), table, finder, context);
     }
 
     private Point getLocation(JTable table) {

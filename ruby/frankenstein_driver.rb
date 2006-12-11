@@ -1,5 +1,4 @@
 require  'socket'
-require 'test/unit'
 
 class Regexp
   def to_s
@@ -10,35 +9,25 @@ end
 # Convenient constants.
 ANYTHING = /.*/
 
-# The Frankenstein driver has all the API methods that allow a Swing interface to be driven.
-# The methods that support regular expressions are c
+# The Frankenstein driver allows a Swing user interface to be tested.
 # Regular expressions can be specified using the regular Ruby syntax.
 module FrankensteinDriver
   @@test_dir =""
   attr_accessor :test_status
 
-  def init(host,port)
-    @test_name = self.class.to_s
-    @host = host
-    @port = port
-    @script = ""
-  end
-  
-  def append_to_script(script_line)
-    @script += script_line.gsub("\n", "&#xA;") + "\n"
-  end
-
-  # Activates a dialog with a specified title
+  # Activates a dialog with a specified title.
+  # The title can be specified as a regular expression
   def activate_dialog(title)
     append_to_script "activate_dialog \"#{title}\""
   end
 
-  # Activates a window with a specified title
+  # Activates a window with a specified title.
+  # The title can be specified as a regular expression
   def activate_window(title)
     append_to_script "activate_window \"#{title}\""
   end
 
-  # Activates an internal frame
+  # Activates an internal frame. Regular expressions are supported
   def activate_internal_frame(title)
     append_to_script "activate_internal_frame \"#{title}\""
   end
@@ -88,7 +77,7 @@ module FrankensteinDriver
     assert table_name,"rowCount",number_of_rows
   end
 
-  # Check the value of a specified table cell. The cell can be specified as a regular expression
+  # Check the value of a specified table cell. The cell value can be specified as a regular expression
   def assert_table_cell(table_name, row, column, value)
     assert table_name, "getValueAt(#{row},#{column})", value
   end
@@ -249,12 +238,23 @@ module FrankensteinDriver
     append_to_script "select_list \"#{list}\" \"#{value}\""
   end
 
+  # Selects the specified rows in a table.
+  # rows is a comma separated list of table rows.
+  # Example: select_table_row "table_name" , "1,2,3"
   def select_table_row(table, rows)
     append_to_script "select_table_row \"#{table}\" \"#{rows}\""
   end
 
-  def select_tree(tree, *path_elements)
+  # Select a specified tree path. Supports regular expressions
+  # For example: select_tree_with_regex "tree_name", "top level", /.*level/, "third level"
+  def select_tree_with_regex(tree, *path_elements)
     path = path_elements.join(">")
+    append_to_script "select_tree \"#{tree}\" \"#{path}\""
+  end
+
+  # Select a specified tree path. The tree path is delimited by the '>' character.
+  # For example: select_tree "tree_name" , "top level>second level>third level"
+  def select_tree(tree, path)
     append_to_script "select_tree \"#{tree}\" \"#{path}\""
   end
 
@@ -268,7 +268,41 @@ module FrankensteinDriver
   def switch_tab(tab, title)
     append_to_script "switch_tab \"#{tab}\" \"#{title}\""
   end
-  
+
+
+  # Sends a test script to the Frankenstein Java runtime at the specified host and port.
+  # Waits for the test to complete, and reports test results.
+  def run_frankenstein_test(host,port)
+    init host,port
+    start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
+    test
+    finish_test
+    puts @test_name + " : " + (@test_status == "F" ? "Failed" : "Passed")
+    @test_status
+  end
+
+  # Modifies the location of the Frankenstein test reporting directory. This should typically be done once in a test run.
+  def FrankensteinDriver.test_dir=(dir)
+    @@test_dir = dir
+  end
+
+  # Returns the location of the current test reporting directory.
+  def FrankensteinDriver.test_dir
+    @@test_dir
+  end
+
+  private
+  def init(host,port)
+    @test_name = self.class.to_s
+    @host = host
+    @port = port
+    @script = ""
+  end
+
+  def append_to_script(script_line)
+    @script += script_line.gsub("\n", "&#xA;") + "\n"
+  end
+
   def start_test(testname)
     @script +="start_test \"#{testname}\"\n"
   end
@@ -283,26 +317,9 @@ module FrankensteinDriver
     recvthread.join
     socket.close
   end
-
- def run_frankenstein_test(host,port)
-    init host,port
-    start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
-    test
-    finish_test
-    puts @test_name + " : " + (@test_status == "F" ? "Failed" : "Passed")
-    @test_status
-  end
-
-  def FrankensteinDriver.test_dir=(dir)
-    @@test_dir = dir
-  end
-
-  def FrankensteinDriver.test_dir
-    @@test_dir
-  end
-
 end
 
+# Runs multiple tests in a suite. Generates an index file that displays whether a test passed or failed.
 class TestRunner
   def initialize(host="localhost",port=5678)
     @test_reporter = TestReporter.new
@@ -310,12 +327,14 @@ class TestRunner
     @port = port
   end
 
-  def run(*args)
-    args.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(@host,@port))}
+  # Runs multiple tests. The argument to the function is a list of Frankenstein test classes.
+  def run(*tests)
+    tests.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(@host,@port))}
     @test_reporter.report
   end
 end
 
+# Stores the result of a test run.
 class TestResult
   attr_accessor :test
   def initialize(test,status)
@@ -327,6 +346,7 @@ class TestResult
   end
 end
 
+# Creates an HTML report of a test run. Lists out the names of the tests that ran, and color codes tests that passed or failed.
 class TestReporter
   def initialize
     @tests = []
@@ -351,29 +371,4 @@ class TestReporter
     index_file.puts "</html>"
     index_file.close
   end   
-end
-
-class RegexTest < Test::Unit::TestCase
-  def test_prefixes_regular_expressions_with_regex
-    regex = /test.*/
-    assert_equal("regex:test.*", "#{regex}")
-  end 
-end
-
-class FrankensteinDriverTest < Test::Unit::TestCase
-  include FrankensteinDriver
-
-  def setup
-    init("localhost",5678)
-  end
-
-  def test_escapes_newlines
-    append_to_script "foo\n"
-    assert_equal("foo&#xA;\n",@script)
-  end
-
-  def test_creates_tree_path_with_regex
-    select_tree("tree",/.*/,"two","three")
-    assert_equal("select_tree \"tree\" \"regex:.*>two>three\"\n", @script)
-  end
 end

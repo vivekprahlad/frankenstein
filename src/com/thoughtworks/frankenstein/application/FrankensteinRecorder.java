@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.application;
 
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,8 @@ public interface FrankensteinRecorder {
     void load(Reader reader) throws IOException;
 
     void reset();
+
+    void registerAction(Class frankensteinEvent);
 
     void registerRecorder(Class recorderClass);
 

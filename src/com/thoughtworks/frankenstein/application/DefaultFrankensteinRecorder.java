@@ -61,13 +61,17 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
         registerRecorder(AssertLabelRecorder.class);
     }
 
-    public void registerRecorder(Class recorderClass) {
-        container.registerComponentImplementation(recorderClass);
-        recorders.add(container.getComponentInstanceOfType(recorderClass));
+    public void registerAction(Class actionClass) {
+        registry.registerAction(actionClass);
     }
 
     public void registerEvent(Class frankensteinEvent) {
         registry.registerEvent(frankensteinEvent);
+    }
+
+    public void registerRecorder(Class recorderClass) {
+        container.registerComponentImplementation(recorderClass);
+        recorders.add(container.getComponentInstanceOfType(recorderClass));
     }
 
     public void startRecording() {

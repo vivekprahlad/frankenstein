@@ -1,14 +1,21 @@
 package com.thoughtworks.frankenstein.recorders;
 
+import com.thoughtworks.frankenstein.script.TestReporter;
+
 /**
  * Understands recording swing events.
  * @author Vivek Prahlad
  */
 public interface Recorder extends EventRecorder {
     void start();
+
     void stop();
+
     void play();
+
     void reset();
+
     void addScriptListener(ScriptListener listener);
+
     void removeScriptListener(ScriptListener listener);
 }

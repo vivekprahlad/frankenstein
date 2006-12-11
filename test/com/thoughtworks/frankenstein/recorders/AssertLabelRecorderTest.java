@@ -8,11 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 22, 2006
- * Time: 4:35:15 PM
- * To change this template use File | Settings | File Templates.
+ * Ensures behaviour of AssertLabelRecorder
  */
 public class AssertLabelRecorderTest extends AbstractRecorderTestCase{
     private AssertLabelRecorder recorder;
@@ -43,7 +39,7 @@ public class AssertLabelRecorderTest extends AbstractRecorderTestCase{
         recorder.componentShown(label);
         mockRecorder.expects(once()).method("record").with(eq(new AssertLabelEvent("label","labelValue")));
         Point point = label.getLocation();
-        recorder.mouseClicked(new MouseEvent(label, MouseEvent.MOUSE_CLICKED, 0,6, point.x, point.y, 1, false,MouseEvent.BUTTON3));
+        recorder.listener.mouseClicked(new MouseEvent(label, MouseEvent.MOUSE_CLICKED, 0,6, point.x, point.y, 1, false,MouseEvent.BUTTON3));
     }
 
 

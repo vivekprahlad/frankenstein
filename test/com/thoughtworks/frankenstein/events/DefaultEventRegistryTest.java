@@ -209,6 +209,16 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new CloseAllDialogsEvent(""), defaultEventRegistry.createEvent("CloseAllDialogs \"\""));
     }
 
+    public void testDoesNotReplaceUnderscoresInTestScript() {
+        defaultEventRegistry.registerEvent(AssertLabelEvent.class);
+        assertEquals(new AssertLabelEvent("label_one","labelValue"), defaultEventRegistry.createEvent("assert_label \"label_one\" , \"labelValue\""));
+    }
+
+    public void testDoesNotReplaceColons() {
+        defaultEventRegistry.registerEvent(AssertEvent.class);
+        assertEquals(new AssertEvent("comp","getValueAt(0,1)","regex:.*"), defaultEventRegistry.createEvent("assert \"comp\" , \"getValueAt(0,1):regex:.*\""));
+    }
+
     private class FakeFrankensteinEvent implements FrankensteinEvent {
 
         public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {

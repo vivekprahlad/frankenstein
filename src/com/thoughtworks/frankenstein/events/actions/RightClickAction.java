@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events.actions;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,14 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.HierarchyEvent;
 
 /**
- * Understands SOMETHING
- *
- * @author vivek
+ * Understands Right Clicking on a specified location.
+ * @author Vivek Prahlad
  */
 public class RightClickAction implements AWTEventListener, Action {
     private ComponentFinder finder;
 
-    public synchronized void execute(Point location, JComponent component, ComponentFinder finder) {
+    public synchronized void execute(Point location, JComponent component, ComponentFinder finder, WindowContext windowContext) {
         this.finder = finder;
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.HIERARCHY_EVENT_MASK);
         rightClick(location, component);

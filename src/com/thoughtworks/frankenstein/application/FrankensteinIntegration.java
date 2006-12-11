@@ -13,6 +13,9 @@ import com.thoughtworks.frankenstein.ui.RecorderTableModel;
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.script.TestReporter;
+import com.thoughtworks.frankenstein.script.CompositeReporter;
+import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +31,8 @@ public class FrankensteinIntegration {
     private JFrame frame;
     private WindowContext context;
     private SocketListener socketListener;
+    private int port = 5678;//Default value
+    private CompositeReporter testReporter;
 
     public FrankensteinIntegration(Class mainClass,
                                    JFrame frame,
@@ -46,7 +51,8 @@ public class FrankensteinIntegration {
         this.mainClass = mainClass;
         this.frame = frame;
         this.context = context;
-        eventRecorder = new DefaultRecorder(monitor, context, finder);
+        this.testReporter = CompositeReporter.create(new HtmlTestReporter());
+        eventRecorder = new DefaultRecorder(new DefaultScriptContext(testReporter, monitor, context, finder));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
@@ -61,6 +67,10 @@ public class FrankensteinIntegration {
         this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
+    public void registerAction(Class actionClass) {
+        recorder.registerAction(actionClass);
+    }
+
     public void registerEvent(Class eventClass) {
         recorder.registerEvent(eventClass);
     }
@@ -73,14 +83,18 @@ public class FrankensteinIntegration {
         Logger.getLogger("Frankenstein").setLevel(level);
     }
 
-    public void logInfo() {
-        Logger.getLogger("Frankenstein").setLevel(Level.INFO);
+    /**
+     * Set the port at which Frankenstein listens for commands. (The default port is 5678)
+     * @param port
+     */
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public void start(String[] args) {
         logInfo();
         recorder.startRecording();
-        socketListener.start();
+        socketListener.start(port);
         try {
             mainClass.getDeclaredMethod("main", new Class[] {String[].class}).invoke(null, new Object[] {args});
         } catch (Exception e) {
@@ -88,10 +102,8 @@ public class FrankensteinIntegration {
         }
     }
 
-    private void createRecorderUI(FrankensteinRecorder compositeRecorder) {
-        frame.getContentPane().add(new RecorderPane(compositeRecorder, new DefaultFileDialogLauncher(), new RecorderTableModel(eventRecorder)));
-        frame.pack();
-        frame.setVisible(true);
+    public void record() {
+        recorder.start();
     }
 
     public void stop() {
@@ -101,7 +113,21 @@ public class FrankensteinIntegration {
         frame.dispose();
     }
 
-    public void record() {
-        recorder.start();
+    public void addTestReporter(TestReporter reporter) {
+        testReporter.addTestReporter(reporter);
+    }
+
+    public void removeAllTestReporters() {
+        testReporter.clear();
+    }
+
+    public void logInfo() {
+        Logger.getLogger("Frankenstein").setLevel(Level.INFO);
+    }
+
+    private void createRecorderUI(FrankensteinRecorder compositeRecorder) {
+        frame.getContentPane().add(new RecorderPane(compositeRecorder, new DefaultFileDialogLauncher(), new RecorderTableModel(eventRecorder)));
+        frame.pack();
+        frame.setVisible(true);
     }
 }

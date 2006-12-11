@@ -28,7 +28,8 @@ public class SocketListener implements Runnable, ScriptListener {
         this(5678, recorder);
     }
 
-    public synchronized void start() {
+    public synchronized void start(int port) {
+        this.port = port;
         thread = new Thread(this);
         thread.start();
         while(socket == null) {

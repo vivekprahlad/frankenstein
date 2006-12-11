@@ -54,7 +54,7 @@ public class TableRowEventTest extends AbstractEventTestCase {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(0, 40)), ANYTHING, ANYTHING);
+        mockAction.expects(once()).method("execute").with(eq(new Point(0, 40)), ANYTHING, ANYTHING, ANYTHING);
         assertEquals(2, table.rowAtPoint(new Point(0, 40)));
         TableRowEvent event = new TableRowEvent("table", 2, (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy());
         WindowContext context = (WindowContext) mockContext.proxy();
@@ -69,7 +69,7 @@ public class TableRowEventTest extends AbstractEventTestCase {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(0, 8)), ANYTHING, ANYTHING);
+        mockAction.expects(once()).method("execute").with(eq(new Point(0, 8)), ANYTHING, ANYTHING, ANYTHING);
         assertEquals(0, table.rowAtPoint(new Point(0, 8)));
         TableRowEvent event = new TableRowEvent("table", 0, (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy());
         WindowContext context = (WindowContext) mockContext.proxy();

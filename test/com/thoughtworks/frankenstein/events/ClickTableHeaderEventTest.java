@@ -11,13 +11,9 @@ import com.thoughtworks.frankenstein.common.RobotFactory;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 20, 2006
- * Time: 5:24:20 PM
- * To change this template use File | Settings | File Templates.
  */
 public class ClickTableHeaderEventTest extends AbstractEventTestCase {
 
@@ -51,10 +47,14 @@ public class ClickTableHeaderEventTest extends AbstractEventTestCase {
 
     public void testPlaysEvent() throws Exception {
         JTable table = new JTable(3, 3);
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(table);
+        frame.pack();
         JTableHeader tableHeader = table.getTableHeader();
         tableHeader.setName("header");
-        tableHeader.getColumnModel().getColumn(1).setHeaderValue("one");
-        ClickTableHeaderEvent event = new ClickTableHeaderEvent("header", "one");
+        tableHeader.getColumnModel().getColumn(0).setHeaderValue("one");
+        tableHeader.getColumnModel().getColumn(1).setHeaderValue("two");
+        ClickTableHeaderEvent event = new ClickTableHeaderEvent("header", "two");
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
@@ -65,23 +65,23 @@ public class ClickTableHeaderEventTest extends AbstractEventTestCase {
         waitForIdle();
         assertTrue(mockMouseListener.singleClicked);
         assertFalse(mockMouseListener.popupTrigger);
+        assertEquals(1, tableHeader.columnAtPoint(mockMouseListener.point));
     }
 
     protected FrankensteinEvent createEvent() {
         return new ClickTableHeaderEvent("header", "one");
-
     }
 
     private class MockMouseListener extends MouseAdapter {
         private boolean singleClicked = false;
         private boolean popupTrigger = true;
-
+        private Point point;
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 1&&(e.getButton()==MouseEvent.BUTTON1)) {
                 singleClicked = true;
-
             }
             popupTrigger = e.isPopupTrigger();
+            point = e.getPoint();
         }
     }
 }

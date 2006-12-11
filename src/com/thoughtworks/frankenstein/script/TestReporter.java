@@ -13,5 +13,5 @@ public interface TestReporter {
     void startTest(String testName);
     void reportSuccess(FrankensteinEvent event);
     void reportFailure(FrankensteinEvent event, Exception cause, Robot robot);
-    String finishTest() throws IOException;
+    void finishTest();
 }

@@ -23,6 +23,7 @@ public class DefaultEventRegistry implements EventRegistry {
     public DefaultEventRegistry() {
         registerAction(RightClickAction.class);
         registerEvent(ActivateInternalFrameEvent.class);
+        registerEvent(ActivateDialogEvent.class);
         registerEvent(ActivateWindowEvent.class);
         registerEvent(AssertEvent.class);
         registerEvent(AssertLabelEvent.class);
@@ -170,12 +171,14 @@ public class DefaultEventRegistry implements EventRegistry {
     }
 
     protected String convert(String scriptAction) {
-        String[] tokens = scriptAction.split("_");
-        String converted = "";
+        String [] line = scriptAction.split("\\s+");
+        String remaining = scriptAction.substring(line[0].length(), scriptAction.length());
+        String[] tokens = line[0].split("_");
+        String action = "";
         for (int i = 0; i < tokens.length; i++) {
-            converted += capitalize(tokens[i]);
+            action += capitalize(tokens[i]);
         }
-        return converted;
+        return action + remaining;
     }
 
     private String capitalize(String token) {

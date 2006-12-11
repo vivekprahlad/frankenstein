@@ -6,11 +6,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 20, 2006
- * Time: 5:17:57 PM
- * To change this template use File | Settings | File Templates.
  */
 public class ClickTableHeaderEvent extends AbstractFrankensteinEvent {
 
@@ -47,8 +42,9 @@ public class ClickTableHeaderEvent extends AbstractFrankensteinEvent {
         TableColumnModel columnModel = header.getColumnModel();
         Point point = header.getLocation();
         int i;
-        for (i = 0; i < (getColumnIndex(columnModel) - 1); i++)
+        for (i = 0; i < getColumnIndex(columnModel); i++) {
             point.x += columnModel.getColumn(i).getWidth();
+        }
         point.x += (columnModel.getColumn(i).getWidth()) / 2;
         point.y += (header.getHeight()) / 2;
         return point;

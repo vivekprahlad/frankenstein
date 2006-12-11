@@ -11,12 +11,14 @@
 Learning how to define functions and classes in Ruby should be sufficient to get started. Check out the excellent open source course,
 <a href="http://wtr.rubyforge.org/s101/doc/Ruby-cheat-sheet.doc">Ruby for Testers</a> for a quick, concise introduction to Ruby.
 <h2>Writing a test</h2>
+The structure of a typical Frankenstein test is as follows:<br><br>
 <pre>
-    <span class="s0">require</span> 'frankenstein_driver'
-
+    #Include the Frankenstein driver module.
+    <span class="s0">require</span> 'frankenstein_driver'<br>
+    #The test class name will be displayed in the report
     <span class="s0">class</span> YourTest
-      <span class="s0">include</span> FrankensteinDriver
-
+      <span class="s0">include</span> FrankensteinDriver<br>
+      #All Frankenstein tests need to define a 'test' method
       <span class="s0">def</span> test
         #Steps go here
       <span class="s0">end</span>
@@ -39,7 +41,7 @@ For example, a test may start off looking like this:<br>
     <span class="s0">end</span>
 </pre>
 
-could be refactored to this:
+This test could be refactored as follows:
 <pre>
     <span class="s0">class</span> LoginTest
       <span class="s0">include</span> FrankensteinDriver
@@ -83,9 +85,10 @@ The login function we defined above would now change to:
 
 <h2>Regular expression support</h2>
 Most of the driver functions support regular expressions. Please refer to the driver documentation for more.  
-<h2>Driver reference</h2>   
+<h2>Driver reference</h2>
+The Frankenstein driver documentation is <a href="doc/index.html">here</a>
 <h2>Running tests in a suite</h2>
-To run multiple tests:
+The TestRunner can be used to run multiple tests:
 <code>TestRunner.new.run < comma separated list of tests ></code><br><br>
 For example, if you'd like to run two tests, which are in classes named TestOne and TestTwo:<br><br>
 <code>TestRunner.new.run TestOne,TestTwo</code>

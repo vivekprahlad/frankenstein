@@ -28,7 +28,7 @@ public class AssertEvent extends AbstractFrankensteinEvent {
     }
 
     public AssertEvent(String scriptLine) {
-        this(params(scriptLine)[0], colonSplit(scriptLine, 0), colonSplit(scriptLine, 1));
+        this(params(scriptLine)[0], colonSplit(scriptLine, 0), params(scriptLine)[1].substring(colonSplit(scriptLine, 0).length()+1,params(scriptLine)[1].length()));
     }
 
     private static String colonSplit(String script, int index) {

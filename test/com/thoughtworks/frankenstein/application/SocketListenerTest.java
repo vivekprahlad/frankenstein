@@ -10,6 +10,7 @@ import org.jmock.MockObjectTestCase;
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
 import com.thoughtworks.frankenstein.events.EnterTextEvent;
 import com.thoughtworks.frankenstein.script.Script;
+import com.thoughtworks.frankenstein.script.TestReporter;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
@@ -20,7 +21,7 @@ public class SocketListenerTest extends MockObjectTestCase {
     public void testAcceptsTextFromSocket() throws IOException, InterruptedException {
         MockFrankensteinRecorder recorder = new MockFrankensteinRecorder();
         SocketListener listener = new SocketListener(recorder);
-        listener.start();
+        listener.start(5678);
         Socket socket = new Socket(InetAddress.getLocalHost(), 5678);
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         writer.write("EnterText \"textField\" \"abc\"\n");
@@ -63,6 +64,9 @@ public class SocketListenerTest extends MockObjectTestCase {
         public void reset() {
         }
 
+        public void registerAction(Class frankensteinEvent) {
+        }
+
         public void registerRecorder(Class recorderClass) {
         }
 
@@ -78,6 +82,13 @@ public class SocketListenerTest extends MockObjectTestCase {
         }
 
         public void removeScriptListener(ScriptListener listener) {
+        }
+
+
+        public void addTestReporter(TestReporter reporter) {
+        }
+
+        public void removeAllTestReporters() {
         }
     }
 }

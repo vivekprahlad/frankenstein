@@ -9,6 +9,7 @@ import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.*;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Ensures behaviour of DefaultRecorder
@@ -226,6 +227,12 @@ public class DefaultRecorderTest extends MockObjectTestCase {
 
         public boolean isScriptPassed() {
             return false;
+        }
+
+        public void addTestReporter(TestReporter testReporter) {
+        }
+
+        public void removeAllTestReporters() {
         }
     }
 }

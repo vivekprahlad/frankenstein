@@ -44,7 +44,7 @@ public class TreeEvent extends AbstractFrankensteinEvent {
 
     public void run() {
         JTree tree = (JTree) finder.findComponent(context, treeName);
-        action.execute(nodeLocation(tree), tree, finder);
+        action.execute(nodeLocation(tree), tree, finder, context);
     }
 
     private Point nodeLocation(JTree tree) {

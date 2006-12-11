@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.event.TreeSelectionListener;
@@ -17,7 +17,8 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * Understands recording tree selection events.
  * @author Vivek Prahlad
  */
-public class SelectTreeRecorder extends AbstractComponentRecorder implements TreeSelectionListener, MouseListener {
+public class SelectTreeRecorder extends AbstractComponentRecorder implements TreeSelectionListener {
+    private MouseListener mouseListener = new MouseListener();
 
     public SelectTreeRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
         super(recorder, namingStrategy, JTree.class);
@@ -25,7 +26,7 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
 
     void componentShown(Component component) {
         tree(component).addTreeSelectionListener(this);
-        tree(component).addMouseListener(this);
+        tree(component).addMouseListener(mouseListener);
     }
 
     private JTree tree(Component component) {
@@ -34,6 +35,7 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
 
     void componentHidden(Component component) {
         tree(component).removeTreeSelectionListener(this);
+        tree(component).removeMouseListener(mouseListener);
     }
 
     public void valueChanged(TreeSelectionEvent e) {
@@ -54,13 +56,6 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
         return treePath;
     }
 
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e) {
-        recordRightClick(e);
-    }
-
     private void recordRightClick(MouseEvent e) {
         if (e.isPopupTrigger()) {
             JTree tree = (JTree) e.getSource();
@@ -68,13 +63,9 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
         }
     }
 
-    public void mouseReleased(MouseEvent e) {
-        recordRightClick(e);
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
+    private class MouseListener extends MouseAdapter {
+        public void mouseReleased(MouseEvent e) {
+            recordRightClick(e);
+        }
     }
 }

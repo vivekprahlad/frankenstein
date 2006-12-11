@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.events.CancelTableEditEvent;
 import com.thoughtworks.frankenstein.events.EditTableCellEvent;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Ensures behaviour of the switch recorder.
@@ -142,6 +143,12 @@ public class TableEditRecorderTest extends AbstractRecorderTestCase {
         }
 
         public void removeScriptListener(ScriptListener listener) {
+        }
+
+        public void addTestReporter(TestReporter reporter) {
+        }
+
+        public void removeAllTestReporters() {
         }
 
         public List eventList() {
