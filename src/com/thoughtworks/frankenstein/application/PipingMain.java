@@ -1,10 +1,7 @@
 package com.thoughtworks.frankenstein.application;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 /**
- * Pipes to a designated main class.
+ * Launches a designated main class after launching Frankenstein.
  */
 public class PipingMain {
     public static void main(String[] args) throws ClassNotFoundException {

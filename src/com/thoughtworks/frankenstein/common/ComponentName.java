@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Understands component names
+ * Understands assigning logical names to components.
  */
 public class ComponentName {
 

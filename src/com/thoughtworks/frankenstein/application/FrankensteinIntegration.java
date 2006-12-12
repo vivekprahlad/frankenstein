@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Facade for the framework.
+ * Facade for the Frankenstein framework. Provides customization hooks.
  * @author Vivek Prahlad
  */
 public class FrankensteinIntegration {

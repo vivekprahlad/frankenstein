@@ -10,11 +10,11 @@
 <p>
 
 <h2>Typical usage</h2>
-The application under test is likely to be launched by a shell script or batch file.
+The application under test is likely to be launched by a shell script or a batch file.
 In order to integrate Frankenstein, you'll need to locate the line in the script that launches the application under
-test. This will typically look like this<br>
-<code>java ... com.your.package.Application</code><br>
-Change the line so that it looks like this:<br>
+test. This will typically look like this<br><br>
+<code>java ... com.your.package.Application</code><br><br>
+Change the line so that it looks like this:<br><br>
 <code>java ... <b>com.thoughtworks.frankenstein.application.PipingMain</b> com.your.package.Application</code><br>
 <br><br>
 The following jar files will need to be added to the classpath of the application under test:
@@ -28,26 +28,28 @@ The following jar files will need to be added to the classpath of the applicatio
 <p>
 
 <p>
-    <h2>Customization</h2>
+    <a name="Customization"><h2>Customization</h2></a>
     If you're extending Frankenstein, you'll need to write your own main class.
     <code><pre>
 
-<a name="l1"><span class="s0">import </span><span class="s1">com.thoughtworks.frankenstein.application.FrankensteinIntegration; 
-<a name="l2">
-<a name="l3"></span><span class="s2">/**
-<a name="l4"> * Launches the application under test via Frankenstein.
-<a name="l5"> */</span><span class="s1">
-<a name="l6"></span><span class="s0">public class </span><span class="s1">FrankensteinLauncher {
-<a name="l7">    </span><span class="s0">public static void </span><span class="s1">main(String[] args) {
-    <a name="l8"> FrankensteinIntegration integration = </span><span class="s0">new </span><span class="s1">FrankensteinIntegration(YouMainClass.</span><span
-        class="s0">class</span><span class="s1">);
-    <a name="l9"> integration.registerEvent(YourCustomEvent.</span><span class="s0">class</span><span class="s1">);
-    <a name="20"> integration.registerRecorder(YourCustomRecorder.</span><span class="s0">class</span><span class="s1">);
-    <a name="l10"> integration.start(args);
-  <a name="l11"> }
-<a name="l12">}
+    <a name="l1"><span class="s0">import </span><span class="s1">com.thoughtworks.frankenstein.application.FrankensteinIntegration;
+    <a name="l2">
+    <a name="l3"></span><span class="s2">/**
+    <a name="l4"> * Launches the application under test via Frankenstein.
+    <a name="l5"> */</span><span class="s1">
+    <a name="l6"></span><span class="s0">public class </span><span class="s1">FrankensteinLauncher {
+    <a name="l7">    </span><span class="s0">public static void </span><span class="s1">main(String[] args) {
+            <a name="l8"> FrankensteinIntegration integration = </span><span class="s0">new </span><span class="s1">FrankensteinIntegration(YouMainClass.</span><span
+                class="s0">class</span><span class="s1">);
+            <a name="l9"> integration.registerEvent(YourCustomEvent.</span><span class="s0">class</span><span class="s1">);
+            <a name="20"> integration.registerRecorder(YourCustomRecorder.</span><span class="s0">class</span><span class="s1">);
+            <a name="l10"> integration.start(args);
+        <a name="l11"> }
+    <a name="l12">}
 <a name="l13"></span></pre>
-</code>
+</code><br>
+The application can then be launched using: <br><br>    
+<code>java ... <b>com.your.package.FrankensteinLauncher</b> ... </code><br>
 </p>
 </body>
 </html>

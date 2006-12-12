@@ -3,27 +3,63 @@
 <head>
     <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
     <title>Customizing Frankenstein</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css"/>    
 </head>
 
 <body>
-<h3>Extending the core test vocabulary</h3>
+<h2>Extending the core test vocabulary</h2>
 Frankenstein is an event-driven framework. It is possible to extend the core event vocabulary by creating new event classes.
 Custom events need to implement the <code>FrankensteinEvent</code> interface. (For most custom events, it will be sufficient to
-extend from <code>AbstractFrankensteinEvent</code>). You'll need to explicitly register a custom event with Frankenstein
-<h3>Custom components</h3>
+extend from <code>AbstractFrankensteinEvent</code>). You'll need to <a href="integrating.html#Customization">explicitly register</a> a custom event with Frankenstein
+<h2>Custom components</h2>
 Custom components will require custom recorders to be written.
 
 Most component recorders work in the following manner:
 <ul>
-    <li>Attach a component specific listener when a component is shown (for example, the textComponentRecorder attaches a document listener)<li>
+    <li>Attach a component specific listener when a component is shown (for example, the CheckBoxRecorder attaches an ActionListener)<li>
     <li>Record a custom event when the component specific listener is triggered.</li>
     <li>Detach the listener when the component is hidden.It is critical to ensure that your listeners get detached at the right time to avoid memory leaks</li>
 </ul>
-<h3>What to record</h3>
-Let's look at what it would take to write a custom recorder for a Map widget, where the user can select locations on a map.
-It would be advisable to avoid recording raw mouse coordinates. <br>Which would you prefer?<br><br>
-<code>Click map 100,100</code>, or<br>
-<code>Click map Bangalore, 83E 92N</code>?<br><br>
+
+Here's an example recorder: the CheckBoxRecorder (this recorder is part of the core framework).
+
+<pre>
+    <a name="l11"></span><span class="s2">/**
+    <a name="l12"> * Records interactions with check boxes.
+    <a name="l14"> */</span><span class="s1">
+    <a name="l15"></span><span class="s0">public class </span><span class="s1">CheckBoxRecorder </span><span class="s0">extends </span><span class="s1">AbstractComponentRecorder </span><span class="s0">implements </span><span class="s1">ActionListener {
+    
+    <a name="l16">    </span><span class="s0">public </span><span class="s1">CheckBoxRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
+    <a name="l17">        </span><span class="s0">super</span><span class="s1">(recorder, namingStrategy, JCheckBox.</span><span class="s0">class</span><span class="s1">);
+    <a name="l18">    }
+    <a name="l19">
+    <a name="l20">    </span><span class="s0">public void </span><span class="s1">componentShown(Component component) {
+    <a name="l21">        checkBox(component).addActionListener(</span><span class="s0">this</span><span class="s1">);
+    <a name="l22">    }
+
+    <a name="l23">
+    <a name="l24">    </span><span class="s0">public void </span><span class="s1">componentHidden(Component component) {
+    <a name="l25">        checkBox(component).removeActionListener(</span><span class="s0">this</span><span class="s1">);
+    <a name="l26">    }
+    <a name="l27">
+    <a name="l28">    </span><span class="s0">private </span><span class="s1">JCheckBox checkBox(Component component) {
+    <a name="l29">        </span><span class="s0">return </span><span class="s1">(JCheckBox) component;
+    <a name="l30">    }
+    <a name="l31">
+    <a name="l32">    </span><span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e) {
+    <a name="l33">        JCheckBox checkBox = (JCheckBox) e.getSource();
+    <a name="l34">        recorder.record(</span><span class="s0">new </span><span class="s1">ClickCheckboxEvent(componentName(checkBox), checkBox.isSelected()));
+    <a name="l35">    }
+    <a name="l39">}
+    <a name="l40"></span></pre>
+<h2>What to record</h2>
+It would be advisable to record high level events that express the user's actions, rather than low level mouse and keyboard events.<br><br>
+For example: let's look at what we'd like to record when the user interacts with a Map widget which allows locations can be selected on a map.<br><br><br>
+Recording raw mouse events would typically result in a script that looks something like this:<br><br>
+<code>Click map 100,100</code><br><br>
+Clearly, it's next to impossible to determine which location the user had selected<br><br><br>
+An example of a higher level event would be one that records the location, latitude, and longitude that the user selected.<br><br>
+<code>Click map Bangalore, 12 58 N , 77 35 E</code><br><br>
 Transforming low level actions into high level events:
 <ul>
     <li>Allows tests to be readable and meaningful</li>

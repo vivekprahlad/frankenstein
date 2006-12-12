@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * Logs EDT violations.
+ * Logs violations of Swing's single threaded rendering rule.
  * @author vivek
  */
 public class EDTRuleViolationLoggingRepaintManager extends CheckingRepaintManager {

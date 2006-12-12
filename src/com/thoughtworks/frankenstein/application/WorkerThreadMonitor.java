@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.application;
 
 /**
- * Understands activity in worker threads.
+ * Monitors worker thread activity.
  * @author Vivek Prahlad
  */
 public interface WorkerThreadMonitor {
