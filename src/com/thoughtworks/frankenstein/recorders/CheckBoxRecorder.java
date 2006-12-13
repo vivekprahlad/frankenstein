@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.ClickCheckboxEvent;
+import com.thoughtworks.frankenstein.events.CheckboxEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -30,7 +31,7 @@ public class CheckBoxRecorder extends AbstractComponentRecorder implements Actio
     }
 
     public void actionPerformed(ActionEvent e) {
-        recorder.record(new ClickCheckboxEvent(componentName(checkBox(e)), checkBox(e).isSelected()));
+        recorder.record(new CheckboxEvent(componentName(checkBox(e)), checkBox(e).isSelected(), new ClickAction()));
     }
 
     private JCheckBox checkBox(ActionEvent e) {

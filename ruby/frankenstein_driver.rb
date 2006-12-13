@@ -1,5 +1,4 @@
 require  'socket'
-
 class Regexp
   def to_s
     "regex:" + source
@@ -269,6 +268,10 @@ module FrankensteinDriver
     append_to_script "switch_tab \"#{tab}\" \"#{title}\""
   end
 
+  # Moves a specified slider to the specified position
+  def move_slider(slider,position)
+    append_to_script "move_slider \"#{slider}\" \"#{position}\""
+  end
 
   # Sends a test script to the Frankenstein Java runtime at the specified host and port.
   # Waits for the test to complete, and reports test results.
@@ -370,5 +373,5 @@ class TestReporter
     index_file.puts "</body>"
     index_file.puts "</html>"
     index_file.close
-  end   
+  end
 end

@@ -7,7 +7,8 @@ import javax.swing.plaf.metal.MetalComboBoxButton;
 import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
-import com.thoughtworks.frankenstein.events.ClickButtonEvent;
+import com.thoughtworks.frankenstein.events.ButtonEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.naming.UnnamedComponentMatchingRule;
@@ -42,7 +43,7 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsEventOnForButtonsWithText() {
         recorder.componentShown(button);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickButtonEvent("abc")));
+        mockRecorder.expects(once()).method("record").with(eq(new ButtonEvent("abc", new ClickAction())));
         button.doClick();
     }
 
@@ -50,7 +51,7 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         button = new JButton(new ImageIcon("icons/list-add.png"));
         new JFrame().getContentPane().add(button);
         recorder.componentShown(button);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickButtonEvent("list-add")));
+        mockRecorder.expects(once()).method("record").with(eq(new ButtonEvent("list-add", new ClickAction())));
         button.doClick();
     }
 
@@ -58,7 +59,7 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         JToggleButton button = new JToggleButton("abc");
         new JFrame().getContentPane().add(button);
         recorder.componentShown(button);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickButtonEvent("abc")));
+        mockRecorder.expects(once()).method("record").with(eq(new ButtonEvent("abc", new ClickAction())));
         button.doClick();
     }
 

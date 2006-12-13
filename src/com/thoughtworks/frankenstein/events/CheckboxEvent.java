@@ -1,29 +1,27 @@
 package com.thoughtworks.frankenstein.events;
 
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
+import com.thoughtworks.frankenstein.events.actions.Action;
+
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Understands selecting checkboxes.
  *
  * @author Vivek Prahlad
  */
-public class ClickCheckboxEvent extends AbstractFrankensteinEvent {
+public class CheckboxEvent extends AbstractCompoundEvent {
     private String checkBoxName;
     private boolean selected;
 
-    public ClickCheckboxEvent(String checkBoxName, boolean isSelected) {
+    public CheckboxEvent(String checkBoxName, boolean isSelected, Action action) {
+        super(action);
         this.checkBoxName = checkBoxName;
         selected = isSelected;
     }
 
-    public ClickCheckboxEvent(String scriptLine) {
-        this(checkBoxParams(scriptLine)[0], Boolean.valueOf(checkBoxParams(scriptLine)[1]).booleanValue());
+    public CheckboxEvent(String scriptLine, Action action) {
+        this(checkBoxParams(scriptLine)[0], Boolean.valueOf(checkBoxParams(scriptLine)[1]).booleanValue(), action);
     }
 
     private static String[] checkBoxParams(String scriptLine) {
@@ -35,7 +33,7 @@ public class ClickCheckboxEvent extends AbstractFrankensteinEvent {
     }
 
     public String toString() {
-        return "ClickCheckboxEvent: " + checkBoxName + ", selected: " + selected;
+        return "CheckboxEvent: " + checkBoxName + ", selected: " + selected;
     }
 
     public String target() {
@@ -48,8 +46,6 @@ public class ClickCheckboxEvent extends AbstractFrankensteinEvent {
 
     public void run() {
         JCheckBox checkBox = (JCheckBox) finder.findComponent(context, checkBoxName);
-        if (checkBox.isSelected() ^ selected) {
-            checkBox.doClick();
-        }
+        action.execute(center(checkBox), checkBox, finder, context);
     }
 }

@@ -55,11 +55,11 @@ public class RightClickAction implements AWTEventListener, Action {
 
     private void rightClick(Point point, JComponent source) {
         Toolkit.getDefaultToolkit().getSystemEventQueue()
-                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_PRESSED, System.currentTimeMillis(), 0, point.x, point.y, 0, true));
+                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_PRESSED, System.currentTimeMillis(), 0, point.x, point.y, 0, true,MouseEvent.BUTTON3));
         Toolkit.getDefaultToolkit().getSystemEventQueue()
-                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_RELEASED, System.currentTimeMillis(), 0, point.x, point.y, 0, true));
+                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_RELEASED, System.currentTimeMillis(), 0, point.x, point.y, 0, true,MouseEvent.BUTTON3));
         Toolkit.getDefaultToolkit().getSystemEventQueue()
-                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(), 0, point.x, point.y, 1, true));
+                .postEvent(new MouseEvent(source, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(), 0, point.x, point.y, 1, true,MouseEvent.BUTTON3));
     }
 
     public boolean equals(Object obj) {

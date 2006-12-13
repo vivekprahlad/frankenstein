@@ -125,7 +125,7 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     private JFrame createAndShowFrame() throws InterruptedException {
         JFrame frame = new JFrame();
         frame.addFocusListener(this);
-        frame.pack();
+        frame.pack();                            
         synchronized(FOCUS_LOCK) {
             frame.setVisible(true);
             FOCUS_LOCK.wait();

@@ -1,11 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.ClickButtonEvent;
 import com.thoughtworks.frankenstein.events.DoubleClickListEvent;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.*;

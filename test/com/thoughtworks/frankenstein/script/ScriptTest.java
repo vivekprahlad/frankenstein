@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.thoughtworks.frankenstein.events.*;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import junit.framework.TestCase;
 
@@ -37,15 +38,16 @@ public class ScriptTest extends TestCase {
     "double_click_list \"list\" , \"0\"\n"+
     "click_table_header \"header\" , \"one\"\n"+
     "right_click_table_row \"table\" , \"1\"\n"+
-    "assert_label \"label\" , \"labelValue\"";
+    "assert_label \"label\" , \"labelValue\"\n"+
+    "move_slider \"slider\" , \"10\"";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
         eventList.add(new AssertEvent("table","enabled", "true"));
         eventList.add(new CancelTableEditEvent("tableName"));
-        eventList.add(new ClickButtonEvent("click button"));
-        eventList.add(new ClickCheckboxEvent("check Box", true));
-        eventList.add(new ClickRadioButtonEvent("radio button"));
+        eventList.add(new ButtonEvent("click button", new ClickAction()));
+        eventList.add(new CheckboxEvent("check Box", true, new ClickAction()));
+        eventList.add(new RadioButtonEvent("radio button", new ClickAction()));
         eventList.add(new DialogShownEvent("2"));
         eventList.add(new EnterTextEvent("textFieldName", "one\ntwo"));
         eventList.add(new EditTableCellEvent("tableName", 1, 1));
@@ -59,9 +61,10 @@ public class ScriptTest extends TestCase {
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
         eventList.add(new DoubleClickListEvent("list",0));
-        eventList.add(new ClickTableHeaderEvent("header","one"));
+        eventList.add(new TableHeaderEvent("header","one", new ClickAction()));
         eventList.add(new TableRowEvent("table",1, new RightClickAction()));
         eventList.add(new AssertLabelEvent("label","labelValue"));
+        eventList.add(new MoveSliderEvent("slider",10));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -69,12 +72,12 @@ public class ScriptTest extends TestCase {
     public void testCreatesEventListFromScript() throws IOException {
         Script script = new Script(new DefaultEventRegistry());
         List eventList = script.parse(new StringReader(SCRIPT));
-        assertEquals(21, eventList.size());
+        assertEquals(22, eventList.size());
         assertEquals(new AssertEvent("table","enabled", "true"),eventList.get(0));
         assertEquals(new CancelTableEditEvent("tableName"), eventList.get(1));
-        assertEquals(new ClickButtonEvent("click button"), eventList.get(2));
-        assertEquals(new ClickCheckboxEvent("check Box", true), eventList.get(3));
-        assertEquals(new ClickRadioButtonEvent("radio button"), eventList.get(4));
+        assertEquals(new ButtonEvent("click button", new ClickAction()), eventList.get(2));
+        assertEquals(new CheckboxEvent("check Box", true, new ClickAction()), eventList.get(3));
+        assertEquals(new RadioButtonEvent("radio button", new ClickAction()), eventList.get(4));
         assertEquals(new DialogShownEvent("2"), eventList.get(5));
         assertEquals(new EnterTextEvent("textFieldName", "one\ntwo"), eventList.get(6));
         assertEquals(new EditTableCellEvent("tableName", 1, 1), eventList.get(7));
@@ -88,8 +91,9 @@ public class ScriptTest extends TestCase {
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(15));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
         assertEquals(new DoubleClickListEvent("list",0),eventList.get(17));
-        assertEquals(new ClickTableHeaderEvent("header","one"),eventList.get(18));
+        assertEquals(new TableHeaderEvent("header","one", new ClickAction()),eventList.get(18));
         assertEquals(new TableRowEvent("table",1, new RightClickAction()),eventList.get(19));
         assertEquals(new AssertLabelEvent("label","labelValue"),eventList.get(20));
+        assertEquals(new MoveSliderEvent("slider",10),eventList.get(21));
     }
 }

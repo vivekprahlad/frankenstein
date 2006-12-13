@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
  * (which will usually be the player thread) or the Swing thread.
  * Exceptions encountered in the Swing thread are propogated.
  * @author vivek
- * @see AbstractFrankensteinEvent.play()
+ 
  */
 public abstract class EventExecutionStrategy {
     abstract void execute(Runnable runnable);

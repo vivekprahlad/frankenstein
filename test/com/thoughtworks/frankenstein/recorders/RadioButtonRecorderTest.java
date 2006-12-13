@@ -2,7 +2,8 @@ package com.thoughtworks.frankenstein.recorders;
 
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.ClickRadioButtonEvent;
+import com.thoughtworks.frankenstein.events.RadioButtonEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
@@ -38,7 +39,7 @@ public class RadioButtonRecorderTest extends AbstractRecorderTestCase {
     public void testRecordsEventWhenCheckBoxIsSelected() {
         radioButton.setSelected(true);
         recorder.componentShown(radioButton);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickRadioButtonEvent("testCheckBox")));
+        mockRecorder.expects(once()).method("record").with(eq(new RadioButtonEvent("testCheckBox", new ClickAction())));
         radioButton.doClick();
     }
 

@@ -9,6 +9,7 @@ import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.*;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
@@ -47,7 +48,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     }
 
     public void testDoesNotCoalesceButtonClicks() {
-        FrankensteinEvent event = new ClickButtonEvent("button");
+        FrankensteinEvent event = new ButtonEvent("button", new ClickAction());
         recorder.record(event);
         recorder.record(event);
         assertEquals(2, recorder.eventList().size());

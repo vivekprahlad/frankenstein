@@ -2,7 +2,8 @@ package com.thoughtworks.frankenstein.recorders;
 
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.ClickCheckboxEvent;
+import com.thoughtworks.frankenstein.events.CheckboxEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
@@ -38,7 +39,7 @@ public class CheckBoxRecorderTest extends AbstractRecorderTestCase {
     public void testRecordsEventWhenCheckBoxIsSelected() {
         checkBox.setSelected(true);
         recorder.componentShown(checkBox);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickCheckboxEvent("testCheckBox", false)));
+        mockRecorder.expects(once()).method("record").with(eq(new CheckboxEvent("testCheckBox", false, new ClickAction())));
         checkBox.doClick();
     }
 

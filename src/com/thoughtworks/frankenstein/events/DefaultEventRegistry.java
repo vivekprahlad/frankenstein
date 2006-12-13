@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.Action;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.script.Script;
 
 import java.lang.reflect.Constructor;
@@ -21,6 +22,7 @@ public class DefaultEventRegistry implements EventRegistry {
     private Map actionNameToActionClassMap = new HashMap();
 
     public DefaultEventRegistry() {
+        registerAction(ClickAction.class);
         registerAction(RightClickAction.class);
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateDialogEvent.class);
@@ -28,10 +30,10 @@ public class DefaultEventRegistry implements EventRegistry {
         registerEvent(AssertEvent.class);
         registerEvent(AssertLabelEvent.class);
         registerEvent(CancelTableEditEvent.class);
-        registerEvent(ClickButtonEvent.class);
-        registerEvent(ClickCheckboxEvent.class);
-        registerEvent(ClickRadioButtonEvent.class);
-        registerEvent(ClickTableHeaderEvent.class);
+        registerEvent(ButtonEvent.class);
+        registerEvent(CheckboxEvent.class);
+        registerEvent(RadioButtonEvent.class);
+        registerEvent(TableHeaderEvent.class);
         registerEvent(CloseAllDialogsEvent.class);
         registerEvent(CloseInternalFrameEvent.class);
         registerEvent(DelayEvent.class);
@@ -54,6 +56,7 @@ public class DefaultEventRegistry implements EventRegistry {
         registerEvent(StartTestEvent.class);
         registerEvent(StopTableEditEvent.class);
         registerEvent(SwitchTabEvent.class);
+        registerEvent(MoveSliderEvent.class);
     }
 
     public void registerEvent(Class eventClass) {

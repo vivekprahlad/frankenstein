@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.ClickTableHeaderEvent;
-import com.thoughtworks.frankenstein.common.ComponentName;
+import com.thoughtworks.frankenstein.events.TableHeaderEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -11,11 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 21, 2006
- * Time: 11:11:16 AM
- * To change this template use File | Settings | File Templates.
+ 
  */
 public class ClickTableHeaderRecorder extends AbstractComponentRecorder implements MouseListener {
     public ClickTableHeaderRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
@@ -54,7 +50,7 @@ public class ClickTableHeaderRecorder extends AbstractComponentRecorder implemen
             JTableHeader header = (JTableHeader) e.getSource();
             int columnIndex = header.columnAtPoint(e.getPoint());
             TableColumn column = header.getColumnModel().getColumn(columnIndex);
-            recorder.record(new ClickTableHeaderEvent(componentName(header), (String) column.getHeaderValue()));
+            recorder.record(new TableHeaderEvent(componentName(header), (String) column.getHeaderValue(), new ClickAction()));
         }
     }
 

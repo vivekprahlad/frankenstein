@@ -1,23 +1,26 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.recorders.EventList;
+import com.thoughtworks.frankenstein.events.actions.Action;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 /**
  * Understands recording button clicks.
  *
  * @author Vivek Prahlad
+ * ahlad
  */
-public class ClickButtonEvent extends AbstractFrankensteinEvent {
+public class ButtonEvent extends AbstractCompoundEvent {
     private String buttonName;
     public static final String CLICK_BUTTON_ACTION = "ClickButton";
-    private static final Object LOCK = new Object();
-    private Exception exception;
 
-    public ClickButtonEvent(String buttonName) {
-        this.buttonName = buttonName;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+    public ButtonEvent(String scriptLine, Action action) {
+        super(action);
+        this.buttonName = scriptLine;
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -25,7 +28,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
     }
 
     public String toString() {
-        return "ClickButtonEvent: " + buttonName;
+        return "ButtonEvent: " + buttonName;
     }
 
     public String target() {
@@ -34,6 +37,7 @@ public class ClickButtonEvent extends AbstractFrankensteinEvent {
 
     public void run() {
         AbstractButton button = (AbstractButton) finder.findComponent(context, buttonName);
-        new ClickButtonAction().execute(button, context);
+        action.execute(center(button), button, finder, context);
     }
+
 }

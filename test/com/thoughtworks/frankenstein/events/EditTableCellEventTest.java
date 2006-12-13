@@ -9,7 +9,7 @@ import org.jmock.Mock;
 import javax.swing.*;
 
 /**
- * Ensures behaviour of ClickButtonEvent
+ * Ensures behaviour of ButtonEvent
  */
 public class EditTableCellEventTest extends AbstractEventTestCase {
 

@@ -37,13 +37,13 @@ public class ClickAction extends MouseAdapter implements Action, WindowContextLi
     }
 
     private void postEvents(JComponent component, Point location, EventQueue queue) {
-        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_PRESSED));
-        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_RELEASED));
-        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_CLICKED));
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_PRESSED, 0));
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_RELEASED, 0));
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_CLICKED, 1));
     }
 
-    private MouseEvent creatMouseEvent(JComponent component, Point location, int type) {
-        return new MouseEvent(component, type, System.currentTimeMillis(), 0, location.x, location.y, 1, false, MouseEvent.BUTTON1);
+    private MouseEvent creatMouseEvent(JComponent component, Point location, int type, int clickCount) {
+        return new MouseEvent(component, type, System.currentTimeMillis(), 0, location.x, location.y, clickCount, false, MouseEvent.BUTTON1);
     }
 
     public String name() {
@@ -56,5 +56,15 @@ public class ClickAction extends MouseAdapter implements Action, WindowContextLi
 
     public synchronized void dialogShown() {
         notifyAll();
+    }
+
+
+    public boolean equals(Object obj) {
+        return  obj instanceof ClickAction;
+    }
+
+
+    public int hashCode() {
+        return 1;
     }
 }

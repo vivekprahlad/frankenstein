@@ -10,16 +10,14 @@ import java.awt.*;
  *
  * @author Vivek Prahlad
  */
-public class TreeEvent extends AbstractFrankensteinEvent {
+public class TreeEvent extends AbstractCompoundEvent {
     private String treeName;
     private String path;
-    private Action action;
 
     public TreeEvent(String treeName, String path, Action action) {
+        super(action);
         this.treeName = treeName;
         this.path = path;
-        this.action = action;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public TreeEvent(String scriptLine, Action action) {
@@ -28,10 +26,6 @@ public class TreeEvent extends AbstractFrankensteinEvent {
 
     public String toString() {
         return action.name() + "TreeEvent: Tree: " + treeName + ", Path: " + path;
-    }
-
-    public String action() {
-        return action.name() + super.action();
     }
 
     public String target() {

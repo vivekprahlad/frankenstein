@@ -1,7 +1,8 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.ClickTableHeaderEvent;
+import com.thoughtworks.frankenstein.events.TableHeaderEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -40,7 +41,7 @@ public class ClickTableHeaderRecorderTest extends AbstractRecorderTestCase {
 
      public void testRecordsClickOnTableHeader() {
         recorder.componentShown(header);
-        mockRecorder.expects(once()).method("record").with(eq(new ClickTableHeaderEvent("header","one")));
+        mockRecorder.expects(once()).method("record").with(eq(new TableHeaderEvent("header","one", new ClickAction())));
         Point point = LocationForFirstColumn();
         recorder.mouseClicked(new MouseEvent(header, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, false,MouseEvent.BUTTON1));
     }

@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.ClickRadioButtonEvent;
+import com.thoughtworks.frankenstein.events.RadioButtonEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -30,6 +31,6 @@ public class RadiobuttonRecorder extends AbstractComponentRecorder implements Ac
     }
 
     public void actionPerformed(ActionEvent e) {
-        recorder.record(new ClickRadioButtonEvent(componentName((Component) e.getSource())));
+        recorder.record(new RadioButtonEvent(componentName((Component) e.getSource()), new ClickAction()));
     }
 }

@@ -9,7 +9,7 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
 
 /**
- * Ensures behaviour of ClickButtonEvent
+ * Ensures behaviour of ButtonEvent
  */
 public class CancelTableEditEventTest extends AbstractEventTestCase {
 

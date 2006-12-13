@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 
 /**
  * Ensures behaviour of the default event registry
@@ -43,18 +44,18 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreatesClickButtonEvent() {
-       defaultEventRegistry.registerEvent(ClickButtonEvent.class);
-       assertEquals(new ClickButtonEvent("abc"), defaultEventRegistry.createEvent("click_button \"abc\""));
+       defaultEventRegistry.registerEvent(ButtonEvent.class);
+       assertEquals(new ButtonEvent("abc", new ClickAction()), defaultEventRegistry.createEvent("click_button \"abc\""));
     }
 
     public void testCreatesClickCheckboxEvent() {
-        defaultEventRegistry.registerEvent(ClickCheckboxEvent.class);
-        assertEquals(new ClickCheckboxEvent("abc", true), defaultEventRegistry.createEvent("ClickCheckbox \"abc\" \"true\""));
+        defaultEventRegistry.registerEvent(CheckboxEvent.class);
+        assertEquals(new CheckboxEvent("abc", true, new ClickAction()), defaultEventRegistry.createEvent("ClickCheckbox \"abc\" \"true\""));
     }
 
     public void testCreatesClickRadioButtonEvent() {
-        defaultEventRegistry.registerEvent(ClickRadioButtonEvent.class);
-        assertEquals(new ClickRadioButtonEvent("abc"), defaultEventRegistry.createEvent("ClickRadioButton \"abc\""));
+        defaultEventRegistry.registerEvent(RadioButtonEvent.class);
+        assertEquals(new RadioButtonEvent("abc", new ClickAction()), defaultEventRegistry.createEvent("ClickRadioButton \"abc\""));
     }
 
     public void testCreatesDialogShownEvent() {
@@ -137,8 +138,8 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreateClickTableHeaderEvent() {
-        defaultEventRegistry.registerEvent(ClickTableHeaderEvent.class);
-        assertEquals(new ClickTableHeaderEvent("header","one"), defaultEventRegistry.createEvent( "click_table_header \"header\" , \"one\""));
+        defaultEventRegistry.registerEvent(TableHeaderEvent.class);
+        assertEquals(new TableHeaderEvent("header","one", new ClickAction()), defaultEventRegistry.createEvent( "click_table_header \"header\" , \"one\""));
     }
 
     public void testCreateRightClickTableRows() {
@@ -182,9 +183,14 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new TreeEvent("tree", "a>b>c", new RightClickAction()), defaultEventRegistry.createEvent("right_click_tree \"tree\" , \"a>b>c\""));
     }
 
-     public void testCreateAssertLabel() {
+     public void testCreatesAssertLabel() {
         defaultEventRegistry.registerEvent(AssertLabelEvent.class);
         assertEquals(new AssertLabelEvent("label","labelValue"), defaultEventRegistry.createEvent("assert_label \"label\" , \"labelValue\""));
+    }
+    
+    public void testCreatesMoveSliderEvent(){
+        defaultEventRegistry.registerEvent(MoveSliderEvent.class);
+        assertEquals(new MoveSliderEvent("slider",10),defaultEventRegistry.createEvent("move_slider \"slider\" , \"10\""));
     }
 
     public void testThrowsExceptionIfCreatingEventFails() {

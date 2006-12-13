@@ -1,25 +1,24 @@
 package com.thoughtworks.frankenstein.events;
 
-import java.awt.*;
+import com.thoughtworks.frankenstein.events.actions.Action;
+
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Understands selecting checkboxes.
  * @author Vivek Prahlad
  */
-public class ClickRadioButtonEvent extends AbstractFrankensteinEvent {
+public class RadioButtonEvent extends AbstractCompoundEvent {
     private String radioButtonName;
 
-    public ClickRadioButtonEvent(String checkBoxName) {
+    public RadioButtonEvent(String checkBoxName, Action action) {
+        super(action);
         this.radioButtonName = checkBoxName;
     }
 
     public String toString() {
-        return "ClickRadioButtonEvent: " + radioButtonName;
+        return "RadioButtonEvent: " + radioButtonName;
     }
 
     public String target() {
@@ -28,6 +27,6 @@ public class ClickRadioButtonEvent extends AbstractFrankensteinEvent {
 
     public void run() {
         JRadioButton radioButton = (JRadioButton) finder.findComponent(context, radioButtonName);
-        radioButton.doClick();
+        action.execute(center(radioButton), radioButton, finder, context);
     }
 }

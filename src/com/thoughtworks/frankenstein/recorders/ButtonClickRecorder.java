@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
-import com.thoughtworks.frankenstein.events.ClickButtonEvent;
+import com.thoughtworks.frankenstein.events.ButtonEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
@@ -43,7 +44,7 @@ public class ButtonClickRecorder extends AbstractComponentRecorder implements Ac
     public void actionPerformed(ActionEvent e) {
         AbstractButton button = (AbstractButton) e.getSource();
         if (hasNoRecorderPane(button)) {
-            recorder.record(new ClickButtonEvent(componentName(button)));
+            recorder.record(new ButtonEvent(componentName(button), new ClickAction()));
         }
     }
 

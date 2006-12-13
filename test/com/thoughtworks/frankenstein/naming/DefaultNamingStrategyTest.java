@@ -274,4 +274,13 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("one", one.getName());
         assertEquals("JTextField_1", two.getName());
     }
+
+    public void testNamesSlider(){
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JSlider slider = new JSlider(1,100,5);
+        panel.add(slider);
+        namingStrategy.nameComponentsIn(panel);
+        assertEquals("JSlider_1", slider.getName());
+
+    }
 }

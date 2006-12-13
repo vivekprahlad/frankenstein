@@ -1,28 +1,29 @@
 package com.thoughtworks.frankenstein.events;
 
+import com.thoughtworks.frankenstein.events.actions.Action;
+
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 /**
  */
-public class ClickTableHeaderEvent extends AbstractFrankensteinEvent {
-
+public class TableHeaderEvent extends AbstractCompoundEvent {
     private String headerName;
     private String columnName;
 
     public String toString() {
-        return "ClickTableHeaderEvent: " + headerName + " " + columnName;
+        return "TableHeaderEvent: " + headerName + " " + columnName;
     }
 
-    public ClickTableHeaderEvent(String headerName, String columnName) {
+    public TableHeaderEvent(String headerName, String columnName, Action action) {
+        super(action);
         this.headerName = headerName;
         this.columnName = columnName;
     }
 
-    public ClickTableHeaderEvent(String args) {
-        this(params(args)[0], params(args)[1]);
+    public TableHeaderEvent(String args, Action action) {
+        this(params(args)[0], params(args)[1], action);
     }
 
    public String target() {
@@ -35,7 +36,7 @@ public class ClickTableHeaderEvent extends AbstractFrankensteinEvent {
 
     public synchronized void run() {
         JTableHeader header = (JTableHeader) finder.findComponent(context, headerName);
-        singleClick(header, getLocation(header));
+        action.execute(getLocation(header), header, finder, context);
     }
 
     private Point getLocation(JTableHeader header) {
@@ -55,10 +56,5 @@ public class ClickTableHeaderEvent extends AbstractFrankensteinEvent {
             if (columnModel.getColumn(i).getHeaderValue().equals(columnName))
                 return i;
         return -1;
-    }
-
-    private void singleClick(JTableHeader header, Point point) {
-        Toolkit.getDefaultToolkit().getSystemEventQueue()
-                .postEvent(new MouseEvent(header, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(), 0, point.x, point.y, 1, false,MouseEvent.BUTTON1));
     }
 }
