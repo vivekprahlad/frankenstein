@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 
 /**
- * Understands recording button clicks.
+ * Understands button actions.
  *
  * @author Vivek Prahlad
  * ahlad

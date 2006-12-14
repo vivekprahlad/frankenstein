@@ -10,9 +10,68 @@
 <h2>Extending the core test vocabulary</h2>
 Frankenstein is an event-driven framework. It is possible to extend the core event vocabulary by creating new event classes.
 Custom events need to implement the <code>FrankensteinEvent</code> interface. (For most custom events, it will be sufficient to
-extend from <code>AbstractFrankensteinEvent</code>). You'll need to <a href="integrating.html#Customization">explicitly register</a> a custom event with Frankenstein
+extend from <code>AbstractFrankensteinEvent</code>). You'll need to <a href="integrating.html#Customization">explicitly register</a> a custom event with Frankenstein.
+<br><br>
+<h2>Compound events</h2>
+Compound events can help decouple Actions (Clicks, RightClicks, Double Clicks, Drag , Drop, etc.) from the components where the action is executed.  
+<br><br>
+Here is an example of a compound event:
+
+<pre>
+
+    <a name="l1"><span class="s0">package </span><span class="s1">com.thoughtworks.frankenstein.events;
+    <a name="l2">
+    <a name="l3"></span><span class="s0">import </span><span class="s1">com.thoughtworks.frankenstein.events.actions.Action;
+    <a name="l4">
+    <a name="l5"></span><span class="s0">import </span><span class="s1">javax.swing.*;
+    <a name="l6">
+    <a name="l7">
+    <a name="l8"></span><span class="s2">/**
+    <a name="l9"> * Understands radio button actions
+    <a name="l10"> */</span><span class="s1">
+    <a name="la10"></span><span class="s0">public class </span><span class="s1">RadioButtonEvent </span><span class="s0">extends </span><span class="s1">AbstractCompoundEvent {
+    <a name="la13">    </span><span class="s0">private </span><span class="s1">String radioButtonName;
+    <a name="la14">
+        /**
+         * Compound events need to declare a constructor that takes in a script line and an action.
+         */
+    <a name="la15">    </span><span class="s0">public </span><span class="s1">RadioButtonEvent(String scriptLine, Action action) {
+    <a name="la16">        </span><span class="s0">super</span><span class="s1">(action);
+    <a name="la17">        </span><span class="s0">this</span><span class="s1">.radioButtonName = scriptLine;
+    <a name="la18">    }
+    <a name="la19">
+    <a name="la20">    </span><span class="s0">public </span><span class="s1">String toString() {
+    <a name="la21">        </span><span class="s0">return </span><span class="s4">&quot;RadioButtonEvent: &quot; </span><span class="s1">+ radioButtonName;
+    <a name="la22">    }
+    <a name="la23">
+    <a name="la24">    </span><span class="s0">public </span><span class="s1">String target() {
+    <a name="la25">        </span><span class="s0">return </span><span class="s1">radioButtonName;
+    <a name="la26">    }
+    <a name="la27">
+    <a name="la28">    </span><span class="s0">public void </span><span class="s1">run() {
+    <a name="la29">        JRadioButton radioButton = (JRadioButton) finder.findComponent(context, radioButtonName);
+    <a name="la30">        action.execute(center(radioButton), radioButton, finder, context);
+    <a name="la31">    }
+    <a name="la32">}
+    <a name="la33"></span></pre>
+
+<h2>Adding custom events to the Ruby driver</h2>
+Custom events can be added to the Frankenstein driver by adding functions to the <code>FrankensteinDriver</code> module. Please refer
+to the <a href="ruby_driver.html">Ruby Driver</a> documentation for more information about Ruby.
+<pre>
+    #Include the Frankenstein driver module.
+    <span class="s0">require</span> 'frankenstein_driver'<br>
+    #Add custom actions to the driver
+    <span class="s0">module</span> FrankensteinDriver
+    
+      <span class="s0">def</span> custom_event(param1,param2)
+        append_to_script("custom_event \"#{param1}\",\"#{param2}\")
+      <span class="s0">end</span>
+    <span class="s0">end</span>
+</pre>
+
 <h2>Custom components</h2>
-Custom components will require custom recorders to be written.
+If required, custom recorders can be written for custom components.
 
 Most component recorders work in the following manner:
 <ul>

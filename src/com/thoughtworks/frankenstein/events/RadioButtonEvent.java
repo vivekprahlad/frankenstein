@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 /**
- * Understands selecting checkboxes.
+ * Understands radio button actio
  * @author Vivek Prahlad
  */
 public class RadioButtonEvent extends AbstractCompoundEvent {
