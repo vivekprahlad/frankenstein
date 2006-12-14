@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Understands performing actions on trees
+ * Understands actions on trees
  *
  * @author Vivek Prahlad
  */

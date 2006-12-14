@@ -8,16 +8,14 @@ import java.awt.*;
 /**
  * Understands actions on table rows
  */
-public class TableRowEvent extends AbstractFrankensteinEvent {
+public class TableRowEvent extends AbstractCompoundEvent {
     private String tableName;
     private int rowIndex;
-    private Action action;
 
     public TableRowEvent(String tableName, int rowIndex, Action action) {
+        super(action);
         this.tableName = tableName;
         this.rowIndex = rowIndex;
-        this.action = action;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     public TableRowEvent(String args, Action action) {

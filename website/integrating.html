@@ -14,7 +14,7 @@ The application under test is likely to be launched by a shell script or a batch
 In order to integrate Frankenstein, you'll need to locate the line in the script that launches the application under
 test. This will typically look like this<br><br>
 <code>java ... com.your.package.Application</code><br><br>
-Change the line so that it looks like this:<br><br>
+You'll need to change the line so that it looks like this:<br><br>
 <code>java ... <b>com.thoughtworks.frankenstein.application.PipingMain</b> com.your.package.Application</code><br>
 <br><br>
 The following jar files will need to be added to the classpath of the application under test:
@@ -48,7 +48,7 @@ The following jar files will need to be added to the classpath of the applicatio
     <a name="l12">}
 <a name="l13"></span></pre>
 </code><br>
-The application can then be launched using: <br><br>    
+The application can then be launched by changing the appropriate line of the application's script to look like this: <br><br>    
 <code>java ... <b>com.your.package.FrankensteinLauncher</b> ... </code><br>
 </p>
 </body>

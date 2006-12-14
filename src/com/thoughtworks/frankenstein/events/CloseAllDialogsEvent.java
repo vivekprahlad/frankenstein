@@ -7,7 +7,7 @@ package com.thoughtworks.frankenstein.events;
 public class CloseAllDialogsEvent extends AbstractFrankensteinEvent {
 
     public CloseAllDialogsEvent(String scriptLine) {
-        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String toString() {

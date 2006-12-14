@@ -19,7 +19,7 @@ import com.thoughtworks.frankenstein.script.Script;
  */
 public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     private static final Map actionNameMap = new HashMap();
-    protected EventExecutionStrategy eventExecutionStrategy = EventExecutionStrategy.IN_SWING_THREAD;
+    private EventExecutionStrategy eventExecutionStrategy = EventExecutionStrategy.IN_SWING_THREAD;
     protected WindowContext context;
     protected ComponentFinder finder;
     protected ScriptContext scriptContext;
@@ -31,6 +31,10 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
         } else {
             list.addEvent(this);
         }
+    }
+
+    protected void executeInPlayerThread() {
+        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
     }
 
     protected boolean isSameTargetAs(FrankensteinEvent lastEvent) {

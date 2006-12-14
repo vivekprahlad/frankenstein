@@ -57,13 +57,11 @@ public class TableHeaderEventTest extends AbstractEventTestCase {
         mockFinder.expects(once()).method("findComponent").with(ANYTHING, eq("header")).will(returnValue(tableHeader));
         Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
         mockAction.expects(once()).method("execute").with(eq(new Point(112,0)), ANYTHING, ANYTHING, ANYTHING);
-        assertSame(1,tableHeader.columnAtPoint(new Point(112,0)));
+        assertEquals(1,tableHeader.columnAtPoint(new Point(112,0)));
         new TableHeaderEvent("header", "two",(com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockFinder.proxy(), null, null);
     }
 
     protected FrankensteinEvent createEvent() {
         return new TableHeaderEvent("header", "one", new ClickAction());
     }
-
-
 }

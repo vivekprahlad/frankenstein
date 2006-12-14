@@ -7,14 +7,11 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 
 /**
+ * Actions on table headers.
  */
 public class TableHeaderEvent extends AbstractCompoundEvent {
     private String headerName;
     private String columnName;
-
-    public String toString() {
-        return "TableHeaderEvent: " + headerName + " " + columnName;
-    }
 
     public TableHeaderEvent(String headerName, String columnName, Action action) {
         super(action);
@@ -26,12 +23,16 @@ public class TableHeaderEvent extends AbstractCompoundEvent {
         this(params(args)[0], params(args)[1], action);
     }
 
-   public String target() {
+    public String target() {
         return headerName;
     }
 
     public String parameters() {
         return columnName;
+    }
+
+    public String toString() {
+        return "TableHeaderEvent: " + headerName + " " + columnName;
     }
 
     public synchronized void run() {

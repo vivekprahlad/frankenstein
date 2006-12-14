@@ -15,7 +15,7 @@ public class ActivateDialogEvent extends AbstractFrankensteinEvent {
 
     public ActivateDialogEvent(String title) {
         this.title = title;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String target() {
@@ -53,7 +53,6 @@ public class ActivateDialogEvent extends AbstractFrankensteinEvent {
 
         public void windowActivated(WindowEvent e) {
             dialogActivated();
-            System.out.println("Focussed");
         }
     }
 }

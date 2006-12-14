@@ -17,7 +17,7 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
 
     public ActivateWindowEvent(String title) {
         this.title = title;
-        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {

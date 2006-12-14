@@ -16,7 +16,7 @@ public class NavigateEvent extends AbstractFrankensteinEvent {
 
     public NavigateEvent(String path) {
         this.path = path;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String toString() {

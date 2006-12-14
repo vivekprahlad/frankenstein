@@ -11,7 +11,7 @@ public class DelayEvent extends AbstractFrankensteinEvent {
 
     public DelayEvent(String scriptLine) {
         duration = Integer.parseInt(scriptLine);
-        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String toString() {

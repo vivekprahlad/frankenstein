@@ -13,7 +13,7 @@ public abstract class AbstractCompoundEvent extends AbstractFrankensteinEvent {
 
     protected AbstractCompoundEvent(Action action) {
         this.action = action;
-        this.eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String action() {

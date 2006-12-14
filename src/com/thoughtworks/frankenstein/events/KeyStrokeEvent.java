@@ -1,14 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
+import com.thoughtworks.frankenstein.recorders.EventList;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.*;
-
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.EventList;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
 
 /**
  * Represents a keystroke event.
@@ -22,7 +19,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     public KeyStrokeEvent(int modifiers, int keyCode) {
         this.modifiers = modifiers;
         this.keyCode = keyCode;
-        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public KeyStrokeEvent(String scriptLine) {

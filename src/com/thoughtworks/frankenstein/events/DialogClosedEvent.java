@@ -11,7 +11,7 @@ public class DialogClosedEvent extends AbstractFrankensteinEvent {
 
     public DialogClosedEvent(String title) {
         this.title = title;
-        eventExecutionStrategy = EventExecutionStrategy.IN_PLAYER_THREAD;
+        executeInPlayerThread();
     }
 
     public String toString() {
