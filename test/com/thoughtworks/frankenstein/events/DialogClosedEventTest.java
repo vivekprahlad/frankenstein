@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Ensures behaviour of DialogShownEvent
@@ -41,5 +42,13 @@ public class DialogClosedEventTest extends MockObjectTestCase {
         Mock mockWindownContext = mock(WindowContext.class);
         mockWindownContext.expects(once()).method("waitForDialogClosing").with(eq("title"), eq(10));
         event.play((WindowContext) mockWindownContext.proxy(), null, null, null);
+    }
+
+    public void testReplacesActivateWindowEvent() {
+        ActivateWindowEvent event = new ActivateWindowEvent("title");
+        DialogClosedEvent dialogClosedEvent = new DialogClosedEvent("title");
+        Mock mockEventList = mock(EventList.class);
+        mockEventList.expects(once()).method("replaceLastEvent").with(same(dialogClosedEvent));
+        dialogClosedEvent.record((EventList) mockEventList.proxy(), event);
     }
 }

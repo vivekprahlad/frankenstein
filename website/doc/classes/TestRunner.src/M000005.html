@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 331</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 334</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">tests</span>)
     <span class="ruby-identifier">tests</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">test</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@test_reporter</span>.<span class="ruby-identifier">report_test_result</span>(<span class="ruby-identifier">test</span>,<span class="ruby-identifier">test</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run_frankenstein_test</span>(<span class="ruby-ivar">@host</span>,<span class="ruby-ivar">@port</span>))}
     <span class="ruby-ivar">@test_reporter</span>.<span class="ruby-identifier">report</span>
