@@ -1,7 +1,8 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.DoubleClickListEvent;
+import com.thoughtworks.frankenstein.events.ListEvent;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 
 import javax.swing.*;
 import java.awt.event.MouseListener;
@@ -47,7 +48,7 @@ public class DoubleClickListRecorder extends AbstractComponentRecorder implement
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             JList list = (JList) e.getSource();
-            recorder.record(new DoubleClickListEvent(list.getName(), list.locationToIndex(e.getPoint())));
+            recorder.record(new ListEvent(list.getName(), list.locationToIndex(e.getPoint()),new DoubleClickAction()));
         }
     }
 

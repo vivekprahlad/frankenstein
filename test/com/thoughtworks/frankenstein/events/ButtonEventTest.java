@@ -1,15 +1,15 @@
 package com.thoughtworks.frankenstein.events;
 
-import java.awt.event.ActionListener;
 import java.awt.*;
-import javax.swing.*;
+
 
 import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
+
+import javax.swing.*;
+
 
 /**
  * Ensures behaviour of ButtonEvent
@@ -44,17 +44,22 @@ public class ButtonEventTest extends AbstractEventTestCase {
     }
 
     public void testPlaysEvent() throws InterruptedException, AWTException {
+        ButtonEvent buttonEvent;
         JButton button = new JButton("abc");
-        button.setSize(20,10);
+        button.setSize(20, 10);
         button.setName("parent.buttonName");
-        Mock mockAction=mock(com.thoughtworks.frankenstein.events.actions.Action.class);
+        com.thoughtworks.frankenstein.events.actions.MockAction mockAction = new com.thoughtworks.frankenstein.events.actions.MockAction();
         Mock mockComponentFinder = mock(ComponentFinder.class);
         mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(button));
-        mockAction.expects(once()).method("execute").with(eq(new Point(10,5)), ANYTHING, ANYTHING, ANYTHING);
-        new ButtonEvent("parent.buttonName", (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
-   }
+        buttonEvent=new ButtonEvent("parent.buttonName", mockAction);
+        buttonEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals(buttonEvent.center(button), mockAction.point);
+    }
 
     protected FrankensteinEvent createEvent() {
         return new ButtonEvent("parent.buttonName", new ClickAction());
     }
+
+
 }
+

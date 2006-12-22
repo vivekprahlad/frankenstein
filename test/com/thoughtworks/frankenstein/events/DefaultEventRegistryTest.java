@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 
 /**
  * Ensures behaviour of the default event registry
@@ -133,8 +134,8 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new DelayEvent("10"), defaultEventRegistry.createEvent("Delay \"10\""));
     }
     public void testCreateDoubleClickListEvent() {
-        defaultEventRegistry.registerEvent(DoubleClickListEvent.class);
-        assertEquals(new DoubleClickListEvent("listone",0), defaultEventRegistry.createEvent("DoubleClickList \"listone\" 0"));
+        defaultEventRegistry.registerEvent(ListEvent.class);
+        assertEquals(new ListEvent("list",0,new DoubleClickAction()), defaultEventRegistry.createEvent("double_click_list \"list\" 0"));
     }
 
     public void testCreateClickTableHeaderEvent() {

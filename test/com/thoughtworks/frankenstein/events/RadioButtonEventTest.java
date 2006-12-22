@@ -2,11 +2,9 @@ package com.thoughtworks.frankenstein.events;
 
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.*;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.*;
 
 /**
@@ -43,15 +41,19 @@ public class RadioButtonEventTest extends AbstractEventTestCase {
 
     public void testPlaysEvent() {
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        Mock mockAction=mock(com.thoughtworks.frankenstein.events.actions.Action.class);
+        RadioButtonEvent radioButtonEvent;
+        MockAction mockAction=new MockAction();
         JRadioButton radioButton = new JRadioButton();
+        radioButton.setSize(20,10);
         mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(radioButton));
-        mockAction.expects(once()).method("execute").with(eq(new Point(0,0)), ANYTHING, ANYTHING, ANYTHING);
-        assertEquals(new Point(0,0),radioButton.getLocation());
-        new RadioButtonEvent("parent.buttonName", (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        radioButtonEvent=new RadioButtonEvent("parent.buttonName",  mockAction);
+        radioButtonEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals(radioButtonEvent.center(radioButton),mockAction.point);
     }
 
     protected FrankensteinEvent createEvent() {
         return new RadioButtonEvent("parent.buttonName", new ClickAction());
     }
+
+
 }

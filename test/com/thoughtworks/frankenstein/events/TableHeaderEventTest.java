@@ -6,13 +6,8 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.*;
+import com.thoughtworks.frankenstein.events.actions.MockAction;
 
 /**
 
@@ -55,13 +50,14 @@ public class TableHeaderEventTest extends AbstractEventTestCase {
         tableHeader.getColumnModel().getColumn(1).setHeaderValue("two");
         Mock mockFinder = mock(ComponentFinder.class);
         mockFinder.expects(once()).method("findComponent").with(ANYTHING, eq("header")).will(returnValue(tableHeader));
-        Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(112,0)), ANYTHING, ANYTHING, ANYTHING);
-        assertEquals(1,tableHeader.columnAtPoint(new Point(112,0)));
-        new TableHeaderEvent("header", "two",(com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockFinder.proxy(), null, null);
+        MockAction mockAction = new com.thoughtworks.frankenstein.events.actions.MockAction();
+        new TableHeaderEvent("header", "two",mockAction).play(null, (ComponentFinder) mockFinder.proxy(), null, null);
+        assertEquals(1,tableHeader.columnAtPoint(mockAction.point));
     }
 
     protected FrankensteinEvent createEvent() {
         return new TableHeaderEvent("header", "one", new ClickAction());
     }
+
+
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import com.thoughtworks.frankenstein.events.*;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import junit.framework.TestCase;
 
@@ -60,7 +61,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
-        eventList.add(new DoubleClickListEvent("list",0));
+        eventList.add(new ListEvent("list",0, new DoubleClickAction()));
         eventList.add(new TableHeaderEvent("header","one", new ClickAction()));
         eventList.add(new TableRowEvent("table",1, new RightClickAction()));
         eventList.add(new AssertLabelEvent("label","labelValue"));
@@ -90,7 +91,7 @@ public class ScriptTest extends TestCase {
         assertEquals(new StopTableEditEvent("table"), eventList.get(14));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(15));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
-        assertEquals(new DoubleClickListEvent("list",0),eventList.get(17));
+        assertEquals(new ListEvent("list",0,new DoubleClickAction()),eventList.get(17));
         assertEquals(new TableHeaderEvent("header","one", new ClickAction()),eventList.get(18));
         assertEquals(new TableRowEvent("table",1, new RightClickAction()),eventList.get(19));
         assertEquals(new AssertLabelEvent("label","labelValue"),eventList.get(20));

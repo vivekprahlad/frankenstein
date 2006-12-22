@@ -4,6 +4,7 @@ import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.Action;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.script.Script;
 
 import java.lang.reflect.Constructor;
@@ -24,6 +25,7 @@ public class DefaultEventRegistry implements EventRegistry {
     public DefaultEventRegistry() {
         registerAction(ClickAction.class);
         registerAction(RightClickAction.class);
+        registerAction(DoubleClickAction.class);
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateDialogEvent.class);
         registerEvent(ActivateWindowEvent.class);
@@ -39,7 +41,7 @@ public class DefaultEventRegistry implements EventRegistry {
         registerEvent(DelayEvent.class);
         registerEvent(DialogClosedEvent.class);
         registerEvent(DialogShownEvent.class);
-        registerEvent(DoubleClickListEvent.class);
+        registerEvent(ListEvent.class);
         registerEvent(EditTableCellEvent.class);
         registerEvent(EnterTextEvent.class);
         registerEvent(InternalFrameShownEvent.class);

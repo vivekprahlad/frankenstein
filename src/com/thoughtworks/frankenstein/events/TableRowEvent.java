@@ -26,10 +26,6 @@ public class TableRowEvent extends AbstractCompoundEvent {
         return action.name() + "TableRowEvent: " + tableName + " " + Integer.toString(rowIndex);
     }
 
-    public String action() {
-        return action.name() + super.action();
-    }
-
     public String target() {
         return tableName;
     }

@@ -2,11 +2,9 @@ package com.thoughtworks.frankenstein.events;
 
 import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.*;
 
 /**
@@ -43,15 +41,18 @@ public class CheckboxEventTest extends AbstractEventTestCase {
 
     public void testPlaysEvent() {
         JCheckBox checkBox = new JCheckBox();
-        Mock mockAction=mock(com.thoughtworks.frankenstein.events.actions.Action.class);
+        CheckboxEvent checkBoxEvent;
+        checkBox.setSize(20, 10);
+        com.thoughtworks.frankenstein.events.actions.MockAction mockAction = new com.thoughtworks.frankenstein.events.actions.MockAction();
         Mock mockComponentFinder = mock(ComponentFinder.class);
         mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(checkBox));
-        mockAction.expects(once()).method("execute").with(eq(new Point(0,0)), ANYTHING, ANYTHING, ANYTHING);
-        assertEquals(new Point(0,0),checkBox.getLocation());
-        new CheckboxEvent("parent.buttonName", true,(com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
-       }
+        checkBoxEvent = new CheckboxEvent("parent.buttonName", true, mockAction);
+        checkBoxEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertEquals(checkBoxEvent.center(checkBox), mockAction.point);
+    }
 
     protected FrankensteinEvent createEvent() {
         return new CheckboxEvent("parent.buttonName", true, new ClickAction());
     }
+
 }
