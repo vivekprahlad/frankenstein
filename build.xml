@@ -64,6 +64,9 @@
     <property name="instrumented.dir" value="${build.dir}/instrumented"/>
     <property name="compiledtests.dir" value="${build.dir}/test-classes"/>
     <property name="reports.tests" value="${build.dir}/test-reports"/>
+    <property name="release.dir" value="${module.basedir}/release"/>
+    <property name="release.documentation" value="${release.dir}/documentation"/>
+    <property name="release.dist" value="${release.dir}/dist"/>
 
     <path id="module.bootclasspath">
         <!-- Paths to be included in compilation bootclasspath -->
@@ -122,7 +125,7 @@
         <copy file="lib/picocontainer-1.2.jar" tofile="dist/picocontainer-1.2.jar"/>
         <copy file="lib/ognl-2.6.9.jar" tofile="dist/ognl-2.6.9.jar"/>
         <copy file="lib/spin-1.4.jar" tofile="dist/spin-1.4.jar"/>
-     </target>
+    </target>
 
     <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"
             unless="skip.tests">
@@ -213,6 +216,23 @@
 
     <target name="cobertura.report" depends="clean, cobertura.test">
         <cobertura-report format="html" destdir="${coveragereport.dir}" srcdir="${module.basedir}/src"/>
+    </target>
+
+    <target name="release" depends="all">
+        <mkdir dir="${release.dir}"/>
+        <mkdir dir="${release.documentation}"/>
+        <copy todir="${release.documentation}">
+            <fileset dir="${module.basedir}/website"/>
+        </copy>
+        <mkdir dir="${release.dist}"/>
+        <copy todir="${release.dist}">
+            <fileset dir="${module.basedir}/dist"/>
+        </copy>
+        <copy file="${module.basedir}/LICENSE-2.0.txt" todir="${release.dir}"/>
+        <copy file="${module.basedir}/r eleasenotes.txt" todir="${release.dir}"/>
+        <copy file="${module.basedir}/readme.txt" todir="${release.dir}"/>
+        <zip destfile="${module.basedir}/release.zip" basedir="${release.dir}"/>
+        <delete dir="${release.dir}"/>
     </target>
 
     <target name="all" depends="init, clean, compile, test, jar" description="build all"/>
