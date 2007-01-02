@@ -10,9 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.*;
 
 /**
- 
+ * Base class for all mouse actions 
  */
-public abstract class MouseAction extends MouseAdapter implements WindowContextListener {
+public abstract class AbstractMouseAction extends MouseAdapter implements WindowContextListener {
     public synchronized void execute(Point location, JComponent component, ComponentFinder finder, WindowContext windowContext) {
         addListeners(windowContext, component);
         postEvents(component, location, Toolkit.getDefaultToolkit().getSystemEventQueue());
@@ -46,5 +46,11 @@ public abstract class MouseAction extends MouseAdapter implements WindowContextL
 
     public synchronized void dialogShown() {
         notifyAll();
+    }
+
+    protected void click(EventQueue queue, JComponent component, Point location, int clickCount) {
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_PRESSED, clickCount));
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_RELEASED, clickCount));
+        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_CLICKED, clickCount));
     }
 }

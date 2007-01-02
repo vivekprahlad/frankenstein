@@ -9,22 +9,20 @@ import java.awt.event.MouseEvent;
  *
  * @author vivek
  */
-public class DoubleClickAction extends MouseAction implements Action {
+public class DoubleClickAction extends AbstractMouseAction implements Action {
 
     protected void postEvents(JComponent component, Point location, EventQueue queue) {
-        queue.postEvent(creatMouseEvent(component, location, MouseEvent.MOUSE_CLICKED, 2));
-
+        click(queue, component, location, 1);
+        click(queue, component, location, 2);
     }
 
     public String name() {
         return "DoubleClick";
     }
 
-
     public boolean equals(Object obj) {
-        return obj instanceof MouseAction;
+        return obj instanceof AbstractMouseAction;
     }
-
 
     public int hashCode() {
         return 1;

@@ -22,6 +22,6 @@ class FrankensteinDriverTest < Test::Unit::TestCase
 
   def test_creates_tree_path_with_regex
     select_tree("tree",/.*/,"two","three")
-    assert_equal("select_tree \"tree\" \"regex:.*>two>three\"\n", @script)
+    assert_equal("select_tree \"tree\",\"regex:.*\",\"two\",\"three\"\n", @script)
   end
 end

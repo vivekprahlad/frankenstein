@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>switch_tab (FrankensteinDriver)</title>
+  <title>select_table_row (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 267</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">switch_tab</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">title</span>)
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;switch_tab \&quot;#{tab}\&quot; \&quot;#{title}\&quot;&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 282</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select_table_row</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">rows</span>)
+    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;select_table_row \&quot;#{table}\&quot;,\&quot;#{rows}\&quot;&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>edit_table_cell (FrankensteinDriver)</title>
+  <title>double_click_tree (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 185</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit_table_cell</span>(<span class="ruby-identifier">table</span>, <span class="ruby-identifier">coords</span>)
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;edit_table_cell \&quot;#{table}\&quot; \&quot;#{coords}\&quot;&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 199</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">double_click_tree</span>(<span class="ruby-identifier">tree</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">path</span> = <span class="ruby-identifier">tree_path</span>(<span class="ruby-identifier">path_elements</span>)
+    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;double_click_tree \&quot;#{tree}\&quot;,#{path}&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

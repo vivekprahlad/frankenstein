@@ -10,7 +10,8 @@ import javax.swing.event.TreeSelectionEvent;
 
 import com.thoughtworks.frankenstein.events.SelectTreeEvent;
 import com.thoughtworks.frankenstein.events.TreeEvent;
-import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.*;
+import com.thoughtworks.frankenstein.events.actions.Action;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
@@ -44,26 +45,45 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
         recorder.record(new SelectTreeEvent(componentName((Component) e.getSource()), treePath(path)));
     }
 
-    private String treePath(TreePath path) {
-        String treePath = "";
+    private String[] treePath(TreePath path) {
+        String[] treePath = new String[path.getPathCount()];
         for (int i = 0; i < path.getPathCount(); i++) {
-            Object pathComponent = path.getPathComponent(i);
-            if (i > 0) {
-                treePath += ">";
-            }
-            treePath += pathComponent.toString();
+                Object pathComponent = path.getPathComponent(i);
+                treePath[i] = pathComponent.toString();
         }
         return treePath;
     }
 
     private void recordRightClick(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            JTree tree = (JTree) e.getSource();
-            recorder.record(new TreeEvent(componentName(tree), treePath(tree.getSelectionPath()), new RightClickAction()));
+            recordTreeEvent(e, new RightClickAction());
+        }
+    }
+
+    private void recordDoubleClick(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            recordTreeEvent(e, new DoubleClickAction());
+        }
+    }
+
+    protected void recordTreeEvent(MouseEvent e, Action action) {
+        JTree tree = (JTree) e.getSource();
+        TreePath path = tree.getLeadSelectionPath();
+        if (path != null) {
+            recorder.record(new TreeEvent(componentName(tree), treePath(path), action));
         }
     }
 
     private class MouseListener extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            recordDoubleClick(e);
+        }
+
+        public void mousePressed(MouseEvent e) {
+            recordRightClick(e);
+        }
+
         public void mouseReleased(MouseEvent e) {
             recordRightClick(e);
         }

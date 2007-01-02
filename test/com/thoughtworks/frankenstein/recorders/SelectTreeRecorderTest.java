@@ -7,7 +7,10 @@ import javax.swing.tree.TreePath;
 import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.events.SelectTreeEvent;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+
+import java.awt.event.MouseEvent;
 
 /**
  * Ensures behaviour of the switch recorder.
@@ -51,13 +54,22 @@ public class SelectTreeRecorderTest extends AbstractRecorderTestCase {
 
     public void testSelectingTreePostsSelectEvent() {
         recorder.componentShown(tree);
-        mockRecorder.expects(once()).method("record").with(eq(new SelectTreeEvent("testTree", "one>two>three")));
+        mockRecorder.expects(once()).method("record").with(eq(new SelectTreeEvent("testTree", new String[]{"one", "two", "three"})));
         tree.setSelectionPath(path);
     }
 
     public void testDoesNotRecordTreeSelectionEventIfPathIsNull() {
         recorder.componentShown(tree);
-        mockRecorder.expects(never()).method("record").with(ANYTHING);
+        expectNoEvent();
         tree.setSelectionPath(null);
+    }
+
+    private void expectNoEvent() {
+        mockRecorder.expects(never()).method("record").with(ANYTHING);
+    }
+
+    public void testDoesNotRecordTreeEventIfTreeIsNotSelected() {
+        expectNoEvent();
+        recorder.recordTreeEvent(new MouseEvent(tree, MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, 1, true, MouseEvent.BUTTON3), new RightClickAction());
     }
 }

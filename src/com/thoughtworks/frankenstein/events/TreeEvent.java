@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,31 +13,44 @@ import java.awt.*;
  */
 public class TreeEvent extends AbstractCompoundEvent {
     private String treeName;
-    private String path;
+    private String[] path;
 
-    public TreeEvent(String treeName, String path, Action action) {
+    public TreeEvent(String treeName, String[] path, Action action) {
         super(action);
         this.treeName = treeName;
         this.path = path;
     }
 
     public TreeEvent(String scriptLine, Action action) {
-        this(params(scriptLine)[0], params(scriptLine)[1], action);
+        this(Tree.name(scriptLine), Tree.path(scriptLine), action);
+    }
+
+    public void record(EventList list, FrankensteinEvent lastEvent) {
+        if (lastEvent instanceof SelectTreeEvent) {
+            list.replaceLastEvent(this);
+        } else {
+            super.record(list, lastEvent);
+        }
     }
 
     public String toString() {
-        return action.name() + "TreeEvent: Tree: " + treeName + ", Path: " + path;
+        return action.name() + "TreeEvent: Tree: " + treeName + ", Path: " + parameters();
     }
 
     public String target() {
         return treeName;
     }
 
+    public String scriptLine() {
+        return (underscore(action()) + " \"" + target() + "\"," + Tree.pathString(path, ",", "\""));
+    }
+
     public String parameters() {
-        return path;
+        return Tree.pathString(path, ">");
     }
 
     public void run() {
+        new SelectTreeEvent(treeName,path).play(context, finder, scriptContext, robot);
         JTree tree = (JTree) finder.findComponent(context, treeName);
         action.execute(nodeLocation(tree), tree, finder, context);
     }

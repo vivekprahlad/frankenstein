@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="frankenstein" default="all">
 
-    <property file="dataobjects.properties"/>
-    <!-- Uncomment the following property if no tests compilation is needed -->
-    <!--
-   <property name="skip.tests" value="true"/>
-    -->
-
-    <!-- Compiler options -->
-
     <property name="compiler.debug" value="on"/>
     <property name="compiler.generate.no.warnings" value="off"/>
     <property name="compiler.args" value=""/>
@@ -53,7 +45,6 @@
         <pathelement location="${basedir}/lib/junit-3.8.1.jar"/>
         <pathelement location="${basedir}/lib/picocontainer-1.2.jar"/>
         <pathelement location="${basedir}/lib/ognl-2.6.9.jar"/>
-        <pathelement location="${basedir}/lib/spin-1.4.jar"/>
     </path>
 
     <dirname property="module.basedir" file="${ant.file}"/>
@@ -124,7 +115,6 @@
         <copy file="lib/commons-lang-2.2.jar" tofile="dist/commons-lang-2.2.jar"/>
         <copy file="lib/picocontainer-1.2.jar" tofile="dist/picocontainer-1.2.jar"/>
         <copy file="lib/ognl-2.6.9.jar" tofile="dist/ognl-2.6.9.jar"/>
-        <copy file="lib/spin-1.4.jar" tofile="dist/spin-1.4.jar"/>
     </target>
 
     <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"

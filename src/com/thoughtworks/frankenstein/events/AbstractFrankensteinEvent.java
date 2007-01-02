@@ -47,7 +47,11 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " \"" + target() + "\"" +  (parameters().equals("") ? "": " , \"" + escapeNewLines(parameters()) + "\"")).replaceAll("\\s", " ").trim();
+        return (underscore(action()) + " " + quote(target()) +  (parameters().equals("") ? "": " , "+quote(escapeNewLines(parameters())))).replaceAll("\\s", " ").trim();
+    }
+    
+    protected String quote(String input) {
+        return "\"" + input  +"\"";
     }
 
     private String escapeNewLines(String string) {

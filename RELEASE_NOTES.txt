@@ -2,11 +2,13 @@ Version: 0.7.0 (Initial release)
 ================================
 
 Feature list:
-- Record and play support for most swing components
-- Support for testing multithreaded applications
-- Customization / extension
-- HTML reporting, with screenshots being captured on test step failure
-- OGNL (http://www.ognl.org) based assertions
+    - Record and play support for most swing components
+    - Support for testing multithreaded applications
+    - Customization / extension
+    - HTML reporting, with screenshots being captured on test step failure
+    - OGNL (http://www.ognl.org) based assertions
 
-Components not yet supported:
-- JEditorPane
+Features for upcoming releases:
+    - Record and play with JEditorPanes
+    - Drag and drop
+    - Tree edit support

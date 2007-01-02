@@ -1,21 +1,22 @@
 package com.thoughtworks.frankenstein.events;
 
+import com.thoughtworks.frankenstein.common.RobotFactory;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import org.jmock.Mock;
 
-
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.common.RobotFactory;
-import com.thoughtworks.frankenstein.events.actions.*;
-
 import javax.swing.*;
-import java.awt.event.MouseListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Ensures TableRowEvent works as expected
  */
 public class TableRowEventTest extends AbstractEventTestCase {
+    private TableRowEventTest.MockMouseListener mockMouseListener;
 
     public void testEqualsAndHashCode() {
         TableRowEvent eventOne = createTableRowEvent();
@@ -49,36 +50,38 @@ public class TableRowEventTest extends AbstractEventTestCase {
     }
 
     public void testPlaysEvent() throws Exception {
+        doTestAtRow(2);
+    }
+
+    private void doTestAtRow(int row) {
         JTable table = new JTable(3, 3);
-        table.setRowHeight(16);
         Mock mockComponentFinder = mock(ComponentFinder.class);
-        Mock mockContext = mock(WindowContext.class);
-        Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(0, 40)), ANYTHING, ANYTHING, ANYTHING);
-        assertEquals(2, table.rowAtPoint(new Point(0, 40)));
-        TableRowEvent event = new TableRowEvent("table", 2, (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy());
-        WindowContext context = (WindowContext) mockContext.proxy();
-        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("table")).will(returnValue(table));
-        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
+        table.addMouseListener(mockMouseListener);
+        TableRowEvent event = new TableRowEvent("table", row, new DoubleClickAction());
+        mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("table")).will(returnValue(table));
+        event.play(new DefaultWindowContext(), (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
         waitForIdle();
+        assertEquals(row, table.rowAtPoint(mockMouseListener.point));
     }
 
     public void testPlaysActionOnZerothRow() {
-        JTable table = new JTable(3, 3);
-        table.setRowHeight(16);
-        Mock mockComponentFinder = mock(ComponentFinder.class);
-        Mock mockContext = mock(WindowContext.class);
-        Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(0, 8)), ANYTHING, ANYTHING, ANYTHING);
-        assertEquals(0, table.rowAtPoint(new Point(0, 8)));
-        TableRowEvent event = new TableRowEvent("table", 0, (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy());
-        WindowContext context = (WindowContext) mockContext.proxy();
-        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("table")).will(returnValue(table));
-        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, RobotFactory.getRobot());
-        waitForIdle();
+        doTestAtRow(0);
     }
 
     protected FrankensteinEvent createEvent() {
         return createTableRowEvent();
+    }
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        mockMouseListener = new MockMouseListener();
+    }
+
+    private class MockMouseListener extends MouseAdapter {
+        private Point point;
+
+        public void mouseClicked(MouseEvent e) {
+            point = e.getPoint();
+        }
     }
 }

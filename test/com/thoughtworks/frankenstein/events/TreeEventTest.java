@@ -2,6 +2,8 @@ package com.thoughtworks.frankenstein.events;
 
 import com.thoughtworks.frankenstein.events.actions.*;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -10,6 +12,8 @@ import javax.swing.tree.TreePath;
 import org.jmock.Mock;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Ensures behaviour of TreeEvent
@@ -19,32 +23,38 @@ public class TreeEventTest extends AbstractEventTestCase {
     private DefaultMutableTreeNode one;
     private DefaultMutableTreeNode two;
     private DefaultMutableTreeNode three;
+    private TreeEventTest.MockMouseListener mockMouseListener;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        mockMouseListener = new MockMouseListener();
+    }
 
     public void testEqualsAndHashCode() {
-        TreeEvent one = new TreeEvent("tree", "one>two>three", new RightClickAction());
-        TreeEvent two = new TreeEvent("tree", "one>two>three", new RightClickAction());
+        TreeEvent one = new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction());
+        TreeEvent two = new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction());
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
 
     public void testToString() {
-        assertEquals("RightClickTreeEvent: Tree: tree, Path: one>two>three", new TreeEvent("tree", "one>two>three", new RightClickAction()).toString());
+        assertEquals("RightClickTreeEvent: Tree: tree, Path: one>two>three", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).toString());
     }
 
     public void testAction() {
-        assertEquals("RightClickTree", new TreeEvent("tree", "one>two>three", new RightClickAction()).action());
+        assertEquals("RightClickTree", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).action());
     }
 
     public void testTarget() {
-        assertEquals("tree", new TreeEvent("tree", "one>two>three", new RightClickAction()).target());
+        assertEquals("tree", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).target());
     }
 
     public void testParameters() {
-        assertEquals("one>two>three", new TreeEvent("tree", "one>two>three", new RightClickAction()).parameters());
+        assertEquals("one>two>three", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("right_click_tree \"tree\" , \"one>two>three\"", new TreeEvent("tree", "one>two>three", new RightClickAction()).scriptLine());
+        assertEquals("right_click_tree \"tree\",\"one\",\"two\",\"three\"", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).scriptLine());
     }
 
     public void testPlaysEvent() throws Exception {
@@ -52,13 +62,21 @@ public class TreeEventTest extends AbstractEventTestCase {
         JTree tree = tree();
         tree.setSelectionPath(new TreePath(new Object[]{one, two, three}));
         mockFinder.expects(once()).method("findComponent").with(ANYTHING, eq("tree")).will(returnValue(tree));
-        Mock mockAction = mock(com.thoughtworks.frankenstein.events.actions.Action.class);
-        mockAction.expects(once()).method("execute").with(eq(new Point(66,46)), ANYTHING, ANYTHING, ANYTHING);
-        TreePath path = tree.getPathForLocation(66, 46);
+        mockFinder.expects(once()).method("findComponent").with(ANYTHING, eq("tree")).will(returnValue(tree));
+        tree.addMouseListener(mockMouseListener);
+        new TreeEvent("tree", new String[]{"one", "two", "three"}, new DoubleClickAction()).play(new DefaultWindowContext(), (ComponentFinder) mockFinder.proxy(), null, null);
+        TreePath path = tree.getPathForLocation(mockMouseListener.point.x, mockMouseListener.point.y);
         assertSame(one, path.getPath()[0]);
         assertSame(two, path.getPath()[1]);
         assertSame(three, path.getPath()[2]);
-        new TreeEvent("tree", "one>two>three", (com.thoughtworks.frankenstein.events.actions.Action) mockAction.proxy()).play(null, (ComponentFinder) mockFinder.proxy(), null, null);
+    }
+
+    public void testReplacesSelectTreeEvent() {
+        SelectTreeEvent treeEvent = new SelectTreeEvent("tree", new String[]{"one", "two", "three"});
+        TreeEvent event = new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction());
+        Mock mockEventList = mock(EventList.class);
+        mockEventList.expects(once()).method("replaceLastEvent").with(same(event));
+        event.record((EventList) mockEventList.proxy(), treeEvent);
     }
 
     private JTree tree() {
@@ -75,6 +93,14 @@ public class TreeEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new TreeEvent("tree", "one>two>three", new RightClickAction());
+        return new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction());
+    }
+
+    private class MockMouseListener extends MouseAdapter {
+        private Point point;
+
+        public void mouseClicked(MouseEvent e) {
+            point = e.getPoint();
+        }
     }
 }

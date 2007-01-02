@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>close_all_dialogs (FrankensteinDriver)</title>
+  <title>delay (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 153</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close_all_dialogs</span>
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-value str">&quot;close_all_dialogs&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 164</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delay</span>(<span class="ruby-identifier">duration_in_milliseconds</span>)
+    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;delay \&quot;#{duration_in_milliseconds}\&quot;&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

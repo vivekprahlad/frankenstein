@@ -101,7 +101,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesSelectTreeEvent() {
         defaultEventRegistry.registerEvent(SelectTreeEvent.class);
-        assertEquals(new SelectTreeEvent("tree", "one>two>three"), defaultEventRegistry.createEvent("SelectTree \"tree\" \"one>two>three\""));
+        assertEquals(new SelectTreeEvent("tree", new String[]{"one", "two", "three"}), defaultEventRegistry.createEvent("SelectTree \"tree\",\"one\",\"two\",\"three\""));
     }
 
     public void testCreatesStopTableEditEvent() {
@@ -181,7 +181,7 @@ public class DefaultEventRegistryTest extends TestCase {
     public void testCreatesRightClickTreeEvent() {
         defaultEventRegistry.registerAction(RightClickAction.class);
         defaultEventRegistry.registerEvent(TreeEvent.class);
-        assertEquals(new TreeEvent("tree", "a>b>c", new RightClickAction()), defaultEventRegistry.createEvent("right_click_tree \"tree\" , \"a>b>c\""));
+        assertEquals(new TreeEvent("tree", new RightClickAction()), defaultEventRegistry.createEvent("right_click_tree \"tree\""));
     }
 
      public void testCreatesAssertLabel() {

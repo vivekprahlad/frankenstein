@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>move_slider (FrankensteinDriver)</title>
+  <title>select_tree (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 272</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_slider</span>(<span class="ruby-identifier">slider</span>,<span class="ruby-identifier">position</span>)
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;move_slider \&quot;#{slider}\&quot; \&quot;#{position}\&quot;&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 289</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select_tree</span>(<span class="ruby-identifier">tree</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">path_elements</span>)
+    <span class="ruby-identifier">path</span> = <span class="ruby-identifier">tree_path</span>(<span class="ruby-identifier">path_elements</span>)
+    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;select_tree \&quot;#{tree}\&quot;,#{path}&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

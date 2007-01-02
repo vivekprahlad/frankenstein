@@ -56,7 +56,6 @@ public class FrankensteinIntegration {
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
         socketListener = new SocketListener(recorder);
         createRecorderUI(recorder);
-        RepaintManager.setCurrentManager(new EDTRuleViolationLoggingRepaintManager());
     }
 
     public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {

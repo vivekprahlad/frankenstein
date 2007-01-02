@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.recorders;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.events.TableRowEvent;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +12,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 
 /**
- * Ensures RightClcikTableRowsRecorder works as expected
+ * Records events on table rows.
  */
-public class RightClickTableRowsRecorder extends AbstractComponentRecorder {
+public class TableRowRecorder extends AbstractComponentRecorder {
     private MouseListener tableListener = new TableMouseListener();
 
-    public RightClickTableRowsRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
+    public TableRowRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
         super(recorder, namingStrategy, JTable.class);
     }
 
@@ -47,15 +48,15 @@ public class RightClickTableRowsRecorder extends AbstractComponentRecorder {
         table(component).removeMouseListener(tableListener);
     }
 
-    public void mouseClicked(MouseEvent e) {
-        recordTableRowEvent(e);
-    }
-
-    private void recordTableRowEvent(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            JTable table = (JTable) e.getSource();
-            int rowIndex = table.rowAtPoint(e.getPoint());
-            recorder.record(new TableRowEvent(componentName(table), rowIndex, new RightClickAction()));
+    protected void recordTableRowEvent(MouseEvent e) {
+        JTable table = (JTable) e.getSource();
+        int rowIndex = table.rowAtPoint(e.getPoint());
+        String componentName = componentName(table);
+        if (e.isPopupTrigger()) {
+            recorder.record(new TableRowEvent(componentName, rowIndex, new RightClickAction()));
+        }
+        if (e.getClickCount() == 2) {
+            recorder.record(new TableRowEvent(componentName, rowIndex, new DoubleClickAction()));
         }
     }
 

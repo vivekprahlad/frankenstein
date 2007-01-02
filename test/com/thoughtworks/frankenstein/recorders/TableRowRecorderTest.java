@@ -3,17 +3,18 @@ package com.thoughtworks.frankenstein.recorders;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.events.TableRowEvent;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
-
+ * Ensures behaviour of TableRowRecorder
  */
-public class RightClickTableRowsRecorderTest extends AbstractRecorderTestCase {
+public class TableRowRecorderTest extends AbstractRecorderTestCase {
     private JTable table;
-    private RightClickTableRowsRecorder recorder;
+    private TableRowRecorder recorder;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -21,7 +22,7 @@ public class RightClickTableRowsRecorderTest extends AbstractRecorderTestCase {
         table.setName("table");
         JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         new JFrame().getContentPane().add(scrollPane);
-        recorder = new RightClickTableRowsRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy());
+        recorder = new TableRowRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy());
     }
 
     public void testAddsMouseListenerWhenListIsShown() {
@@ -37,14 +38,21 @@ public class RightClickTableRowsRecorderTest extends AbstractRecorderTestCase {
         assertTrue(listenerCount() == listenerCount);
     }
 
-     public void testRecordsClickOnTableHeader() {
+     public void testRecordsClickOnFirstRow() {
         recorder.componentShown(table);
         mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table",0, new RightClickAction())));
-        Point point = LocationForFirstRow();
-        recorder.mouseClicked(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, false,MouseEvent.BUTTON3));
+        Point point = locationOfFirstRow();
+        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, true,MouseEvent.BUTTON3));
     }
 
-    private Point LocationForFirstRow() {
+    public void testRecordsDoubleClickOnFirstRow() {
+        recorder.componentShown(table);
+        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table",0, new DoubleClickAction())));
+        Point point = locationOfFirstRow();
+        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 2, false,MouseEvent.BUTTON1));
+    }
+
+    private Point locationOfFirstRow() {
         Point point=table.getLocation();
         point.y+=(table.getRowHeight(0))/2;
         point.x+=(table.getWidth())/2;

@@ -12,23 +12,27 @@ import com.thoughtworks.frankenstein.playback.MatchStrategy;
  */
 public class SelectTreeEvent extends AbstractFrankensteinEvent {
     private String treeName;
-    private String path;
+    private String[] path;
 
-    public SelectTreeEvent(String treeName, String path) {
+    public SelectTreeEvent(String treeName, String[] path) {
         this.treeName = treeName;
         this.path = path;
     }
 
     public SelectTreeEvent(String scriptLine) {
-        this(params(scriptLine)[0], params(scriptLine)[1]);
+        this(Tree.name(scriptLine), Tree.path(scriptLine));
     }
 
     public String toString() {
-        return "SelectTreeEvent: Tree: " + treeName + ", Path: " + path;
+        return "SelectTreeEvent: Tree: " + treeName + ", Path: " + Tree.pathString(path, ">");
+    }
+
+    public String scriptLine() {
+        return (underscore(action()) + " \"" + target() + "\"," + Tree.pathString(path, ",", "\""));
     }
 
     private void select(JTree tree) {
-        String[] nodeNames = path.split(">");
+        String[] nodeNames = path;
         TreePath path = findRoot(tree, nodeNames[0]);
         for (int i = 1; i < nodeNames.length; i++) {
             path = findChild(tree, path, nodeNames[i]);
@@ -65,7 +69,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
     }
 
     public String parameters() {
-        return path;
+        return Tree.pathString(path, ">");
     }
 
     public void run() {

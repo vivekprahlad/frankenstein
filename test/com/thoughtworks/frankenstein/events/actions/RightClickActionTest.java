@@ -1,35 +1,26 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import org.jmock.MockObjectTestCase;
-import org.jmock.Mock;
-
-
-import java.awt.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.common.WaitForIdle;
-import com.thoughtworks.frankenstein.application.ThreadUtil;
+import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import org.jmock.MockObjectTestCase;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Ensures that RightClickAction behaves properly
  */
 public class RightClickActionTest extends MockObjectTestCase {
     private MockMouseListener mockMouseListener;
-    private Mock mockWindowContext;
     private RightClickAction rightClickAction;
     private JTable table;
     private JFrame frame;
-    private static final Object LOCK = new Object();
 
     protected void setUp() throws Exception {
         super.setUp();
         mockMouseListener = new MockMouseListener();
-        mockWindowContext = mock(WindowContext.class);
         rightClickAction = new RightClickAction();
         table = new JTable(3, 3);
         frame = new JFrame();
@@ -48,12 +39,10 @@ public class RightClickActionTest extends MockObjectTestCase {
 
     public void testClicksOnComponent() {
         table.addMouseListener(mockMouseListener);
-        assertEquals(225, table.getWidth());
-        assertEquals(48, table.getHeight());
-        rightClickAction.execute(new Point(110, 24), table, null, (WindowContext) mockWindowContext.proxy());
+        rightClickAction.execute(new Point(table.getWidth()/2, table.getRowHeight()/2), table, null, new DefaultWindowContext());
         waitForIdle();
         assertTrue(mockMouseListener.clicked);
-        assertEquals(new Point(110,24), mockMouseListener.point);
+        assertEquals(0, table.rowAtPoint(mockMouseListener.point));
     }
 
     private void waitForIdle() {
@@ -70,7 +59,5 @@ public class RightClickActionTest extends MockObjectTestCase {
                 point = e.getPoint();
             }
         }
-
-
     }
 }
