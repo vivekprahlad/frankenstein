@@ -58,6 +58,7 @@
     <property name="release.dir" value="${module.basedir}/release"/>
     <property name="release.documentation" value="${release.dir}/documentation"/>
     <property name="release.dist" value="${release.dir}/dist"/>
+    <property name="release.ruby" value="${release.dir}/ruby"/>
 
     <path id="module.bootclasspath">
         <!-- Paths to be included in compilation bootclasspath -->
@@ -211,16 +212,23 @@
     <target name="release" depends="all">
         <mkdir dir="${release.dir}"/>
         <mkdir dir="${release.documentation}"/>
-        <copy todir="${release.documentation}">
-            <fileset dir="${module.basedir}/website"/>
-        </copy>
         <mkdir dir="${release.dist}"/>
+        <mkdir dir="${release.ruby}"/>
+        <copy todir="${release.documentation}">
+            <fileset dir="${module.basedir}/website">
+                <exclude name="meta.xml"/>
+                <exclude name="releases/**"/>
+            </fileset>
+        </copy>
         <copy todir="${release.dist}">
             <fileset dir="${module.basedir}/dist"/>
         </copy>
+        <copy todir="${release.ruby}">
+            <fileset dir="${module.basedir}/ruby"/>
+        </copy>
         <copy file="${module.basedir}/LICENSE-2.0.txt" todir="${release.dir}"/>
-        <copy file="${module.basedir}/r eleasenotes.txt" todir="${release.dir}"/>
-        <copy file="${module.basedir}/readme.txt" todir="${release.dir}"/>
+        <copy file="${module.basedir}/RELEASE_NOTES.txt" todir="${release.dir}"/>
+        <copy file="${module.basedir}/README.txt" todir="${release.dir}"/>
         <zip destfile="${module.basedir}/release.zip" basedir="${release.dir}"/>
         <delete dir="${release.dir}"/>
     </target>
