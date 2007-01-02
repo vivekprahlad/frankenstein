@@ -1,0 +1,61 @@
+<project>
+    <name>Frankenstein</name>
+    <jiraId>10100</jiraId>
+    <jiraName>SRC</jiraName>
+    <confluenceName>SRC</confluenceName>
+
+    <forums>
+        <usersId>13</usersId>
+        <devId>14</devId>
+        <jiraId>17</jiraId>
+    </forums>
+
+    <evaluating>
+        <item>
+            <name>Release Notes</name>
+            <url>release-notes.html</url>
+        </item>
+    </evaluating>
+
+    <docs>
+        <url>index.html</url>
+        <items>
+            <item>
+                <name>API docs</name>
+                <url>docs/index.html</url>
+            </item>
+            <item>
+                <name>Wiki</name>
+                <url>http://wiki.openqa.org/display/SRC/Home</url>
+            </item>
+        </items>
+    </docs>
+
+    <owners>
+        <person>
+            <name>Vivek Prahlad</name>
+            <email>vivek.prahlad at gmail.com</email>
+        </person>
+    </owners>
+
+    <developers>
+        <person>
+            <name>Vivek Prahlad</name>
+            <email>vivek.prahlad at gmail.com</email>
+        </person>
+    </developers>
+
+    <releases>        
+        <release>
+            <version>0.7.0</version>
+            <date>02/01/2007</date>
+            <jiraId>10233</jiraId>
+            <downloads>
+                <download>
+                    <url>http://www.openqa.org/frankenstein/releases/frankenstein-0.7.zip</url>
+                    <name>Initial release</name>
+                </download>                
+            </downloads>
+        </release>
+    </releases>
+</project>
