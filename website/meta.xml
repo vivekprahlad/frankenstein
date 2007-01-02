@@ -22,7 +22,7 @@
         <items>
             <item>
                 <name>API docs</name>
-                <url>docs/index.html</url>
+                <url>doc/index.html</url>
             </item>
             <item>
                 <name>Wiki</name>
