@@ -25,6 +25,10 @@
                 <url>doc/index.html</url>
             </item>
             <item>
+                <name>Driver docs</name>
+                <url>doc/classes/FrankensteinDriver.html</url>
+            </item>
+            <item>
                 <name>Wiki</name>
                 <url>http://wiki.openqa.org/display/SRC/Home</url>
             </item>
