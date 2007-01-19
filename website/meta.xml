@@ -1,13 +1,13 @@
 <project>
     <name>Frankenstein</name>
-    <jiraId>10100</jiraId>
-    <jiraName>SRC</jiraName>
-    <confluenceName>SRC</confluenceName>
+    <jiraId>10130</jiraId>
+    <jiraName>FKS</jiraName>
+    <confluenceName>FKS</confluenceName>
 
     <forums>
-        <usersId>13</usersId>
-        <devId>14</devId>
-        <jiraId>17</jiraId>
+        <usersId>31</usersId>
+        <devId>32</devId>
+        <jiraId>33</jiraId>
     </forums>
 
     <evaluating>
