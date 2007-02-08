@@ -353,7 +353,7 @@ module FrankensteinDriver
     socket = TCPSocket.new(@host, @port)
     socket.write @script
     socket.write "END_OF_SCRIPT\n"
-    @test_status = socket.read
+    @test_status = socket.eof? ? 'F' : socket.read
     socket.close
   end
 
