@@ -25,6 +25,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     protected ComponentFinder finder;
     protected ScriptContext scriptContext;
     protected Robot robot;
+    protected static final String SPACE = " ";
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (isSameTargetAs(lastEvent)) {
@@ -49,23 +50,19 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " " + quote(target()) + (parameters().equals("") ? "" : " , " + quote(escapeNewLines(parameters())))).replaceAll("\\s", " ").trim();
+        return (underscore(action()) + SPACE + quote(target()) + (parameters().equals("") ? "" : " , " + quote(Script.escapeNewLines(parameters())))).replaceAll("\\s", SPACE).trim();
     }
 
     protected String quote(String input) {
         return "\"" + input + "\"";
     }
 
-    private String escapeNewLines(String string) {
-        return string.replaceAll("\n", Script.NEW_LINE);
-    }
-
     protected String underscore(String action) {
         return action.replaceAll("(\\w)([A-Z])", "$1_$2").toLowerCase();
     }
 
-    public boolean equals(Object o) {
-        return EqualsBuilder.reflectionEquals(this, o);
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     public int hashCode() {

@@ -7,4 +7,6 @@ package com.thoughtworks.frankenstein.recorders;
  */
 public interface ScriptListener {
     void scriptCompleted(boolean passed);
+
+    void scriptStepStarted(int eventIndex);
 }

@@ -24,7 +24,7 @@ public class ListEvent extends AbstractCompoundEvent {
     }
 
     public String toString() {
-        return "ListEvent: " + listName + " " + itemIndex;
+        return "ListEvent: " + listName + SPACE + itemIndex;
     }
 
     public String target() {

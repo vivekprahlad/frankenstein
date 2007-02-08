@@ -35,4 +35,8 @@ public interface FrankensteinRecorder {
     void addScriptListener(ScriptListener listener);
 
     void removeScriptListener(ScriptListener listener);
+
+    void startRecording();
+
+    void stopRecording();
 }

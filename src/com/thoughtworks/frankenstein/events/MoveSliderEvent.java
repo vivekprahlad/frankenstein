@@ -20,7 +20,7 @@ public class MoveSliderEvent extends AbstractFrankensteinEvent {
     }
 
     public String toString() {
-        return "MoveSliderEvent: " + sliderName + " " + movement;
+        return "MoveSliderEvent: " + sliderName + SPACE + movement;
     }
 
     public String target() {

@@ -12,7 +12,7 @@ import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
  */
 public class DefaultFileDialogLauncher implements FileDialogLauncher {
 
-    public void launchOpenDialog(RecorderPane pane, JFileChooser chooser, FrankensteinRecorder recorder) {
+    public void launchOpenDialog(JPanel pane, JFileChooser chooser, FrankensteinRecorder recorder) {
         if (chooser.showOpenDialog(pane) == JFileChooser.APPROVE_OPTION) {
             try {
                 recorder.load(chooser.getSelectedFile());
@@ -22,7 +22,7 @@ public class DefaultFileDialogLauncher implements FileDialogLauncher {
         }
     }
 
-    public void launchSaveDialog(RecorderPane pane, JFileChooser chooser, FrankensteinRecorder recorder) {
+    public void launchSaveDialog(JPanel pane, JFileChooser chooser, FrankensteinRecorder recorder) {
         if (chooser.showSaveDialog(pane) == JFileChooser.APPROVE_OPTION) {
             try {
                 recorder.save(chooser.getSelectedFile());

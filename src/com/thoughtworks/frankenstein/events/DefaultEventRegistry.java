@@ -118,7 +118,7 @@ public class DefaultEventRegistry implements EventRegistry {
     }
 
     private FrankensteinEvent createEvent(Action action, String rawLine, EventCreationStrategy strategy) {
-        String scriptLine = unescape(rawLine);
+        String scriptLine = Script.unescapeNewLines(rawLine);
         int quoteIndex = scriptLine.indexOf("\"");
         String line = "", actionName = "";
         if (quoteIndex == -1) {
@@ -165,10 +165,6 @@ public class DefaultEventRegistry implements EventRegistry {
             if (scriptLine.startsWith((String) iterator.next())) return true;
         }
         return false;
-    }
-
-    private String unescape(String rawLine) {
-        return rawLine.replaceAll(Script.NEW_LINE, "\n");
     }
 
     private void verifyActionRegistered(String action) {

@@ -1,10 +1,12 @@
 package com.thoughtworks.frankenstein.script;
 
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.events.*;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
@@ -29,7 +31,7 @@ public class ScriptTest extends TestCase {
                     "edit_table_cell \"tableName\" , \"1,1\"\n" +
                     "enter_text \"textBox\" , \"text\"\n" +
                     "internal_frame_shown \"title a\"\n" +
-                    "key_stroke \"0,48\"\n" +
+                    "key_stroke \"Alt" + Constants.SPACE + "0\"\n" +
                     "navigate \"ab>ac>de\"\n" +
                     "select_drop_down \"combo\" , \"text a\"\n" +
                     "select_list \"list\" , \"text a\"\n" +
@@ -39,7 +41,7 @@ public class ScriptTest extends TestCase {
                     "double_click_list \"list\" , \"0\"\n" +
                     "click_table_header \"header\" , \"one\"\n" +
                     "right_click_table_row \"table\" , \"1\"\n" +
-                    "assert_label \"label\" , \"labelValue\"\n" +
+                    "assert_label \"labelValue\"\n" +
                     "move_slider \"slider\" , \"10\"";
 
     public void testCreatesScriptFromEventList() {
@@ -54,7 +56,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new EditTableCellEvent("tableName", 1, 1));
         eventList.add(new EnterTextEvent("textBox", "text"));
         eventList.add(new InternalFrameShownEvent("title a"));
-        eventList.add(new KeyStrokeEvent(0, 48));
+        eventList.add(new KeyStrokeEvent(InputEvent.ALT_DOWN_MASK, 48));
         eventList.add(new NavigateEvent("ab>ac>de"));
         eventList.add(new SelectDropDownEvent("combo", "text a"));
         eventList.add(new SelectListEvent("list", new String[]{"text a"}));
@@ -64,7 +66,7 @@ public class ScriptTest extends TestCase {
         eventList.add(new ListEvent("list", 0, new DoubleClickAction()));
         eventList.add(new TableHeaderEvent("header", "one", new ClickAction()));
         eventList.add(new TableRowEvent("table", 1, new RightClickAction()));
-        eventList.add(new AssertLabelEvent("label", "labelValue"));
+        eventList.add(new AssertLabelEvent("labelValue"));
         eventList.add(new MoveSliderEvent("slider", 10));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
@@ -84,7 +86,7 @@ public class ScriptTest extends TestCase {
         assertEquals(new EditTableCellEvent("tableName", 1, 1), eventList.get(7));
         assertEquals(new EnterTextEvent("textBox", "text"), eventList.get(8));
         assertEquals(new InternalFrameShownEvent("title a"), eventList.get(9));
-        assertEquals(new KeyStrokeEvent(0, 48), eventList.get(10));
+        assertEquals(new KeyStrokeEvent(InputEvent.ALT_DOWN_MASK, 48), eventList.get(10));
         assertEquals(new NavigateEvent("ab>ac>de"), eventList.get(11));
         assertEquals(new SelectDropDownEvent("combo", "text a"), eventList.get(12));
         assertEquals(new SelectListEvent("list", new String[]{"text a"}), eventList.get(13));
@@ -94,7 +96,19 @@ public class ScriptTest extends TestCase {
         assertEquals(new ListEvent("list", 0, new DoubleClickAction()), eventList.get(17));
         assertEquals(new TableHeaderEvent("header", "one", new ClickAction()), eventList.get(18));
         assertEquals(new TableRowEvent("table", 1, new RightClickAction()), eventList.get(19));
-        assertEquals(new AssertLabelEvent("label", "labelValue"), eventList.get(20));
+        assertEquals(new AssertLabelEvent("labelValue"), eventList.get(20));
         assertEquals(new MoveSliderEvent("slider", 10), eventList.get(21));
+    }
+
+    public void testSpecialCharactersAreEscaped() {
+        String testString = "Hello, World\n";
+        String expectedOutput = "Hello&#x83; World&#xA;";
+        assertEquals(expectedOutput, Script.escapeSpecialCharacters(Script.escapeNewLines(testString)));
+    }
+
+    public void testSpecialCharactersAreUnescaped() {
+        String expectedOutput = "Hello, World\n";
+        String testString = "Hello&#x83; World&#xA;";
+        assertEquals(expectedOutput, Script.unescapeSpecialCharacters(Script.unescapeNewLines(testString)));
     }
 }

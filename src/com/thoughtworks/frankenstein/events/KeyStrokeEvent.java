@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
+import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
@@ -18,18 +19,29 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     private int currentKey;
 
     public KeyStrokeEvent(int modifiers, int keyCode) {
+        initEvent(modifiers, keyCode);
+    }
+
+    private void initEvent(int modifiers, int keyCode) {
         this.modifiers = modifiers;
         this.keyCode = keyCode;
         executeInPlayerThread();
     }
 
     public KeyStrokeEvent(String scriptLine) {
-        this(keystrokeParams(scriptLine, 0), keystrokeParams(scriptLine, 1));
+        String[] keyEventParams = scriptLine.split(Constants.SPACE);
+        int modifiers = 0;
+        int indexOfKeyCode = 0;
+
+        if (keyEventParams.length == 2) {
+            modifiers = KeyStrokeMap.getModifiersFromText(keyEventParams[0]);
+            indexOfKeyCode = 1;
+        }
+
+        int keyCode = KeyStrokeMap.getKeyCodeFromText(keyEventParams[indexOfKeyCode]);
+        initEvent(modifiers, keyCode);
     }
 
-    private static int keystrokeParams(String params, int index) {
-        return Integer.parseInt(params.split(",")[index]);
-    }
 
     public String toString() {
         return "KeyStrokeEvent:" + (modifiers != 0 ? " modifiers: " + KeyEvent.getModifiersExText(modifiers) : "") + " key: " + KeyEvent.getKeyText(keyCode);
@@ -44,7 +56,18 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public String scriptLine() {
-        return underscore(action()) + " \"" + modifiers + "," + keyCode + "\"";
+        String modifiersText = KeyStrokeMap.getModifiersExText(modifiers);
+        String modifiersTextPart = modifiersText;
+
+        if (!modifiersText.equals(Constants.EMPTY)) {
+            modifiersTextPart += Constants.SPACE;
+        }
+
+        return underscore(action())
+                + " \""
+                + modifiersTextPart
+                + KeyStrokeMap.getKeyText(keyCode)
+                + "\"";
     }
 
     public String parameters() {

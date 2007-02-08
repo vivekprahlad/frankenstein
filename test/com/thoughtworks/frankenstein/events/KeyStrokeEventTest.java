@@ -3,6 +3,7 @@ package com.thoughtworks.frankenstein.events;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
+import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.WindowContext;
@@ -54,11 +56,11 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     }
 
     public void testAction() {
-        assertEquals("KeyStroke", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).action());
+        assertEquals("KeyStroke", new KeyStrokeEvent(KeyEvent.ALT_DOWN_MASK, KeyEvent.VK_0).action());
     }
 
     public void testTarget() {
-        assertEquals("", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).target());
+        assertEquals("", new KeyStrokeEvent(KeyEvent.ALT_DOWN_MASK, KeyEvent.VK_0).target());
     }
 
     public void testParametersWithModifiers() {
@@ -70,15 +72,44 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
     }
 
     public void testScriptLine() {
-        assertEquals("key_stroke \"8,48\"", new KeyStrokeEvent(KeyEvent.ALT_MASK, KeyEvent.VK_0).scriptLine());
+        assertEquals("key_stroke \"Alt" + Constants.SPACE + "0\"", new KeyStrokeEvent(InputEvent.ALT_DOWN_MASK, KeyEvent.VK_0).scriptLine());
+    }
+
+    public void testScriptLineWithNoModifier() {
+        assertEquals("key_stroke \"0\"", new KeyStrokeEvent(0, KeyEvent.VK_0).scriptLine());
+    }
+
+    public void testScriptLineWithCtrlAndAltModifier() {
+        assertEquals("key_stroke \"Ctrl+Alt" + Constants.SPACE + "0\"", new KeyStrokeEvent(InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK, KeyEvent.VK_0).scriptLine());
+    }
+
+    public void testScriptLineIsParsedBackToCorrectKeyModifiersAndKeyCode() {
+        String scriptLine = "Alt" + Constants.SPACE + "0";
+        KeyStrokeEvent event = new KeyStrokeEvent(scriptLine);
+        KeyStrokeEvent expectedEvent = new KeyStrokeEvent(KeyEvent.ALT_DOWN_MASK, KeyEvent.VK_0);
+        assertEquals(expectedEvent, event);
+    }
+
+    public void testScriptLineIsParsedBackToCorrectKeyCode() {
+        String scriptLine = "D";
+        KeyStrokeEvent event = new KeyStrokeEvent(scriptLine);
+        KeyStrokeEvent expectedEvent = new KeyStrokeEvent(0, KeyEvent.VK_D);
+        assertEquals(expectedEvent, event);
+    }
+
+    public void testScriptLineIsParsedBackToCorrectKeyModifiersAndKeyCodeWithNoModifier() {
+        String scriptLine = "0";
+        KeyStrokeEvent event = new KeyStrokeEvent(scriptLine);
+        KeyStrokeEvent expectedEvent = new KeyStrokeEvent(0, KeyEvent.VK_0);
+        assertEquals(expectedEvent, event);
     }
 
     public void testPlayWithSpecialKeys() throws InterruptedException {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         frame = createAndShowFrame();
-        modifierKeyTest(manager, KeyEvent.VK_ALT, KeyEvent.ALT_MASK);
-        modifierKeyTest(manager, KeyEvent.VK_CONTROL, KeyEvent.CTRL_MASK);
-        modifierKeyTest(manager, KeyEvent.VK_SHIFT, KeyEvent.SHIFT_MASK);
+        modifierKeyTest(manager, KeyEvent.VK_ALT, KeyEvent.ALT_DOWN_MASK);
+        modifierKeyTest(manager, KeyEvent.VK_CONTROL, KeyEvent.CTRL_DOWN_MASK);
+        modifierKeyTest(manager, KeyEvent.VK_SHIFT, KeyEvent.SHIFT_DOWN_MASK);
         frame.dispose();
     }
 

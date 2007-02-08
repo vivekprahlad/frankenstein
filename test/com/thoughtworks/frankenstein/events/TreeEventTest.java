@@ -66,6 +66,7 @@ public class TreeEventTest extends AbstractEventTestCase {
         mockFinder.expects(once()).method("findComponent").with(ANYTHING, eq("tree")).will(returnValue(tree));
         tree.addMouseListener(mockMouseListener);
         new TreeEvent("tree", new String[]{"one", "two", "three"}, new DoubleClickAction()).play(new DefaultWindowContext(), (ComponentFinder) mockFinder.proxy(), null, null);
+        waitForIdle();
         TreePath path = tree.getPathForLocation(mockMouseListener.point.x, mockMouseListener.point.y);
         assertSame(one, path.getPath()[0]);
         assertSame(two, path.getPath()[1]);

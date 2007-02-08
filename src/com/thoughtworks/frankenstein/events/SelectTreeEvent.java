@@ -21,15 +21,15 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
     }
 
     public SelectTreeEvent(String scriptLine) {
-        this(Tree.name(scriptLine), Tree.path(scriptLine));
+        this(TreeUtil.name(scriptLine), TreeUtil.path(scriptLine));
     }
 
     public String toString() {
-        return "SelectTreeEvent: Tree: " + treeName + ", Path: " + Tree.pathString(path, ">");
+        return "SelectTreeEvent: Tree: " + treeName + ", Path: " + TreeUtil.pathString(path, ">");
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " \"" + target() + "\"," + Tree.pathString(path, ",", "\""));
+        return (underscore(action()) + " \"" + target() + "\"," + TreeUtil.pathString(path, ",", "\""));
     }
 
     private void select(JTree tree) {
@@ -70,7 +70,7 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
     }
 
     public String parameters() {
-        return Tree.pathString(path, ">");
+        return TreeUtil.pathString(path, ">");
     }
 
     public void run() {

@@ -26,8 +26,9 @@ public class DefaultFileDialogLauncherTest extends MockObjectTestCase {
         file = new File("abc");
         launcher = new DefaultFileDialogLauncher();
         mockFrankensteinRecorder = mock(FrankensteinRecorder.class);
+        mockFrankensteinRecorder.expects(atLeastOnce()).method("addScriptListener");
         mockFileDialogLauncher = mock(FileDialogLauncher.class);
-        pane = new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), (FileDialogLauncher) mockFileDialogLauncher.proxy(), null);
+        pane = new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), (FileDialogLauncher) mockFileDialogLauncher.proxy(), null, null);
     }
 
     public void testLaunchesSaveFileDialog() {

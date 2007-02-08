@@ -4,13 +4,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
-import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.*;
 import com.thoughtworks.frankenstein.recorders.DefaultRecorder;
 import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
 import com.thoughtworks.frankenstein.recorders.Recorder;
@@ -29,19 +27,20 @@ import com.thoughtworks.frankenstein.ui.RecorderTableModel;
 public class FrankensteinIntegration {
     protected Recorder eventRecorder;
     private DefaultFrankensteinRecorder recorder;
-    private Class mainClass;
+    private Application application;
     private JFrame frame;
     private WindowContext context;
+    private RecorderMode recorderMode;
     private SocketListener socketListener;
-    private int port = 5678;//Default value
+    private int port = Constants.LISTEN_PORT;//Default value
     private CompositeReporter testReporter;
 
     public FrankensteinIntegration(Class mainClass,
                                    JFrame frame,
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
-                                   NamingStrategy namingStrategy) {
-        this(mainClass, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy));
+                                   NamingStrategy namingStrategy, RecorderMode recorderMode) {
+        this(mainClass, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy), recorderMode);
     }
 
     public FrankensteinIntegration(Class mainClass,
@@ -49,10 +48,21 @@ public class FrankensteinIntegration {
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
                                    NamingStrategy namingStrategy,
-                                   ComponentFinder finder) {
-        this.mainClass = mainClass;
+                                   ComponentFinder finder, RecorderMode recorderMode) {
+        this(new CommandLineApplication(mainClass), frame, monitor, context, namingStrategy, finder, recorderMode);
+    }
+
+    public FrankensteinIntegration(Application application,
+                                   JFrame frame,
+                                   WorkerThreadMonitor monitor,
+                                   WindowContext context,
+                                   NamingStrategy namingStrategy,
+                                   ComponentFinder finder,
+                                   RecorderMode recorderMode) {
+        this.application = application;
         this.frame = frame;
         this.context = context;
+        this.recorderMode = recorderMode;
         this.testReporter = CompositeReporter.create(new HtmlTestReporter());
         eventRecorder = new DefaultRecorder(new DefaultScriptContext(testReporter, monitor, context, finder));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
@@ -60,12 +70,12 @@ public class FrankensteinIntegration {
         createRecorderUI(recorder);
     }
 
-    public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {
-        this(mainClass, new JFrame("Recorder"), monitor, new DefaultWindowContext(), new DefaultNamingStrategy());
+    public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor, RecorderMode recorderMode) {
+        this(mainClass, new JFrame("Recorder"), monitor, new DefaultWindowContext(), new DefaultNamingStrategy(), recorderMode);
     }
 
-    public FrankensteinIntegration(Class mainClass) {
-        this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
+    public FrankensteinIntegration(Class mainClass, RecorderMode recorderMode) {
+        this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy(), recorderMode);
     }
 
     public void registerAction(Class actionClass) {
@@ -86,8 +96,8 @@ public class FrankensteinIntegration {
 
     /**
      * Set the port at which Frankenstein listens for commands. (The default port is 5678)
-     *
-     * @param port
+     * <p/>
+     * * @param port port at which Frankenstein listens.
      */
     public void setPort(int port) {
         this.port = port;
@@ -95,13 +105,9 @@ public class FrankensteinIntegration {
 
     public void start(String[] args) {
         logInfo();
-        recorder.startRecording();
+        recorderMode.start(recorder);
         socketListener.start(port);
-        try {
-            mainClass.getDeclaredMethod("main", new Class[]{String[].class}).invoke(null, new Object[]{args});
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        application.launch(args);
     }
 
     public void record() {
@@ -110,7 +116,7 @@ public class FrankensteinIntegration {
 
     public void stop() {
         context.close();
-        recorder.stopRecording();
+        recorderMode.stop(recorder);
         socketListener.stop();
         frame.dispose();
     }
@@ -128,7 +134,8 @@ public class FrankensteinIntegration {
     }
 
     private void createRecorderUI(FrankensteinRecorder compositeRecorder) {
-        frame.getContentPane().add(new RecorderPane(compositeRecorder, new DefaultFileDialogLauncher(), new RecorderTableModel(eventRecorder)));
+        frame.getContentPane().add(new RecorderPane(compositeRecorder, new DefaultFileDialogLauncher(), new RecorderTableModel(eventRecorder),
+                new PlaybackSpeedControlScriptListener(Constants.DEFAULT_DELAY, Constants.DEFAULT_SHOULD_SLOW_DOWN)));
         frame.pack();
         frame.setVisible(true);
     }

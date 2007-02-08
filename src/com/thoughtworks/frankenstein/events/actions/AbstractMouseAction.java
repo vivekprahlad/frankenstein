@@ -40,7 +40,7 @@ public abstract class AbstractMouseAction extends MouseAdapter implements Window
         return new MouseEvent(component, type, System.currentTimeMillis(), 0, location.x, location.y, clickCount, false, MouseEvent.BUTTON1);
     }
 
-    public synchronized void mouseClicked(MouseEvent e) {
+    public synchronized void mouseReleased(MouseEvent e) {
         notifyAll();
     }
 

@@ -56,6 +56,11 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
         return treePath;
     }
 
+    private void recordClicks(MouseEvent e) {
+        recordDoubleClick(e);
+        recordRightClick(e);
+    }
+
     private void recordRightClick(MouseEvent e) {
         if (e.isPopupTrigger()) {
             recordTreeEvent(e, new RightClickAction());
@@ -79,15 +84,15 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
     private class MouseListener extends MouseAdapter {
 
         public void mouseClicked(MouseEvent e) {
-            recordDoubleClick(e);
+            recordClicks(e);
         }
 
         public void mousePressed(MouseEvent e) {
-            recordRightClick(e);
+            recordClicks(e);
         }
 
         public void mouseReleased(MouseEvent e) {
-            recordRightClick(e);
+            recordClicks(e);
         }
     }
 }

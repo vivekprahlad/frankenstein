@@ -13,4 +13,8 @@ public interface ScriptContext {
     void play(List events);
 
     boolean isScriptPassed();
+
+    void addScriptListener(ScriptListener listener);
+
+    void removeScriptListener(ScriptListener listener);
 }

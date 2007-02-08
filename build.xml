@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="frankenstein" default="all">
-
     <property name="compiler.debug" value="on"/>
     <property name="compiler.generate.no.warnings" value="off"/>
     <property name="compiler.args" value=""/>
@@ -41,7 +40,7 @@
 
     <path id="library.libs.classpath">
         <pathelement location="${basedir}/lib/commons-lang-2.2.jar"/>
-        <pathelement location="${basedir}/lib/jmock-1.1.jar"/>
+        <pathelement location="${basedir}/lib/jmock-1.1.0.jar"/>
         <pathelement location="${basedir}/lib/junit-3.8.1.jar"/>
         <pathelement location="${basedir}/lib/picocontainer-1.2.jar"/>
         <pathelement location="${basedir}/lib/ognl-2.6.9.jar"/>
@@ -142,7 +141,7 @@
     </target>
 
     <target name="init" description="Build initialization">
-        <!-- Perform any build initialization in this target -->
+        <mkdir dir="${reports.tests}"/>
     </target>
 
     <target name="test" description="Run unit tests">
@@ -152,6 +151,8 @@
                 <pathelement location="${compiledclasses.dir}"/>
             </classpath>
             <classpath refid="module.classpath"/>
+            <formatter type="brief" usefile="false"/>
+            <formatter type="xml"/>
             <batchtest todir="${reports.tests}">
                 <fileset dir="${module.basedir}/test">
                     <include name="**/*Test.java"/>
@@ -233,5 +234,5 @@
         <delete dir="${release.dir}"/>
     </target>
 
-    <target name="all" depends="init, clean, compile, test, jar" description="build all"/>
+    <target name="all" depends="clean, init, compile, test, jar" description="build all"/>
 </project>

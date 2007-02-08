@@ -2,7 +2,6 @@ package com.thoughtworks.frankenstein.recorders;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -16,7 +15,6 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
  */
 public class DefaultRecorder implements Recorder, EventList, Runnable {
     private List events = new ArrayList();
-    private List scriptListeners = new ArrayList();
     private FrankensteinEvent lastEvent = FrankensteinEvent.NULL;
     private ChangeListener listener;
     private ChangeEvent changeEvent = new ChangeEvent(this);
@@ -36,8 +34,9 @@ public class DefaultRecorder implements Recorder, EventList, Runnable {
     }
 
     private void fireChangeEvent() {
-        if (listener != null)
+        if (listener != null) {
             listener.stateChanged(changeEvent);
+        }
     }
 
     public void addChangeListener(ChangeListener listener) {
@@ -90,18 +89,14 @@ public class DefaultRecorder implements Recorder, EventList, Runnable {
     }
 
     public void addScriptListener(ScriptListener listener) {
-        scriptListeners.add(listener);
+        scriptContext.addScriptListener(listener);
     }
 
     public void removeScriptListener(ScriptListener listener) {
-        scriptListeners.remove(listener);
+        scriptContext.removeScriptListener(listener);
     }
 
     public void run() {
         scriptContext.play(eventList());
-        for (Iterator iterator = scriptListeners.iterator(); iterator.hasNext();) {
-            ScriptListener scriptListener = (ScriptListener) iterator.next();
-            scriptListener.scriptCompleted(scriptContext.isScriptPassed());
-        }
     }
 }

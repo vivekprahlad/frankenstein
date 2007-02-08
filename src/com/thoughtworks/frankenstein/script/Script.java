@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.thoughtworks.frankenstein.application.ScriptReader;
 import com.thoughtworks.frankenstein.events.EventRegistry;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
@@ -17,7 +18,8 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
  */
 public class Script {
     private EventRegistry registry;
-    public static final String NEW_LINE = "&#xA;";
+    private static final String NEW_LINE = "&#xA;";
+    private static final String COMMA = "&#x83;";
 
     public Script(EventRegistry registry) {
         this.registry = registry;
@@ -41,13 +43,29 @@ public class Script {
     }
 
     private String read(Reader reader) throws IOException {
-        BufferedReader br = new BufferedReader(reader);
+        ScriptReader br = new ScriptReader(new BufferedReader(reader));
         String nextLine;
         StringBuffer sb = new StringBuffer();
         while ((nextLine = br.readLine()) != null) {
             sb.append(nextLine).append(System.getProperty("line.separator"));
         }
         return sb.toString();
+    }
+
+    public static String escapeNewLines(String string) {
+        return string.replaceAll("\n", NEW_LINE);
+    }
+
+    public static String unescapeNewLines(String rawLine) {
+        return rawLine.replaceAll(NEW_LINE, "\n");
+    }
+
+    public static String escapeSpecialCharacters(String string) {
+        return string.replaceAll(",", COMMA);
+    }
+
+    public static String unescapeSpecialCharacters(String rawLine) {
+        return rawLine.replaceAll(COMMA, ",");
     }
 
 }

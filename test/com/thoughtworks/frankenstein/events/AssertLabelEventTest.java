@@ -7,42 +7,37 @@ import org.jmock.Mock;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 22, 2006
- * Time: 3:53:51 PM
- * To change this template use File | Settings | File Templates.
  */
 public class AssertLabelEventTest extends AbstractEventTestCase {
     public void testEqualsAndHashCode() {
-        AssertLabelEvent one = new AssertLabelEvent("label", "labelValue");
-        AssertLabelEvent two = new AssertLabelEvent("label", "labelValue");
+        AssertLabelEvent one = new AssertLabelEvent("labelValue");
+        AssertLabelEvent two = new AssertLabelEvent("labelValue");
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
 
     public void testToString() {
-        assertEquals("AssertLabelEvent: labelValue", new AssertLabelEvent("label", "labelValue").toString());
+        assertEquals("AssertLabelEvent: labelValue", new AssertLabelEvent("labelValue").toString());
     }
 
     public void testAction() {
-        assertEquals("AssertLabel", new AssertLabelEvent("label", "labelValue").action());
+        assertEquals("AssertLabel", new AssertLabelEvent("labelValue").action());
     }
 
     public void testTarget() {
-        assertEquals("label", new AssertLabelEvent("label", "labelValue").target());
+        assertEquals("", new AssertLabelEvent("labelValue").target());
     }
 
     public void testParameters() {
-        assertEquals("labelValue", new AssertLabelEvent("label", "labelValue").parameters());
+        assertEquals("labelValue", new AssertLabelEvent("labelValue").parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("assert_label \"label\" , \"labelValue\"", new AssertLabelEvent("label", "labelValue").scriptLine());
+        assertEquals("assert_label \"labelValue\"", new AssertLabelEvent("labelValue").scriptLine());
     }
 
     public void testPlaysEvent() throws Exception {
-        AssertLabelEvent event = new AssertLabelEvent("label", "labelValue");
+        AssertLabelEvent event = new AssertLabelEvent("labelValue");
         JLabel lable = new JLabel("labelValue");
         Mock componentFinder = mock(ComponentFinder.class);
         componentFinder.expects(once()).method("findLabel").will(returnValue(lable));
@@ -50,6 +45,6 @@ public class AssertLabelEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new AssertLabelEvent("label", "labelValue");
+        return new AssertLabelEvent("labelValue");
     }
 }

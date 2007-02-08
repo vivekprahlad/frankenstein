@@ -29,7 +29,7 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
     private String tabs(JTabbedPane pane) {
         String values = "";
         for (int i = 0; i < pane.getTabCount(); i++) {
-            values += pane.getTitleAt(i) + " ";
+            values += pane.getTitleAt(i) + SPACE;
         }
         return values;
     }

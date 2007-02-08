@@ -4,10 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
-import javax.swing.text.DateFormatter;
 
 /**
- * Understands SOMETHING
+ * Formats log
  *
  * @author vivek
  */
@@ -15,7 +14,6 @@ public class FrankensteinFormatter extends Formatter {
     public String format(LogRecord record) {
         StringBuffer sb = new StringBuffer();
         Date date = new Date(record.getMillis());
-        DateFormatter formatter = new DateFormatter();
         sb.append(record.getLevel() + ": ");
         sb.append(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").format(date) + " ");
         if (record.getThrown() != null) {

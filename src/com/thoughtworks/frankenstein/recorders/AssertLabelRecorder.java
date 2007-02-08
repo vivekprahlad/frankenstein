@@ -33,7 +33,7 @@ public class AssertLabelRecorder extends AbstractComponentRecorder {
     private void recordAssertEvent(MouseEvent e) {
         if ((e.getButton() == MouseEvent.BUTTON3) && (e.getModifiers() == (6))) {
             JLabel label = (JLabel) e.getSource();
-            recorder.record(new AssertLabelEvent("label", label.getText()));
+            recorder.record(new AssertLabelEvent(label.getText()));
         }
     }
 

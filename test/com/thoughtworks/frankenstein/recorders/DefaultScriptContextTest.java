@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -64,10 +65,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     }
 
     public void testPlayingEventSuccessfullyReportsSuccess() {
-        Mock frankensteinEvent = mock(FrankensteinEvent.class);
-        frankensteinEvent.expects(once()).method("play")
-                .with(same(windowContext), same(componentFinder), same(context), ANYTHING);
-        FrankensteinEvent event = (FrankensteinEvent) frankensteinEvent.proxy();
+        FrankensteinEvent event = createMockFrankensteinEventAndSetPlayExpectation();
         expectSuccessReport(event);
         context.play(event);
     }
@@ -97,6 +95,55 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
         expectFinishTest();
         context.play(list(event));
         assertEquals("choice2", comboBox.getSelectedItem());
+    }
+
+    public void testNotifiesScriptListenerOnceTestCompletes() {
+        setExpectationsForListenerNotificationTests();
+        List eventList = createEventList();
+        ScriptListener scriptListener = createMockListenerAndSetExpectations(eventList.size());
+        context.addScriptListener(scriptListener);
+        context.play(eventList);
+    }
+
+    public void testRemoveScriptListener() {
+        Mock listener = mock(ScriptListener.class);
+        listener.expects(never()).method("scriptCompleted");
+        listener.expects(never()).method("scriptStepStarted");
+        ScriptListener scriptListener = (ScriptListener) listener.proxy();
+        context.addScriptListener(scriptListener);
+        context.removeScriptListener(scriptListener);
+        setExpectationsForListenerNotificationTests();
+        context.play(createEventList());
+    }
+
+    private ScriptListener createMockListenerAndSetExpectations(int sizeOfEventList) {
+        Mock listener = mock(ScriptListener.class);
+        for (int eventListIndex = 0; eventListIndex < sizeOfEventList; eventListIndex++) {
+            listener.expects(once()).method("scriptStepStarted").with(eq(eventListIndex));
+        }
+        listener.expects(once()).method("scriptCompleted");
+        return (ScriptListener) listener.proxy();
+    }
+
+    private void setExpectationsForListenerNotificationTests() {
+        monitor.expects(once()).method("start");
+        monitor.expects(atLeastOnce()).method("waitForIdle");
+        testReporter.expects(atLeastOnce()).method("reportSuccess").withAnyArguments();
+        testReporter.expects(atLeastOnce()).method("finishTest");
+    }
+
+    private List createEventList() {
+        List eventList = new ArrayList();
+        eventList.add(createMockFrankensteinEventAndSetPlayExpectation());
+        eventList.add(createMockFrankensteinEventAndSetPlayExpectation());
+        return eventList;
+    }
+
+    private FrankensteinEvent createMockFrankensteinEventAndSetPlayExpectation() {
+        Mock frankensteinEventMock = mock(FrankensteinEvent.class);
+        frankensteinEventMock.expects(once()).method("play")
+                .with(same(windowContext), same(componentFinder), same(context), ANYTHING);
+        return (FrankensteinEvent) frankensteinEventMock.proxy();
     }
 
     private List list(SelectDropDownEvent event) {

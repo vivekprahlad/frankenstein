@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
@@ -12,6 +13,7 @@ import org.jmock.MockObjectTestCase;
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.recorders.ComponentRecorderToTestFiringEvents;
 import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
@@ -67,10 +69,32 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
         file.delete();
     }
 
+    public void testEventIsFiredWhenStartRecordingIsCalled() {
+        ComponentRecorderToTestFiringEvents.eventDispatchedCallCount = 0;
+        compositeRecorder.registerRecorder(ComponentRecorderToTestFiringEvents.class);
+        compositeRecorder.startRecording();
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(new JButton("Test"));
+        compositeRecorder.stopRecording();
+        assertTrue(ComponentRecorderToTestFiringEvents.eventDispatchedCallCount > 0);
+    }
+
+    public void testNoEventIsFiredWhenStartRecordingIsNotCalled() {
+        ComponentRecorderToTestFiringEvents.eventDispatchedCallCount = 0;
+        compositeRecorder.registerRecorder(ComponentRecorderToTestFiringEvents.class);
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(new JButton("Test"));
+        assertEquals(0, ComponentRecorderToTestFiringEvents.eventDispatchedCallCount);
+    }
+
     public void testRemoveScriptListener() {
         ScriptListener listener = new ScriptListener() {
             public void scriptCompleted(boolean passed) {
             }
+
+            public void scriptStepStarted(int frankensteinEvent) {
+            }
+
         };
         mockRecorder.expects(once()).method("removeScriptListener").with(same(listener));
         compositeRecorder.removeScriptListener(listener);

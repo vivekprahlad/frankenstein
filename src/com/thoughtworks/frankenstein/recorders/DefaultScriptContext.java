@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.*;
@@ -25,6 +26,7 @@ public class DefaultScriptContext implements ScriptContext {
     private ComponentFinder finder;
     private boolean testPassed = true;
     private Logger logger;
+    private List scriptListeners = new ArrayList();
 
     public DefaultScriptContext(TestReporter reporter,
                                 WorkerThreadMonitor monitor,
@@ -74,10 +76,36 @@ public class DefaultScriptContext implements ScriptContext {
         return testPassed;
     }
 
+    public void addScriptListener(ScriptListener scriptListener) {
+        scriptListeners.add(scriptListener);
+    }
+
+    public void removeScriptListener(ScriptListener listener) {
+        scriptListeners.remove(listener);
+    }
+
     private void playEvents(List events) {
+        int eventIndex = 0;
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
-            play((FrankensteinEvent) iterator.next());
+            FrankensteinEvent event = (FrankensteinEvent) iterator.next();
+            fireScriptStepStartedEvent(eventIndex++);
+            play(event);
+        }
+        fireScriptCompletedEvent();
+    }
+
+    private void fireScriptCompletedEvent() {
+        for (Iterator iterator = scriptListeners.iterator(); iterator.hasNext();) {
+            ScriptListener scriptListener = (ScriptListener) iterator.next();
+            scriptListener.scriptCompleted(isScriptPassed());
+        }
+    }
+
+    private void fireScriptStepStartedEvent(int eventIndex) {
+        for (Iterator iterator = scriptListeners.iterator(); iterator.hasNext();) {
+            ScriptListener scriptListener = (ScriptListener) iterator.next();
+            scriptListener.scriptStepStarted(eventIndex);
         }
     }
 

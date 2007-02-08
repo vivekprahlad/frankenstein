@@ -23,7 +23,7 @@ public class TableRowEvent extends AbstractCompoundEvent {
     }
 
     public String toString() {
-        return action.name() + "TableRowEvent: " + tableName + " " + Integer.toString(rowIndex);
+        return action.name() + "TableRowEvent: " + tableName + SPACE + Integer.toString(rowIndex);
     }
 
     public String target() {

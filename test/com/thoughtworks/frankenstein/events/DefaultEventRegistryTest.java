@@ -81,7 +81,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesKeystrokeEvent() {
         defaultEventRegistry.registerEvent(KeyStrokeEvent.class);
-        assertEquals(new KeyStrokeEvent(0, 48), defaultEventRegistry.createEvent("KeyStroke \"0,48\""));
+        assertEquals(new KeyStrokeEvent(0, 48), defaultEventRegistry.createEvent("KeyStroke \"0\""));
     }
 
     public void testCreatesNavigateEvent() {
@@ -102,6 +102,11 @@ public class DefaultEventRegistryTest extends TestCase {
     public void testCreatesSelectTreeEvent() {
         defaultEventRegistry.registerEvent(SelectTreeEvent.class);
         assertEquals(new SelectTreeEvent("tree", new String[]{"one", "two", "three"}), defaultEventRegistry.createEvent("SelectTree \"tree\",\"one\",\"two\",\"three\""));
+    }
+
+    public void testCreatesSelectTreeEventWithSpecialCharsInPath() {
+        defaultEventRegistry.registerEvent(SelectTreeEvent.class);
+        assertEquals(new SelectTreeEvent("tree", new String[]{"one", "two", "three,four"}), defaultEventRegistry.createEvent("SelectTree \"tree\",\"one\",\"two\",\"three&#x83;four\""));
     }
 
     public void testCreatesStopTableEditEvent() {
@@ -187,7 +192,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesAssertLabel() {
         defaultEventRegistry.registerEvent(AssertLabelEvent.class);
-        assertEquals(new AssertLabelEvent("label", "labelValue"), defaultEventRegistry.createEvent("assert_label \"label\" , \"labelValue\""));
+        assertEquals(new AssertLabelEvent("labelValue"), defaultEventRegistry.createEvent("assert_label \"labelValue\""));
     }
 
     public void testCreatesMoveSliderEvent() {
@@ -219,7 +224,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testDoesNotReplaceUnderscoresInTestScript() {
         defaultEventRegistry.registerEvent(AssertLabelEvent.class);
-        assertEquals(new AssertLabelEvent("label_one", "labelValue"), defaultEventRegistry.createEvent("assert_label \"label_one\" , \"labelValue\""));
+        assertEquals(new AssertLabelEvent("labelValue"), defaultEventRegistry.createEvent("assert_label \"labelValue\""));
     }
 
     public void testDoesNotReplaceColons() {

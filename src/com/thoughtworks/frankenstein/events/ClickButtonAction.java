@@ -27,8 +27,8 @@ public class ClickButtonAction implements WindowContextListener, ActionListener,
         SwingUtilities.invokeLater(this);
         try {
             //Wait until one of two things happens:
-            //   a) All eventActionName listeners are processed - in that case, the actionPerformed method will get called
-            //   b) A dialog is shown (the button's eventActionName listener will block until the dialog is closed, so we
+            //   a) All action listeners are processed - in that case, the actionPerformed method will get called
+            //   b) A dialog is shown (the button's action listener will block until the dialog is closed, so we
             //                         rely on the window context to notify us in case a dialog pops up after the click)
             wait();
         } catch (Exception e) {

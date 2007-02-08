@@ -3,7 +3,10 @@ package com.thoughtworks.frankenstein.application;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
@@ -19,52 +22,60 @@ public class SocketListener implements Runnable, ScriptListener {
     private boolean run = true;
     private boolean passed;
 
-    public SocketListener(int port, FrankensteinRecorder recorder) {
-        this.port = port;
+    public SocketListener(FrankensteinRecorder recorder) {
         this.recorder = recorder;
         recorder.addScriptListener(this);
     }
 
-    public SocketListener(FrankensteinRecorder recorder) {
-        this(5678, recorder);
-    }
-
     public synchronized void start(int port) {
         this.port = port;
+        try {
+            socket = new ServerSocket(this.port);
+        } catch (IOException e) {
+            Logger.getLogger("Frankenstein").log(Level.WARNING, "Error with socket IO", e);
+        }
+
         thread = new Thread(this);
         thread.start();
-        while (socket == null) {
-            ThreadUtil.sleep(50);
-        }
     }
 
     public void run() {
         try {
-            socket = new ServerSocket(port);
-            Socket sock;
-            BufferedReader reader;
             while (run) {
-                sock = socket.accept();
-                reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                Socket sock = null;
+                try {
+                    sock = socket.accept();
+                } catch (IOException e) {
+                    Logger.getLogger("Frankenstein").log(Level.WARNING, "Accept failed because Socket is closed or not bound.", e);
+                    return;
+                }
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
                 recorder.load(reader);
                 recorder.play();
+
                 synchronized (this) {
-                    wait();//Wait for the script to complete
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        Logger.getLogger("Frankenstein").log(Level.WARNING, "Error", e);
+                    }
                 }
-                writeScriptCompletion(sock);
+
+                writeScriptCompletion(writer);
+                writer.close();
                 reader.close();
                 sock.close();
             }
         } catch (IOException e) {
-//            e.printStackTrace();
-        } catch (InterruptedException e) {
+            Logger.getLogger("Frankenstein").log(Level.WARNING, "Error with socket IO", e);
         }
     }
 
-    private void writeScriptCompletion(Socket sock) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-        writer.write(passed ? "P" : "F");
-        writer.close();
+    private void writeScriptCompletion(BufferedWriter writer) throws IOException {
+        writer.write(passed ? Constants.SCRIPT_PASSED : Constants.SCRIPT_FAILED);
+        writer.flush();
     }
 
     public synchronized void stop() {
@@ -82,5 +93,8 @@ public class SocketListener implements Runnable, ScriptListener {
     public synchronized void scriptCompleted(boolean passed) {
         this.passed = passed;
         notifyAll();
+    }
+
+    public void scriptStepStarted(int frankensteinEvent) {
     }
 }

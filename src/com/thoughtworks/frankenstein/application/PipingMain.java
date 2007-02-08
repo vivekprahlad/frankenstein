@@ -5,7 +5,7 @@ package com.thoughtworks.frankenstein.application;
  */
 public class PipingMain {
     public static void main(String[] args) throws ClassNotFoundException {
-        new FrankensteinIntegration(parseClass(args)).start(parseArgs(args));
+        new FrankensteinIntegration(parseClass(args), RecorderMode.RECORD_AND_PLAY_MODE).start(parseArgs(args));
     }
 
     static String[] parseArgs(String[] args) {

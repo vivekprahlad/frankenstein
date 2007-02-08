@@ -33,7 +33,8 @@ public class WindowActivationRecorderTest extends AbstractRecorderTestCase {
     private JFrame createRecorderFrame() {
         JFrame frame = new JFrame("testTitle");
         Mock mockFrankensteinRecorder = mock(FrankensteinRecorder.class);
-        frame.getContentPane().add(new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), null, null));
+        mockFrankensteinRecorder.expects(atLeastOnce()).method("addScriptListener");
+        frame.getContentPane().add(new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), null, null, null));
         return frame;
     }
 

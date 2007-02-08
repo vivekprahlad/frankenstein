@@ -57,27 +57,27 @@ module FrankensteinDriver
 
   # Check whether a toggle button with the specified name is selected
   def assert_togglebutton_selected(togglebutton_name)
-    assert_true togglebutton_name,"selected"
+    assert_true togglebutton_name, "selected"
   end
 
   # Check whether a toggle button with the specified name is not selected
   def assert_togglebutton_not_selected(togglebutton_name)
-    assert_false togglebutton_name,"selected"
+    assert_false togglebutton_name, "selected"
   end
 
   # Check whether a component with the specified name is enabled
   def assert_enabled(component_name)
-    assert_true component_name,"enabled"
+    assert_true component_name, "enabled"
   end
 
   # Check whether a component with the specified name is enabled
   def assert_disabled(component_name)
-    assert_false component_name,"enabled"
+    assert_false component_name, "enabled"
   end
 
   # Check the number of rows displayed in a table
   def assert_number_of_table_rows(table_name, number_of_rows)
-    assert table_name,"rowCount",number_of_rows
+    assert table_name, "rowCount", number_of_rows
   end
 
   # Check the value of a specified table cell. The cell value can be specified as a regular expression
@@ -98,25 +98,29 @@ module FrankensteinDriver
   # Checks whether an OGNL expression evaluated against a specified component matches the specified value.
   #
   # The expected value can be specified as a regular expression.
-  def assert(component_name,ognl_expression,expected_value)
+  def assert(component_name, ognl_expression, expected_value)
     append_to_script "assert \"#{component_name}\" \"#{ognl_expression}:#{expected_value}\""
   end
 
   # Checks whether the specified OGNL expression is true.
-  def assert_true(component_name,ognl_expression)
-    assert component_name,ognl_expression,"true"
+  def assert_true(component_name, ognl_expression)
+    assert component_name, ognl_expression, "true"
   end
 
   # Checks whether the specified OGNL expression is false.
-  def assert_false(component_name,ognl_expression)
-    assert component_name,ognl_expression,"false"
+  def assert_false(component_name, ognl_expression)
+    assert component_name, ognl_expression, "false"
   end
-
   # Checks whether the text of a specified text component matches the specified value.
   #
   # The expected text can be specified as a regular expression.
   def assert_text(text_component, expected_text)
-    assert text_component,"text",expected_text
+    assert text_component, "text", expected_text
+  end
+
+  # Checks whether the text of a specified label component matches the specified value.
+  def assert_label(expected_text)
+    append_to_script "assert_label \"#{expected_text}\""
   end
 
   # Cancels a table edit.
@@ -137,12 +141,12 @@ module FrankensteinDriver
   end
 
   # Click on a specified radio button.
-  def click_radiobutton(button)
+  def click_radio_button(button)
     append_to_script "click_radio_button \"#{button}\""
   end
 
   # Click on a specified column of a table header
-  def click_table_header(header_name,column_name)
+  def click_table_header(header_name, column_name)
     append_to_script "click_table_header \"#(header_name)\" \"#(column_name)\""
   end
 
@@ -196,7 +200,7 @@ module FrankensteinDriver
   # Double clicks on a tree. Supports regular expressions
   #
   # For example: double_click_tree "tree_name", "top level", /.*level/, "third level"
-  def double_click_tree(tree,*path)
+  def double_click_tree(tree, *path)
     path = tree_path(path_elements)
     append_to_script "double_click_tree \"#{tree}\",#{path}"
   end
@@ -223,8 +227,8 @@ module FrankensteinDriver
   # This method isn't too tester friendly at the moment (the modifiers and the keycode are both integers).
   # It is recommended that the recorder be used to create keystroke steps.
   # Future releases will make it easier to specify keystrokes.
-  def key_stroke(modifiers, keycode)
-    append_to_script "key_stroke \"#{modifiers},#{keycode}\""
+  def key_stroke(keycodeText)
+    append_to_script "key_stroke \"#{keycodeText}\""
   end
 
   # Navigate to a specified path in a menu item.
@@ -246,12 +250,12 @@ module FrankensteinDriver
   end
 
   # Right click on a list item of a specified list.
-  def right_click_list(list,item_index)
+  def right_click_list(list, item_index)
     append_to_script "right_click_list \"#{list}\",\"#{item_index}\""
   end
 
   # Right click on a table row of a specified table.
-  def right_click_table_row(table,row_index)
+  def right_click_table_row(table, row_index)
     append_to_script "right_click_table_row \"#{table}\",\"#{row_index}\""
   end
 
@@ -303,19 +307,19 @@ module FrankensteinDriver
   end
 
   # Moves a specified slider to the specified position
-  def move_slider(slider,position)
+  def move_slider(slider, position)
     append_to_script "move_slider \"#{slider}\",\"#{position}\""
   end
 
   # Sends a test script to the Frankenstein Java runtime at the specified host and port.
   #
   # Waits for the test to complete, and reports test results.
-  def run_frankenstein_test(host,port)
-    init host,port
+  def run_frankenstein_test(host, port)
+    init host, port
     start_test @@test_dir == "" ? @test_name : @@test_dir + "/" + @test_name
     test
     finish_test
-    puts @test_name + " : " + (@test_status == "F" ? "Failed" : "Passed")
+    puts @test_name + " : " + (@test_status == "P" ? "Passed" : "Failed")
     @test_status
   end
 
@@ -330,7 +334,7 @@ module FrankensteinDriver
   end
 
   private
-  def init(host,port)
+  def init(host, port)
     @test_name = self.class.to_s
     @host = host
     @port = port
@@ -346,13 +350,10 @@ module FrankensteinDriver
   end
 
   def finish_test
-    socket = TCPSocket.new(@host,@port)
+    socket = TCPSocket.new(@host, @port)
     socket.write @script
-    socket.close_write
-    recvthread = Thread.start do
-        @test_status = socket.read
-      end
-    recvthread.join
+    socket.write "END_OF_SCRIPT\n"
+    @test_status = socket.read
     socket.close
   end
 
@@ -363,7 +364,7 @@ end
 
 # Runs multiple tests in a suite. Generates an index file that displays whether a test passed or failed.
 class TestRunner
-  def initialize(host="localhost",port=5678)
+  def initialize(host="localhost", port=5678)
     @test_reporter = TestReporter.new
     @host = host
     @port = port
@@ -371,7 +372,7 @@ class TestRunner
 
   # Runs multiple tests. The argument to the function is a list of Frankenstein test classes.
   def run(*tests)
-    tests.each {|test| @test_reporter.report_test_result(test,test.new.run_frankenstein_test(@host,@port))}
+    tests.each {|test| @test_reporter.report_test_result(test, test.new.run_frankenstein_test(@host, @port))}
     @test_reporter.report
   end
 end
@@ -379,8 +380,8 @@ end
 # Stores the result of a test run.
 class TestResult
   attr_accessor :test
-  def initialize(test,status)
-    @test,@status = test,status
+  def initialize(test, status)
+    @test, @status = test, status
   end
 
   def status
@@ -394,8 +395,8 @@ class TestReporter
     @tests = []
   end
 
-  def report_test_result(test,result)
-    @tests.push TestResult.new(test,result)
+  def report_test_result(test, result)
+    @tests.push TestResult.new(test, result)
   end
 
   def report

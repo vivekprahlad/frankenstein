@@ -17,11 +17,12 @@ import com.thoughtworks.frankenstein.script.TestReporter;
  */
 public class DefaultRecorderTest extends MockObjectTestCase {
     private DefaultRecorder recorder;
+    private Mock scriptContextMock;
 
     protected void setUp() throws Exception {
         super.setUp();
-        Mock scriptContext = mock(ScriptContext.class);
-        recorder = new DefaultRecorder((ScriptContext) scriptContext.proxy());
+        scriptContextMock = mock(ScriptContext.class);
+        recorder = new DefaultRecorder((ScriptContext) scriptContextMock.proxy());
     }
 
     public void testAddOneEvent() {
@@ -39,7 +40,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     }
 
     public void testDoesNotCoalesceKeystrokeEvents() {
-        KeyStrokeEvent event = new KeyStrokeEvent(KeyEvent.ALT_MASK, '0');
+        KeyStrokeEvent event = new KeyStrokeEvent(KeyEvent.ALT_DOWN_MASK, '0');
         recorder.record(event);
         recorder.record(event);
         assertEquals(2, recorder.eventList().size());
@@ -109,7 +110,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     }
 
     public void testDoesNotRemoveCancelEventAfterOtherEvents() {
-        recorder.record(new KeyStrokeEvent(KeyEvent.ALT_MASK, '0'));
+        recorder.record(new KeyStrokeEvent(KeyEvent.ALT_DOWN_MASK, '0'));
         recorder.record(new CancelTableEditEvent("testTable"));
         assertEquals(2, recorder.eventList().size());
         assertEquals(new CancelTableEditEvent("testTable"), recorder.eventList().get(1));
@@ -196,24 +197,28 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         assertEquals(recorder.eventList(), scriptContext.eventList);
     }
 
-    public void testNotifiesScriptListenerOnceTestCompletes() {
-        MockScriptContext scriptContext = new MockScriptContext();
-        recorder = new DefaultRecorder(scriptContext);
-        recorder.record(new ActivateWindowEvent("title"));
-        Mock listener = mock(ScriptListener.class);
-        recorder.addScriptListener((ScriptListener) listener.proxy());
-        listener.expects(once()).method("scriptCompleted");
-        recorder.run();
+    public void testAddScriptListener() {
+        ScriptListener listener = new ScriptListener() {
+            public void scriptCompleted(boolean b) {
+            }
+
+            public void scriptStepStarted(int frankensteinEvent) {
+            }
+        };
+        scriptContextMock.expects(once()).method("addScriptListener").with(same(listener));
+        recorder.addScriptListener(listener);
     }
 
-    public void testRemovesScriptListener() {
-        MockScriptContext scriptContext = new MockScriptContext();
-        recorder = new DefaultRecorder(scriptContext);
-        recorder.record(new ActivateWindowEvent("title"));
-        Mock listener = mock(ScriptListener.class);
-        recorder.addScriptListener((ScriptListener) listener.proxy());
-        listener.expects(once()).method("scriptCompleted");
-        recorder.run();
+    public void testRemoveScriptListener() {
+        ScriptListener listener = new ScriptListener() {
+            public void scriptCompleted(boolean b) {
+            }
+
+            public void scriptStepStarted(int frankensteinEvent) {
+            }
+        };
+        scriptContextMock.expects(once()).method("removeScriptListener").with(same(listener));
+        recorder.removeScriptListener(listener);
     }
 
     private class MockScriptContext implements ScriptContext {
@@ -230,10 +235,19 @@ public class DefaultRecorderTest extends MockObjectTestCase {
             return false;
         }
 
+        public void addScriptListener(ScriptListener scriptListener) {
+
+        }
+
+        public void removeScriptListener(ScriptListener scriptListener) {
+
+        }
+
         public void addTestReporter(TestReporter testReporter) {
         }
 
         public void removeAllTestReporters() {
         }
+
     }
 }

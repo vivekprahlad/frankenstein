@@ -85,8 +85,9 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
 
     public void testDoesNotRecordRecorderPaneButtons() {
         Mock mockFrankensteinRecorder = mock(FrankensteinRecorder.class);
+        mockFrankensteinRecorder.expects(atLeastOnce()).method("addScriptListener");
         mockFrankensteinRecorder.expects(once()).method("start");
-        RecorderPane pane = new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), null, null);
+        RecorderPane pane = new RecorderPane((FrankensteinRecorder) mockFrankensteinRecorder.proxy(), null, null, null);
         new JFrame().getContentPane().add(pane);
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JButton.class);
         new ComponentHierarchyWalker().matchComponentsIn(pane, rule);

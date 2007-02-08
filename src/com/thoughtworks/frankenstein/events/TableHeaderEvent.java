@@ -32,7 +32,7 @@ public class TableHeaderEvent extends AbstractCompoundEvent {
     }
 
     public String toString() {
-        return "TableHeaderEvent: " + headerName + " " + columnName;
+        return "TableHeaderEvent: " + headerName + SPACE + columnName;
     }
 
     public synchronized void run() {

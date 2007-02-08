@@ -1,23 +1,13 @@
 package com.thoughtworks.frankenstein.events;
 
 /**
- * Created by IntelliJ IDEA.
- * User: cprakash
- * Date: Nov 22, 2006
- * Time: 3:53:07 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class AssertLabelEvent extends AbstractFrankensteinEvent {
     private String labelValue;
-    private String label;
-
-    public AssertLabelEvent(String label, String labelValue) {
-        this.labelValue = labelValue;
-        this.label = label;
-    }
 
     public AssertLabelEvent(String scriptLine) {
-        this(params(scriptLine)[0], params(scriptLine)[1]);
+        this.labelValue = scriptLine;
     }
 
     public String toString() {
@@ -29,7 +19,12 @@ public class AssertLabelEvent extends AbstractFrankensteinEvent {
     }
 
     public String target() {
-        return "label";
+        return "";
+    }
+
+
+    public String scriptLine() {
+        return underscore(action()) + SPACE + quote(parameters());
     }
 
     public void run() {

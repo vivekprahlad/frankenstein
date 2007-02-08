@@ -37,7 +37,7 @@ public class AssertLabelRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsClickOnLabel() {
         recorder.componentShown(label);
-        mockRecorder.expects(once()).method("record").with(eq(new AssertLabelEvent("label", "labelValue")));
+        mockRecorder.expects(once()).method("record").with(eq(new AssertLabelEvent("labelValue")));
         Point point = label.getLocation();
         recorder.listener.mouseClicked(new MouseEvent(label, MouseEvent.MOUSE_CLICKED, 0, 6, point.x, point.y, 1, false, MouseEvent.BUTTON3));
     }

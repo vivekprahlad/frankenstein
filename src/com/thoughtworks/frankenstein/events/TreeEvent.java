@@ -22,7 +22,7 @@ public class TreeEvent extends AbstractCompoundEvent {
     }
 
     public TreeEvent(String scriptLine, Action action) {
-        this(Tree.name(scriptLine), Tree.path(scriptLine), action);
+        this(TreeUtil.name(scriptLine), TreeUtil.path(scriptLine), action);
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -42,11 +42,11 @@ public class TreeEvent extends AbstractCompoundEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " \"" + target() + "\"," + Tree.pathString(path, ",", "\""));
+        return (underscore(action()) + " \"" + target() + "\"," + TreeUtil.pathString(path, ",", "\""));
     }
 
     public String parameters() {
-        return Tree.pathString(path, ">");
+        return TreeUtil.pathString(path, ">");
     }
 
     public void run() {
