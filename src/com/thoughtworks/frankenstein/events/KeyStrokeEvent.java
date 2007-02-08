@@ -32,12 +32,10 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
         String[] keyEventParams = scriptLine.split(Constants.SPACE);
         int modifiers = 0;
         int indexOfKeyCode = 0;
-
         if (keyEventParams.length == 2) {
             modifiers = KeyStrokeMap.getModifiersFromText(keyEventParams[0]);
             indexOfKeyCode = 1;
         }
-
         int keyCode = KeyStrokeMap.getKeyCodeFromText(keyEventParams[indexOfKeyCode]);
         initEvent(modifiers, keyCode);
     }
@@ -56,7 +54,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public String scriptLine() {
-        String modifiersText = KeyStrokeMap.getModifiersExText(modifiers);
+        String modifiersText = KeyEvent.getModifiersExText(modifiers);
         String modifiersTextPart = modifiersText;
 
         if (!modifiersText.equals(Constants.EMPTY)) {
