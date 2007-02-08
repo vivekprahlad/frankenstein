@@ -4,6 +4,7 @@ import javax.swing.*;
 
 /**
  * Understands recording table edit events
+ *
  * @author Vivek Prahlad
  */
 public class EditTableCellEvent extends AbstractFrankensteinEvent {

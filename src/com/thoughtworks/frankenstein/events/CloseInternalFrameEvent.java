@@ -4,6 +4,7 @@ import java.beans.PropertyVetoException;
 
 /**
  * Represents an internal frame being shown.
+ *
  * @author Vivek Prahlad
  */
 public class CloseInternalFrameEvent extends AbstractFrankensteinEvent {

@@ -5,9 +5,10 @@ import javax.swing.*;
 
 /**
  * Matches all components of a certain type. Returns a list of matching components.
+ *
  * @author Vivek Prahlad
  */
-public class InternalFrameMatchingRule implements ComponentMatchingRule{
+public class InternalFrameMatchingRule implements ComponentMatchingRule {
     private String title;
     private JInternalFrame frame;
 

@@ -7,6 +7,7 @@ import com.thoughtworks.frankenstein.events.SelectTableRowEvent;
 
 /**
  * Ensures behaviour of SelectTableRecorder
+ *
  * @author vivek
  */
 public class SelectTableRecorderTest extends AbstractRecorderTestCase {
@@ -16,7 +17,7 @@ public class SelectTableRecorderTest extends AbstractRecorderTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        recorder = new SelectTableRecorder((EventRecorder) mockRecorder.proxy(),null);
+        recorder = new SelectTableRecorder((EventRecorder) mockRecorder.proxy(), null);
         table = new JTable();
         table.setName("table");
     }
@@ -49,24 +50,24 @@ public class SelectTableRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsSelectingOneRow() {
         recorder.componentShown(table);
-        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[] {0})));
-        table.getSelectionModel().setSelectionInterval(0,0);
+        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[]{0})));
+        table.getSelectionModel().setSelectionInterval(0, 0);
     }
 
     public void testRecordsSelectingOneRowAfterSelectionModelChanges() {
         recorder.componentShown(table);
         table.setSelectionModel(new DefaultListSelectionModel());
-        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[] {0})));
-        table.getSelectionModel().setSelectionInterval(0,0);
+        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[]{0})));
+        table.getSelectionModel().setSelectionInterval(0, 0);
     }
 
     public void testRecordsSelectingMultipleRowsAfterSelectionModelChanges() {
         recorder.componentShown(table);
         table.setSelectionModel(new DefaultListSelectionModel());
-        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[] {0})));
-        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[] {0,2,3,4})));
-        table.getSelectionModel().setSelectionInterval(0,0);
-        table.getSelectionModel().addSelectionInterval(2,4);
+        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[]{0})));
+        mockRecorder.expects(once()).method("record").with(eq(new SelectTableRowEvent("table", new int[]{0, 2, 3, 4})));
+        table.getSelectionModel().setSelectionInterval(0, 0);
+        table.getSelectionModel().addSelectionInterval(2, 4);
     }
 
     private int listSelectionListenerCount(JTable table) {

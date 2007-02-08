@@ -13,37 +13,37 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
  */
 public class SelectTreeEventTest extends AbstractEventTestCase {
     public void testEqualsAndHashCode() {
-        SelectTreeEvent one = new SelectTreeEvent("name", new String[] {"one", "two", "three"});
-        SelectTreeEvent two = new SelectTreeEvent("name", new String[] {"one", "two", "three"});
+        SelectTreeEvent one = new SelectTreeEvent("name", new String[]{"one", "two", "three"});
+        SelectTreeEvent two = new SelectTreeEvent("name", new String[]{"one", "two", "three"});
         assertEquals(one, two);
         assertEquals(one.hashCode(), two.hashCode());
     }
 
     public void testToString() {
-        assertEquals("SelectTreeEvent: Tree: name, Path: one>two>three", new SelectTreeEvent("name", new String[] {"one", "two", "three"}).toString());
+        assertEquals("SelectTreeEvent: Tree: name, Path: one>two>three", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).toString());
     }
 
     public void testAction() {
-        assertEquals("SelectTree", new SelectTreeEvent("name", new String[] {"one", "two", "three"}).action());
+        assertEquals("SelectTree", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).action());
     }
 
     public void testTarget() {
-        assertEquals("name", new SelectTreeEvent("name", new String[] {"one", "two", "three"}).target());
+        assertEquals("name", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).target());
     }
 
     public void testParameters() {
-        assertEquals("one>two>three", new SelectTreeEvent("name", new String[] {"one", "two", "three"}).parameters());
+        assertEquals("one>two>three", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("select_tree \"name\",\"one\",\"two\",\"three\"", new SelectTreeEvent("name", new String[] {"one", "two", "three"}).scriptLine());
+        assertEquals("select_tree \"name\",\"one\",\"two\",\"three\"", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).scriptLine());
     }
 
     public void testPlaysEvent() {
         Mock componentFinder = mock(ComponentFinder.class);
         JTree tree = tree();
         componentFinder.expects(once()).method("findComponent").will(returnValue(tree));
-        new SelectTreeEvent("name", new String[] {"one", "two", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+        new SelectTreeEvent("name", new String[]{"one", "two", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
         TreePath selectionPath = tree.getSelectionPath();
         assertEquals(node(selectionPath, 0).getUserObject(), "one");
         assertEquals(node(selectionPath, 1).getUserObject(), "two");
@@ -54,7 +54,7 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         Mock componentFinder = mock(ComponentFinder.class);
         JTree tree = tree();
         componentFinder.expects(once()).method("findComponent").will(returnValue(tree));
-        new SelectTreeEvent("name", new String[] {"regex:o.*", "two", "regex:th.*"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+        new SelectTreeEvent("name", new String[]{"regex:o.*", "two", "regex:th.*"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
         TreePath selectionPath = tree.getSelectionPath();
         assertEquals(node(selectionPath, 0).getUserObject(), "one");
         assertEquals(node(selectionPath, 1).getUserObject(), "two");
@@ -66,7 +66,7 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         JTree tree = tree();
         componentFinder.expects(once()).method("findComponent").will(returnValue(tree));
         try {
-            new SelectTreeEvent("name", new String[] {"notthere", "two", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+            new SelectTreeEvent("name", new String[]{"notthere", "two", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
             fail();
         } catch (Exception e) {
         }
@@ -77,7 +77,7 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         JTree tree = tree();
         componentFinder.expects(once()).method("findComponent").will(returnValue(tree));
         try {
-            new SelectTreeEvent("name", new String[] {"one", "notthere", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
+            new SelectTreeEvent("name", new String[]{"one", "notthere", "three"}).play(null, (ComponentFinder) componentFinder.proxy(), null, null);
             fail();
         } catch (Exception e) {
         }
@@ -97,6 +97,6 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new SelectTreeEvent("name", new String[] {"one", "two", "three"});
+        return new SelectTreeEvent("name", new String[]{"one", "two", "three"});
     }
 }

@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording item listeners.
+ *
  * @author Vivek Prahlad
  */
 public class SelectDropDownRecorder extends AbstractComponentRecorder implements ItemListener {

@@ -61,7 +61,7 @@ public class DefaultComponentFinder implements ComponentFinder {
     public Window findWindow(String title) {
         Frame[] frames = Frame.getFrames();
         for (int i = 0; i < frames.length; i++) {
-            if (MatchStrategy.matchValues(title(frames[i]),title)) {
+            if (MatchStrategy.matchValues(title(frames[i]), title)) {
                 return frames[i];
             }
         }
@@ -84,7 +84,7 @@ public class DefaultComponentFinder implements ComponentFinder {
         return (JFileChooser) rule.unnamedComponents().get(0);
     }
 
-    public JLabel findLabel(WindowContext context,String labelValue) {
+    public JLabel findLabel(WindowContext context, String labelValue) {
         LabelMatchingRule rule = new LabelMatchingRule(labelValue);
         new ComponentHierarchyWalker().matchComponentsIn((Container) context.activeWindow(), rule);
         if (rule.matchingLabel() == null) throw new RuntimeException("Unable to find label: " + labelValue);

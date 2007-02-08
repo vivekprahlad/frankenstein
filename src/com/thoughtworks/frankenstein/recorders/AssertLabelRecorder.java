@@ -10,7 +10,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  */
-public class AssertLabelRecorder extends AbstractComponentRecorder  {
+public class AssertLabelRecorder extends AbstractComponentRecorder {
     protected MouseListener listener = new MouseListener();
 
     public AssertLabelRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
@@ -18,11 +18,11 @@ public class AssertLabelRecorder extends AbstractComponentRecorder  {
     }
 
     void componentShown(Component component) {
-       label(component).addMouseListener(listener);
+        label(component).addMouseListener(listener);
     }
 
     private JLabel label(Component component) {
-        return ((JLabel)component);
+        return ((JLabel) component);
     }
 
     void componentHidden(Component component) {
@@ -31,10 +31,10 @@ public class AssertLabelRecorder extends AbstractComponentRecorder  {
 
 
     private void recordAssertEvent(MouseEvent e) {
-        if ((e.getButton() == MouseEvent.BUTTON3)&&(e.getModifiers()==(6))){
-             JLabel label = (JLabel) e.getSource();
-             recorder.record(new AssertLabelEvent("label", label.getText()));
-         }
+        if ((e.getButton() == MouseEvent.BUTTON3) && (e.getModifiers() == (6))) {
+            JLabel label = (JLabel) e.getSource();
+            recorder.record(new AssertLabelEvent("label", label.getText()));
+        }
     }
 
     protected class MouseListener extends MouseAdapter {

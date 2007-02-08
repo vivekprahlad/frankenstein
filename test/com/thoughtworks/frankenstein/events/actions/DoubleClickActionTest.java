@@ -14,8 +14,8 @@ public class DoubleClickActionTest extends MouseActionTestCase {
     private DoubleClickAction doubleClickAction;
 
     public void testClicksOnComponent() {
-        mockMouseListener=new MockMouseListener();
-        doubleClickAction=new DoubleClickAction();
+        mockMouseListener = new MockMouseListener();
+        doubleClickAction = new DoubleClickAction();
         button.addMouseListener(mockMouseListener);
         expectAddAndRemoveWindowContextListener(doubleClickAction);
         doubleClickAction.execute(center(button), button, null, (WindowContext) mockWindowContext.proxy());

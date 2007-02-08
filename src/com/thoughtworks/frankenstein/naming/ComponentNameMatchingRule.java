@@ -4,6 +4,7 @@ import java.awt.*;
 
 /**
  * Understands matching components by name.
+ *
  * @author Vivek Prahlad
  */
 public class ComponentNameMatchingRule implements ComponentMatchingRule {
@@ -22,7 +23,7 @@ public class ComponentNameMatchingRule implements ComponentMatchingRule {
             return true;
         }
     }
-                           
+
     public boolean hasMatches() {
         return matchingComponent != null;
     }

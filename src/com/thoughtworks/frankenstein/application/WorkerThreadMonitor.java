@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.application;
 
 /**
  * Monitors worker thread activity.
+ *
  * @author Vivek Prahlad
  */
 public interface WorkerThreadMonitor {

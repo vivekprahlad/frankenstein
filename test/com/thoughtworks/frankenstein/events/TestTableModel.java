@@ -16,9 +16,11 @@ public class TestTableModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int columnIndex) {
-        switch(columnIndex) {
-            case 0: return Boolean.class;
-            case 1: return String.class;
+        switch (columnIndex) {
+            case 0:
+                return Boolean.class;
+            case 1:
+                return String.class;
         }
         return null;
     }
@@ -33,18 +35,24 @@ public class TestTableModel extends AbstractTableModel {
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         TestTableRow row = (TestTableRow) values.get(rowIndex);
-        switch(columnIndex) {
-            case 0: return row.value1;
-            case 1: return row.value2;
+        switch (columnIndex) {
+            case 0:
+                return row.value1;
+            case 1:
+                return row.value2;
         }
         return null;
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         TestTableRow row = (TestTableRow) values.get(rowIndex);
-        switch(columnIndex) {
-            case 0: row.value1 = (Boolean) aValue; return;
-            case 1: row.value2 = (String) aValue; return;
+        switch (columnIndex) {
+            case 0:
+                row.value1 = (Boolean) aValue;
+                return;
+            case 1:
+                row.value2 = (String) aValue;
+                return;
         }
     }
 

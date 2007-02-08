@@ -15,6 +15,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording table edit events
+ *
  * @author Vivek Prahlad
  */
 public class TableEditRecorder extends AbstractComponentRecorder implements PropertyChangeListener, CellEditorListener {
@@ -32,7 +33,7 @@ public class TableEditRecorder extends AbstractComponentRecorder implements Prop
         table(component).addPropertyChangeListener(TABLE_CELL_EDITOR_PROPERTY, this);
     }
 
-    private JTable table (Component component) {
+    private JTable table(Component component) {
         return (JTable) component;
     }
 
@@ -55,7 +56,7 @@ public class TableEditRecorder extends AbstractComponentRecorder implements Prop
     private boolean hasEditor(PropertyChangeEvent evt) {
         //Since the property change is called whenever the editor is set (it is set to null when editing stops),
         //ensure that the table has actually started an edit.
-        return evt.getNewValue()!=null;
+        return evt.getNewValue() != null;
     }
 
     private void invokeLater(final JTable table) {
@@ -85,7 +86,7 @@ public class TableEditRecorder extends AbstractComponentRecorder implements Prop
     }
 
     private void removeCellEditorListener() {
-        if (editor!=null) {
+        if (editor != null) {
             editor.removeCellEditorListener(TableEditRecorder.this);
         }
     }

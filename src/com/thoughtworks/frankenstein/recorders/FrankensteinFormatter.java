@@ -18,7 +18,7 @@ public class FrankensteinFormatter extends Formatter {
         DateFormatter formatter = new DateFormatter();
         sb.append(record.getLevel() + ": ");
         sb.append(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").format(date) + " ");
-        if (record.getThrown()!=null) {
+        if (record.getThrown() != null) {
             sb.append("Exception: " + record.getThrown().getMessage() + "\n");
             logException(sb, record.getThrown());
         }

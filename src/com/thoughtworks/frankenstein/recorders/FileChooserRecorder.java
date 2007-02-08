@@ -39,14 +39,14 @@ public class FileChooserRecorder extends AbstractComponentRecorder {
 
     private class SelectedFilePropertyChangeListener implements PropertyChangeListener {
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getNewValue()!=null)
+            if (evt.getNewValue() != null)
                 recorder.record(new SelectFileEvent(evt.getNewValue().toString()));
         }
     }
 
     private class SelectedFilesPropertyChangeListener implements PropertyChangeListener {
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getNewValue()!=null) {
+            if (evt.getNewValue() != null) {
                 recorder.record(new SelectFilesEvent(fileNames((File[]) evt.getNewValue())));
             }
 
@@ -58,7 +58,7 @@ public class FileChooserRecorder extends AbstractComponentRecorder {
                 File file = files[i];
                 fileList += file.toString() + ",";
             }
-            return  fileList.substring(0, fileList.length()-1);
+            return fileList.substring(0, fileList.length() - 1);
         }
     }
 }

@@ -7,6 +7,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 /**
  * Low level event recorder.
+ *
  * @author Vivek Prahlad
  */
 public interface EventRecorder {

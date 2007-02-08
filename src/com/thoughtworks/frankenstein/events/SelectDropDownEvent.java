@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.playback.MatchStrategy;
 
 /**
  * Represents a combo box selection event.
+ *
  * @author Vivek Prahlad
  */
 public class SelectDropDownEvent extends AbstractFrankensteinEvent {
@@ -44,10 +45,10 @@ public class SelectDropDownEvent extends AbstractFrankensteinEvent {
         JComboBox combo = (JComboBox) finder.findComponent(context, comboBoxName);
         ListCellRenderer renderer = combo.getRenderer();
         ComboBoxModel model = combo.getModel();
-        Object selectValue=null;
-        for (int i=0; i< model.getSize(); i++) {
+        Object selectValue = null;
+        for (int i = 0; i < model.getSize(); i++) {
             Object element = model.getElementAt(i);
-            if (MatchStrategy.matchValues(valueToString(renderer, element, i),choice)) {
+            if (MatchStrategy.matchValues(valueToString(renderer, element, i), choice)) {
                 selectValue = element;
                 break;
             }

@@ -12,6 +12,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording text entered in text fields.
+ *
  * @author Vivek Prahlad
  */
 public class TextFieldRecorder extends AbstractComponentRecorder {

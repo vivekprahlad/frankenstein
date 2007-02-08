@@ -12,7 +12,7 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 /**
  * Ensures behaviour of check text recorder
  */
-public class CheckTextRecorderTest extends AbstractRecorderTestCase{
+public class CheckTextRecorderTest extends AbstractRecorderTestCase {
     private CheckTextRecorder checkTextRecorder;
 
     protected void setUp() throws Exception {

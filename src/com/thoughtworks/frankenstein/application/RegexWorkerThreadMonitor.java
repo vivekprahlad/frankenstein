@@ -32,7 +32,7 @@ public class RegexWorkerThreadMonitor implements WorkerThreadMonitor {
     private boolean hasActiveWorkerThreads(Thread[] threads) {
         for (int i = 0; i < threads.length; i++) {
             Thread thread = threads[i];
-            if (thread!=null && thread.isAlive() && matchesPattern(thread.getName())) return true;
+            if (thread != null && thread.isAlive() && matchesPattern(thread.getName())) return true;
         }
         return false;
     }

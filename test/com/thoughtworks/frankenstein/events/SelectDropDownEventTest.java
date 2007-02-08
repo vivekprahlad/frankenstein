@@ -44,7 +44,7 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
-        JComboBox  combo = new JComboBox(new Object[]{"one", "text", "three"});
+        JComboBox combo = new JComboBox(new Object[]{"one", "text", "three"});
         mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.comboFieldName")).will(returnValue(combo));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", combo.getSelectedItem());
@@ -55,7 +55,7 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
-        JComboBox  combo = new JComboBox(new Object[]{"one", "text", "three"});
+        JComboBox combo = new JComboBox(new Object[]{"one", "text", "three"});
         mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.comboFieldName")).will(returnValue(combo));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals("text", combo.getSelectedItem());

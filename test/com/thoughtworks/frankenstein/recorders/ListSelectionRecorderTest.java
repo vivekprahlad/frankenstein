@@ -39,7 +39,7 @@ public class ListSelectionRecorderTest extends AbstractRecorderTestCase {
 
     public void testSelectingChoiceRecordsEvent() {
         list.setModel(new DefaultComboBoxModel(new String[]{"abc", "def"}));
-        mockRecorder.expects(once()).method("record").with(eq(new SelectListEvent("testList", new String[] {"def"})));
+        mockRecorder.expects(once()).method("record").with(eq(new SelectListEvent("testList", new String[]{"def"})));
         mockComponentVisibility.expects(once()).method("isShowing").with(eq(list)).will(returnValue(true));
         recorder.componentShown(list);
         list.setSelectedIndex(1);

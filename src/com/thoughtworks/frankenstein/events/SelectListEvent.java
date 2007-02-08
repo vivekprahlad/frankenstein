@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.playback.MatchStrategy;
 
 /**
  * Represents a List selection event.
+ *
  * @author Vivek Prahlad
  */
 public class SelectListEvent extends AbstractFrankensteinEvent {
@@ -40,13 +41,13 @@ public class SelectListEvent extends AbstractFrankensteinEvent {
             String s = choices[i];
             params += s + ",";
         }
-        return params.substring(0, params.length()-1);
+        return params.substring(0, params.length() - 1);
     }
 
     private int value(JList list, String text) {
         ListModel model = list.getModel();
-        for (int i=0; i<model.getSize(); i++) {
-            if (MatchStrategy.matchValues(valueAsString(list, model.getElementAt(i), i),text))
+        for (int i = 0; i < model.getSize(); i++) {
+            if (MatchStrategy.matchValues(valueAsString(list, model.getElementAt(i), i), text))
                 return i;
         }
         return -1;

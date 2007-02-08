@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
  */
 public class SelectFileEventTest extends AbstractEventTestCase {
 
-      public void testEqualsAndHashCode() {
+    public void testEqualsAndHashCode() {
         SelectFileEvent one = new SelectFileEvent(file("/home/test/file"));
         SelectFileEvent two = new SelectFileEvent(file("/home/test/file"));
         assertEquals(one, two);
@@ -19,7 +19,7 @@ public class SelectFileEventTest extends AbstractEventTestCase {
     }
 
     public void testToString() {
-        assertEquals("SelectFileEvent:"+file(" /home/test/file"), new SelectFileEvent(file("/home/test/file")).toString());
+        assertEquals("SelectFileEvent:" + file(" /home/test/file"), new SelectFileEvent(file("/home/test/file")).toString());
     }
 
     public void testAction() {
@@ -35,7 +35,7 @@ public class SelectFileEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_file \""+file("/home/test/file")+"\"", new SelectFileEvent(file("/home/test/file")).scriptLine());
+        assertEquals("select_file \"" + file("/home/test/file") + "\"", new SelectFileEvent(file("/home/test/file")).scriptLine());
     }
 
     public void testDoesNotReplaceSInScriptLine() {

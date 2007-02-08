@@ -25,7 +25,7 @@ public class CheckBoxRecorderTest extends AbstractRecorderTestCase {
     public void testAddsActionListenerWhenCheckBoxIsShown() {
         int initialActionListenerCount = numberOfActionListeners(checkBox);
         recorder.componentShown(checkBox);
-        assertEquals(initialActionListenerCount+1, numberOfActionListeners(checkBox));
+        assertEquals(initialActionListenerCount + 1, numberOfActionListeners(checkBox));
 
     }
 

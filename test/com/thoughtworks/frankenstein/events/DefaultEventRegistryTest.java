@@ -45,8 +45,8 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreatesClickButtonEvent() {
-       defaultEventRegistry.registerEvent(ButtonEvent.class);
-       assertEquals(new ButtonEvent("abc", new ClickAction()), defaultEventRegistry.createEvent("click_button \"abc\""));
+        defaultEventRegistry.registerEvent(ButtonEvent.class);
+        assertEquals(new ButtonEvent("abc", new ClickAction()), defaultEventRegistry.createEvent("click_button \"abc\""));
     }
 
     public void testCreatesClickCheckboxEvent() {
@@ -81,7 +81,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreatesKeystrokeEvent() {
         defaultEventRegistry.registerEvent(KeyStrokeEvent.class);
-        assertEquals(new KeyStrokeEvent(0,48), defaultEventRegistry.createEvent("KeyStroke \"0,48\""));
+        assertEquals(new KeyStrokeEvent(0, 48), defaultEventRegistry.createEvent("KeyStroke \"0,48\""));
     }
 
     public void testCreatesNavigateEvent() {
@@ -120,8 +120,8 @@ public class DefaultEventRegistryTest extends TestCase {
     }
 
     public void testCreatesAssertEvent() {
-           defaultEventRegistry.registerEvent(AssertEvent.class);
-           assertEquals(new AssertEvent("table", "enabled", "true"), defaultEventRegistry.createEvent("Assert \"table\" \"enabled:true\""));
+        defaultEventRegistry.registerEvent(AssertEvent.class);
+        assertEquals(new AssertEvent("table", "enabled", "true"), defaultEventRegistry.createEvent("Assert \"table\" \"enabled:true\""));
     }
 
     public void testCreatesStartTestEvent() {
@@ -133,19 +133,20 @@ public class DefaultEventRegistryTest extends TestCase {
         defaultEventRegistry.registerEvent(DelayEvent.class);
         assertEquals(new DelayEvent("10"), defaultEventRegistry.createEvent("Delay \"10\""));
     }
+
     public void testCreateDoubleClickListEvent() {
         defaultEventRegistry.registerEvent(ListEvent.class);
-        assertEquals(new ListEvent("list",0,new DoubleClickAction()), defaultEventRegistry.createEvent("double_click_list \"list\" 0"));
+        assertEquals(new ListEvent("list", 0, new DoubleClickAction()), defaultEventRegistry.createEvent("double_click_list \"list\" 0"));
     }
 
     public void testCreateClickTableHeaderEvent() {
         defaultEventRegistry.registerEvent(TableHeaderEvent.class);
-        assertEquals(new TableHeaderEvent("header","one", new ClickAction()), defaultEventRegistry.createEvent( "click_table_header \"header\" , \"one\""));
+        assertEquals(new TableHeaderEvent("header", "one", new ClickAction()), defaultEventRegistry.createEvent("click_table_header \"header\" , \"one\""));
     }
 
     public void testCreateRightClickTableRows() {
         defaultEventRegistry.registerEvent(TableRowEvent.class);
-        assertEquals(new TableRowEvent("table",1, new RightClickAction()), defaultEventRegistry.createEvent( "right_click_table_row \"table\" , \"1\""));
+        assertEquals(new TableRowEvent("table", 1, new RightClickAction()), defaultEventRegistry.createEvent("right_click_table_row \"table\" , \"1\""));
     }
 
     public void testRegisteringValidAction() {
@@ -184,14 +185,14 @@ public class DefaultEventRegistryTest extends TestCase {
         assertEquals(new TreeEvent("tree", new RightClickAction()), defaultEventRegistry.createEvent("right_click_tree \"tree\""));
     }
 
-     public void testCreatesAssertLabel() {
+    public void testCreatesAssertLabel() {
         defaultEventRegistry.registerEvent(AssertLabelEvent.class);
-        assertEquals(new AssertLabelEvent("label","labelValue"), defaultEventRegistry.createEvent("assert_label \"label\" , \"labelValue\""));
+        assertEquals(new AssertLabelEvent("label", "labelValue"), defaultEventRegistry.createEvent("assert_label \"label\" , \"labelValue\""));
     }
-    
-    public void testCreatesMoveSliderEvent(){
+
+    public void testCreatesMoveSliderEvent() {
         defaultEventRegistry.registerEvent(MoveSliderEvent.class);
-        assertEquals(new MoveSliderEvent("slider",10),defaultEventRegistry.createEvent("move_slider \"slider\" , \"10\""));
+        assertEquals(new MoveSliderEvent("slider", 10), defaultEventRegistry.createEvent("move_slider \"slider\" , \"10\""));
     }
 
     public void testThrowsExceptionIfCreatingEventFails() {
@@ -199,7 +200,7 @@ public class DefaultEventRegistryTest extends TestCase {
         try {
             defaultEventRegistry.createEvent("ExceptionThrowing textField text");
             fail();
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
     }
 
@@ -218,12 +219,12 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testDoesNotReplaceUnderscoresInTestScript() {
         defaultEventRegistry.registerEvent(AssertLabelEvent.class);
-        assertEquals(new AssertLabelEvent("label_one","labelValue"), defaultEventRegistry.createEvent("assert_label \"label_one\" , \"labelValue\""));
+        assertEquals(new AssertLabelEvent("label_one", "labelValue"), defaultEventRegistry.createEvent("assert_label \"label_one\" , \"labelValue\""));
     }
 
     public void testDoesNotReplaceColons() {
         defaultEventRegistry.registerEvent(AssertEvent.class);
-        assertEquals(new AssertEvent("comp","getValueAt(0,1)","regex:.*"), defaultEventRegistry.createEvent("assert \"comp\" , \"getValueAt(0,1):regex:.*\""));
+        assertEquals(new AssertEvent("comp", "getValueAt(0,1)", "regex:.*"), defaultEventRegistry.createEvent("assert \"comp\" , \"getValueAt(0,1):regex:.*\""));
     }
 
     private class FakeFrankensteinEvent implements FrankensteinEvent {

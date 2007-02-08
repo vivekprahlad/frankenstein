@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording a check box.
+ *
  * @author Vivek Prahlad
  */
 public class CheckBoxRecorder extends AbstractComponentRecorder implements ActionListener {

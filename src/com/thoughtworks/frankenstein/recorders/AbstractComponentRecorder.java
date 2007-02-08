@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Base class for all component event recorders
+ *
  * @author Vivek Prahlad
  */
 public abstract class AbstractComponentRecorder implements ComponentRecorder, AWTEventListener {

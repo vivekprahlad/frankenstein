@@ -7,6 +7,7 @@ import com.thoughtworks.frankenstein.events.actions.Action;
 
 /**
  * Understands radio button actio
+ *
  * @author Vivek Prahlad
  */
 public class RadioButtonEvent extends AbstractCompoundEvent {

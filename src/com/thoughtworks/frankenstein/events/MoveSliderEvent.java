@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Understands the behavior of slider
  */
-public class MoveSliderEvent extends AbstractFrankensteinEvent{
+public class MoveSliderEvent extends AbstractFrankensteinEvent {
 
     private String sliderName;
     private int movement;
@@ -15,12 +15,12 @@ public class MoveSliderEvent extends AbstractFrankensteinEvent{
         this.movement = movement;
     }
 
-    public MoveSliderEvent(String scriptline){
+    public MoveSliderEvent(String scriptline) {
         this(params(scriptline)[0], Integer.parseInt(params(scriptline)[1]));
     }
 
     public String toString() {
-        return "MoveSliderEvent: "+sliderName+" "+movement;
+        return "MoveSliderEvent: " + sliderName + " " + movement;
     }
 
     public String target() {
@@ -32,8 +32,8 @@ public class MoveSliderEvent extends AbstractFrankensteinEvent{
         return Integer.toString(movement);
     }
 
-    public  void run() {
-       JSlider slider = (JSlider) finder.findComponent(context, sliderName);
-       slider.setValue(movement);
+    public void run() {
+        JSlider slider = (JSlider) finder.findComponent(context, sliderName);
+        slider.setValue(movement);
     }
 }

@@ -7,7 +7,7 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 
 /**
-    Ensures SliderRecorders behavior
+ * Ensures SliderRecorders behavior
  */
 public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
     JSlider slider;
@@ -15,7 +15,7 @@ public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        slider=new JSlider(1,100,5);
+        slider = new JSlider(1, 100, 5);
         slider.setName("slider");
         JScrollPane scrollPane = new JScrollPane(slider, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         new JFrame().getContentPane().add(scrollPane);
@@ -29,16 +29,16 @@ public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
         assertTrue(listenerCount() == listenerCount + 1);
     }
 
-     public void testRemovesChangeListenerWhenSliderIsHidden() {
+    public void testRemovesChangeListenerWhenSliderIsHidden() {
         int listenerCount = listenerCount();
         recorder.componentShown(slider);
         recorder.componentHidden(slider);
         assertTrue(listenerCount() == listenerCount);
     }
 
-     public void testRecordsMovementOnSlider() {
+    public void testRecordsMovementOnSlider() {
         recorder.componentShown(slider);
-        mockRecorder.expects(once()).method("record").with(eq(new MoveSliderEvent("slider",10)));
+        mockRecorder.expects(once()).method("record").with(eq(new MoveSliderEvent("slider", 10)));
         slider.setValue(10);
     }
 

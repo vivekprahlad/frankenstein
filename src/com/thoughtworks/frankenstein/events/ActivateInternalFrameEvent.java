@@ -5,9 +5,10 @@ import javax.swing.*;
 
 /**
  * Represents an internal frame being activated.
+ *
  * @author Vivek Prahlad
  */
-public class ActivateInternalFrameEvent extends AbstractFrankensteinEvent implements Runnable{
+public class ActivateInternalFrameEvent extends AbstractFrankensteinEvent implements Runnable {
     private String title;
 
     public ActivateInternalFrameEvent(String title) {

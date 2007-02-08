@@ -23,6 +23,7 @@ import com.thoughtworks.frankenstein.ui.RecorderTableModel;
 
 /**
  * Facade for the Frankenstein framework. Provides customization hooks.
+ *
  * @author Vivek Prahlad
  */
 public class FrankensteinIntegration {
@@ -85,6 +86,7 @@ public class FrankensteinIntegration {
 
     /**
      * Set the port at which Frankenstein listens for commands. (The default port is 5678)
+     *
      * @param port
      */
     public void setPort(int port) {
@@ -96,7 +98,7 @@ public class FrankensteinIntegration {
         recorder.startRecording();
         socketListener.start(port);
         try {
-            mainClass.getDeclaredMethod("main", new Class[] {String[].class}).invoke(null, new Object[] {args});
+            mainClass.getDeclaredMethod("main", new Class[]{String[].class}).invoke(null, new Object[]{args});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

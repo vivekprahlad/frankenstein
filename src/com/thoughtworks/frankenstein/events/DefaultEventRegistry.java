@@ -134,9 +134,9 @@ public class DefaultEventRegistry implements EventRegistry {
     protected String[] split(String scriptLine) {
         Set set = actionNameToActionClassMap.keySet();
         for (Iterator iterator = set.iterator(); iterator.hasNext();) {
-            String actionName =  (String) iterator.next();
+            String actionName = (String) iterator.next();
             if (scriptLine.startsWith(actionName)) {
-                return new String[] {actionName, scriptLine.substring(actionName.length(), scriptLine.length())};
+                return new String[]{actionName, scriptLine.substring(actionName.length(), scriptLine.length())};
             }
         }
         throw new RuntimeException("No matching action found");
@@ -144,8 +144,9 @@ public class DefaultEventRegistry implements EventRegistry {
 
     protected Action createAction(String scriptLine) {
         for (Iterator iterator = actionNameToActionClassMap.keySet().iterator(); iterator.hasNext();) {
-            String actionName =  (String) iterator.next();
-            if (scriptLine.startsWith(actionName)) return createAction((Class)actionNameToActionClassMap.get(actionName));
+            String actionName = (String) iterator.next();
+            if (scriptLine.startsWith(actionName))
+                return createAction((Class) actionNameToActionClassMap.get(actionName));
         }
         throw new RuntimeException("Could not create action from scriptline: " + scriptLine);
     }
@@ -176,7 +177,7 @@ public class DefaultEventRegistry implements EventRegistry {
     }
 
     protected String convert(String scriptAction) {
-        String [] line = scriptAction.split("\\s+");
+        String[] line = scriptAction.split("\\s+");
         String remaining = scriptAction.substring(line[0].length(), scriptAction.length());
         String[] tokens = line[0].split("_");
         String action = "";

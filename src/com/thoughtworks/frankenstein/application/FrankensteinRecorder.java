@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  * Top level recorder interface
+ *
  * @author Vivek Prahlad
  */
 public interface FrankensteinRecorder {

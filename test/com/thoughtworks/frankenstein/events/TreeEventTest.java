@@ -17,6 +17,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Ensures behaviour of TreeEvent
+ *
  * @author Vivek Prahlad
  */
 public class TreeEventTest extends AbstractEventTestCase {

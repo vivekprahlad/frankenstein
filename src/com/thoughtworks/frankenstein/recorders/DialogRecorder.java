@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.events.DialogShownEvent;
 
 /**
  * Understands recording dialog.
+ *
  * @author Vivek Prahlad
  */
 public class DialogRecorder implements ComponentRecorder, WindowListener, AWTEventListener {

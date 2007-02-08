@@ -16,23 +16,23 @@ public class StartTestEventTest extends AbstractEventTestCase {
     }
 
     public void testToString() {
-        assertEquals("StartTest: testName" ,new StartTestEvent("testName").toString());
+        assertEquals("StartTest: testName", new StartTestEvent("testName").toString());
     }
 
     public void testAction() {
-        assertEquals("StartTest" ,new StartTestEvent("testName").action());
+        assertEquals("StartTest", new StartTestEvent("testName").action());
     }
 
     public void testTarget() {
-        assertEquals("" ,new StartTestEvent("testName").target());
+        assertEquals("", new StartTestEvent("testName").target());
     }
 
     public void testParameters() {
-        assertEquals("testName" ,new StartTestEvent("testName").parameters());
+        assertEquals("testName", new StartTestEvent("testName").parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("StartTest \"testName\"" ,new StartTestEvent("testName").scriptLine());
+        assertEquals("StartTest \"testName\"", new StartTestEvent("testName").scriptLine());
     }
 
     public void testPlaysEvent() {

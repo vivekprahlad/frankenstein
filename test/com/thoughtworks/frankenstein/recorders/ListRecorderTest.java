@@ -10,7 +10,7 @@ import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
- * Ensures behaviour of ListRecorder. 
+ * Ensures behaviour of ListRecorder.
  */
 public class ListRecorderTest extends AbstractRecorderTestCase {
     private JList list;
@@ -41,7 +41,7 @@ public class ListRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsDoubleClickOnListFirst() {
         recorder.componentShown(list);
-        mockRecorder.expects(once()).method("record").with(eq(new ListEvent("listName", 0,new DoubleClickAction())));
+        mockRecorder.expects(once()).method("record").with(eq(new ListEvent("listName", 0, new DoubleClickAction())));
         Point point = list.indexToLocation(0);
         recorder.listMouseListener.mouseClicked(new MouseEvent(list, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 2, false));
     }
@@ -49,11 +49,11 @@ public class ListRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsDoubleClickOnListWhenTheItemNotInView() {
         recorder.componentShown(list);
-        mockRecorder.expects(once()).method("record").with(eq(new ListEvent("listName", 9,new RightClickAction())));
+        mockRecorder.expects(once()).method("record").with(eq(new ListEvent("listName", 9, new RightClickAction())));
         Point point = list.indexToLocation(9);
         recorder.listMouseListener.mouseClicked(new MouseEvent(list, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, true));
     }
-                                                
+
     private int listenerCount() {
         return list.getMouseListeners().length;
     }

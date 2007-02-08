@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 /**
  * Understands presenting a TestReporter interface for a collection of reporters.
+ *
  * @author Vivek Prahlad
  */
 public class CompositeReporter implements TestReporter {

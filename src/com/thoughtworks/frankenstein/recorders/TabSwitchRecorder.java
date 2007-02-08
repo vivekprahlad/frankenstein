@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording switch events
+ *
  * @author Vivek Prahlad
  */
 public class TabSwitchRecorder extends AbstractComponentRecorder implements ChangeListener {

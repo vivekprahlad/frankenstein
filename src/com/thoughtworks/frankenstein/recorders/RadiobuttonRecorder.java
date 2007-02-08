@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording a radio button selection.
+ *
  * @author Vivek Prahlad
  */
 public class RadiobuttonRecorder extends AbstractComponentRecorder implements ActionListener {

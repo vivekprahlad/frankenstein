@@ -12,6 +12,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Base class for all assertion recorders.
+ *
  * @author Vivek Prahlad
  */
 public abstract class AbstractCheckRecorder implements ComponentRecorder, AWTEventListener {
@@ -46,7 +47,7 @@ public abstract class AbstractCheckRecorder implements ComponentRecorder, AWTEve
 
     protected boolean isControlRightClick(MouseEvent mouseEvent) {
         return isControlPopup(mouseEvent, MouseEvent.MOUSE_PRESSED)
-               || isControlPopup(mouseEvent, MouseEvent.MOUSE_RELEASED);
+                || isControlPopup(mouseEvent, MouseEvent.MOUSE_RELEASED);
     }
 
     private boolean isControlPopup(MouseEvent mouseEvent, int id) {

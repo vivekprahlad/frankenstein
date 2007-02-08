@@ -5,6 +5,7 @@ package com.thoughtworks.frankenstein.application;
  */
 class TestMain {
     static String[] arguments;
+
     public static void main(String[] args) {
         arguments = args;
     }

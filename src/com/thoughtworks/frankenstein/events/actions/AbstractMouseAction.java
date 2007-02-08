@@ -10,7 +10,7 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContextListener;
 
 /**
- * Base class for all mouse actions 
+ * Base class for all mouse actions
  */
 public abstract class AbstractMouseAction extends MouseAdapter implements WindowContextListener {
     public synchronized void execute(Point location, JComponent component, ComponentFinder finder, WindowContext windowContext) {

@@ -19,8 +19,8 @@ public class DefaultScreenShot implements ScreenShot {
     public String capture(String parent, Robot robot) {
         Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         BufferedImage image = robot.createScreenCapture(screenRect);
-        String captureFileName = "screenshot-" + counter++ +".png";
-        String pathname = (parent != null? parent + File.separator: "")  + "screenshots";
+        String captureFileName = "screenshot-" + counter++ + ".png";
+        String pathname = (parent != null ? parent + File.separator : "") + "screenshots";
         createScreenshotDirectory(pathname);
         try {
             ImageIO.write(image, "png", new File(pathname + File.separator + captureFileName));

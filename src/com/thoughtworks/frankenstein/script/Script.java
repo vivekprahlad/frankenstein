@@ -12,6 +12,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 /**
  * Understands saving and restoring scripts.
+ *
  * @author Vivek Prahlad
  */
 public class Script {
@@ -27,13 +28,13 @@ public class Script {
         for (Iterator iterator = eventList.iterator(); iterator.hasNext();) {
             script += ((FrankensteinEvent) iterator.next()).scriptLine() + "\n";
         }
-        return script.substring(0, script.length()-1);
+        return script.substring(0, script.length() - 1);
     }
 
     public List parse(Reader script) throws IOException {
         String[] lines = read(script).split("\n");
         List eventList = new ArrayList();
-        for (int i = 0; i < lines.length ; i ++) {
+        for (int i = 0; i < lines.length; i++) {
             eventList.add(registry.createEvent(lines[i].trim()));
         }
         return eventList;

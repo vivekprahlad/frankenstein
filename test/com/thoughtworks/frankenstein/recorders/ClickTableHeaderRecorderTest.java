@@ -27,29 +27,30 @@ public class ClickTableHeaderRecorderTest extends AbstractRecorderTestCase {
         recorder = new ClickTableHeaderRecorder((Recorder) mockRecorder.proxy(), new DefaultNamingStrategy());
     }
 
-     public void testAddsMouseListenerWhenListIsShown() {
+    public void testAddsMouseListenerWhenListIsShown() {
         int listenerCount = listenerCount();
         recorder.componentShown(header);
         assertTrue(listenerCount() == listenerCount + 1);
     }
-      public void testRemovesMouseListenerWhenListIsHidden() {
+
+    public void testRemovesMouseListenerWhenListIsHidden() {
         int listenerCount = listenerCount();
         recorder.componentShown(header);
         recorder.componentHidden(header);
         assertTrue(listenerCount() == listenerCount);
     }
 
-     public void testRecordsClickOnTableHeader() {
+    public void testRecordsClickOnTableHeader() {
         recorder.componentShown(header);
-        mockRecorder.expects(once()).method("record").with(eq(new TableHeaderEvent("header","one", new ClickAction())));
+        mockRecorder.expects(once()).method("record").with(eq(new TableHeaderEvent("header", "one", new ClickAction())));
         Point point = LocationForFirstColumn();
-        recorder.mouseClicked(new MouseEvent(header, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, false,MouseEvent.BUTTON1));
+        recorder.mouseClicked(new MouseEvent(header, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, false, MouseEvent.BUTTON1));
     }
 
     private Point LocationForFirstColumn() {
-        Point point=header.getLocation();
-        point.x+=(header.getColumnModel().getColumn(0).getWidth())/2;
-        point.y+=(header.getHeight())/2;
+        Point point = header.getLocation();
+        point.x += (header.getColumnModel().getColumn(0).getWidth()) / 2;
+        point.y += (header.getHeight()) / 2;
         return point;
     }
 

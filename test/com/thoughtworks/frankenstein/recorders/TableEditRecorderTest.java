@@ -47,7 +47,7 @@ public class TableEditRecorderTest extends AbstractRecorderTestCase {
         int listenerCount = propertyChangeListenerCount();
         recorder.componentShown(table);
         recorder.componentHidden(table);
-        assertEquals(listenerCount,  propertyChangeListenerCount());
+        assertEquals(listenerCount, propertyChangeListenerCount());
     }
 
     public void testEditingTablePostsEditTableEvent() throws InterruptedException, InvocationTargetException {
@@ -108,7 +108,7 @@ public class TableEditRecorderTest extends AbstractRecorderTestCase {
     private void editCell() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
             public void run() {
-                table.editCellAt(0,0);
+                table.editCellAt(0, 0);
             }
         });
         waitForIdle();

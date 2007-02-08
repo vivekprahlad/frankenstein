@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 /**
  * Creates eventActionName names from event names.
+ *
  * @author Vivek Prahlad
  */
 public class EventActionName {
@@ -16,7 +17,7 @@ public class EventActionName {
 
     private static String actionInternal(Class actionClass, String suffix) {
         String[] strings = className(actionClass);
-        return strings[strings.length-1].replaceAll(suffix, "");
+        return strings[strings.length - 1].replaceAll(suffix, "");
     }
 
     private static String[] className(Class actionClass) {

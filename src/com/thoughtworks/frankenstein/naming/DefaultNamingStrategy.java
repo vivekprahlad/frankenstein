@@ -38,7 +38,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
     }
 
     public void nameComponentsIn(String prefix, Container panel) {
-        nameComponentOfType(JSlider.class,panel,new CounterBasedNamingStrategy(prefix));
+        nameComponentOfType(JSlider.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JSpinner.class, panel, new SpinnerNamingStrategy(prefix, this));
         nameComponentOfType(JTableHeader.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTextField.class, panel, new CounterBasedNamingStrategy(prefix));

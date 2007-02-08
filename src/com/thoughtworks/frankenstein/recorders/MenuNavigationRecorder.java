@@ -13,6 +13,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording when the user navigating to a menu associated with a menu bar.
+ *
  * @author Vivek Prahlad
  */
 public class MenuNavigationRecorder extends AbstractComponentRecorder implements ActionListener, ChangeListener {

@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
 
 /**
  * User interface for recorded events.
+ *
  * @author Vivek Prahlad
  */
 public class RecorderPane extends JPanel {

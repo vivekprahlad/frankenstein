@@ -12,6 +12,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording internal frame events.
+ *
  * @author Vivek Prahlad
  */
 public class InternalFrameRecorder extends AbstractComponentRecorder implements InternalFrameListener {

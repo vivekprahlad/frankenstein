@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Represents a keystroke event.
+ *
  * @author Vivek Prahlad
  */
 public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyListener {
@@ -23,7 +24,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public KeyStrokeEvent(String scriptLine) {
-       this(keystrokeParams(scriptLine,0), keystrokeParams(scriptLine,1));
+        this(keystrokeParams(scriptLine, 0), keystrokeParams(scriptLine, 1));
     }
 
     private static int keystrokeParams(String params, int index) {
@@ -31,7 +32,7 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public String toString() {
-        return "KeyStrokeEvent:" +  (modifiers !=0 ? " modifiers: " + KeyEvent.getModifiersExText(modifiers) : "") + " key: " + KeyEvent.getKeyText(keyCode);
+        return "KeyStrokeEvent:" + (modifiers != 0 ? " modifiers: " + KeyEvent.getModifiersExText(modifiers) : "") + " key: " + KeyEvent.getKeyText(keyCode);
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
@@ -43,11 +44,11 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     }
 
     public String scriptLine() {
-        return underscore(action()) + " \"" + modifiers + "," + keyCode +"\"";
+        return underscore(action()) + " \"" + modifiers + "," + keyCode + "\"";
     }
 
     public String parameters() {
-        return (modifiers !=0 ? KeyEvent.getModifiersExText(modifiers) + "+" : "") + KeyEvent.getKeyText(keyCode);
+        return (modifiers != 0 ? KeyEvent.getModifiersExText(modifiers) + "+" : "") + KeyEvent.getKeyText(keyCode);
     }
 
     private void releaseModifiers(Robot robot) {

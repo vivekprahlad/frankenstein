@@ -18,32 +18,32 @@ public class MoveSliderEventTest extends AbstractEventTestCase {
         MoveSliderEvent eventOne = new MoveSliderEvent("slider", 10);
         MoveSliderEvent eventTwo = new MoveSliderEvent("slider", 10);
         assertEquals(eventOne, eventTwo);
-        assertEquals(eventOne.hashCode(),eventTwo.hashCode());
+        assertEquals(eventOne.hashCode(), eventTwo.hashCode());
 
     }
 
     public void testToString() {
-       assertEquals("MoveSliderEvent: slider 10",new MoveSliderEvent("slider",10).toString());
+        assertEquals("MoveSliderEvent: slider 10", new MoveSliderEvent("slider", 10).toString());
     }
 
     public void testAction() {
-       assertEquals("MoveSlider",new MoveSliderEvent("slider",10).action());
+        assertEquals("MoveSlider", new MoveSliderEvent("slider", 10).action());
     }
 
     public void testTarget() {
-        assertEquals("slider",new MoveSliderEvent("slider",10).target());
+        assertEquals("slider", new MoveSliderEvent("slider", 10).target());
     }
 
     public void testParameters() {
-        assertEquals("10",new MoveSliderEvent("slider",10).parameters());
+        assertEquals("10", new MoveSliderEvent("slider", 10).parameters());
     }
 
     public void testScriptLine() {
-        assertEquals("move_slider \"slider\" , \"10\"",new MoveSliderEvent("slider",10).scriptLine());
+        assertEquals("move_slider \"slider\" , \"10\"", new MoveSliderEvent("slider", 10).scriptLine());
     }
 
     public void testPlaysEvent() throws Exception {
-        JSlider slider = new JSlider(1, 100,10);
+        JSlider slider = new JSlider(1, 100, 10);
         slider.setName("slider");
         MoveSliderEvent event = new MoveSliderEvent("slider", 5);
         Mock mockComponentFinder = mock(ComponentFinder.class);
@@ -58,6 +58,6 @@ public class MoveSliderEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new MoveSliderEvent("slider",10);
+        return new MoveSliderEvent("slider", 10);
     }
 }

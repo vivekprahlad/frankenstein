@@ -7,6 +7,7 @@ import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
 
 /**
  * Understands launching swing file choosers.
+ *
  * @author Vivek Prahlad
  */
 public class DefaultFileDialogLauncher implements FileDialogLauncher {

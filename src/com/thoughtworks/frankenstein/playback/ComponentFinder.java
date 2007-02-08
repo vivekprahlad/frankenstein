@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /**
  * Finds components
+ *
  * @author Vivek Prahlad
  */
 public interface ComponentFinder {
@@ -20,7 +21,7 @@ public interface ComponentFinder {
 
     JFileChooser findFileChooser(WindowContext context);
 
-    JLabel findLabel(WindowContext context,String labelValue);
+    JLabel findLabel(WindowContext context, String labelValue);
 
     void menuDisplayed(JPopupMenu jPopupMenu);
 

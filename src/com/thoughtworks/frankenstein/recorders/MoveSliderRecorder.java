@@ -9,7 +9,7 @@ import com.thoughtworks.frankenstein.events.MoveSliderEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
-    Understands recording slider motion
+ * Understands recording slider motion
  */
 public class MoveSliderRecorder extends AbstractComponentRecorder implements ChangeListener {
     public MoveSliderRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
@@ -21,7 +21,7 @@ public class MoveSliderRecorder extends AbstractComponentRecorder implements Cha
     }
 
     private JSlider slider(Component component) {
-        return((JSlider)component);
+        return ((JSlider) component);
     }
 
     void componentHidden(Component component) {
@@ -29,9 +29,9 @@ public class MoveSliderRecorder extends AbstractComponentRecorder implements Cha
     }
 
     public void stateChanged(ChangeEvent e) {
-        JSlider slider= (JSlider) e.getSource();
-        if(!slider.getValueIsAdjusting()) {
-            recorder.record(new MoveSliderEvent(componentName(slider),slider.getValue()));
+        JSlider slider = (JSlider) e.getSource();
+        if (!slider.getValueIsAdjusting()) {
+            recorder.record(new MoveSliderEvent(componentName(slider), slider.getValue()));
         }
     }
 }

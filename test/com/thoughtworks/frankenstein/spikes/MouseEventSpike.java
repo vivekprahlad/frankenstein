@@ -20,7 +20,7 @@ public class MouseEventSpike {
                 System.out.println("e = " + e);
             }
         });
-        test.setSize(200,200);
+        test.setSize(200, 200);
         test.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         test.setVisible(true);
     }

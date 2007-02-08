@@ -19,7 +19,7 @@ public class SelectFilesEvent extends AbstractFrankensteinEvent {
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (lastEvent instanceof SelectFileEvent || lastEvent instanceof SelectFilesEvent)
-          list.replaceLastEvent(this);
+            list.replaceLastEvent(this);
         else {
             list.addEvent(this);
         }

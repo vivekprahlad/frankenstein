@@ -6,6 +6,7 @@ import com.thoughtworks.frankenstein.playback.MatchStrategy;
 
 /**
  * Understands switches in tabs.
+ *
  * @author Vivek Prahlad
  */
 public class SwitchTabEvent extends AbstractFrankensteinEvent {
@@ -27,8 +28,8 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
 
     private String tabs(JTabbedPane pane) {
         String values = "";
-        for (int i=0 ; i<pane.getTabCount(); i++) {
-             values += pane.getTitleAt(i) + " ";
+        for (int i = 0; i < pane.getTabCount(); i++) {
+            values += pane.getTitleAt(i) + " ";
         }
         return values;
     }
@@ -44,8 +45,8 @@ public class SwitchTabEvent extends AbstractFrankensteinEvent {
     public void run() {
         JTabbedPane pane = (JTabbedPane) finder.findComponent(context, tabbedPaneName);
         int count = pane.getTabCount();
-        for (int i=0 ; i<count; i++) {
-            if (MatchStrategy.matchValues(pane.getTitleAt(i),tabTitle)) {
+        for (int i = 0; i < count; i++) {
+            if (MatchStrategy.matchValues(pane.getTitleAt(i), tabTitle)) {
                 pane.setSelectedIndex(i);
                 return;
             }

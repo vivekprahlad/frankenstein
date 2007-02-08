@@ -48,7 +48,7 @@ public class SelectTreeRecorderTest extends AbstractRecorderTestCase {
         int listenerCount = treeListenerCount();
         recorder.componentShown(tree);
         recorder.componentHidden(tree);
-        assertEquals(listenerCount,  treeListenerCount());
+        assertEquals(listenerCount, treeListenerCount());
     }
 
     public void testSelectingTreePostsSelectEvent() {

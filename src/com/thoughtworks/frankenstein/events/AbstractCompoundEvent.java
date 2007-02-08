@@ -21,6 +21,6 @@ public abstract class AbstractCompoundEvent extends AbstractFrankensteinEvent {
     }
 
     protected Point center(JComponent component) {
-        return new Point(component.getWidth() / 2, component.getHeight()/2);
+        return new Point(component.getWidth() / 2, component.getHeight() / 2);
     }
 }

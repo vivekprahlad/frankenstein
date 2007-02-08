@@ -7,14 +7,14 @@ import ognl.OgnlException;
 /**
  * Compiles OGNL expressions.
  *
- * @see AssertEvent
  * @author vivek
+ * @see AssertEvent
  */
 public class OgnlExpression {
     private Object expression;
     private String expressionString;
 
-    public OgnlExpression(String expressionString)  {
+    public OgnlExpression(String expressionString) {
         this.expressionString = expressionString;
         try {
             expression = Ognl.parseExpression(expressionString);

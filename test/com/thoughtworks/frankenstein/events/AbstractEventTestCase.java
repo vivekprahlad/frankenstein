@@ -42,6 +42,6 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
     }
 
     protected String file(String s) {
-          return s.replaceAll("/", (File.separator.equals("/"))?File.separator:("\\"+File.separator));
+        return s.replaceAll("/", (File.separator.equals("/")) ? File.separator : ("\\" + File.separator));
     }
 }

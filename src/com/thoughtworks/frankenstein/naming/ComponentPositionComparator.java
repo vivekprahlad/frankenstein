@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 /**
  * Understands comparing the positions of components.
+ *
  * @author Vivek Prahlad
  */
 public class ComponentPositionComparator implements Comparator {

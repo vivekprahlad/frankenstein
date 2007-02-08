@@ -39,7 +39,7 @@ public class TabSwitchRecorderTest extends AbstractRecorderTestCase {
         int listenerCount = changeListenerCount();
         recorder.componentShown(tabbedPane);
         recorder.componentHidden(tabbedPane);
-        assertEquals(listenerCount,  changeListenerCount());
+        assertEquals(listenerCount, changeListenerCount());
     }
 
     public void testSwitchingTabPostsSelectEvent() {

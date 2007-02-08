@@ -11,8 +11,8 @@ import javax.swing.*;
  */
 public class PopupMenuSpike {
     public static void main(String[] args) {
-        final JFrame frame =new JFrame();
-        frame.setSize(100,100);
+        final JFrame frame = new JFrame();
+        frame.setSize(100, 100);
         frame.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 JDialog dialog = new JDialog(frame, "title");

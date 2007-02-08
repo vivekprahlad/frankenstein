@@ -13,7 +13,7 @@ import javax.swing.*;
 public class HierarchyEventSpike {
     public static void main(String[] args) {
         final JFrame frame = new JFrame();
-        frame.setSize(100,100);
+        frame.setSize(100, 100);
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
             public void eventDispatched(AWTEvent event) {
                 if (event instanceof HierarchyEvent) {
@@ -21,7 +21,7 @@ public class HierarchyEventSpike {
                     if (he.getSource() instanceof JButton) {
                         System.out.println("he = " + he);
                     }
-                    if ((he.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED)!=0) {
+                    if ((he.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0) {
                         if (he.getSource() instanceof JButton) {
                             JButton button = (JButton) he.getSource();
                             if (button.isShowing()) {

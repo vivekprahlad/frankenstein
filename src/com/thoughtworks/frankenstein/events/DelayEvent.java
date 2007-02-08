@@ -4,6 +4,7 @@ import com.thoughtworks.frankenstein.application.ThreadUtil;
 
 /**
  * Delays a script for a specifed duration of time.
+ *
  * @author Vivek Prahlad
  */
 public class DelayEvent extends AbstractFrankensteinEvent {

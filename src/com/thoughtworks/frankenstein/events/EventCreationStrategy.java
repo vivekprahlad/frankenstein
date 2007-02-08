@@ -6,6 +6,7 @@ import com.thoughtworks.frankenstein.events.actions.Action;
 
 /**
  * Understands creating FrankensteinEvents.
+ *
  * @author vivek
  */
 abstract class EventCreationStrategy {

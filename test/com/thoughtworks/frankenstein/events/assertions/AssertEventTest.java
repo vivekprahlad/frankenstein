@@ -22,19 +22,19 @@ public class AssertEventTest extends AbstractEventTestCase {
     }
 
     public void testToString() {
-        assertEquals("AssertEvent: table, enabled: true",new AssertEvent("table", "enabled", "true").toString());
+        assertEquals("AssertEvent: table, enabled: true", new AssertEvent("table", "enabled", "true").toString());
     }
 
     public void testAction() {
-        assertEquals("Assert",new AssertEvent("table", "enabled", "true").action());
+        assertEquals("Assert", new AssertEvent("table", "enabled", "true").action());
     }
 
     public void testTarget() {
-        assertEquals("table",new AssertEvent("table", "enabled", "true").target());
+        assertEquals("table", new AssertEvent("table", "enabled", "true").target());
     }
 
     public void testParameters() {
-        assertEquals("enabled:true",new AssertEvent("table", "enabled", "true").parameters());
+        assertEquals("enabled:true", new AssertEvent("table", "enabled", "true").parameters());
     }
 
     public void testScriptLine() {

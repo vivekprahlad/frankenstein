@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.ui.RecorderPane;
 
 /**
  * Understands recording window activation events.
+ *
  * @author Vivek Prahlad
  */
 public class WindowActivationRecorder implements ComponentRecorder, AWTEventListener {

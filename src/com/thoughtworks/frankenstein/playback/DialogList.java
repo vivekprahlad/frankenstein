@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author vivek
  */
-public class DialogList  extends WindowAdapter implements AWTEventListener {
+public class DialogList extends WindowAdapter implements AWTEventListener {
     private List dialogs = new ArrayList();
 
     public DialogList() {

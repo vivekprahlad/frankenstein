@@ -65,6 +65,7 @@ public class ListRecorder extends AbstractComponentRecorder {
             record(e, new DoubleClickAction());
         }
     }
+
     private class ListMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             recordDoubleClick(e);

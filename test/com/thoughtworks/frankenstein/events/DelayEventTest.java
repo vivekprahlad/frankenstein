@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 /**
  * Ensures behaviour of DelayEvent
+ *
  * @author vivek
  */
 public class DelayEventTest extends AbstractEventTestCase {
@@ -14,7 +15,7 @@ public class DelayEventTest extends AbstractEventTestCase {
     }
 
     public void testToString() {
-        assertEquals("DelayEvent: 10", new DelayEvent("10").toString() );
+        assertEquals("DelayEvent: 10", new DelayEvent("10").toString());
     }
 
     public void testAction() {
@@ -39,7 +40,7 @@ public class DelayEventTest extends AbstractEventTestCase {
         long executionTime = System.currentTimeMillis() - currentTime;
         assertTrue(executionTime > 250);
         assertTrue(executionTime < 350);
-   }
+    }
 
     protected FrankensteinEvent createEvent() {
         return new DelayEvent("100");

@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.application;
 
 /**
  * Thread utility methods
+ *
  * @author Vivek Prahlad
  */
 public class ThreadUtil {

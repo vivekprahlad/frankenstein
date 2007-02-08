@@ -30,7 +30,7 @@ public class ComponentName {
     private void clear(Component[] components) {
         for (int i = 0; i < components.length; i++) {
             components[i].setName(null);
-            if (components[i] instanceof  Container) {
+            if (components[i] instanceof Container) {
                 clear((((Container) components[i]).getComponents()));
             }
         }

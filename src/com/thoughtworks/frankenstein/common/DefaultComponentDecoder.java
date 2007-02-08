@@ -8,6 +8,7 @@ import javax.swing.text.JTextComponent;
 
 /**
  * Decodes default swing components.
+ *
  * @author Vivek Prahlad
  */
 public class DefaultComponentDecoder implements ComponentDecoder {

@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /**
  * Names components with a counter.
+ *
  * @author Vivek Prahlad
  */
 public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
@@ -14,7 +15,8 @@ public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implem
     }
 
     public void name(Component component, int counter) {
-        if (!(component instanceof AbstractButton)) throw new IllegalArgumentException("Can only be used to name buttons");
+        if (!(component instanceof AbstractButton))
+            throw new IllegalArgumentException("Can only be used to name buttons");
         component.setName(prefix((JComponent) component) + buttonName(component, counter).replaceAll("\\s+", ""));
     }
 

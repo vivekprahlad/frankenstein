@@ -6,6 +6,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Understands recording table edit events
+ *
  * @author Vivek Prahlad
  */
 public class CancelTableEditEvent extends AbstractFrankensteinEvent {

@@ -4,6 +4,7 @@ import java.awt.*;
 
 /**
  * Represents the active window.
+ *
  * @author Vivek Prahlad
  */
 public interface WindowContext {

@@ -50,7 +50,7 @@ public class SelectTableRowEvent extends AbstractFrankensteinEvent {
         table.getSelectionModel().setSelectionInterval(rows[0], rows[0]);
         for (int i = 1; i < rows.length; i++) {
             int row = rows[i];
-            table.getSelectionModel().addSelectionInterval(row, row);            
+            table.getSelectionModel().addSelectionInterval(row, row);
         }
     }
 }

@@ -7,10 +7,10 @@ import junit.framework.TestCase;
  */
 public class NullWorkerThreadMonitorTest extends TestCase {
     public void testStartingMonitorIsNotABlockingCall() {
-       new NullWorkerThreadMonitor().start();
+        new NullWorkerThreadMonitor().start();
     }
 
     public void testWaitForIdleIsNotABlockingCall() {
-       new NullWorkerThreadMonitor().waitForIdle();
+        new NullWorkerThreadMonitor().waitForIdle();
     }
 }

@@ -6,6 +6,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Understands stopping a table edit.
+ *
  * @author Vivek Prahlad
  */
 public class StopTableEditEvent extends AbstractFrankensteinEvent {

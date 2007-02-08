@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.playback.WindowContextListener;
 
 /**
  * Understands clicking on a button.
+ *
  * @author vivek
  */
 public class ClickButtonAction implements WindowContextListener, ActionListener, Runnable {

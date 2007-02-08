@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Core script interface.
+ *
  * @author Vivek Prahlad
  */
 public interface ScriptContext {

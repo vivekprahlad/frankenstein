@@ -19,32 +19,32 @@ import junit.framework.TestCase;
  */
 public class ScriptTest extends TestCase {
     private static final String SCRIPT =
-    "assert \"table\" , \"enabled:true\"\n"+
-    "cancel_table_edit \"tableName\"\n"+
-    "click_button \"click button\"\n" +
-    "click_checkbox \"check Box\" , \"true\"\n" +
-    "click_radio_button \"radio button\"\n" +
-    "dialog_shown \"2\"\n" +
-    "enter_text \"textFieldName\" , \"one&#xA;two\"\n" +
-    "edit_table_cell \"tableName\" , \"1,1\"\n" +
-    "enter_text \"textBox\" , \"text\"\n" +
-    "internal_frame_shown \"title a\"\n" +
-    "key_stroke \"0,48\"\n" +
-    "navigate \"ab>ac>de\"\n" +
-    "select_drop_down \"combo\" , \"text a\"\n" +
-    "select_list \"list\" , \"text a\"\n" +
-    "stop_table_edit \"table\"\n" +
-    "switch_tab \"tab\" , \"text a\"\n" +
-    "activate_window \"text a\"\n"+
-    "double_click_list \"list\" , \"0\"\n"+
-    "click_table_header \"header\" , \"one\"\n"+
-    "right_click_table_row \"table\" , \"1\"\n"+
-    "assert_label \"label\" , \"labelValue\"\n"+
-    "move_slider \"slider\" , \"10\"";
+            "assert \"table\" , \"enabled:true\"\n" +
+                    "cancel_table_edit \"tableName\"\n" +
+                    "click_button \"click button\"\n" +
+                    "click_checkbox \"check Box\" , \"true\"\n" +
+                    "click_radio_button \"radio button\"\n" +
+                    "dialog_shown \"2\"\n" +
+                    "enter_text \"textFieldName\" , \"one&#xA;two\"\n" +
+                    "edit_table_cell \"tableName\" , \"1,1\"\n" +
+                    "enter_text \"textBox\" , \"text\"\n" +
+                    "internal_frame_shown \"title a\"\n" +
+                    "key_stroke \"0,48\"\n" +
+                    "navigate \"ab>ac>de\"\n" +
+                    "select_drop_down \"combo\" , \"text a\"\n" +
+                    "select_list \"list\" , \"text a\"\n" +
+                    "stop_table_edit \"table\"\n" +
+                    "switch_tab \"tab\" , \"text a\"\n" +
+                    "activate_window \"text a\"\n" +
+                    "double_click_list \"list\" , \"0\"\n" +
+                    "click_table_header \"header\" , \"one\"\n" +
+                    "right_click_table_row \"table\" , \"1\"\n" +
+                    "assert_label \"label\" , \"labelValue\"\n" +
+                    "move_slider \"slider\" , \"10\"";
 
     public void testCreatesScriptFromEventList() {
         List eventList = new ArrayList();
-        eventList.add(new AssertEvent("table","enabled", "true"));
+        eventList.add(new AssertEvent("table", "enabled", "true"));
         eventList.add(new CancelTableEditEvent("tableName"));
         eventList.add(new ButtonEvent("click button", new ClickAction()));
         eventList.add(new CheckboxEvent("check Box", true, new ClickAction()));
@@ -57,15 +57,15 @@ public class ScriptTest extends TestCase {
         eventList.add(new KeyStrokeEvent(0, 48));
         eventList.add(new NavigateEvent("ab>ac>de"));
         eventList.add(new SelectDropDownEvent("combo", "text a"));
-        eventList.add(new SelectListEvent("list", new String[] {"text a"}));
+        eventList.add(new SelectListEvent("list", new String[]{"text a"}));
         eventList.add(new StopTableEditEvent("table"));
         eventList.add(new SwitchTabEvent("tab", "text a"));
         eventList.add(new ActivateWindowEvent("text a"));
-        eventList.add(new ListEvent("list",0, new DoubleClickAction()));
-        eventList.add(new TableHeaderEvent("header","one", new ClickAction()));
-        eventList.add(new TableRowEvent("table",1, new RightClickAction()));
-        eventList.add(new AssertLabelEvent("label","labelValue"));
-        eventList.add(new MoveSliderEvent("slider",10));
+        eventList.add(new ListEvent("list", 0, new DoubleClickAction()));
+        eventList.add(new TableHeaderEvent("header", "one", new ClickAction()));
+        eventList.add(new TableRowEvent("table", 1, new RightClickAction()));
+        eventList.add(new AssertLabelEvent("label", "labelValue"));
+        eventList.add(new MoveSliderEvent("slider", 10));
         Script script = new Script(new DefaultEventRegistry());
         assertEquals(SCRIPT, script.scriptText(eventList));
     }
@@ -74,7 +74,7 @@ public class ScriptTest extends TestCase {
         Script script = new Script(new DefaultEventRegistry());
         List eventList = script.parse(new StringReader(SCRIPT));
         assertEquals(22, eventList.size());
-        assertEquals(new AssertEvent("table","enabled", "true"),eventList.get(0));
+        assertEquals(new AssertEvent("table", "enabled", "true"), eventList.get(0));
         assertEquals(new CancelTableEditEvent("tableName"), eventList.get(1));
         assertEquals(new ButtonEvent("click button", new ClickAction()), eventList.get(2));
         assertEquals(new CheckboxEvent("check Box", true, new ClickAction()), eventList.get(3));
@@ -91,10 +91,10 @@ public class ScriptTest extends TestCase {
         assertEquals(new StopTableEditEvent("table"), eventList.get(14));
         assertEquals(new SwitchTabEvent("tab", "text a"), eventList.get(15));
         assertEquals(new ActivateWindowEvent("text a"), eventList.get(16));
-        assertEquals(new ListEvent("list",0,new DoubleClickAction()),eventList.get(17));
-        assertEquals(new TableHeaderEvent("header","one", new ClickAction()),eventList.get(18));
-        assertEquals(new TableRowEvent("table",1, new RightClickAction()),eventList.get(19));
-        assertEquals(new AssertLabelEvent("label","labelValue"),eventList.get(20));
-        assertEquals(new MoveSliderEvent("slider",10),eventList.get(21));
+        assertEquals(new ListEvent("list", 0, new DoubleClickAction()), eventList.get(17));
+        assertEquals(new TableHeaderEvent("header", "one", new ClickAction()), eventList.get(18));
+        assertEquals(new TableRowEvent("table", 1, new RightClickAction()), eventList.get(19));
+        assertEquals(new AssertLabelEvent("label", "labelValue"), eventList.get(20));
+        assertEquals(new MoveSliderEvent("slider", 10), eventList.get(21));
     }
 }

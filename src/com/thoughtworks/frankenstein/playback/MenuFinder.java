@@ -16,22 +16,22 @@ public class MenuFinder {
     private JPopupMenu popupMenu;
 
     public JMenuItem find(String path) {
-       String[] pathElements = path.split(">");
-       if (popupMenu != null) {
-           return findPopupMenu(pathElements);
-       } else {
-           for (int i = 0; i < Frame.getFrames().length; i++) {
-               try {
-                   java.util.List menuBars = findMenuBar(Frame.getFrames(), i);
-                   if (!menuBars.isEmpty()) {
-                       return findMenuItem(menuBars, pathElements);
-                   }
-               } catch (Exception e) {
-                   //Ignore
-               }
-           }
-       }
-       throw new RuntimeException("Unable to find menu with path: " + path);
+        String[] pathElements = path.split(">");
+        if (popupMenu != null) {
+            return findPopupMenu(pathElements);
+        } else {
+            for (int i = 0; i < Frame.getFrames().length; i++) {
+                try {
+                    java.util.List menuBars = findMenuBar(Frame.getFrames(), i);
+                    if (!menuBars.isEmpty()) {
+                        return findMenuItem(menuBars, pathElements);
+                    }
+                } catch (Exception e) {
+                    //Ignore
+                }
+            }
+        }
+        throw new RuntimeException("Unable to find menu with path: " + path);
     }
 
     public void menuDisplayed(JPopupMenu menu) {
@@ -63,7 +63,7 @@ public class MenuFinder {
     }
 
     private JMenuItem findTopLevelMenu(String pathElement) {
-        for (int i=0; i<popupMenu.getComponentCount(); i++) {
+        for (int i = 0; i < popupMenu.getComponentCount(); i++) {
             if (popupMenu.getComponent(i) instanceof JMenuItem) {
                 JMenuItem item = (JMenuItem) popupMenu.getComponent(i);
                 if (pathElement.equals(item.getText())) return item;
@@ -93,7 +93,7 @@ public class MenuFinder {
                 if (jmenuItem.getText().equals(pathElement)) return jmenuItem;
             }
         }
-        throw new RuntimeException  ("Unable to find menu" + pathElement);
+        throw new RuntimeException("Unable to find menu" + pathElement);
     }
 
 }

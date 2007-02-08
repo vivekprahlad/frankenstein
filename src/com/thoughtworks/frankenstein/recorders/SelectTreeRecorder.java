@@ -17,6 +17,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording tree selection events.
+ *
  * @author Vivek Prahlad
  */
 public class SelectTreeRecorder extends AbstractComponentRecorder implements TreeSelectionListener {
@@ -49,8 +50,8 @@ public class SelectTreeRecorder extends AbstractComponentRecorder implements Tre
     private String[] treePath(TreePath path) {
         String[] treePath = new String[path.getPathCount()];
         for (int i = 0; i < path.getPathCount(); i++) {
-                Object pathComponent = path.getPathComponent(i);
-                treePath[i] = pathComponent.toString();
+            Object pathComponent = path.getPathComponent(i);
+            treePath[i] = pathComponent.toString();
         }
         return treePath;
     }

@@ -9,9 +9,10 @@ import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of CloseAllDialogsEvent
+ *
  * @author vivek
  */
-public class CloseAllDialogsEventTest extends AbstractEventTestCase{
+public class CloseAllDialogsEventTest extends AbstractEventTestCase {
     public void testEqualsAndHashCode() {
         CloseAllDialogsEvent one = new CloseAllDialogsEvent("");
         CloseAllDialogsEvent two = new CloseAllDialogsEvent("");

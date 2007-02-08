@@ -9,6 +9,7 @@ public class TestFrankensteinEvent extends AbstractFrankensteinEvent {
     public TestFrankensteinEvent(String line) {
 
     }
+
     public String target() {
         return null;
     }

@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 /**
  * Matches all components of a certain type. Returns a list of matching components.
+ *
  * @author Vivek Prahlad
  */
-public class ComponentTypeMatchingRule implements ComponentMatchingRule{
+public class ComponentTypeMatchingRule implements ComponentMatchingRule {
     private java.util.List matchingComponents = new ArrayList();
     private Class componentType;
 

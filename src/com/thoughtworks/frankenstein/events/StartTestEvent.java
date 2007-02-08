@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 /**
  * Starts a test run.
+ *
  * @author Vivek Prahlad
  */
 public class StartTestEvent extends AbstractFrankensteinEvent {

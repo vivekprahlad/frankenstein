@@ -25,7 +25,7 @@ public class RadioButtonRecorderTest extends AbstractRecorderTestCase {
     public void testAddsActionListenerWhenCheckBoxIsShown() {
         int initialActionListenerCount = numberOfActionListeners(radioButton);
         recorder.componentShown(radioButton);
-        assertEquals(initialActionListenerCount+1, numberOfActionListeners(radioButton));
+        assertEquals(initialActionListenerCount + 1, numberOfActionListeners(radioButton));
 
     }
 

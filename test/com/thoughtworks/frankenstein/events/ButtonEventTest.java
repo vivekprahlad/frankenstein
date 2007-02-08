@@ -49,7 +49,7 @@ public class ButtonEventTest extends AbstractEventTestCase {
         com.thoughtworks.frankenstein.events.actions.MockAction mockAction = new com.thoughtworks.frankenstein.events.actions.MockAction();
         Mock mockComponentFinder = mock(ComponentFinder.class);
         mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(button));
-        buttonEvent=new ButtonEvent("parent.buttonName", mockAction);
+        buttonEvent = new ButtonEvent("parent.buttonName", mockAction);
         buttonEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals(buttonEvent.center(button), mockAction.point);
     }

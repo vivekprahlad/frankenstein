@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /**
  * Decodes text from JCheckBoxes.
+ *
  * @author Vivek Prahlad
  */
 public class JCheckBoxDecoder implements ComponentDecoder {

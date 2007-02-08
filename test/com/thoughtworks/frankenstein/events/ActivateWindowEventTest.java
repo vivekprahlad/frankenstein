@@ -52,7 +52,7 @@ public class ActivateWindowEventTest extends MockObjectTestCase {
     public void testPlay() throws InterruptedException, InvocationTargetException {
         final JFrame frameOne = new JFrame("title1");
         JFrame frameTwo = new JFrame("title2");
-        frameTwo.setLocation(100,100);
+        frameTwo.setLocation(100, 100);
         frameTwo.setVisible(true);
         waitForIdle();
         FocusListener focusListener = new FocusListener() {

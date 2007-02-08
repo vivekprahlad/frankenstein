@@ -10,7 +10,7 @@ import com.thoughtworks.frankenstein.events.SelectFileEvent;
  */
 public class FileChooserRecorderTest extends AbstractRecorderTestCase {
 
-    static final String file="com"+File.separator+"thoughtworks"+File.separator+"frankenstein"+File.separator+"recorders"+File.separator+"FileChooserRecorderTest.java" ;
+    static final String file = "com" + File.separator + "thoughtworks" + File.separator + "frankenstein" + File.separator + "recorders" + File.separator + "FileChooserRecorderTest.java";
 
     public void testAddsPropertyChangeListenerWhenComponentIsShown() {
         FileChooserRecorder recorder = new FileChooserRecorder((EventRecorder) mockRecorder.proxy(), null);
@@ -36,8 +36,8 @@ public class FileChooserRecorderTest extends AbstractRecorderTestCase {
         recorder.componentShown(chooser);
         mockRecorder.expects(once())
                 .method("record")
-                .with(eq(new SelectFileEvent(file )));
-        chooser.setSelectedFile(new File(file ));
+                .with(eq(new SelectFileEvent(file)));
+        chooser.setSelectedFile(new File(file));
         recorder.componentHidden(chooser);
     }
 

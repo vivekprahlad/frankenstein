@@ -44,7 +44,7 @@ public class EnterTextEventTest extends AbstractEventTestCase {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);
         WindowContext context = (WindowContext) mockContext.proxy();
-        JTextField  textField = new JTextField();
+        JTextField textField = new JTextField();
         mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.textFieldName")).will(returnValue(textField));
         event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         waitForIdle();

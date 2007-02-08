@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.events.KeyStrokeEvent;
 
 /**
  * Understands recording keystrokes
+ *
  * @author Vivek Prahlad
  */
 public class KeystrokeRecorder implements ComponentRecorder, KeyEventDispatcher {

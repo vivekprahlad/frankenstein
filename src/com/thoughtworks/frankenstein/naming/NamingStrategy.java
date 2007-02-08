@@ -4,6 +4,7 @@ import java.awt.*;
 
 /**
  * Understands naming components.
+ *
  * @author Vivek Prahlad
  */
 public interface NamingStrategy {

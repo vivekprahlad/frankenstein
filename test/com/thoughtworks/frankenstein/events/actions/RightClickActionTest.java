@@ -40,7 +40,7 @@ public class RightClickActionTest extends MockObjectTestCase {
 
     public void testClicksOnComponent() {
         table.addMouseListener(mockMouseListener);
-        rightClickAction.execute(new Point(table.getWidth()/2, table.getRowHeight()/2), table, null, new DefaultWindowContext());
+        rightClickAction.execute(new Point(table.getWidth() / 2, table.getRowHeight() / 2), table, null, new DefaultWindowContext());
         waitForIdle();
         assertTrue(mockMouseListener.clicked);
         assertEquals(0, table.rowAtPoint(mockMouseListener.point));

@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 
 /**
  * Base class for all component naming strategies.
+ *
  * @author Vivek Prahlad
  */
 public abstract class AbstractComponentNamingStrategy {
@@ -37,6 +38,6 @@ public abstract class AbstractComponentNamingStrategy {
 
     protected String type(Class componentType) {
         String[] type = componentType.getName().split("\\.");
-        return type[type.length-1];
+        return type[type.length - 1];
     }
 }

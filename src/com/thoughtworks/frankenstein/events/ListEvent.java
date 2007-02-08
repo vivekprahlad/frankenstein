@@ -11,8 +11,8 @@ public class ListEvent extends AbstractCompoundEvent {
 
     public ListEvent(String listName, int itemIndex, Action action) {
         super(action);
-        this.listName =listName;
-        this.itemIndex=itemIndex;
+        this.listName = listName;
+        this.itemIndex = itemIndex;
     }
 
     public ListEvent(String args, Action action) {

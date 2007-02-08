@@ -54,7 +54,7 @@ public class HtmlTestReporter implements TestReporter {
     }
 
     private String line(FrankensteinEvent event, String background, Exception cause, String imageFileName) {
-        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br><br><a href='" + imageFileName+"'>Screen shot</a>" + "<br><br>Cause: " +exception(cause))
+        return "<tr>" + td(background, event.action()) + td(background, event.target() + "<br><br><a href='" + imageFileName + "'>Screen shot</a>" + "<br><br>Cause: " + exception(cause))
                 + td(background, event.parameters()) + "</tr>\n";
     }
 
@@ -104,7 +104,7 @@ public class HtmlTestReporter implements TestReporter {
 
     private void writeReport() throws IOException {
         File reportFile = new File(testFileName);
-        if (reportFile.getParent()!=null) {
+        if (reportFile.getParent() != null) {
             new File(reportFile.getParent()).mkdirs();
         }
         if (reportFile.exists()) {

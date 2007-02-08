@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /**
  * Names components with a counter.
+ *
  * @author Vivek Prahlad
  */
 public class CounterBasedNamingStrategy extends AbstractComponentNamingStrategy implements ComponentNamingStrategy {
@@ -13,7 +14,7 @@ public class CounterBasedNamingStrategy extends AbstractComponentNamingStrategy 
     }
 
     public void name(Component component, int counter) {
-        component.setName(prefix((JComponent) component) + type(component.getClass()) + "_"+counter++);
+        component.setName(prefix((JComponent) component) + type(component.getClass()) + "_" + counter++);
     }
 
 }

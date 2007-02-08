@@ -4,6 +4,7 @@ import javax.swing.*;
 
 /**
  * Represents a menu navigation event.
+ *
  * @author Vivek Prahlad
  */
 public class NavigateEvent extends AbstractFrankensteinEvent {
@@ -28,7 +29,7 @@ public class NavigateEvent extends AbstractFrankensteinEvent {
             new ClickButtonAction().execute(menuItem, context);
             MenuSelectionManager.defaultManager().clearSelectedPath();
         } else {
-            throw new RuntimeException("Menu item: "+ path + " is disabled");
+            throw new RuntimeException("Menu item: " + path + " is disabled");
         }
     }
 }

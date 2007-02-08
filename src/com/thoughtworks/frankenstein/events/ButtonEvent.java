@@ -10,7 +10,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
  * Understands button actions.
  *
  * @author Vivek Prahlad
- * ahlad
+ *         ahlad
  */
 public class ButtonEvent extends AbstractCompoundEvent {
     private String buttonName;

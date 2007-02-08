@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of InternalFrameMatchingRule
+ *
  * @author vivek
  */
 public class InternalFrameMatchingRuleTest extends TestCase {

@@ -88,7 +88,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     }
 
     public void testPlayOneEvent() throws InterruptedException, AWTException {
-        JComboBox comboBox = new JComboBox(new Object[] {"choice1", "choice2"});
+        JComboBox comboBox = new JComboBox(new Object[]{"choice1", "choice2"});
         finder.expects(once()).method("findComponent").will(returnValue(comboBox));
         monitor.expects(once()).method("start");
         monitor.expects(once()).method("waitForIdle");
@@ -100,6 +100,6 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     }
 
     private List list(SelectDropDownEvent event) {
-        return Arrays.asList(new Object[] {event});
+        return Arrays.asList(new Object[]{event});
     }
 }

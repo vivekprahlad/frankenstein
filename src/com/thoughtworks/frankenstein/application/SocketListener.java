@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  * Listens for incoming requests from drivers.
+ *
  * @author Vivek Prahlad
  */
 public class SocketListener implements Runnable, ScriptListener {
@@ -32,7 +33,7 @@ public class SocketListener implements Runnable, ScriptListener {
         this.port = port;
         thread = new Thread(this);
         thread.start();
-        while(socket == null) {
+        while (socket == null) {
             ThreadUtil.sleep(50);
         }
     }
@@ -69,11 +70,11 @@ public class SocketListener implements Runnable, ScriptListener {
     public synchronized void stop() {
         try {
             run = false;
-            if (socket!=null) socket.close();
-            if (thread!=null) thread.interrupt();
+            if (socket != null) socket.close();
+            if (thread != null) thread.interrupt();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally{
+        } finally {
             notifyAll();
         }
     }

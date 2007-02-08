@@ -15,6 +15,7 @@ import com.thoughtworks.frankenstein.script.Script;
 
 /**
  * Top level recorder
+ *
  * @author Vivek Prahlad
  */
 public class DefaultFrankensteinRecorder implements FrankensteinRecorder {

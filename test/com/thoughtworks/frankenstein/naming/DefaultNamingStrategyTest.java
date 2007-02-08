@@ -99,7 +99,7 @@ public class DefaultNamingStrategyTest extends TestCase {
     }
 
     public void testNamesJTabbedPaneNestedInATabbedPane() throws InterruptedException, InvocationTargetException {
-        final JTabbedPane parent =  new JTabbedPane();
+        final JTabbedPane parent = new JTabbedPane();
         parent.setName("JTabbedPane_1");
         final JTabbedPane child = new JTabbedPane();
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -275,9 +275,9 @@ public class DefaultNamingStrategyTest extends TestCase {
         assertEquals("JTextField_1", two.getName());
     }
 
-    public void testNamesSlider(){
+    public void testNamesSlider() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
-        JSlider slider = new JSlider(1,100,5);
+        JSlider slider = new JSlider(1, 100, 5);
         panel.add(slider);
         namingStrategy.nameComponentsIn(panel);
         assertEquals("JSlider_1", slider.getName());

@@ -9,8 +9,8 @@ public class PipingMain {
     }
 
     static String[] parseArgs(String[] args) {
-        String[] dest = new String[args.length-1];
-        System.arraycopy(args, 1, dest, 0, args.length-1);
+        String[] dest = new String[args.length - 1];
+        System.arraycopy(args, 1, dest, 0, args.length - 1);
         return dest;
     }
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 /**
  * Represents an internal frame being shown.
+ *
  * @author Vivek Prahlad
  */
 public class InternalFrameShownEvent extends AbstractFrankensteinEvent {

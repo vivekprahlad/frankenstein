@@ -78,12 +78,12 @@ public class RecorderTableModelTest extends MockObjectTestCase {
     public void testReturnsParametersAsColumnNameForFirstColumn() {
         assertEquals("Parameters", model.getColumnName(2));
     }
-                                                                                    
+
     public void testThrowsExceptionForUnknownColumn() {
         try {
             model.getColumnName(4);
             fail("Should not have been able to get a column name for the 4th column");
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Expected.
         }
     }

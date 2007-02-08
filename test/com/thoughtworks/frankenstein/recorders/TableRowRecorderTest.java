@@ -38,24 +38,24 @@ public class TableRowRecorderTest extends AbstractRecorderTestCase {
         assertTrue(listenerCount() == listenerCount);
     }
 
-     public void testRecordsClickOnFirstRow() {
+    public void testRecordsClickOnFirstRow() {
         recorder.componentShown(table);
-        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table",0, new RightClickAction())));
+        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table", 0, new RightClickAction())));
         Point point = locationOfFirstRow();
-        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, true,MouseEvent.BUTTON3));
+        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 1, true, MouseEvent.BUTTON3));
     }
 
     public void testRecordsDoubleClickOnFirstRow() {
         recorder.componentShown(table);
-        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table",0, new DoubleClickAction())));
+        mockRecorder.expects(once()).method("record").with(eq(new TableRowEvent("table", 0, new DoubleClickAction())));
         Point point = locationOfFirstRow();
-        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 2, false,MouseEvent.BUTTON1));
+        recorder.recordTableRowEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, 0, 0, point.x, point.y, 2, false, MouseEvent.BUTTON1));
     }
 
     private Point locationOfFirstRow() {
-        Point point=table.getLocation();
-        point.y+=(table.getRowHeight(0))/2;
-        point.x+=(table.getWidth())/2;
+        Point point = table.getLocation();
+        point.y += (table.getRowHeight(0)) / 2;
+        point.x += (table.getWidth()) / 2;
         return point;
 
     }

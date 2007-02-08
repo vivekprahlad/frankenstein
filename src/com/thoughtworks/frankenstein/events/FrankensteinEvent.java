@@ -10,10 +10,11 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
 /**
  * Represents a frankenstein event. Events can execute either in the Swing thread (in case they manipulate swing components)
  * or in the player thread.
- * @see EventExecutionStrategy
+ *
  * @author Vivek Prahlad
+ * @see EventExecutionStrategy
  */
-public interface FrankensteinEvent extends Runnable{
+public interface FrankensteinEvent extends Runnable {
     FrankensteinEvent NULL = new AbstractFrankensteinEvent() {
         public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
             throw new UnsupportedOperationException("Cannot play back null events");
@@ -26,10 +27,16 @@ public interface FrankensteinEvent extends Runnable{
         public void run() {
         }
     };
+
     public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot);
+
     public void record(EventList list, FrankensteinEvent lastEvent);
+
     public String action();
+
     public String target();
+
     public String parameters();
+
     public String scriptLine();
 }

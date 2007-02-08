@@ -26,7 +26,7 @@ public class AssertEvent extends AbstractFrankensteinEvent {
     }
 
     public AssertEvent(String scriptLine) {
-        this(params(scriptLine)[0], colonSplit(scriptLine, 0), params(scriptLine)[1].substring(colonSplit(scriptLine, 0).length()+1,params(scriptLine)[1].length()));
+        this(params(scriptLine)[0], colonSplit(scriptLine, 0), params(scriptLine)[1].substring(colonSplit(scriptLine, 0).length() + 1, params(scriptLine)[1].length()));
     }
 
     private static String colonSplit(String script, int index) {
@@ -48,7 +48,7 @@ public class AssertEvent extends AbstractFrankensteinEvent {
     public void run() {
         try {
             String actual = expression.getValue(OGNL_CONTEXT, finder.findComponent(context, componentName));
-            if (!MatchStrategy.matchValues(actual,expectedValue)) {
+            if (!MatchStrategy.matchValues(actual, expectedValue)) {
                 throw new RuntimeException("Expected: " + expectedValue + ", but was: " + actual);
             }
         } catch (OgnlException e) {

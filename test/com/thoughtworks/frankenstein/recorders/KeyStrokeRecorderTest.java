@@ -90,7 +90,7 @@ public class KeyStrokeRecorderTest extends AbstractRecorderTestCase {
 
         public synchronized int getKeyEventDispatcherCount() {
             java.util.List keyEventDispatchers = super.getKeyEventDispatchers();
-            if (keyEventDispatchers==null) return 0;
+            if (keyEventDispatchers == null) return 0;
             return keyEventDispatchers.size();
         }
     }

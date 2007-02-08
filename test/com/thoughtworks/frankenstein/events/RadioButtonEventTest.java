@@ -43,13 +43,13 @@ public class RadioButtonEventTest extends AbstractEventTestCase {
     public void testPlaysEvent() {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         RadioButtonEvent radioButtonEvent;
-        MockAction mockAction=new MockAction();
+        MockAction mockAction = new MockAction();
         JRadioButton radioButton = new JRadioButton();
-        radioButton.setSize(20,10);
+        radioButton.setSize(20, 10);
         mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(radioButton));
-        radioButtonEvent=new RadioButtonEvent("parent.buttonName",  mockAction);
+        radioButtonEvent = new RadioButtonEvent("parent.buttonName", mockAction);
         radioButtonEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
-        assertEquals(radioButtonEvent.center(radioButton),mockAction.point);
+        assertEquals(radioButtonEvent.center(radioButton), mockAction.point);
     }
 
     protected FrankensteinEvent createEvent() {

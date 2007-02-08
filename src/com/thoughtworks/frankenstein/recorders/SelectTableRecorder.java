@@ -13,6 +13,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording table selection
+ *
  * @author vivek
  */
 public class SelectTableRecorder extends AbstractComponentRecorder implements ListSelectionListener, TableColumnModelListener, PropertyChangeListener {

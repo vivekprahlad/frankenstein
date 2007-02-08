@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 /**
  * Ensures behaviour of CompositeReporter
+ *
  * @author Vivek Prahlad
  */
 public class CompositeReporterTest extends MockObjectTestCase {

@@ -8,7 +8,7 @@ import javax.swing.*;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 
 /**
- *  
+ *
  */
 public class WindowContextSpike {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class WindowContextSpike {
 
     private static void enumerateFrames() {
         Frame[] frames = Frame.getFrames();
-        for (int i=0; i<frames.length; i++) {
+        for (int i = 0; i < frames.length; i++) {
             System.out.println("Frame: " + frames[i].getTitle());
         }
     }
@@ -48,7 +48,7 @@ public class WindowContextSpike {
         comp.getContentPane().add(new JSlider());
         frame.pack();
         comp.setVisible(true);
-        comp.setSize(100,100);
+        comp.setSize(100, 100);
         frame.getContentPane().add(comp);
     }
 }

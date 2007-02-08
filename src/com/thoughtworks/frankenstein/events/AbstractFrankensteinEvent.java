@@ -15,6 +15,7 @@ import com.thoughtworks.frankenstein.script.Script;
 
 /**
  * Base class for all events
+ *
  * @author Vivek Prahlad
  */
 public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
@@ -42,16 +43,17 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String action() {
-        if (!actionNameMap.containsKey(getClass())) actionNameMap.put(getClass(), EventActionName.eventActionName(getClass()));
+        if (!actionNameMap.containsKey(getClass()))
+            actionNameMap.put(getClass(), EventActionName.eventActionName(getClass()));
         return (String) actionNameMap.get(getClass());
     }
 
     public String scriptLine() {
-        return (underscore(action()) + " " + quote(target()) +  (parameters().equals("") ? "": " , "+quote(escapeNewLines(parameters())))).replaceAll("\\s", " ").trim();
+        return (underscore(action()) + " " + quote(target()) + (parameters().equals("") ? "" : " , " + quote(escapeNewLines(parameters())))).replaceAll("\\s", " ").trim();
     }
-    
+
     protected String quote(String input) {
-        return "\"" + input  +"\"";
+        return "\"" + input + "\"";
     }
 
     private String escapeNewLines(String string) {

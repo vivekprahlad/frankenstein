@@ -4,6 +4,7 @@ import java.awt.*;
 
 /**
  * Default component visibility implementation
+ *
  * @author Vivek Prahlad
  */
 public class DefaultComponentVisibility implements ComponentVisibility {

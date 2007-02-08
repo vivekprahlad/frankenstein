@@ -9,6 +9,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of SelectTableRowEvent
+ *
  * @author vivek
  */
 public class SelectTableRowEventTest extends AbstractEventTestCase {
@@ -41,12 +42,12 @@ public class SelectTableRowEventTest extends AbstractEventTestCase {
 
     public void testPlaysEvent() throws Exception {
         JTable table = new JTable();
-        SelectTableRowEvent event = new SelectTableRowEvent("table", new int[] {1,2,4});
+        SelectTableRowEvent event = new SelectTableRowEvent("table", new int[]{1, 2, 4});
         Mock componentFinder = mock(ComponentFinder.class);
         componentFinder.expects(once()).method("findComponent").will(returnValue(table));
         event.play(null, (ComponentFinder) componentFinder.proxy(), null, null);
         waitForIdle();
-        assertRows(new int[] {1,2,4}, table.getSelectedRows());
+        assertRows(new int[]{1, 2, 4}, table.getSelectedRows());
     }
 
     private void assertRows(int[] rows, int[] selectedRows) {
@@ -62,6 +63,6 @@ public class SelectTableRowEventTest extends AbstractEventTestCase {
     }
 
     protected FrankensteinEvent createEvent() {
-        return new SelectTableRowEvent("table", new int[] {1,3,8});
+        return new SelectTableRowEvent("table", new int[]{1, 3, 8});
     }
 }

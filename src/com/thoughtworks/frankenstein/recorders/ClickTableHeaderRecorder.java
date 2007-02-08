@@ -11,7 +11,7 @@ import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
- 
+
  */
 public class ClickTableHeaderRecorder extends AbstractComponentRecorder implements MouseListener {
     public ClickTableHeaderRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {

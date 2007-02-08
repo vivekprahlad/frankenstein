@@ -42,7 +42,7 @@ public class TextFieldRecorderTest extends AbstractRecorderTestCase {
         int listenerCount = documentListenerCount();
         recorder.componentShown(textField);
         recorder.componentHidden(textField);
-        assertEquals(listenerCount,  documentListenerCount());
+        assertEquals(listenerCount, documentListenerCount());
     }
 
     public void testAddsAwtEventListenerOnRegister() {
@@ -90,7 +90,7 @@ public class TextFieldRecorderTest extends AbstractRecorderTestCase {
         recorder.componentShown(textField);
         HierarchyEvent event = new HierarchyEvent(textField, HierarchyEvent.SHOWING_CHANGED, textField, new JPanel(), HierarchyEvent.DISPLAYABILITY_CHANGED);
         recorder.eventDispatched(event);
-        assertEquals(listenerCount,  documentListenerCount());
+        assertEquals(listenerCount, documentListenerCount());
     }
 
     public void testEventDispatchedWithComponentShown() throws InterruptedException, InvocationTargetException {
@@ -99,14 +99,14 @@ public class TextFieldRecorderTest extends AbstractRecorderTestCase {
         HierarchyEvent event = new HierarchyEvent(textField, HierarchyEvent.DISPLAYABILITY_CHANGED, textField, new JPanel(), HierarchyEvent.SHOWING_CHANGED);
         recorder.eventDispatched(event);
         recorder.componentHidden(textField);
-        assertEquals(listenerCount,  documentListenerCount());
+        assertEquals(listenerCount, documentListenerCount());
     }
 
     private FakeComponent textField() throws InvocationTargetException, InterruptedException {
         final FakeComponent[] fakeComponent = new FakeComponent[1];
         SwingUtilities.invokeAndWait(new Runnable() {
             public void run() {
-                fakeComponent[0]  = new FakeComponent();
+                fakeComponent[0] = new FakeComponent();
             }
         });
         return fakeComponent[0];

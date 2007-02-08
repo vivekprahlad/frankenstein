@@ -54,7 +54,7 @@ public class MenuNavigationRecorderTest extends AbstractRecorderTestCase {
 
     public void testRecordsNavigationEventWhenMenuItemIsClicked() {
         recorder.register();
-        MenuSelectionManager.defaultManager().setSelectedPath(new MenuElement[] {menubar, menu, menuItem});
+        MenuSelectionManager.defaultManager().setSelectedPath(new MenuElement[]{menubar, menu, menuItem});
         recorder.componentShown(menuItem);
         mockRecorder.expects(once()).method("record").with(eq(new NavigateEvent("top>item")));
         menuItem.doClick();

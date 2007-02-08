@@ -12,7 +12,7 @@ public class CommandLineApplication implements Application {
 
     public void launch(String[] args) {
         try {
-            mainClass.getDeclaredMethod("main", new Class[] {String[].class}).invoke(null, new Object[] {args});
+            mainClass.getDeclaredMethod("main", new Class[]{String[].class}).invoke(null, new Object[]{args});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

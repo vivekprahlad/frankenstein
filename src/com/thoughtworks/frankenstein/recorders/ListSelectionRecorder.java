@@ -11,6 +11,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Records list selection events.
+ *
  * @author Vivek Prahlad
  */
 public class ListSelectionRecorder extends AbstractComponentRecorder implements ListSelectionListener {
@@ -38,7 +39,8 @@ public class ListSelectionRecorder extends AbstractComponentRecorder implements 
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting()) return;
         JList list = (JList) e.getSource();
-        if (!visibility.isShowing(list) || list.getClass().getName().matches(".*Combo.*") || isFileChooserChild(list)) return;
+        if (!visibility.isShowing(list) || list.getClass().getName().matches(".*Combo.*") || isFileChooserChild(list))
+            return;
         recorder.record(new SelectListEvent(componentName(list), values(list)));
     }
 
@@ -55,7 +57,7 @@ public class ListSelectionRecorder extends AbstractComponentRecorder implements 
 
     private boolean isFileChooserChild(JList list) {
         Component parent = list.getParent();
-        while(parent  != null) {
+        while (parent != null) {
             if (parent instanceof JFileChooser) return true;
             parent = parent.getParent();
         }

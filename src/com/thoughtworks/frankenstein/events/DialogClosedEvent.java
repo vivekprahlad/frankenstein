@@ -4,6 +4,7 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Represents an internal frame being shown.
+ *
  * @author Vivek Prahlad
  */
 public class DialogClosedEvent extends AbstractFrankensteinEvent {

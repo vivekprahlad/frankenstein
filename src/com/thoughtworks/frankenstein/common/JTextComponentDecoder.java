@@ -5,6 +5,7 @@ import javax.swing.text.JTextComponent;
 
 /**
  * Understands decoding JTextComponents
+ *
  * @author Vivek Prahlad
  */
 public class JTextComponentDecoder implements ComponentDecoder {

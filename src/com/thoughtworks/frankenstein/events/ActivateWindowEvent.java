@@ -22,7 +22,7 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (!(lastEvent.action().equals(DialogClosedEvent.DIALOG_CLOSED_ACTION) ||
-              lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION))) {
+                lastEvent.action().equals(DialogShownEvent.DIALOG_SHOWN_ACTION))) {
             super.record(list, lastEvent);
         }
     }

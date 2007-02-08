@@ -66,7 +66,7 @@ public class MenuSelectionSpike {
         recorder.register();
         final JFrame frame = new JFrame("test");
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        frame.setSize(200,200);
+        frame.setSize(200, 200);
         JMenuBar menubar = new JMenuBar();
         final JMenu menu = new JMenu("test");
         JMenuItem menuItem = new JMenuItem("next");

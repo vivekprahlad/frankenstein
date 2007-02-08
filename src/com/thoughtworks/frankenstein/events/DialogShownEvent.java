@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.events;
 
 /**
  * Represents a Dialog being shown.
+ *
  * @author Vivek Prahlad
  */
 public class DialogShownEvent extends AbstractFrankensteinEvent {

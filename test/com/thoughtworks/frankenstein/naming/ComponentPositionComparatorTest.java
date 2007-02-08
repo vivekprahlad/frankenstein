@@ -12,10 +12,10 @@ import junit.framework.TestCase;
  */
 public class ComponentPositionComparatorTest extends TestCase {
     public void testSortsComponentsFromLeftToRightAndTopToBottom() {
-        JTextField fieldOne  = new JTextField();
-        JTextField fieldTwo  = new JTextField();
-        JTextField fieldThree  = new JTextField();
-        JTextField fieldFour  = new JTextField();
+        JTextField fieldOne = new JTextField();
+        JTextField fieldTwo = new JTextField();
+        JTextField fieldThree = new JTextField();
+        JTextField fieldFour = new JTextField();
         addComponentsToFrame(fieldOne, fieldTwo, fieldThree, fieldFour);
         java.util.List list = addFields(fieldOne, fieldTwo, fieldThree, fieldFour);
         Collections.sort(list, new ComponentPositionComparator());
@@ -27,7 +27,7 @@ public class ComponentPositionComparatorTest extends TestCase {
 
     private void addComponentsToFrame(JTextField fieldOne, JTextField fieldTwo, JTextField fieldThree, JTextField fieldFour) {
         JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new GridLayout(2,2));
+        frame.getContentPane().setLayout(new GridLayout(2, 2));
         frame.getContentPane().add(fieldOne);
         frame.getContentPane().add(fieldTwo);
         frame.getContentPane().add(fieldThree);

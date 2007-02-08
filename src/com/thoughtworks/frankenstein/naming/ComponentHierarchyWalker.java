@@ -4,6 +4,7 @@ import java.awt.*;
 
 /**
  * Understands traversing components from a top level container.
+ *
  * @author Vivek Prahlad
  */
 public class ComponentHierarchyWalker {
@@ -11,7 +12,7 @@ public class ComponentHierarchyWalker {
     public ComponentMatchingRule matchComponentsIn(Container container, ComponentMatchingRule rule) {
         if (rule.hasMatches()) return rule;
         Component[] components = container.getComponents();
-        for (int i=0; i<components.length ;i++) {
+        for (int i = 0; i < components.length; i++) {
             Component component = components[i];
             if (!rule.matchAndContinue(component)) {
                 break;

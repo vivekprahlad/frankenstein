@@ -8,6 +8,7 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Records check text events
+ *
  * @author Vivek Prahlad
  */
 public class CheckTextRecorder extends AbstractCheckRecorder {
