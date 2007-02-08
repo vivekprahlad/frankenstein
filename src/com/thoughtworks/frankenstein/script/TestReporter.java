@@ -1,6 +1,5 @@
 package com.thoughtworks.frankenstein.script;
 
-import java.io.IOException;
 import java.awt.*;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;

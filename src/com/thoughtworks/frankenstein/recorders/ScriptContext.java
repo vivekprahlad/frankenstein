@@ -1,7 +1,5 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.script.TestReporter;
-
 import java.util.List;
 
 /**

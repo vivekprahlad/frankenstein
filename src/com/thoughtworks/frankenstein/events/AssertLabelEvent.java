@@ -1,11 +1,5 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.MatchStrategy;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseEvent;
-
 /**
  * Created by IntelliJ IDEA.
  * User: cprakash

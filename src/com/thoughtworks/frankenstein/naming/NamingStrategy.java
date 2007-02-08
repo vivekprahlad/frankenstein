@@ -1,8 +1,6 @@
 package com.thoughtworks.frankenstein.naming;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 
 /**
  * Understands naming components.

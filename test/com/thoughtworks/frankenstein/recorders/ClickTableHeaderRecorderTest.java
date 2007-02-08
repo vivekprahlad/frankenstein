@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.TableHeaderEvent;
-import com.thoughtworks.frankenstein.events.actions.ClickAction;
-
-import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.table.JTableHeader;
+
+import com.thoughtworks.frankenstein.events.TableHeaderEvent;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
  */

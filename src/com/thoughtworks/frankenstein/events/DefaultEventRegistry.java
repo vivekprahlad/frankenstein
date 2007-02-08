@@ -1,17 +1,17 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
-import com.thoughtworks.frankenstein.events.actions.Action;
-import com.thoughtworks.frankenstein.events.actions.RightClickAction;
-import com.thoughtworks.frankenstein.events.actions.ClickAction;
-import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
-import com.thoughtworks.frankenstein.script.Script;
-
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
+import com.thoughtworks.frankenstein.script.Script;
 
 /**
  * The default event registry

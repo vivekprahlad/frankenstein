@@ -1,13 +1,14 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import com.thoughtworks.frankenstein.common.WaitForIdle;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
-import org.jmock.MockObjectTestCase;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
+
+import org.jmock.MockObjectTestCase;
+
+import com.thoughtworks.frankenstein.common.WaitForIdle;
+import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 
 /**
  * Ensures that RightClickAction behaves properly

@@ -1,11 +1,12 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.Mock;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.events.actions.*;
-
 import javax.swing.*;
-import java.awt.*;
+
+import org.jmock.Mock;
+
+import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.MockAction;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of RadioButtonEvent.

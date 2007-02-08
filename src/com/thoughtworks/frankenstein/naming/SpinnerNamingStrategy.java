@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.naming;
 
-import com.thoughtworks.frankenstein.common.ComponentName;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.common.ComponentName;
 
 /**
  *

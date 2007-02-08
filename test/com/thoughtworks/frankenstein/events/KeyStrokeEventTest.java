@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
 
-import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.common.RobotFactory;
-import com.thoughtworks.frankenstein.application.ThreadUtil;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**

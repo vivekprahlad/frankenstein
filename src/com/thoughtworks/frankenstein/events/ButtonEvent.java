@@ -1,11 +1,9 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.recorders.EventList;
-import com.thoughtworks.frankenstein.events.actions.Action;
-
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 
 /**

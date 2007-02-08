@@ -5,8 +5,6 @@ import com.thoughtworks.frankenstein.playback.MatchStrategy;
 import ognl.OgnlContext;
 import ognl.OgnlException;
 
-import java.awt.*;
-
 
 /**
  * Understands evaluating arbitrary OGNL expressions

@@ -1,14 +1,12 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
-
+import javax.swing.*;
 
 import org.jmock.Mock;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
-
-import javax.swing.*;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 
 /**

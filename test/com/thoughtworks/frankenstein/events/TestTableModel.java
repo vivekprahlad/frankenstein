@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  * Test Table model

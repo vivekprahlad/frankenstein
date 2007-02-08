@@ -9,9 +9,9 @@ import org.picocontainer.defaults.DefaultPicoContainer;
 
 import com.thoughtworks.frankenstein.common.ComponentDecoder;
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 import com.thoughtworks.frankenstein.recorders.*;
 import com.thoughtworks.frankenstein.script.Script;
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Top level recorder

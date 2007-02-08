@@ -2,12 +2,12 @@ package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.InternalFrameListener;
 import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
-import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
-import com.thoughtworks.frankenstein.events.CloseInternalFrameEvent;
 import com.thoughtworks.frankenstein.events.ActivateInternalFrameEvent;
+import com.thoughtworks.frankenstein.events.CloseInternalFrameEvent;
+import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
 import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**

@@ -1,13 +1,12 @@
 package com.thoughtworks.frankenstein.playback;
 
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Ensures behaviour of component finder.

@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.Map;
-import java.util.HashMap;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.table.AbstractTableModel;
 
 /**
  * Test editable table model.

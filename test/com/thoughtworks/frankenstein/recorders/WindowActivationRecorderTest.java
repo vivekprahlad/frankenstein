@@ -1,12 +1,13 @@
 package com.thoughtworks.frankenstein.recorders;
 
+import java.awt.event.WindowEvent;
+import javax.swing.*;
+
+import org.jmock.Mock;
+
 import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
-import org.jmock.Mock;
-
-import javax.swing.*;
-import java.awt.event.WindowEvent;
 
 /**
  * Ensures behaviour of the JInternalFrame.

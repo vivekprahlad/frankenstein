@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.common;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands assigning logical names to components.

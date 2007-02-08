@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.naming;
 
-import junit.framework.TestCase;
-
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
-import java.lang.reflect.InvocationTargetException;
+
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of the component list

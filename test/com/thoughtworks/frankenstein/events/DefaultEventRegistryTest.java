@@ -2,15 +2,15 @@ package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
 
-import junit.framework.TestCase;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.recorders.EventList;
-import com.thoughtworks.frankenstein.recorders.ScriptContext;
-import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
-import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.recorders.EventList;
+import com.thoughtworks.frankenstein.recorders.ScriptContext;
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of the default event registry

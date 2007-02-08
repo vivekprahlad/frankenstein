@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.actions.Action;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
 
 /**
  * Understands actions on table rows

@@ -1,10 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.Mock;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+
+import org.jmock.Mock;
+
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of SelectTableRowEvent

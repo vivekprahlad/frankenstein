@@ -1,14 +1,14 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.common.WaitForIdle;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of CheckBoxSelectEvent.

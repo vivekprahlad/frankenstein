@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.events.SelectTableRowEvent;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableColumnModel;
+
+import com.thoughtworks.frankenstein.events.SelectTableRowEvent;
 
 /**
  * Ensures behaviour of SelectTableRecorder

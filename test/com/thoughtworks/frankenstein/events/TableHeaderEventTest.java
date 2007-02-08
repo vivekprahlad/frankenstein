@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.Mock;
-
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import org.jmock.Mock;
+
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.MockAction;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
 

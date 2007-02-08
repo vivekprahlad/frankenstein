@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.frankenstein.events.*;
-import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import junit.framework.TestCase;
 

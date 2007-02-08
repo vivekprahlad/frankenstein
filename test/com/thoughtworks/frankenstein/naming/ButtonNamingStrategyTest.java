@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.naming;
 
-import junit.framework.TestCase;
-
 import javax.swing.*;
+
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of button naming strategy

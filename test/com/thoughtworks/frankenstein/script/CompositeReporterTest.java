@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.script;
 
+import java.io.IOException;
+
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
-import java.io.IOException;
-
+import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
-import com.thoughtworks.frankenstein.common.RobotFactory;
 
 /**
  * Ensures behaviour of CompositeReporter

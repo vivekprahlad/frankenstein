@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import org.jmock.MockObjectTestCase;
+import java.awt.*;
+import javax.swing.*;
+
 import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.WindowContext;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
 

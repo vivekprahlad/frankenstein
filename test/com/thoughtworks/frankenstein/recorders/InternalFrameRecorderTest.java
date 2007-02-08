@@ -1,13 +1,12 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
 import com.thoughtworks.frankenstein.events.ActivateInternalFrameEvent;
 import com.thoughtworks.frankenstein.events.CloseInternalFrameEvent;
+import com.thoughtworks.frankenstein.events.InternalFrameShownEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**

@@ -1,7 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
 import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
+
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.EventList;
 

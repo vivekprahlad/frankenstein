@@ -1,13 +1,11 @@
 package com.thoughtworks.frankenstein.script;
 
-import com.thoughtworks.frankenstein.events.FrankensteinEvent;
-
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 
 /**
  * Understands presenting a TestReporter interface for a collection of reporters.

@@ -1,16 +1,16 @@
 package com.thoughtworks.frankenstein.events;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.*;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.EventList;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.script.Script;
 
 /**

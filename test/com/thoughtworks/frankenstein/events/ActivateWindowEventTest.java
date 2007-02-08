@@ -1,15 +1,16 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.common.WaitForIdle;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.*;
+
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
-import javax.swing.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of windowactivated event.

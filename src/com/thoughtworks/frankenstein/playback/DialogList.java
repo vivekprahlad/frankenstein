@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.playback;
 
-import javax.swing.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.*;
 
 /**
  * Understands maintaining a list of dialogs.

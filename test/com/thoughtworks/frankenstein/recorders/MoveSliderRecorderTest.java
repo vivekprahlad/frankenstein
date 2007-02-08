@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.MoveSliderEvent;
-
 import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.MoveSliderEvent;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 
 /**

@@ -1,12 +1,12 @@
 package com.thoughtworks.frankenstein.events.assertions;
 
-import com.thoughtworks.frankenstein.events.AbstractEventTestCase;
-import com.thoughtworks.frankenstein.events.FrankensteinEvent;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-
 import javax.swing.*;
 
 import org.jmock.Mock;
+
+import com.thoughtworks.frankenstein.events.AbstractEventTestCase;
+import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of AssertEvent

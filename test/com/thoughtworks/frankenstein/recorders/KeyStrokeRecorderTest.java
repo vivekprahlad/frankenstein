@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.events.KeyStrokeEvent;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.KeyStrokeEvent;
 
 /**
  * Ensures behaviour of KeyStrokeRecorder.

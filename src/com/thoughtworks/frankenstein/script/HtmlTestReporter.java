@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.script;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.awt.*;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.recorders.DefaultScreenShot;

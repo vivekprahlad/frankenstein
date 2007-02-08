@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import javax.swing.text.DateFormatter;
 
 /**
  * Understands SOMETHING

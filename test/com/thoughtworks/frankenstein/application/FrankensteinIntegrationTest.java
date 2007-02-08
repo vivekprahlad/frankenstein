@@ -1,16 +1,15 @@
 package com.thoughtworks.frankenstein.application;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 import org.jmock.MockObjectTestCase;
 
+import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.recorders.ComponentRecorder;
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Ensures behaviour of FrankensteinIntegration

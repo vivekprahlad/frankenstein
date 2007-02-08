@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import javax.swing.*;
-import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 import com.thoughtworks.frankenstein.playback.MatchStrategy;
 

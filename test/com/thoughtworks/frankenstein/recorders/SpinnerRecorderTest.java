@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
 
-import junit.framework.TestCase;
-
 import javax.swing.*;
+
+import junit.framework.TestCase;
 
 public class SpinnerRecorderTest extends TestCase {
 

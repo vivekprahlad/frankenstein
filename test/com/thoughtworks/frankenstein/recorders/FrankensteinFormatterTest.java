@@ -1,11 +1,11 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import junit.framework.TestCase;
-
-import java.util.logging.LogRecord;
-import java.util.logging.Level;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of FrankensteinFormatter

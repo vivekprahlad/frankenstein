@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.common;
 
-import junit.framework.TestCase;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of default renderer decoder.

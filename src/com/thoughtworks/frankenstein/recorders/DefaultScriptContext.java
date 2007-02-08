@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.*;
-import java.io.IOException;
 
 import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;

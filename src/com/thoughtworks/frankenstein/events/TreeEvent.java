@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.events;
 
+import java.awt.*;
+import javax.swing.*;
+
 import com.thoughtworks.frankenstein.events.actions.Action;
 import com.thoughtworks.frankenstein.recorders.EventList;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Understands actions on trees

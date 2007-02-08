@@ -1,12 +1,11 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.DialogShownEvent;
 import com.thoughtworks.frankenstein.events.DialogClosedEvent;
+import com.thoughtworks.frankenstein.events.DialogShownEvent;
 
 /**
  * Ensures behaviour of the DialogRecorder.

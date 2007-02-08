@@ -1,12 +1,12 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.AssertLabelEvent;
-
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.AssertLabelEvent;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  */

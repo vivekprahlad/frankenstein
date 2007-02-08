@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.application;
 
-import com.thoughtworks.frankenstein.recorders.ScriptListener;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  * Listens for incoming requests from drivers.

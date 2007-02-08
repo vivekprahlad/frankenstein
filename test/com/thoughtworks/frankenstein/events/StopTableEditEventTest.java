@@ -1,10 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.MockObjectTestCase;
-import org.jmock.Mock;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-
 import javax.swing.*;
+
+import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
+
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of StopTableEditEvent

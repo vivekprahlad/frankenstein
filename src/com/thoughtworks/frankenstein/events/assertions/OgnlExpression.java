@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events.assertions;
 
 import ognl.Ognl;
-import ognl.OgnlException;
 import ognl.OgnlContext;
+import ognl.OgnlException;
 
 /**
  * Compiles OGNL expressions.

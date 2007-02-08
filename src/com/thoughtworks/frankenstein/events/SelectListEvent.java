@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;

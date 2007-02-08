@@ -1,8 +1,9 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.WindowContext;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
+
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of DialogShownEvent

@@ -1,9 +1,10 @@
 package com.thoughtworks.frankenstein.events;
 
 import org.jmock.Mock;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
+
 import com.thoughtworks.frankenstein.common.RobotFactory;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 
 /**

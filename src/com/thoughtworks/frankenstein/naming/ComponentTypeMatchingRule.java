@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
-import java.util.ArrayList;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Matches all components of a certain type. Returns a list of matching components.

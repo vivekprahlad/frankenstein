@@ -1,11 +1,11 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.events.AssertLabelEvent;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.AssertLabelEvent;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
  * Ensures behaviour of AssertLabelRecorder

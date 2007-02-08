@@ -2,6 +2,7 @@ package com.thoughtworks.frankenstein.recorders;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
+
 import com.thoughtworks.frankenstein.common.WaitForIdle;
 
 /**

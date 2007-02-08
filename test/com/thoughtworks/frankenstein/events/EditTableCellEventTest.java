@@ -1,12 +1,13 @@
 package com.thoughtworks.frankenstein.events;
 
+import javax.swing.*;
+
+import org.jmock.Mock;
+
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.TestTableModel;
-import com.thoughtworks.frankenstein.common.WaitForIdle;
-import org.jmock.Mock;
-
-import javax.swing.*;
 
 /**
  * Ensures behaviour of ButtonEvent

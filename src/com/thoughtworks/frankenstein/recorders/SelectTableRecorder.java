@@ -1,15 +1,15 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.SelectTableRowEvent;
-
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.*;
-import java.util.Map;
-import java.util.HashMap;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
+
+import com.thoughtworks.frankenstein.events.SelectTableRowEvent;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Understands recording table selection

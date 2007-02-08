@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.ui;
 
 import java.util.List;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.*;
 
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.recorders.EventRecorder;

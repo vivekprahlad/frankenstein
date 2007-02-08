@@ -1,11 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.recorders.EventList;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Represents a keystroke event.

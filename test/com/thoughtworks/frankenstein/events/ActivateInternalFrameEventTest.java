@@ -1,11 +1,12 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.Mock;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-
-import javax.swing.*;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
+import javax.swing.*;
+
+import org.jmock.Mock;
+
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
  * Ensures behaviour of ActivateInternalFrameEvent

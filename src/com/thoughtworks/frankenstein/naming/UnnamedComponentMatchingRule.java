@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
-import java.util.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 /**

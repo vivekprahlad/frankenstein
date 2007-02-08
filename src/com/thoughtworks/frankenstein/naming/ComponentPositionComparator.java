@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
-import java.util.Comparator;
 import java.awt.*;
+import java.util.Comparator;
 
 /**
  * Understands comparing the positions of components.

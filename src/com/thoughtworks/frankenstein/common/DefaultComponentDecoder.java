@@ -1,10 +1,5 @@
 package com.thoughtworks.frankenstein.common;
 
-import com.thoughtworks.frankenstein.common.JTextComponentDecoder;
-import com.thoughtworks.frankenstein.common.JLabelDecoder;
-import com.thoughtworks.frankenstein.common.ComponentDecoder;
-import com.thoughtworks.frankenstein.common.JCheckBoxDecoder;
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;

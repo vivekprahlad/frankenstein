@@ -1,10 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
+import javax.swing.*;
+
 import org.jmock.Mock;
 
-import javax.swing.*;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Ensures behaviour of CheckBoxSelectEvent.

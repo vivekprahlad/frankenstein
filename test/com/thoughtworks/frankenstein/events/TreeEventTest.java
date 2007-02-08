@@ -1,19 +1,19 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.actions.*;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
-import com.thoughtworks.frankenstein.recorders.EventList;
-
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.jmock.Mock;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Ensures behaviour of TreeEvent

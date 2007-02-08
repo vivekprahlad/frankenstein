@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
-import javax.swing.*;
 import java.beans.PropertyVetoException;
+import javax.swing.*;
 
 /**
  * Represents an internal frame being activated.

@@ -1,10 +1,8 @@
 package com.thoughtworks.frankenstein.playback;
 
-import junit.framework.TestCase;
-
-import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import javax.swing.*;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;

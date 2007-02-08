@@ -1,10 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.recorders.EventList;
+import javax.swing.*;
+
 import org.jmock.Mock;
 
-import javax.swing.*;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Ensures behaviour of SelectFileEvent

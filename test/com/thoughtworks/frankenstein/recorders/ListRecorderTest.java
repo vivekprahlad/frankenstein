@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
 import com.thoughtworks.frankenstein.events.ListEvent;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
-
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.*;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
  * Ensures behaviour of ListRecorder. 

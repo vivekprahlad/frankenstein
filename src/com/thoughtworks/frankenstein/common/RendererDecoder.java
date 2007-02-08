@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.common;
 
 import javax.swing.*;
-import javax.swing.tree.TreeCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
 
 /**
  * Decodes renderers

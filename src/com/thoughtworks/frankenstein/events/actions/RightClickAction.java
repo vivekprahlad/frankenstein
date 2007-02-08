@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.HierarchyEvent;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  * Understands Right Clicking on a specified location.

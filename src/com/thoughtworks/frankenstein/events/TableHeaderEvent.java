@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.actions.Action;
-
+import java.awt.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
 
 /**
  * Actions on table headers.

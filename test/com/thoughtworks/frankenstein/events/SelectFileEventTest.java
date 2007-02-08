@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import org.jmock.Mock;
-
 import javax.swing.*;
+
+import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 

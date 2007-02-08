@@ -1,24 +1,25 @@
 package com.thoughtworks.frankenstein.application;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
+import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.recorders.*;
+import com.thoughtworks.frankenstein.recorders.DefaultRecorder;
+import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
+import com.thoughtworks.frankenstein.recorders.Recorder;
+import com.thoughtworks.frankenstein.script.CompositeReporter;
+import com.thoughtworks.frankenstein.script.HtmlTestReporter;
+import com.thoughtworks.frankenstein.script.TestReporter;
 import com.thoughtworks.frankenstein.ui.DefaultFileDialogLauncher;
 import com.thoughtworks.frankenstein.ui.RecorderPane;
 import com.thoughtworks.frankenstein.ui.RecorderTableModel;
-import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.script.TestReporter;
-import com.thoughtworks.frankenstein.script.CompositeReporter;
-import com.thoughtworks.frankenstein.script.HtmlTestReporter;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Facade for the Frankenstein framework. Provides customization hooks.

@@ -7,8 +7,8 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 import com.thoughtworks.frankenstein.application.ThreadUtil;
+import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.

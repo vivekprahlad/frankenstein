@@ -1,16 +1,17 @@
 package com.thoughtworks.frankenstein.events;
 
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
+import org.jmock.Mock;
+
 import com.thoughtworks.frankenstein.common.RobotFactory;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
-import org.jmock.Mock;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Ensures TableRowEvent works as expected

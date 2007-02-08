@@ -1,12 +1,12 @@
 package com.thoughtworks.frankenstein.events.actions;
 
 
-import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.application.ThreadUtil;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.thoughtworks.frankenstein.application.ThreadUtil;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 /**
  *

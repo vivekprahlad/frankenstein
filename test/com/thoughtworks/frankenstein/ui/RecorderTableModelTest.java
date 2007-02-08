@@ -8,9 +8,9 @@ import javax.swing.event.TableModelListener;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 import com.thoughtworks.frankenstein.events.SwitchTabEvent;
 import com.thoughtworks.frankenstein.recorders.Recorder;
-import com.thoughtworks.frankenstein.common.WaitForIdle;
 
 /**
  * Ensures behaviour of the recorder table model.

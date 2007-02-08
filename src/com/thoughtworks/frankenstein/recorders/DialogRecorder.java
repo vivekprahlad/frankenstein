@@ -1,14 +1,13 @@
 package com.thoughtworks.frankenstein.recorders;
 
 import java.awt.*;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.AWTEventListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.*;
 
-import com.thoughtworks.frankenstein.events.DialogShownEvent;
 import com.thoughtworks.frankenstein.events.DialogClosedEvent;
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
+import com.thoughtworks.frankenstein.events.DialogShownEvent;
 
 /**
  * Understands recording dialog.

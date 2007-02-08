@@ -9,9 +9,9 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
 import com.thoughtworks.frankenstein.events.EnterTextEvent;
+import com.thoughtworks.frankenstein.recorders.ScriptListener;
 import com.thoughtworks.frankenstein.script.Script;
 import com.thoughtworks.frankenstein.script.TestReporter;
-import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
 /**
  * Ensures behaviour of socket listener

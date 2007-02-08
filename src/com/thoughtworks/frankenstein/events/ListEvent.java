@@ -1,12 +1,9 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.recorders.EventList;
-import com.thoughtworks.frankenstein.events.actions.*;
-import com.thoughtworks.frankenstein.events.actions.Action;
-
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.*;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 public class ListEvent extends AbstractCompoundEvent {
     private String listName;

@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import com.thoughtworks.frankenstein.playback.WindowContext;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import com.thoughtworks.frankenstein.playback.WindowContext;
 
 
 /**

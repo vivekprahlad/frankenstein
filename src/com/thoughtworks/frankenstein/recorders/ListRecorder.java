@@ -1,15 +1,16 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.ListEvent;
-import com.thoughtworks.frankenstein.events.actions.*;
-import com.thoughtworks.frankenstein.events.actions.Action;
-
-import javax.swing.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.ListEvent;
+import com.thoughtworks.frankenstein.events.actions.Action;
+import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
+import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Records double and right clicks on lists

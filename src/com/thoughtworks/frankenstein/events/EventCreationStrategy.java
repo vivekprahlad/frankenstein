@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.events.actions.Action;
-
 import java.lang.reflect.Constructor;
+
+import com.thoughtworks.frankenstein.events.actions.Action;
 
 /**
  * Understands creating FrankensteinEvents.

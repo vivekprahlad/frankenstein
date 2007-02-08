@@ -1,7 +1,6 @@
 package com.thoughtworks.frankenstein.events;
 
 import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Understands executing events: depending on the strategy, events are executed either in the current thread

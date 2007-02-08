@@ -1,10 +1,11 @@
 package com.thoughtworks.frankenstein.events;
 
+import javax.swing.*;
+
 import org.jmock.Mock;
+
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
-
-import javax.swing.*;
 
 /**
  * Ensures behaviour of SelectDropDownEvent

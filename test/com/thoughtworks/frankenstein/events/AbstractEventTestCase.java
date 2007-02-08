@@ -1,9 +1,10 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.common.WaitForIdle;
+import java.io.File;
+
 import org.jmock.MockObjectTestCase;
 
-import java.io.File;
+import com.thoughtworks.frankenstein.common.WaitForIdle;
 
 /**
  * Base test case for all events.

@@ -1,13 +1,13 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import com.thoughtworks.frankenstein.playback.WindowContextListener;
-import com.thoughtworks.frankenstein.playback.ComponentFinder;
-import com.thoughtworks.frankenstein.playback.WindowContext;
-
-import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.*;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import com.thoughtworks.frankenstein.playback.WindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContextListener;
 
 /**
  * Base class for all mouse actions 

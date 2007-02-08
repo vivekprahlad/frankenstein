@@ -1,14 +1,12 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.events.MoveSliderEvent;
-import com.thoughtworks.frankenstein.common.ComponentName;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import com.thoughtworks.frankenstein.events.MoveSliderEvent;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
     Understands recording slider motion

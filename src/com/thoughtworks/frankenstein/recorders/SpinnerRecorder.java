@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
-import com.thoughtworks.frankenstein.common.ComponentName;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.common.ComponentName;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 public class SpinnerRecorder extends AbstractComponentRecorder {
     public SpinnerRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {

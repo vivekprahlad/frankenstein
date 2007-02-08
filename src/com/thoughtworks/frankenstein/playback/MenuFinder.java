@@ -1,11 +1,11 @@
 package com.thoughtworks.frankenstein.playback;
 
-import com.thoughtworks.frankenstein.naming.UnnamedComponentMatchingRule;
-import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
+import com.thoughtworks.frankenstein.naming.UnnamedComponentMatchingRule;
 
 /**
  * Understands finding menu items.

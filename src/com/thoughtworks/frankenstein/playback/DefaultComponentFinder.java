@@ -1,7 +1,6 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.awt.*;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 import com.thoughtworks.frankenstein.naming.*;

@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.events.SelectFileEvent;
-
-import javax.swing.*;
 import java.io.File;
+import javax.swing.*;
+
+import com.thoughtworks.frankenstein.events.SelectFileEvent;
 
 /**
  * Ensures behaviour of SelectFileRecorder

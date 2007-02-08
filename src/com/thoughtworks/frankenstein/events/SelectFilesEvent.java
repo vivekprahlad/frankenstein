@@ -1,8 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
-import com.thoughtworks.frankenstein.recorders.EventList;
-
 import java.io.File;
+
+import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
  * Understands selecting a file from a filechooser.

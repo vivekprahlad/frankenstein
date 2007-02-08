@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Matches all components of a certain type. Returns a list of matching components.

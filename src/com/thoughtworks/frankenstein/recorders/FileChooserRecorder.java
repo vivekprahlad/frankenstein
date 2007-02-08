@@ -1,14 +1,14 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import com.thoughtworks.frankenstein.naming.NamingStrategy;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import javax.swing.*;
+
 import com.thoughtworks.frankenstein.events.SelectFileEvent;
 import com.thoughtworks.frankenstein.events.SelectFilesEvent;
-
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.io.File;
+import com.thoughtworks.frankenstein.naming.NamingStrategy;
 
 /**
  * Records file choices

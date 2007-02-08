@@ -1,10 +1,10 @@
 package com.thoughtworks.frankenstein.events.actions;
 
+import java.awt.*;
+import javax.swing.*;
+
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Interface for Actions.

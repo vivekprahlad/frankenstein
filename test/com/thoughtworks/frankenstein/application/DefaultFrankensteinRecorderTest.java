@@ -11,9 +11,9 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.common.DefaultComponentDecoder;
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
+import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.recorders.Recorder;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
-import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 
 /**
  * Ensures behaviour of frankenstein recorder.

@@ -1,12 +1,11 @@
 package com.thoughtworks.frankenstein.playback;
 
-import junit.framework.TestCase;
-
-import javax.swing.*;
-import java.awt.event.WindowEvent;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import javax.swing.*;
 
 import com.thoughtworks.frankenstein.common.WaitForIdle;
+import junit.framework.TestCase;
 
 /**
  * Ensures

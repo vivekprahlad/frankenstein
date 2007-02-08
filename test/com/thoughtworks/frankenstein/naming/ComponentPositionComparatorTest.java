@@ -1,11 +1,11 @@
 package com.thoughtworks.frankenstein.naming;
 
-import junit.framework.TestCase;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.*;
+
+import junit.framework.TestCase;
 
 /**
  * Ensures behaviour of components positions.

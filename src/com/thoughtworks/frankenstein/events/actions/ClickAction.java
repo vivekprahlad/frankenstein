@@ -1,8 +1,7 @@
 package com.thoughtworks.frankenstein.events.actions;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 /**
  * Understands clicking on a component
