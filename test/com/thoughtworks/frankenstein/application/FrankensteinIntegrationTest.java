@@ -21,7 +21,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
     protected void setUp() throws Exception {
         frame = new MockJFrame();
         integration = new FrankensteinIntegration(TestMainClass.class, frame,
-                new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy(), RecorderMode.RECORD_AND_PLAY_MODE);
+                new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
     protected void tearDown() throws Exception {
@@ -38,7 +38,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
     }
 
     public void testDoesNotLaunchMainForClassesWithoutMainMethod() {
-        FrankensteinIntegration integration = new FrankensteinIntegration(FrankensteinIntegrationTest.class, new MockJFrame(), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy(), RecorderMode.RECORD_AND_PLAY_MODE);
+        FrankensteinIntegration integration = new FrankensteinIntegration(FrankensteinIntegrationTest.class, new MockJFrame(), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
         try {
             integration.start(null);
             fail();
@@ -78,8 +78,9 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
                         new MockJFrame(),
                         new NullWorkerThreadMonitor(),
                         new DefaultWindowContext(),
-                        new DefaultNamingStrategy(),
-                        RecorderMode.PLAY_MODE);
+                        new DefaultNamingStrategy()
+                );
+        frankensteinIntegrationInPlayMode.setRecorderMode(RecorderMode.PLAY_MODE);
         TestComponentRecorder.registerCalled = false;
         TestComponentRecorder.unregisterCalled = false;
         frankensteinIntegrationInPlayMode.registerRecorder(TestComponentRecorder.class);

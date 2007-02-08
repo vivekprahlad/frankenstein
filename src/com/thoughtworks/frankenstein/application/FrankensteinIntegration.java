@@ -39,8 +39,8 @@ public class FrankensteinIntegration {
                                    JFrame frame,
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
-                                   NamingStrategy namingStrategy, RecorderMode recorderMode) {
-        this(mainClass, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy), recorderMode);
+                                   NamingStrategy namingStrategy) {
+        this(mainClass, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy));
     }
 
     public FrankensteinIntegration(Class mainClass,
@@ -48,8 +48,8 @@ public class FrankensteinIntegration {
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
                                    NamingStrategy namingStrategy,
-                                   ComponentFinder finder, RecorderMode recorderMode) {
-        this(new CommandLineApplication(mainClass), frame, monitor, context, namingStrategy, finder, recorderMode);
+                                   ComponentFinder finder) {
+        this(new CommandLineApplication(mainClass), frame, monitor, context, namingStrategy, finder);
     }
 
     public FrankensteinIntegration(Application application,
@@ -57,12 +57,11 @@ public class FrankensteinIntegration {
                                    WorkerThreadMonitor monitor,
                                    WindowContext context,
                                    NamingStrategy namingStrategy,
-                                   ComponentFinder finder,
-                                   RecorderMode recorderMode) {
+                                   ComponentFinder finder) {
         this.application = application;
         this.frame = frame;
         this.context = context;
-        this.recorderMode = recorderMode;
+        this.recorderMode = RecorderMode.RECORD_AND_PLAY_MODE;
         this.testReporter = CompositeReporter.create(new HtmlTestReporter());
         eventRecorder = new DefaultRecorder(new DefaultScriptContext(testReporter, monitor, context, finder));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
@@ -70,12 +69,12 @@ public class FrankensteinIntegration {
         createRecorderUI(recorder);
     }
 
-    public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor, RecorderMode recorderMode) {
-        this(mainClass, new JFrame("Recorder"), monitor, new DefaultWindowContext(), new DefaultNamingStrategy(), recorderMode);
+    public FrankensteinIntegration(Class mainClass, WorkerThreadMonitor monitor) {
+        this(mainClass, new JFrame("Recorder"), monitor, new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
-    public FrankensteinIntegration(Class mainClass, RecorderMode recorderMode) {
-        this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy(), recorderMode);
+    public FrankensteinIntegration(Class mainClass) {
+        this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
     public void registerAction(Class actionClass) {
@@ -101,6 +100,14 @@ public class FrankensteinIntegration {
      */
     public void setPort(int port) {
         this.port = port;
+    }
+
+    /**
+     * Changes the recorder mode. The two possible modes are RecorderMode.PLAY_MODE and RecorderMode.RECORD_AND_PLAY_MODE
+     * @param recorderMode
+     */
+    public void setRecorderMode(RecorderMode recorderMode) {
+        this.recorderMode = recorderMode;
     }
 
     public void start(String[] args) {

@@ -13,17 +13,18 @@ import com.thoughtworks.frankenstein.playback.PlaybackSpeedControlScriptListener
  */
 public class RecorderPane extends JPanel {
 
-    public RecorderPane(FrankensteinRecorder recorder, FileDialogLauncher launcher, RecorderTableModel tableModel, PlaybackSpeedControlScriptListener playbackSpeedControlScriptListener) {
+    public RecorderPane(FrankensteinRecorder recorder, FileDialogLauncher launcher, RecorderTableModel tableModel,
+                        PlaybackSpeedControlScriptListener listener) {
         setLayout(new BorderLayout());
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
         controlPanel.add(new ControlButtonPanel(recorder, launcher));
-        controlPanel.add(new SpeedControlPanel(playbackSpeedControlScriptListener));
+        controlPanel.add(new SpeedControlPanel(listener));
 
         add(controlPanel, BorderLayout.PAGE_START);
         DefaultRecorderTable recorderTable = new DefaultRecorderTable(tableModel);
         recorder.addScriptListener(new RowSelectionScriptListener(recorderTable));
-        recorder.addScriptListener(playbackSpeedControlScriptListener);
+        recorder.addScriptListener(listener);
         JScrollPane scrollPane = new JScrollPane(recorderTable);
         scrollPane.setAutoscrolls(true);
         add(scrollPane, BorderLayout.CENTER);
