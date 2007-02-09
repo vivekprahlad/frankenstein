@@ -24,6 +24,7 @@ public class SocketListenerTest extends MockObjectTestCase {
         SocketListener listener = new SocketListener(recorder);
         listener.start(Constants.LISTEN_PORT);
         Socket socket = new Socket(InetAddress.getLocalHost(), Constants.LISTEN_PORT);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         writer.write("EnterText \"textField\" \"abc\"\n");
