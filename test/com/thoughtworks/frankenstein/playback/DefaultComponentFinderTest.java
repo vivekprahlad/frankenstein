@@ -83,6 +83,7 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
 
     public void testFindsMenuItemFromMenuBars() {
         JFrame frame = new JFrame("testFrame");
+        frame.getContentPane().add(createMenuBar("Down"));
         frame.getContentPane().add(createMenuBar("Top"));
         frame.setVisible(true);
         assertSame(menuItem, finder.findMenuItem(null, "Top>Next>Third"));

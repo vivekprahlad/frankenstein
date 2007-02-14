@@ -27,7 +27,7 @@ public class MenuFinder {
                         return findMenuItem(menuBars, pathElements);
                     }
                 } catch (Exception e) {
-                    //Ignore
+                    //ignore
                 }
             }
         }
@@ -45,8 +45,19 @@ public class MenuFinder {
     }
 
     private JMenuItem findMenuItem(java.util.List menuBars, String[] pathElements) {
-        JMenuBar bar = (JMenuBar) menuBars.get(0);
-        JMenuItem menuItem = findTopLevelMenu(bar, pathElements[0]);
+        for (int i = 0; i < menuBars.size(); i++) {
+            try {
+                return findMenuItem((JMenuBar) menuBars.get(i), pathElements);
+            } catch (Exception e) {
+                //ignore
+            }
+        }
+        throw new RuntimeException("Unable to find menu with path.");
+    }
+
+    private JMenuItem findMenuItem(JMenuBar menuBar, String[] pathElements) {
+        JMenuItem menuItem = findTopLevelMenu(menuBar, pathElements[0]);
+
         for (int j = 1; j < pathElements.length; j++) {
             menuItem = findMenu((JMenu) menuItem, pathElements[j]);
         }

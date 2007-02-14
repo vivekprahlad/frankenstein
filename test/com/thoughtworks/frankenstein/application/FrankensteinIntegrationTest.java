@@ -35,6 +35,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         String[] args = new String[]{"abc", "def"};
         integration.start(args);
         assertSame(TestMainClass.args(), args);
+        integration.stop();
     }
 
     public void testDoesNotLaunchMainForClassesWithoutMainMethod() {
