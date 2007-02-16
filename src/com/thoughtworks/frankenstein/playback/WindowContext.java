@@ -25,4 +25,6 @@ public interface WindowContext {
     void addWindowContextListener(WindowContextListener listener);
 
     void removeWindowContextListener(WindowContextListener listener);
+
+    void waitForProgressBarToClose();
 }

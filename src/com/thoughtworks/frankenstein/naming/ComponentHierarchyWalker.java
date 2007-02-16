@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * Understands traversing components from a top level container.
@@ -10,7 +11,6 @@ import java.awt.*;
 public class ComponentHierarchyWalker {
 
     public ComponentMatchingRule matchComponentsIn(Container container, ComponentMatchingRule rule) {
-        if (rule.hasMatches()) return rule;
         Component[] components = container.getComponents();
         for (int i = 0; i < components.length; i++) {
             Component component = components[i];
@@ -26,5 +26,11 @@ public class ComponentHierarchyWalker {
 
     public boolean hasNoMatches(Container container, Class componentClass) {
         return !(matchComponentsIn(container, new ComponentTypeMatchingRule(componentClass)).hasMatches());
+    }
+
+    public List getMatchingComponents(Container container, Class componentClass) {
+        ComponentTypeMatchingRule typeMatchingRule = new ComponentTypeMatchingRule(componentClass);
+        matchComponentsIn(container, typeMatchingRule);
+        return typeMatchingRule.getMatchingComponents();
     }
 }

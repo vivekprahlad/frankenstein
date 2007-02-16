@@ -7,6 +7,8 @@ import javax.swing.*;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
+import com.thoughtworks.frankenstein.application.ThreadUtil;
+
 /**
  * Ensures behaviour of the window context.
  */
@@ -76,6 +78,50 @@ public class DefaultWindowContextTest extends MockObjectTestCase {
         windowContext.waitForDialogOpening("testDialog", 10);
         assertSame(testDialog, windowContext.activeWindow());
         testDialog.dispose();
+        frame.dispose();
+    }
+
+    public void testWaitsTillProgressBarCompletes() {
+        final JFrame frame = new JFrame();
+        final JProgressBar progressBar1 = new JProgressBar(0, 10);
+        progressBar1.setValue(progressBar1.getMaximum());
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+        frame.getContentPane().add(progressBar1);
+        JPanel panel = new JPanel();
+        frame.getContentPane().add(panel);
+        final JProgressBar progressBar2 = new JProgressBar(0, 10);
+        panel.add(progressBar2);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        setFocusManager(frame);
+        windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, progressBar2));
+
+        long before = System.currentTimeMillis();
+
+        new Thread(new Runnable(){
+            public void run() {
+                ThreadUtil.sleep(1000);
+                progressBar1.setVisible(false);
+            }
+        }).start();
+
+        new Thread(new Runnable(){
+            public void run() {
+                while (true) {
+                    progressBar2.setValue(progressBar2.getValue() + 2);
+                    if (progressBar2.getValue() == progressBar2.getMaximum()) {
+                        break;
+                    }
+                    ThreadUtil.sleep(500);
+                }
+            }
+        }).start();
+        
+
+        windowContext.waitForProgressBarToClose();
+        long after = System.currentTimeMillis();
+        assertTrue((after - before) > 2000);
         frame.dispose();
     }
 

@@ -127,6 +127,7 @@ public class DefaultScriptContext implements ScriptContext {
 
     private void waitForIdle() {
         monitor.waitForIdle();
+        context.waitForProgressBarToClose();
         while (EventQueue.getCurrentEvent() != null) {
             monitor.waitForIdle();
             robot.waitForIdle();

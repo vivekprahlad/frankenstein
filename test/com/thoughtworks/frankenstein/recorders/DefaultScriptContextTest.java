@@ -27,11 +27,12 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     private Mock finder;
     private Mock monitor;
     private ComponentFinder componentFinder;
+    public Mock mockContext;
 
     protected void setUp() throws Exception {
         super.setUp();
         testReporter = mock(TestReporter.class);
-        Mock mockContext = mock(WindowContext.class);
+        mockContext = mock(WindowContext.class);
         windowContext = (WindowContext) mockContext.proxy();
         finder = mock(ComponentFinder.class);
         monitor = mock(WorkerThreadMonitor.class);
@@ -90,6 +91,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
         finder.expects(once()).method("findComponent").will(returnValue(comboBox));
         monitor.expects(once()).method("start");
         monitor.expects(once()).method("waitForIdle");
+        mockContext.expects(once()).method("waitForProgressBarToClose");        
         SelectDropDownEvent event = new SelectDropDownEvent("comboName2", "choice2");
         expectSuccessReport(event);
         expectFinishTest();
@@ -128,6 +130,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     private void setExpectationsForListenerNotificationTests() {
         monitor.expects(once()).method("start");
         monitor.expects(atLeastOnce()).method("waitForIdle");
+        mockContext.expects(atLeastOnce()).method("waitForProgressBarToClose");        
         testReporter.expects(atLeastOnce()).method("reportSuccess").withAnyArguments();
         testReporter.expects(atLeastOnce()).method("finishTest");
     }

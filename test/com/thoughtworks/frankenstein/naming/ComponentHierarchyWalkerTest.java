@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.naming;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
@@ -10,17 +11,17 @@ import junit.framework.TestCase;
  * Ensures behaviour of the component list
  */
 public class ComponentHierarchyWalkerTest extends TestCase {
-    private ComponentHierarchyWalker factory;
+    private ComponentHierarchyWalker hierarchyWalker;
 
     protected void setUp() throws Exception {
         super.setUp();
-        factory = new ComponentHierarchyWalker();
+        hierarchyWalker = new ComponentHierarchyWalker();
     }
 
     public void testFindsComponentFromTopLevel() {
         JPanel panel = createPanel();
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JTextComponent.class);
-        factory.matchComponentsIn(panel, rule);
+        hierarchyWalker.matchComponentsIn(panel, rule);
         assertEquals(4, rule.unnamedComponents().size());
     }
 
@@ -38,7 +39,7 @@ public class ComponentHierarchyWalkerTest extends TestCase {
         JPanel panel = createPanel();
         panel.add(createPanel());
         UnnamedComponentMatchingRule rule = new UnnamedComponentMatchingRule(JTextComponent.class);
-        factory.matchComponentsIn(panel, rule);
+        hierarchyWalker.matchComponentsIn(panel, rule);
         assertEquals(8, rule.unnamedComponents().size());
     }
 
@@ -50,8 +51,20 @@ public class ComponentHierarchyWalkerTest extends TestCase {
         namedTextArea.setName("testName");
         panel.add(namedTextArea);
         ComponentNameMatchingRule rule = new ComponentNameMatchingRule("testName");
-        factory.matchComponentsIn(panel, rule);
+        hierarchyWalker.matchComponentsIn(panel, rule);
         assertSame(namedTextArea, rule.matchingComponent());
+    }
+
+    public void testGetMatchingComponents() {
+        JPanel panel = createPanel();
+        JPanel innerPanel = new JPanel();
+        innerPanel.add(new JTextField());
+        panel.add(innerPanel);
+        List matchingComponents = hierarchyWalker.getMatchingComponents(panel, JTextField.class);
+        assertEquals(4, matchingComponents.size());
+        assertTrue(matchingComponents.get(0) instanceof JTextField);
+        assertTrue(matchingComponents.get(1) instanceof JTextField);
+        assertTrue(matchingComponents.get(2) instanceof JTextField);
     }
 
     private JTextArea createTextArea() throws InvocationTargetException, InterruptedException {
@@ -69,6 +82,6 @@ public class ComponentHierarchyWalkerTest extends TestCase {
     }
 
     public void testHasNoMatches() {
-        assertFalse(factory.matchComponentsIn(new JPanel(), new ComponentNameMatchingRule("testName")).hasMatches());
+        assertFalse(hierarchyWalker.matchComponentsIn(new JPanel(), new ComponentNameMatchingRule("testName")).hasMatches());
     }
 }

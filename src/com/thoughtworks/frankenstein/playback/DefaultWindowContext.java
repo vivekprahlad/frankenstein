@@ -9,6 +9,7 @@ import javax.swing.event.EventListenerList;
 
 import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
+import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
@@ -124,6 +125,29 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     private void closeDialog(final JDialog dialog) {
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
         while (activeWindow == dialog) {
+            ThreadUtil.sleep(100);
+        }
+    }
+
+    private boolean isProgressBarActive() {
+        ComponentHierarchyWalker hierarchyWalker = new ComponentHierarchyWalker();
+        java.util.List matchingComponents = hierarchyWalker.getMatchingComponents((Container) activeWindow, JProgressBar.class);
+
+        boolean isAtleastOneProgressBarActive = false;
+        for (int i = 0; i < matchingComponents.size(); i++) {
+            JProgressBar progressBar = (JProgressBar) matchingComponents.get(i);
+            if (progressBar.isVisible()
+                && progressBar.getValue() < progressBar.getMaximum()) {
+                isAtleastOneProgressBarActive = true;
+                break;
+            }
+        }
+
+        return isAtleastOneProgressBarActive;
+    }
+
+    public void waitForProgressBarToClose() {
+        while(isProgressBarActive()){
             ThreadUtil.sleep(100);
         }
     }
