@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
 /**
- * Represents a Dialog being shown.
+ * Closes all open dialogs recursively.
  *
  * @author Vivek Prahlad
  */

@@ -10,6 +10,7 @@ import javax.swing.event.EventListenerList;
 import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
 import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
+import com.thoughtworks.frankenstein.naming.ActiveProgressbarMatchingRule;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
@@ -129,25 +130,14 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
         }
     }
 
-    private boolean isProgressBarActive() {
-        ComponentHierarchyWalker hierarchyWalker = new ComponentHierarchyWalker();
-        java.util.List matchingComponents = hierarchyWalker.getMatchingComponents((Container) activeWindow, JProgressBar.class);
-
-        boolean isAtleastOneProgressBarActive = false;
-        for (int i = 0; i < matchingComponents.size(); i++) {
-            JProgressBar progressBar = (JProgressBar) matchingComponents.get(i);
-            if (progressBar.isVisible()
-                && progressBar.getValue() < progressBar.getMaximum()) {
-                isAtleastOneProgressBarActive = true;
-                break;
-            }
-        }
-
-        return isAtleastOneProgressBarActive;
+    private boolean isProgressBarActive(ActiveProgressbarMatchingRule rule, ComponentHierarchyWalker walker) {
+        return rule.matches((Container) activeWindow, walker);
     }
 
-    public void waitForProgressBarToClose() {
-        while(isProgressBarActive()){
+    public void waitForProgressBar() {
+        ActiveProgressbarMatchingRule progressbarMatchingRule = new ActiveProgressbarMatchingRule();
+        ComponentHierarchyWalker walker = new ComponentHierarchyWalker();
+        while(isProgressBarActive(progressbarMatchingRule, walker)){
             ThreadUtil.sleep(100);
         }
     }

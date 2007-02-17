@@ -20,8 +20,9 @@ public abstract class AbstractMouseAction extends MouseAdapter implements Window
             wait();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        } finally {
+            removeListeners(component, windowContext);
         }
-        removeListeners(component, windowContext);
     }
 
     private void addListeners(WindowContext windowContext, JComponent component) {

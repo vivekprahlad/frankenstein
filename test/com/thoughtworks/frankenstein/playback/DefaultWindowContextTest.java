@@ -119,7 +119,7 @@ public class DefaultWindowContextTest extends MockObjectTestCase {
         }).start();
         
 
-        windowContext.waitForProgressBarToClose();
+        windowContext.waitForProgressBar();
         long after = System.currentTimeMillis();
         assertTrue((after - before) > 2000);
         frame.dispose();

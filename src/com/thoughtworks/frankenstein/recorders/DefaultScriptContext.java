@@ -88,9 +88,8 @@ public class DefaultScriptContext implements ScriptContext {
         int eventIndex = 0;
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
-            FrankensteinEvent event = (FrankensteinEvent) iterator.next();
             fireScriptStepStartedEvent(eventIndex++);
-            play(event);
+            play((FrankensteinEvent) iterator.next());
         }
         fireScriptCompletedEvent();
     }
@@ -127,7 +126,7 @@ public class DefaultScriptContext implements ScriptContext {
 
     private void waitForIdle() {
         monitor.waitForIdle();
-        context.waitForProgressBarToClose();
+        context.waitForProgressBar();
         while (EventQueue.getCurrentEvent() != null) {
             monitor.waitForIdle();
             robot.waitForIdle();
