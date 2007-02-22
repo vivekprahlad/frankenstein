@@ -243,6 +243,12 @@ public class DefaultRecorderTest extends MockObjectTestCase {
 
         }
 
+        public void play(FrankensteinEvent event) {
+        }
+
+        public void startMonitor() {
+        }
+
         public void addTestReporter(TestReporter testReporter) {
         }
 

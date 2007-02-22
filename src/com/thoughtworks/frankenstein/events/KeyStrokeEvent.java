@@ -28,8 +28,8 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
         executeInPlayerThread();
     }
 
-    public KeyStrokeEvent(String scriptLine) {
-        String[] keyEventParams = scriptLine.split(Constants.SPACE);
+    public KeyStrokeEvent(String keyModifierAndKeyCodeText) {
+        String[] keyEventParams = keyModifierAndKeyCodeText.split(Constants.SPACE);
         int modifiers = 0;
         int indexOfKeyCode = 0;
         if (keyEventParams.length == 2) {

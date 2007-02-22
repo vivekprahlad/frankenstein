@@ -2,6 +2,8 @@ package com.thoughtworks.frankenstein.recorders;
 
 import java.util.List;
 
+import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+
 /**
  * Core script interface.
  *
@@ -17,4 +19,8 @@ public interface ScriptContext {
     void addScriptListener(ScriptListener listener);
 
     void removeScriptListener(ScriptListener listener);
+
+    void play(FrankensteinEvent event);
+
+    void startMonitor();
 }

@@ -13,9 +13,9 @@ import com.thoughtworks.frankenstein.events.actions.Action;
 public class RadioButtonEvent extends AbstractCompoundEvent {
     private String radioButtonName;
 
-    public RadioButtonEvent(String checkBoxName, Action action) {
+    public RadioButtonEvent(String radioButtonName, Action action) {
         super(action);
-        this.radioButtonName = checkBoxName;
+        this.radioButtonName = radioButtonName;
     }
 
     public String toString() {

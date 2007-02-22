@@ -6,8 +6,8 @@ package com.thoughtworks.frankenstein.events;
 public class AssertLabelEvent extends AbstractFrankensteinEvent {
     private String labelValue;
 
-    public AssertLabelEvent(String scriptLine) {
-        this.labelValue = scriptLine;
+    public AssertLabelEvent(String labelValue) {
+        this.labelValue = labelValue;
     }
 
     public String toString() {

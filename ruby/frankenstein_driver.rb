@@ -224,9 +224,7 @@ module FrankensteinDriver
 
   # Enter a keystroke with the specified modifiers.
   #
-  # This method isn't too tester friendly at the moment (the modifiers and the keycode are both integers).
-  # It is recommended that the recorder be used to create keystroke steps.
-  # Future releases will make it easier to specify keystrokes.
+  # For example: key_stroke "Ctrl+Alt 0" for the modifiers "Control" & "Alt" and the key "0".
   def key_stroke(keycodeText)
     append_to_script "key_stroke \"#{keycodeText}\""
   end

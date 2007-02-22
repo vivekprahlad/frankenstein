@@ -16,9 +16,9 @@ public class ButtonEvent extends AbstractCompoundEvent {
     private String buttonName;
     public static final String CLICK_BUTTON_ACTION = "ClickButton";
 
-    public ButtonEvent(String scriptLine, Action action) {
+    public ButtonEvent(String buttonName, Action action) {
         super(action);
-        this.buttonName = scriptLine;
+        this.buttonName = buttonName;
     }
 
     public void record(EventList list, FrankensteinEvent lastEvent) {

@@ -2,6 +2,8 @@ package com.thoughtworks.frankenstein.events;
 
 import java.io.File;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.thoughtworks.frankenstein.recorders.EventList;
 
 /**
@@ -10,10 +12,15 @@ import com.thoughtworks.frankenstein.recorders.EventList;
 public class SelectFilesEvent extends AbstractFrankensteinEvent {
 
     private String[] fileNames;
-    private String scriptline;
+    private String fileNamesWithPath;
+
+    public SelectFilesEvent(String[] fileNames) {
+        this.fileNames = fileNames;
+        fileNamesWithPath = StringUtils.join(fileNames, ',');
+    }
 
     public SelectFilesEvent(String scriptline) {
-        this.scriptline = scriptline;
+        this.fileNamesWithPath = scriptline;
         this.fileNames = scriptline.split(",");
     }
 
@@ -26,11 +33,11 @@ public class SelectFilesEvent extends AbstractFrankensteinEvent {
     }
 
     public String toString() {
-        return "SelectFilesEvent: " + scriptline;
+        return "SelectFilesEvent: " + fileNamesWithPath;
     }
 
     public String target() {
-        return scriptline;
+        return fileNamesWithPath;
     }
 
     public void run() {

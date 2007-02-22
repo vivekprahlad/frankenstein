@@ -68,7 +68,7 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
     public void testPlayingEventSuccessfullyReportsSuccess() {
         FrankensteinEvent event = createMockFrankensteinEventAndSetPlayExpectation();
         expectSuccessReport(event);
-        context.play(event);
+        context.playAndReportTestStatus(event);
     }
 
     private void expectSuccessReport(FrankensteinEvent event) {
@@ -83,20 +83,41 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
                 .will(throwException(exception));
         FrankensteinEvent event = (FrankensteinEvent) frankensteinEvent.proxy();
         testReporter.expects(once()).method("reportFailure").with(same(event), same(exception), ANYTHING);
-        context.play(event);
+        context.playAndReportTestStatus(event);
     }
 
-    public void testPlayOneEvent() throws InterruptedException, AWTException {
-        JComboBox comboBox = new JComboBox(new Object[]{"choice1", "choice2"});
-        finder.expects(once()).method("findComponent").will(returnValue(comboBox));
-        monitor.expects(once()).method("start");
-        monitor.expects(once()).method("waitForIdle");
-        mockContext.expects(once()).method("waitForProgressBar");
+    public void testPlayOneEventInList() throws InterruptedException, AWTException {
+        JComboBox comboBox = createComboBoxAndSetExpectationsToPlayEvents();
         SelectDropDownEvent event = new SelectDropDownEvent("comboName2", "choice2");
         expectSuccessReport(event);
         expectFinishTest();
         context.play(list(event));
         assertEquals("choice2", comboBox.getSelectedItem());
+    }
+
+    public void testPlayOneEvent() throws InterruptedException, AWTException {
+        JComboBox comboBox = createComboBoxAndSetExpectationsToPlayOneEvent();
+        SelectDropDownEvent event = new SelectDropDownEvent("comboName2", "choice2");
+        expectSuccessReport(event);
+        context.play(event);
+        assertEquals("choice2", comboBox.getSelectedItem());
+    }
+
+    private JComboBox createComboBoxAndSetExpectationsToPlayEvents() {
+        JComboBox comboBox = new JComboBox(new Object[]{"choice1", "choice2"});
+        finder.expects(once()).method("findComponent").will(returnValue(comboBox));
+        monitor.expects(once()).method("start");
+        monitor.expects(once()).method("waitForIdle");
+        mockContext.expects(once()).method("waitForProgressBar");
+        return comboBox;
+    }
+
+    private JComboBox createComboBoxAndSetExpectationsToPlayOneEvent() {
+        JComboBox comboBox = new JComboBox(new Object[]{"choice1", "choice2"});
+        finder.expects(once()).method("findComponent").will(returnValue(comboBox));
+        monitor.expects(once()).method("waitForIdle");
+        mockContext.expects(once()).method("waitForProgressBar");
+        return comboBox;
     }
 
     public void testNotifiesScriptListenerOnceTestCompletes() {
@@ -116,6 +137,11 @@ public class DefaultScriptContextTest extends MockObjectTestCase {
         context.removeScriptListener(scriptListener);
         setExpectationsForListenerNotificationTests();
         context.play(createEventList());
+    }
+
+    public void testStartMonitorStartsTheMonitor() {
+        monitor.expects(once()).method("start");
+        context.startMonitor();
     }
 
     private ScriptListener createMockListenerAndSetExpectations(int sizeOfEventList) {

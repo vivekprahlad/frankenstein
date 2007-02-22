@@ -67,9 +67,18 @@ public class DefaultScriptContext implements ScriptContext {
     }
 
     public void play(List events) {
-        monitor.start();
+        startMonitor();
         playEvents(events);
         finishTest();
+    }
+
+    public void startMonitor() {
+        monitor.start();
+    }
+
+    public void play(FrankensteinEvent event) {
+        waitForIdle();
+        playAndReportTestStatus(event);
     }
 
     public boolean isScriptPassed() {
@@ -89,7 +98,7 @@ public class DefaultScriptContext implements ScriptContext {
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
             waitForIdle();
             fireScriptStepStartedEvent(eventIndex++);
-            play((FrankensteinEvent) iterator.next());
+            playAndReportTestStatus((FrankensteinEvent) iterator.next());
         }
         fireScriptCompletedEvent();
     }
@@ -108,12 +117,12 @@ public class DefaultScriptContext implements ScriptContext {
         }
     }
 
-    protected void play(FrankensteinEvent event) {
+    protected void playAndReportTestStatus(FrankensteinEvent event) {
         try {
             logger.info("Playing: " + event);
             event.play(context, finder, this, robot);
             reporter.reportSuccess(event);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.log(Level.WARNING, "", e);
             testPassed = false;
             reporter.reportFailure(event, e, robot);
