@@ -425,6 +425,7 @@ public interface FrankensteinDriver {
      * Moves a specified slider to the specified position
      *
      * @param sliderName The name of the slider.
+     * @param position The position of the slider.
      */
     public void moveSlider(String sliderName, int position);
 

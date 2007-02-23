@@ -10,7 +10,6 @@ import com.thoughtworks.frankenstein.recorders.EventList;
  * Understands button actions.
  *
  * @author Vivek Prahlad
- *         ahlad
  */
 public class ButtonEvent extends AbstractCompoundEvent {
     private String buttonName;
@@ -37,5 +36,4 @@ public class ButtonEvent extends AbstractCompoundEvent {
         AbstractButton button = (AbstractButton) finder.findComponent(context, buttonName);
         action.execute(center(button), button, finder, context);
     }
-
 }

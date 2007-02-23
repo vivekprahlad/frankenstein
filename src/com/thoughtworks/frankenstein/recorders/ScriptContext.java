@@ -12,6 +12,8 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 public interface ScriptContext {
     void startTest(String testName);
 
+    void startMonitor();
+
     void play(List events);
 
     boolean isScriptPassed();
@@ -21,6 +23,4 @@ public interface ScriptContext {
     void removeScriptListener(ScriptListener listener);
 
     void play(FrankensteinEvent event);
-
-    void startMonitor();
 }

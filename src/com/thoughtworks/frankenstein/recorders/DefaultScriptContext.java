@@ -105,15 +105,13 @@ public class DefaultScriptContext implements ScriptContext {
 
     private void fireScriptCompletedEvent() {
         for (Iterator iterator = scriptListeners.iterator(); iterator.hasNext();) {
-            ScriptListener scriptListener = (ScriptListener) iterator.next();
-            scriptListener.scriptCompleted(isScriptPassed());
+            ((ScriptListener) iterator.next()).scriptCompleted(isScriptPassed());
         }
     }
 
     private void fireScriptStepStartedEvent(int eventIndex) {
         for (Iterator iterator = scriptListeners.iterator(); iterator.hasNext();) {
-            ScriptListener scriptListener = (ScriptListener) iterator.next();
-            scriptListener.scriptStepStarted(eventIndex);
+            ((ScriptListener) iterator.next()).scriptStepStarted(eventIndex);
         }
     }
 

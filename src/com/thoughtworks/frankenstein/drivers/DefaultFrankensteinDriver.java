@@ -65,28 +65,23 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void activateDialog(String dialogTitle) {
-        ActivateDialogEvent activateDialogEvent = new ActivateDialogEvent(dialogTitle);
-        scriptContext.play(activateDialogEvent);
+        scriptContext.play(new ActivateDialogEvent(dialogTitle));
     }
 
     public void activateWindow(String windowTitle) {
-        ActivateWindowEvent activateWindowEvent = new ActivateWindowEvent(windowTitle);
-        scriptContext.play(activateWindowEvent);
+        scriptContext.play(new ActivateWindowEvent(windowTitle));
     }
 
     public void activateInternalFrame(String internalFrameTitle) {
-        ActivateInternalFrameEvent activateInternalFrameEvent = new ActivateInternalFrameEvent(internalFrameTitle);
-        scriptContext.play(activateInternalFrameEvent);
+        scriptContext.play(new ActivateInternalFrameEvent(internalFrameTitle));
     }
 
     public void assertValue(String componentName, String ognlExpression, String expectedValue) {
-        AssertEvent assertEvent = new AssertEvent(componentName, ognlExpression, expectedValue);
-        scriptContext.play(assertEvent);
+        scriptContext.play(new AssertEvent(componentName, ognlExpression, expectedValue));
     }
 
     public void assertNumberOfTableRows(String tableName, int expectedNumberOfRows) {
-        String numberOfRowAsString = String.valueOf(expectedNumberOfRows);
-        assertValue(tableName, "rowCount", numberOfRowAsString);
+        assertValue(tableName, "rowCount", String.valueOf(expectedNumberOfRows));
     }
 
     public void assertTableCell(String tableName, int row, int column, String expectedCellValue) {
@@ -144,158 +139,127 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void assertLabel(String expectedText) {
-        AssertLabelEvent assertLabelEvent = new AssertLabelEvent(expectedText);
-        scriptContext.play(assertLabelEvent);
+        scriptContext.play(new AssertLabelEvent(expectedText));
     }
 
     public void cancelTableEdit(String tableName) {
-        CancelTableEditEvent cancelTableEditEvent = new CancelTableEditEvent(tableName);
-        scriptContext.play(cancelTableEditEvent);
+        scriptContext.play(new CancelTableEditEvent(tableName));
     }
 
     public void clickButton(String buttonName) {
-        ButtonEvent buttonEvent = new ButtonEvent(buttonName, new ClickAction());
-        scriptContext.play(buttonEvent);
+        scriptContext.play(new ButtonEvent(buttonName, new ClickAction()));
     }
 
     public void clickCheckBox(String checkBoxName, boolean isChecked) {
-        CheckboxEvent checkBoxEvent = new CheckboxEvent(checkBoxName, isChecked, new ClickAction());
-        scriptContext.play(checkBoxEvent);
+        scriptContext.play(new CheckboxEvent(checkBoxName, isChecked, new ClickAction()));
     }
 
     public void clickRadioButton(String radioButtonName) {
-        RadioButtonEvent radioButtonEvent = new RadioButtonEvent(radioButtonName, new ClickAction());
-        scriptContext.play(radioButtonEvent);
+        scriptContext.play(new RadioButtonEvent(radioButtonName, new ClickAction()));
     }
 
     public void clickTableHeader(String tableHeaderName, String tableColumnName) {
-        TableHeaderEvent tableHeaderEvent = new TableHeaderEvent(tableHeaderName, tableColumnName, new ClickAction());
-        scriptContext.play(tableHeaderEvent);
+        scriptContext.play(new TableHeaderEvent(tableHeaderName, tableColumnName, new ClickAction()));
     }
 
     public void closeInternalFrame(String internalFrameTitle) {
-        CloseInternalFrameEvent closeInternalFrameEvent = new CloseInternalFrameEvent(internalFrameTitle);
-        scriptContext.play(closeInternalFrameEvent);
+        scriptContext.play(new CloseInternalFrameEvent(internalFrameTitle));
     }
 
     public void closeAllDialogs() {
-        CloseAllDialogsEvent closeAllDialogsEvent = new CloseAllDialogsEvent(null);
-        scriptContext.play(closeAllDialogsEvent);
+        scriptContext.play(new CloseAllDialogsEvent(null));
     }
 
     public void delay(int milliseconds) {
-        DelayEvent delayEvent = new DelayEvent(String.valueOf(milliseconds));
-        scriptContext.play(delayEvent);
+        scriptContext.play(new DelayEvent(String.valueOf(milliseconds)));
     }
 
     public void dialogClosed(String dialogTitle) {
-        DialogClosedEvent dialogClosedEvent = new DialogClosedEvent(dialogTitle);
-        scriptContext.play(dialogClosedEvent);
+        scriptContext.play(new DialogClosedEvent(dialogTitle));
     }
 
     public void dialogShown(String dialogTitle) {
-        DialogShownEvent dialogShownEvent = new DialogShownEvent(dialogTitle);
-        scriptContext.play(dialogShownEvent);
+        scriptContext.play(new DialogShownEvent(dialogTitle));
     }
 
     public void doubleClickTableRow(String tableName, int rowIndex) {
-        TableRowEvent tableRowEvent = new TableRowEvent(tableName, rowIndex, new DoubleClickAction());
-        scriptContext.play(tableRowEvent);
+        scriptContext.play(new TableRowEvent(tableName, rowIndex, new DoubleClickAction()));
     }
 
     public void doubleClickList(String listName, int itemIndex) {
-        ListEvent listEvent = new ListEvent(listName, itemIndex, new DoubleClickAction());
-        scriptContext.play(listEvent);
+        scriptContext.play(new ListEvent(listName, itemIndex, new DoubleClickAction()));
     }
 
     public void doubleClickTree(String treeName, String[] pathElements) {
-        TreeEvent treeEvent = new TreeEvent(treeName, pathElements, new DoubleClickAction());
-        scriptContext.play(treeEvent);
+        scriptContext.play(new TreeEvent(treeName, pathElements, new DoubleClickAction()));
     }
 
     public void enterText(String textFieldname, String text) {
-        EnterTextEvent enterTextEvent = new EnterTextEvent(textFieldname, text);
-        scriptContext.play(enterTextEvent);
+        scriptContext.play(new EnterTextEvent(textFieldname, text));
     }
 
     public void editTableCell(String tableName, int row, int column) {
-        EditTableCellEvent editTableCellEvent = new EditTableCellEvent(tableName, row, column);
-        scriptContext.play(editTableCellEvent);
+        scriptContext.play(new EditTableCellEvent(tableName, row, column));
     }
 
     public void internalFrameShown(String internalFrameTitle) {
-        InternalFrameShownEvent internalFrameShownEvent = new InternalFrameShownEvent(internalFrameTitle);
-        scriptContext.play(internalFrameShownEvent);
+        scriptContext.play(new InternalFrameShownEvent(internalFrameTitle));
     }
 
     public void keyStroke(String keyModifierAndKeyCodeText) {
-        KeyStrokeEvent keyStrokeEvent = new KeyStrokeEvent(keyModifierAndKeyCodeText);
-        scriptContext.play(keyStrokeEvent);
+        scriptContext.play(new KeyStrokeEvent(keyModifierAndKeyCodeText));
     }
 
     public void navigate(String pathString) {
-        NavigateEvent navigateEvent = new NavigateEvent(pathString);
-        scriptContext.play(navigateEvent);
+        scriptContext.play(new NavigateEvent(pathString));
     }
 
     public void rightClickTree(String treeName, String[] pathElements) {
-        TreeEvent treeEvent = new TreeEvent(treeName, pathElements, new RightClickAction());
-        scriptContext.play(treeEvent);
+        scriptContext.play(new TreeEvent(treeName, pathElements, new RightClickAction()));
     }
 
     public void rightClickList(String listName, int itemIndex) {
-        ListEvent listEvent = new ListEvent(listName, itemIndex, new RightClickAction());
-        scriptContext.play(listEvent);
+        scriptContext.play(new ListEvent(listName, itemIndex, new RightClickAction()));
     }
 
     public void rightClickTableRow(String tableName, int rowIndex) {
-        TableRowEvent tableRowEvent = new TableRowEvent(tableName, rowIndex, new RightClickAction());
-        scriptContext.play(tableRowEvent);
+        scriptContext.play(new TableRowEvent(tableName, rowIndex, new RightClickAction()));
     }
 
     public void selectDropDown(String comboBoxName, String value) {
-        SelectDropDownEvent selectDropDownEvent = new SelectDropDownEvent(comboBoxName, value);
-        scriptContext.play(selectDropDownEvent);
+        scriptContext.play(new SelectDropDownEvent(comboBoxName, value));
     }
 
     public void selectFile(String filePath) {
-        SelectFileEvent selectFileEvent = new SelectFileEvent(filePath);
-        scriptContext.play(selectFileEvent);
+        scriptContext.play(new SelectFileEvent(filePath));
     }
 
     public void selectFiles(String[] filePaths) {
-        SelectFilesEvent selectFilesEvent = new SelectFilesEvent(filePaths);
-        scriptContext.play(selectFilesEvent);
+        scriptContext.play(new SelectFilesEvent(filePaths));
     }
 
     public void selectList(String listName, String[] listElements) {
-        SelectListEvent selectListEvent = new SelectListEvent(listName, listElements);
-        scriptContext.play(selectListEvent);
+        scriptContext.play(new SelectListEvent(listName, listElements));
     }
 
     public void selectTableRow(String tableName, int[] rows) {
-        SelectTableRowEvent selectTableRowEvent = new SelectTableRowEvent(tableName, rows);
-        scriptContext.play(selectTableRowEvent);
+        scriptContext.play(new SelectTableRowEvent(tableName, rows));
     }
 
     public void selectTree(String treeName, String[] pathElements) {
-        SelectTreeEvent selectTreeEvent = new SelectTreeEvent(treeName, pathElements);
-        scriptContext.play(selectTreeEvent);
+        scriptContext.play(new SelectTreeEvent(treeName, pathElements));
     }
 
     public void stopTableEdit(String tableName) {
-        StopTableEditEvent stopTableEditEvent = new StopTableEditEvent(tableName);
-        scriptContext.play(stopTableEditEvent);
+        scriptContext.play(new StopTableEditEvent(tableName));
     }
 
     public void switchTab(String tabPaneTitle, String tabTitle) {
-        SwitchTabEvent switchTabEvent = new SwitchTabEvent(tabPaneTitle, tabTitle);
-        scriptContext.play(switchTabEvent);
+        scriptContext.play(new SwitchTabEvent(tabPaneTitle, tabTitle));
     }
 
     public void moveSlider(String sliderName, int position) {
-        MoveSliderEvent moveSliderEvent = new MoveSliderEvent(sliderName, position);
-        scriptContext.play(moveSliderEvent);
+        scriptContext.play(new MoveSliderEvent(sliderName, position));
     }
 
     public void finishTest() {

@@ -56,16 +56,10 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     public String scriptLine() {
         String modifiersText = KeyEvent.getModifiersExText(modifiers);
         String modifiersTextPart = modifiersText;
-
-        if (!modifiersText.equals(Constants.EMPTY)) {
+        if (!Constants.EMPTY.equals(modifiersText)) {
             modifiersTextPart += Constants.SPACE;
         }
-
-        return underscore(action())
-                + " \""
-                + modifiersTextPart
-                + KeyStrokeMap.getKeyText(keyCode)
-                + "\"";
+        return underscore(action()) + Constants.SPACE + quote(modifiersTextPart + KeyStrokeMap.getKeyText(keyCode));
     }
 
     public String parameters() {
@@ -114,15 +108,19 @@ public class KeyStrokeEvent extends AbstractFrankensteinEvent implements KeyList
     public synchronized void run() {
         Component focusOwner = context.focusOwner();
         focusOwner.addKeyListener(this);
-        pressModifiers(robot);
-        robot.keyPress(keyCode);
-        releaseKey(robot, keyCode);
-        releaseModifiers(robot);
+        pressKeys();
         try {
             wait();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         focusOwner.removeKeyListener(this);
+    }
+
+    private void pressKeys() {
+        pressModifiers(robot);
+        robot.keyPress(keyCode);
+        releaseKey(robot, keyCode);
+        releaseModifiers(robot);
     }
 }
