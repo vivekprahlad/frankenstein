@@ -2,8 +2,8 @@ package com.thoughtworks.frankenstein.drivers;
 
 import java.awt.*;
 
-import com.thoughtworks.frankenstein.script.TestReporter;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Fails fast(Throws exception) when the execution of an event fails.

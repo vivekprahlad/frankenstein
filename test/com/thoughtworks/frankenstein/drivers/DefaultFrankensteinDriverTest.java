@@ -10,8 +10,8 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
-import com.thoughtworks.frankenstein.script.TestReporter;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Ensures the behaviour of the DefaultFrankensteinDriver.
@@ -34,7 +34,7 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     }
 
     public void testClickButtonReceivesAnExceptionWhenPlayingAnEventThrowsAnException() {
-        TestScriptContext scriptContext = new TestScriptContext(frankensteinDriver.getCompositeReporter());
+        TestScriptContext scriptContext = new TestScriptContext(frankensteinDriver.getTestReporter());
         String buttonName = "button1";
         frankensteinDriver.setScriptContext(scriptContext);
         try {
@@ -89,7 +89,6 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
         }
 
         public void startMonitor() {
-            //To change body of implemented methods use File | Settings | File Templates.
         }
     }
 }

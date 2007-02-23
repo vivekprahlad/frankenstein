@@ -9,8 +9,8 @@ import javax.swing.event.EventListenerList;
 
 import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.common.RootPaneContainerFinder;
-import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 import com.thoughtworks.frankenstein.naming.ActiveProgressbarMatchingRule;
+import com.thoughtworks.frankenstein.naming.ComponentHierarchyWalker;
 
 /**
  * Understands the currently active window. The active window could be an internal frame or a dialog.
@@ -137,7 +137,7 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     public void waitForProgressBar() {
         ActiveProgressbarMatchingRule progressbarMatchingRule = new ActiveProgressbarMatchingRule();
         ComponentHierarchyWalker walker = new ComponentHierarchyWalker();
-        while(isProgressBarActive(progressbarMatchingRule, walker)){
+        while (isProgressBarActive(progressbarMatchingRule, walker)) {
             ThreadUtil.sleep(100);
         }
     }

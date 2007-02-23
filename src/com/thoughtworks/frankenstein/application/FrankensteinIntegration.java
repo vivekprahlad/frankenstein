@@ -104,6 +104,7 @@ public class FrankensteinIntegration {
 
     /**
      * Changes the recorder mode. The two possible modes are RecorderMode.PLAY_MODE and RecorderMode.RECORD_AND_PLAY_MODE
+     *
      * @param recorderMode
      */
     public void setRecorderMode(RecorderMode recorderMode) {

@@ -6,7 +6,7 @@ import javax.swing.*;
 /**
  * Finds active progress bars
  */
-public class ActiveProgressbarMatchingRule implements ComponentMatchingRule{
+public class ActiveProgressbarMatchingRule implements ComponentMatchingRule {
     private boolean matches = false;
 
     public boolean matchAndContinue(Component component) {

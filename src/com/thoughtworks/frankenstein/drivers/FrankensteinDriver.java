@@ -1,7 +1,12 @@
 package com.thoughtworks.frankenstein.drivers;
 
 /**
- *  The Frankenstein driver allows a Swing user interface to be tested.
+ * The Frankenstein driver allows a Swing user interface to be tested.
+ * <p/>
+ * <p/>
+ * The Client of this API should ensure that finishTest() method is called after doing
+ * all test assertions without fail.
+ * </p>
  *
  * @author Pavan
  * @author Prakash
@@ -18,7 +23,7 @@ public interface FrankensteinDriver {
 
     /**
      * Activates a window with a specified title.
-     *
+     * <p/>
      * The title can be specified as a regular expression.
      *
      * @param windowTitle The title of the window to be acitvated.
@@ -37,16 +42,16 @@ public interface FrankensteinDriver {
      * Checks whether an OGNL expression evaluated against a specified component matches the specified value.
      * The expected value can be specified as a regular expression.
      *
-     * @param componentName The component name.
+     * @param componentName  The component name.
      * @param ognlExpression The OGNL expression to be evaluated.
-     * @param expectedValue The expected value.
+     * @param expectedValue  The expected value.
      */
     public void assertValue(String componentName, String ognlExpression, String expectedValue);
 
     /**
      * Check the number of rows displayed in a table
      *
-     * @param tableName The name of the table.
+     * @param tableName            The name of the table.
      * @param expectedNumberOfRows The expected number of rows in the table.
      */
     public void assertNumberOfTableRows(String tableName, int expectedNumberOfRows);
@@ -54,23 +59,23 @@ public interface FrankensteinDriver {
     /**
      * Check the value of a specified table cell. The cell value can be specified as a regular expression.
      *
-     * @param tableName The name of the table.
-     * @param row The row number of the cell.
-     * @param column The column number of the cell.
+     * @param tableName         The name of the table.
+     * @param row               The row number of the cell.
+     * @param column            The column number of the cell.
      * @param expectedCellValue The expected cell value.
      */
     public void assertTableCell(String tableName, int row, int column, String expectedCellValue);
 
     /**
      * Check the elements of a specified table row.
-     *
+     * <p/>
      * The cell values can be an arbitrary list of arguments, which are checked from left to
      * right, starting at the first column.
-     *
+     * <p/>
      * The cell values can be specified as regular expressions.
      *
-     * @param tableName Name of the table.
-     * @param row The row number to be asserted.
+     * @param tableName          Name of the table.
+     * @param row                The row number to be asserted.
      * @param expectedCellValues The expected cell values.
      */
     public void assertTableRow(String tableName, int row, String[] expectedCellValues);
@@ -80,14 +85,14 @@ public interface FrankensteinDriver {
      * The expected text can be specified as a regular expression.
      *
      * @param textComponentName Name of the text component.
-     * @param expectedText The expected text.
+     * @param expectedText      The expected text.
      */
     public void assertText(String textComponentName, String expectedText);
 
     /**
      * Checks whether the specified OGNL expression is true.
      *
-     * @param componentName Name of the component.
+     * @param componentName  Name of the component.
      * @param ognlExpression The ognl expression used to assert.
      */
     public void assertTrue(String componentName, String ognlExpression);
@@ -95,7 +100,7 @@ public interface FrankensteinDriver {
     /**
      * Checks whether the specified OGNL expression is false.
      *
-     * @param componentName Name of the component.
+     * @param componentName  Name of the component.
      * @param ognlExpression The ognl expression used to assert.
      */
     public void assertFalse(String componentName, String ognlExpression);
@@ -182,7 +187,7 @@ public interface FrankensteinDriver {
      * The check box will be selected or deselected based on the isChecked value.
      *
      * @param checkBoxName The name of the check box.
-     * @param isChecked true if check box is expected to be checked, false otherwise.
+     * @param isChecked    true if check box is expected to be checked, false otherwise.
      */
     public void clickCheckBox(String checkBoxName, boolean isChecked);
 
@@ -224,7 +229,7 @@ public interface FrankensteinDriver {
 
     /**
      * Wait for a dialog with a specified title to be closed.
-     *
+     * <p/>
      * This method waits for 10 seconds in case the dialog is found to be open.
      * (The wait time will be made configurable in a future release).
      * The title can be specified as a regular expression.
@@ -235,7 +240,7 @@ public interface FrankensteinDriver {
 
     /**
      * Wait for a dialog with a specified title to be opened.
-     *
+     * <p/>
      * This function waits for 10 seconds in case the dialog is not found to be open.
      * (The wait will be made configurable in a future release).
      * The title can be specified as a regular expression.
@@ -248,25 +253,25 @@ public interface FrankensteinDriver {
      * Double click on a table row of a specified table.
      *
      * @param tableName The name of the table.
-     * @param rowIndex The row of the table.
+     * @param rowIndex  The row of the table.
      */
     public void doubleClickTableRow(String tableName, int rowIndex);
 
     /**
      * Double click on a list item of a specified list.
      *
-     * @param listName The name of the list.
+     * @param listName  The name of the list.
      * @param itemIndex The row of the list.
      */
     public void doubleClickList(String listName, int itemIndex);
 
     /**
      * Double clicks on a tree. Supports regular expressions.
-     * <p>
+     * <p/>
      * Example: doubleClickTree("tree_name", new String[]{"top level", "/.*level/", "third level"});
      * </p>
      *
-     * @param treeName The name of the tree.
+     * @param treeName     The name of the tree.
      * @param pathElements The array of the path elements of the tree.
      */
     public void doubleClickTree(String treeName, String[] pathElements);
@@ -275,7 +280,7 @@ public interface FrankensteinDriver {
      * Enter the specified text into a specified text field.
      *
      * @param textFieldname The name of the text field.
-     * @param text The text to be entered into the text field.
+     * @param text          The text to be entered into the text field.
      */
     public void enterText(String textFieldname, String text);
 
@@ -283,8 +288,8 @@ public interface FrankensteinDriver {
      * Edit the table cell, identified by the row and the column numbers provided.
      *
      * @param tableName The name of the table.
-     * @param row The row number of the cell.
-     * @param column The column number of the cell.
+     * @param row       The row number of the cell.
+     * @param column    The column number of the cell.
      */
     public void editTableCell(String tableName, int row, int column);
 
@@ -298,7 +303,7 @@ public interface FrankensteinDriver {
 
     /**
      * Enter a keystroke with the specified modifiers.
-     * <p>
+     * <p/>
      * Example: keyStroke("Ctrl+Alt 0") for the modifiers "Control" & "Alt" and the key "0".
      * </p>
      *
@@ -309,12 +314,12 @@ public interface FrankensteinDriver {
     /**
      * Navigate to a specified path in a menu item.
      * Both menu bars and popup menus are supported.
-     *
+     * <p/>
      * The path needs to be specified as a string delimited by the ">" character.
-     * <p>
+     * <p/>
      * Example: "first level>second level>item".
      * </p>
-     *
+     * <p/>
      * This function does not have regular expression support.
      *
      * @param pathString The delimited path string.
@@ -323,10 +328,11 @@ public interface FrankensteinDriver {
 
     /**
      * Right click on a tree item of the specified tree. Supports regular expressions
-     * <p>
+     * <p/>
      * Example: rightClickTree("tree_name", new String[]{"top level", "/.*level/", "third level"});
      * </p>
-     * @param treeName The name of the tree.
+     *
+     * @param treeName     The name of the tree.
      * @param pathElements The array of the path elements of the tree.
      */
     public void rightClickTree(String treeName, String[] pathElements);
@@ -334,7 +340,7 @@ public interface FrankensteinDriver {
     /**
      * Right click on a list item of a specified list.
      *
-     * @param listName The name of the list.
+     * @param listName  The name of the list.
      * @param itemIndex The index of the item in the list.
      */
     public void rightClickList(String listName, int itemIndex);
@@ -343,7 +349,7 @@ public interface FrankensteinDriver {
      * Right click on a table row of a specified table.
      *
      * @param tableName The name of the table.
-     * @param rowIndex The index of the table row to right clicked.
+     * @param rowIndex  The index of the table row to right clicked.
      */
     public void rightClickTableRow(String tableName, int rowIndex);
 
@@ -351,7 +357,7 @@ public interface FrankensteinDriver {
      * Select a specified value from a specified combo box.
      *
      * @param comboBoxName The name of the combo box.
-     * @param value The value to be selected in the combo box.
+     * @param value        The value to be selected in the combo box.
      */
     public void selectDropDown(String comboBoxName, String value);
 
@@ -372,29 +378,29 @@ public interface FrankensteinDriver {
     /**
      * Select a specified value in a specified list.
      *
-     * @param listName The name of the list.
+     * @param listName     The name of the list.
      * @param listElements The array of the list elements to be selected.
      */
     public void selectList(String listName, String[] listElements);
 
     /**
      * Selects the specified rows in a table.
-     * <p>
+     * <p/>
      * Example: selectTableRow("table_name" , new int[]{1,2,3});
      * </p>
      *
      * @param tableName The name of the table.
-     * @param rows The arary of rows to be selected.
+     * @param rows      The arary of rows to be selected.
      */
     public void selectTableRow(String tableName, int[] rows);
 
     /**
      * Select a specified tree path. Supports regular expressions
-     * <p>
+     * <p/>
      * Example: selectTree("tree_name", new String[] {"top level", "/.*level/", "third level"});
      * </p>
      *
-     * @param treeName The name of the tree.
+     * @param treeName     The name of the tree.
      * @param pathElements The array of the path elements.
      */
     public void selectTree(String treeName, String[] pathElements);
@@ -411,7 +417,7 @@ public interface FrankensteinDriver {
      * The title can be specified as a regular expression.
      *
      * @param tabPaneTitle The title of the tabbed pane.
-     * @param tabTitle The title of the tab.
+     * @param tabTitle     The title of the tab.
      */
     public void switchTab(String tabPaneTitle, String tabTitle);
 

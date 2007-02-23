@@ -96,7 +96,7 @@ public class DefaultWindowContextTest extends MockObjectTestCase {
         Thread thread1 = spawnFirstThreadToInactivateFirstProgressBar(progressBar1);
         Thread thread2 = spawnSecondThreadToInactivateSecondProgressBar(progressBar2);
 
-        windowContext.waitForProgressBar();        
+        windowContext.waitForProgressBar();
         long after = System.currentTimeMillis();
 
         assertTrue((after - before) > 500);

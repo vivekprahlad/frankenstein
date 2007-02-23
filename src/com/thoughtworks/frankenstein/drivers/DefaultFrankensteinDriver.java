@@ -1,18 +1,19 @@
 package com.thoughtworks.frankenstein.drivers;
 
 import com.thoughtworks.frankenstein.application.RegexWorkerThreadMonitor;
+import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
 import com.thoughtworks.frankenstein.events.*;
-import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
-import com.thoughtworks.frankenstein.script.TestReporter;
 import com.thoughtworks.frankenstein.script.CompositeReporter;
+import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Default FrankensteinDriver implementation.
@@ -22,18 +23,25 @@ import com.thoughtworks.frankenstein.script.CompositeReporter;
  */
 public class DefaultFrankensteinDriver implements FrankensteinDriver {
     private ScriptContext scriptContext;
-    private CompositeReporter compositeReporter;
+    private TestReporter testReporter;
+
+    public DefaultFrankensteinDriver(TestReporter testReporter) {
+        this(testReporter, "test");
+    }
 
     public DefaultFrankensteinDriver(TestReporter testReporter, String testName) {
-        compositeReporter = createCompositeReporter(testReporter);
-        setScriptContext(createScriptContext(compositeReporter));
+        this(testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+    }
+
+    public DefaultFrankensteinDriver(TestReporter testReporter, WorkerThreadMonitor threadMonitor, String testName) {
+        this.testReporter = createCompositeReporter(testReporter);
+        setScriptContext(createScriptContext(this.testReporter, threadMonitor));
         startTest(testName);
     }
 
-    private ScriptContext createScriptContext(CompositeReporter compositeReporter) {
+    private ScriptContext createScriptContext(TestReporter testReporter, WorkerThreadMonitor threadMonitor) {
         DefaultComponentFinder componentFinder = new DefaultComponentFinder(new DefaultNamingStrategy());
-        RegexWorkerThreadMonitor threadMonitor = new RegexWorkerThreadMonitor("UIWorker");
-        return new DefaultScriptContext(compositeReporter, threadMonitor, new DefaultWindowContext(), componentFinder);
+        return new DefaultScriptContext(testReporter, threadMonitor, new DefaultWindowContext(), componentFinder);
     }
 
     private CompositeReporter createCompositeReporter(TestReporter testReporter) {
@@ -48,12 +56,12 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         this.scriptContext.startMonitor();
     }
 
-    CompositeReporter getCompositeReporter() {
-        return compositeReporter;
+    TestReporter getTestReporter() {
+        return testReporter;
     }
 
     private void startTest(String testName) {
-        compositeReporter.startTest(testName);
+        testReporter.startTest(testName);
     }
 
     public void activateDialog(String dialogTitle) {
@@ -82,7 +90,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void assertTableCell(String tableName, int row, int column, String expectedCellValue) {
-        assertValue(tableName, "getValueAt("+row+","+column+")", expectedCellValue);
+        assertValue(tableName, "getValueAt(" + row + "," + column + ")", expectedCellValue);
     }
 
     public void assertTableRow(String tableName, int row, String[] expectedCellValues) {
@@ -246,7 +254,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void selectDropDown(String comboBoxName, String value) {
-        SelectDropDownEvent selectDropDownEvent = new SelectDropDownEvent(comboBoxName,value);
+        SelectDropDownEvent selectDropDownEvent = new SelectDropDownEvent(comboBoxName, value);
         scriptContext.play(selectDropDownEvent);
     }
 
@@ -291,6 +299,6 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void finishTest() {
-        compositeReporter.finishTest();
+        testReporter.finishTest();
     }
 }

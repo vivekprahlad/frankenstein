@@ -72,7 +72,7 @@ public class SelectFilesEventTest extends AbstractEventTestCase {
     }
 
     public void testIfArrayOfStringObjectsAreJoinedCorrectly() {
-        String[] filePaths = new String[] {"/home/test/file1", "/home/test/file2"};
+        String[] filePaths = new String[]{"/home/test/file1", "/home/test/file2"};
         SelectFilesEvent event = new SelectFilesEvent(filePaths);
 
         assertEquals("/home/test/file1,/home/test/file2", event.target());
