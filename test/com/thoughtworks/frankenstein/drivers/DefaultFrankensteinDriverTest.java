@@ -5,6 +5,7 @@ import java.util.List;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
+import com.thoughtworks.frankenstein.application.Application;
 import com.thoughtworks.frankenstein.events.ButtonEvent;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
@@ -21,7 +22,14 @@ import com.thoughtworks.frankenstein.script.TestReporter;
  */
 public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     private String testName = "test";
-    public DefaultFrankensteinDriver frankensteinDriver = new DefaultFrankensteinDriver(new HtmlTestReporter(), testName);
+    public DefaultFrankensteinDriver frankensteinDriver;
+
+
+    protected void setUp() throws Exception {
+        Mock applicationMock = mock(Application.class);
+        applicationMock.expects(once()).method("launch").with(ANYTHING);
+        frankensteinDriver = new DefaultFrankensteinDriver((Application) applicationMock.proxy(), new String[]{"abc", "def"}, new HtmlTestReporter(), null, null, null, testName);
+    }
 
     public void testClickButtonPlaysClickEvent() {
         Mock scriptContextMock = mock(ScriptContext.class);
@@ -44,11 +52,13 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
         }
     }
 
-    public void testCreationOfDefaultFrankensteinDriverObjectDoesAllInitialization() {
+    public void testCreationOfDefaultFrankensteinDriverObjectDoesAllInitialization() throws ClassNotFoundException {
         String testName = "test";
         Mock testReporterMock = mock(TestReporter.class);
         testReporterMock.expects(once()).method("startTest").with(eq(testName));
-        new DefaultFrankensteinDriver((TestReporter) testReporterMock.proxy(), testName);
+        Mock applicationMock = mock(Application.class);
+        applicationMock.expects(once()).method("launch").with(ANYTHING);
+        new DefaultFrankensteinDriver((Application) applicationMock.proxy(), new String[]{"abc", "def"}, (TestReporter) testReporterMock.proxy(), null, null, null, testName);
     }
 
     public void testSettingScriptContextStartsTheNewScriptContextMonitor() {

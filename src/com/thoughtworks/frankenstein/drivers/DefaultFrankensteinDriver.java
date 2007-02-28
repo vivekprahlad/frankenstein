@@ -1,5 +1,7 @@
 package com.thoughtworks.frankenstein.drivers;
 
+import com.thoughtworks.frankenstein.application.Application;
+import com.thoughtworks.frankenstein.application.CommandLineApplication;
 import com.thoughtworks.frankenstein.application.RegexWorkerThreadMonitor;
 import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
 import com.thoughtworks.frankenstein.events.*;
@@ -8,11 +10,14 @@ import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
 import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
+import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
+import com.thoughtworks.frankenstein.playback.WindowContext;
 import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.script.CompositeReporter;
+import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
@@ -24,24 +29,59 @@ import com.thoughtworks.frankenstein.script.TestReporter;
 public class DefaultFrankensteinDriver implements FrankensteinDriver {
     private ScriptContext scriptContext;
     private TestReporter testReporter;
+    private Application application;
 
-    public DefaultFrankensteinDriver(TestReporter testReporter) {
-        this(testReporter, "test");
+    public DefaultFrankensteinDriver(Class mainClass, String[] args) {
+        this(mainClass, args, new HtmlTestReporter());
     }
 
-    public DefaultFrankensteinDriver(TestReporter testReporter, String testName) {
-        this(testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+    public DefaultFrankensteinDriver(Class mainClass, String[] args, TestReporter testReporter) {
+        this(mainClass, args, testReporter, "test");
     }
 
-    public DefaultFrankensteinDriver(TestReporter testReporter, WorkerThreadMonitor threadMonitor, String testName) {
+    public DefaultFrankensteinDriver(Class mainClass, String[] args, TestReporter testReporter, String testName) {
+        this(mainClass, args, testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+    }
+
+    public DefaultFrankensteinDriver(Class mainClass,
+                                     String[] args,
+                                     TestReporter testReporter,
+                                     WorkerThreadMonitor threadMonitor,
+                                     String testName) {
+        this(mainClass, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext(), testName);
+    }
+
+    public DefaultFrankensteinDriver(Class mainClass,
+                                     String[] args,
+                                     TestReporter testReporter,
+                                     WorkerThreadMonitor threadMonitor,
+                                     ComponentFinder componentFinder,
+                                     WindowContext windowContext,
+                                     String testName) {
         this.testReporter = createCompositeReporter(testReporter);
-        setScriptContext(createScriptContext(this.testReporter, threadMonitor));
+        this.scriptContext = new DefaultScriptContext(testReporter, threadMonitor, windowContext, componentFinder);
+        application = createApplication(mainClass);
+        application.launch(args);
         startTest(testName);
     }
 
-    private ScriptContext createScriptContext(TestReporter testReporter, WorkerThreadMonitor threadMonitor) {
-        DefaultComponentFinder componentFinder = new DefaultComponentFinder(new DefaultNamingStrategy());
-        return new DefaultScriptContext(testReporter, threadMonitor, new DefaultWindowContext(), componentFinder);
+    public DefaultFrankensteinDriver(Application application,
+                                     String[] args,
+                                     TestReporter testReporter,
+                                     WorkerThreadMonitor threadMonitor,
+                                     ComponentFinder componentFinder,
+                                     WindowContext windowContext,
+                                     String testName) {
+        this.testReporter = createCompositeReporter(testReporter);
+        this.scriptContext = new DefaultScriptContext(testReporter, threadMonitor, windowContext, componentFinder);
+        this.application = application;
+        this.application.launch(args);
+        startTest(testName);
+    }
+
+
+    private Application createApplication(Class mainClass) {
+        return new CommandLineApplication(mainClass);
     }
 
     private CompositeReporter createCompositeReporter(TestReporter testReporter) {
