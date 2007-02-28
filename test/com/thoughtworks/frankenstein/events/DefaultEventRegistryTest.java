@@ -141,7 +141,7 @@ public class DefaultEventRegistryTest extends TestCase {
 
     public void testCreateDoubleClickListEvent() {
         defaultEventRegistry.registerEvent(ListEvent.class);
-        assertEquals(new ListEvent("list", 0, new DoubleClickAction()), defaultEventRegistry.createEvent("double_click_list \"list\" 0"));
+        assertEquals(new ListEvent("list", 0, new DoubleClickAction()), defaultEventRegistry.createEvent("double_click_list \"list\" , \"0\""));
     }
 
     public void testCreateClickTableHeaderEvent() {
@@ -152,6 +152,66 @@ public class DefaultEventRegistryTest extends TestCase {
     public void testCreateRightClickTableRows() {
         defaultEventRegistry.registerEvent(TableRowEvent.class);
         assertEquals(new TableRowEvent("table", 1, new RightClickAction()), defaultEventRegistry.createEvent("right_click_table_row \"table\" , \"1\""));
+    }
+
+    public void testCreateSelectDropDownEvent() {
+        defaultEventRegistry.registerEvent(SelectDropDownEvent.class);
+        assertEquals(new SelectDropDownEvent("combo", "one"), defaultEventRegistry.createEvent("select_drop_down \"combo\" , \"one\""));
+    }
+
+    public void testCreateEditTableCellEvent() {
+        defaultEventRegistry.registerEvent(EditTableCellEvent.class);
+        assertEquals(new EditTableCellEvent("table", 1,1) , defaultEventRegistry.createEvent("edit_table_cell \"table\" , \"1,1\""));
+    }
+
+    public void testCreateDoubleClickTableRowEvent() {
+        defaultEventRegistry.registerEvent(TableRowEvent.class);
+        assertEquals(new TableRowEvent("table", 1, new DoubleClickAction()) , defaultEventRegistry.createEvent("double_click_table_row \"table\" , \"1\""));
+    }
+
+    public void testCreateDoubleClickTreeEvent() {
+        defaultEventRegistry.registerEvent(TreeEvent.class);
+        assertEquals(new TreeEvent("tree", new String[]{"top level", "second level", "third level"}, new DoubleClickAction()) , defaultEventRegistry.createEvent("double_click_tree \"tree\",\"top level\",\"second level\",\"third level\""));
+    }
+
+    public void testCreateEnterTestEvent() {
+        defaultEventRegistry.registerEvent(EnterTextEvent.class);
+        assertEquals(new EnterTextEvent("field","text") , defaultEventRegistry.createEvent("enter_text \"field\" , \"text\""));
+    }
+
+    public void testCreateRightClickTreePathEvent() {
+        defaultEventRegistry.registerEvent(TreeEvent.class);
+        assertEquals(new TreeEvent("tree", new String[]{"top level", "second level", "third level"}, new RightClickAction()) , defaultEventRegistry.createEvent("right_click_tree \"tree\",\"top level\",\"second level\",\"third level\""));
+    }
+
+    public void testCreateRightClickListEvent() {
+        defaultEventRegistry.registerEvent(ListEvent.class);
+        assertEquals(new ListEvent("list", 0, new RightClickAction()), defaultEventRegistry.createEvent("right_click_list \"list\" , \"0\""));
+    }
+
+    public void testCreateSelectListEvent() {
+        defaultEventRegistry.registerEvent(SelectListEvent.class);
+        assertEquals(new SelectListEvent("list", new String[]{"1","2"}) , defaultEventRegistry.createEvent("select_list \"list\" , \"1|2\""));
+    }
+
+    public void testCreateSelectTableRowEvent() {
+        defaultEventRegistry.registerEvent(SelectTableRowEvent.class);
+        assertEquals(new SelectTableRowEvent("table", new int[]{1,2}) , defaultEventRegistry.createEvent("select_table_row \"table\" , \"1,2\""));
+    }
+
+    public void testCreateSelectTreeEvent() {
+        defaultEventRegistry.registerEvent(SelectTreeEvent.class);
+        assertEquals(new SelectTreeEvent("tree", new String[]{"one","two"}), defaultEventRegistry.createEvent("select_tree \"tree\",\"one\",\"two\""));
+    }
+
+    public void testCreateSwitchTabEvent() {
+        defaultEventRegistry.registerEvent(SwitchTabEvent.class);
+        assertEquals(new SwitchTabEvent("tab", "title"), defaultEventRegistry.createEvent("switch_tab \"tab\" , \"title\""));
+    }
+
+    public void testCreateMoveSliderEvent() {
+        defaultEventRegistry.registerEvent(MoveSliderEvent.class);
+        assertEquals(new MoveSliderEvent("slider", 0), defaultEventRegistry.createEvent("move_slider \"slider\" , \"0\""));
     }
 
     public void testRegisteringValidAction() {

@@ -59,7 +59,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      WindowContext windowContext,
                                      String testName) {
         this.testReporter = createCompositeReporter(testReporter);
-        this.scriptContext = new DefaultScriptContext(testReporter, threadMonitor, windowContext, componentFinder);
+        this.scriptContext = new DefaultScriptContext(this.testReporter, threadMonitor, windowContext, componentFinder);
         application = createApplication(mainClass);
         application.launch(args);
         startTest(testName);
@@ -73,7 +73,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      WindowContext windowContext,
                                      String testName) {
         this.testReporter = createCompositeReporter(testReporter);
-        this.scriptContext = new DefaultScriptContext(testReporter, threadMonitor, windowContext, componentFinder);
+        this.scriptContext = new DefaultScriptContext(this.testReporter, threadMonitor, windowContext, componentFinder);
         this.application = application;
         this.application.launch(args);
         startTest(testName);

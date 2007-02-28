@@ -189,17 +189,17 @@ module FrankensteinDriver
 
   # Double click on a table row of a specified table.
   def double_click_table_row(table, row_index)
-    append_to_script "double_click_table_row \"#{table}\",\"#{row_index}\""
+    append_to_script "double_click_table_row \"#{table}\" , \"#{row_index}\""
   end
 
   # Double click on a list item of a specified list.
   def double_click_list(list, row_index)
-    append_to_script "double_click_list \"#{list}\",\"#{row_index}\""
+    append_to_script "double_click_list \"#{list}\" , \"#{row_index}\""
   end
 
   # Double clicks on a tree. Supports regular expressions
   #
-  # For example: double_click_tree "tree_name", "top level", /.*level/, "third level"
+  # For example: double_click_tree "tree_name","top level",/.*level/,"third level"
   def double_click_tree(tree, *path)
     path = tree_path(path_elements)
     append_to_script "double_click_tree \"#{tree}\",#{path}"
@@ -207,13 +207,13 @@ module FrankensteinDriver
 
   # Enter the specified text into a specified text field.
   def enter_text(textfield, text)
-    append_to_script "enter_text \"#{textfield}\",\"#{text}\""
+    append_to_script "enter_text \"#{textfield}\" , \"#{text}\""
   end
 
   # Edit a table cell at the specified coordinates. The coordinates are specified as a
   # "<row>,<column>" - for example, "1,1"
   def edit_table_cell(table, coords)
-    append_to_script "edit_table_cell \"#{table}\",\"#{coords}\""
+    append_to_script "edit_table_cell \"#{table}\" , \"#{coords}\""
   end
 
   # Checks that an internal frame with the specified title has been shown
@@ -241,7 +241,7 @@ module FrankensteinDriver
 
   # Right click on a tree item of the specified tree. Supports regular expressions
   #
-  # For example: right_click_tree "tree_name", "top level", /.*level/, "third level"
+  # For example: right_click_tree "tree_name","top level",/.*level/,"third level"
   def right_click_tree(tree, *path_elements)
     path = tree_path(path_elements)
     append_to_script "right_click_tree \"#{tree}\",#{path}"
@@ -249,17 +249,17 @@ module FrankensteinDriver
 
   # Right click on a list item of a specified list.
   def right_click_list(list, item_index)
-    append_to_script "right_click_list \"#{list}\",\"#{item_index}\""
+    append_to_script "right_click_list \"#{list}\" , \"#{item_index}\""
   end
 
   # Right click on a table row of a specified table.
   def right_click_table_row(table, row_index)
-    append_to_script "right_click_table_row \"#{table}\",\"#{row_index}\""
+    append_to_script "right_click_table_row \"#{table}\" , \"#{row_index}\""
   end
 
   # Select a specified value from a specified combo box.
   def select_drop_down(combo, value)
-    append_to_script "select_drop_down \"#{combo}\",\"#{value}\""
+    append_to_script "select_drop_down \"#{combo}\" , \"#{value}\""
   end
 
   # Select a specified file in a file chooser.
@@ -274,7 +274,7 @@ module FrankensteinDriver
 
   # Select a specified value in a specified list.
   def select_list(list, value)
-    append_to_script "select_list \"#{list}\",\"#{value}\""
+    append_to_script "select_list \"#{list}\" , \"#{value}\""
   end
 
   # Selects the specified rows in a table.
@@ -282,12 +282,12 @@ module FrankensteinDriver
   #
   # Example: select_table_row "table_name" , "1,2,3"
   def select_table_row(table, rows)
-    append_to_script "select_table_row \"#{table}\",\"#{rows}\""
+    append_to_script "select_table_row \"#{table}\" , \"#{rows}\""
   end
 
   # Select a specified tree path. Supports regular expressions
   #
-  # For example: select_tree "tree_name", "top level", /.*level/, "third level"
+  # For example: select_tree "tree_name","top level",/.*level/,"third level"
   def select_tree(tree, *path_elements)
     path = tree_path(path_elements)
     append_to_script "select_tree \"#{tree}\",#{path}"
@@ -301,12 +301,12 @@ module FrankensteinDriver
   # Switch to a tab with the specified title of a specified tabbed pane.
   # The title can be specified as a regular expression.
   def switch_tab(tab, title)
-    append_to_script "switch_tab \"#{tab}\",\"#{title}\""
+    append_to_script "switch_tab \"#{tab}\" , \"#{title}\""
   end
 
   # Moves a specified slider to the specified position
   def move_slider(slider, position)
-    append_to_script "move_slider \"#{slider}\",\"#{position}\""
+    append_to_script "move_slider \"#{slider}\" , \"#{position}\""
   end
 
   # Sends a test script to the Frankenstein Java runtime at the specified host and port.
