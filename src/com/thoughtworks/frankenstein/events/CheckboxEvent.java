@@ -46,6 +46,8 @@ public class CheckboxEvent extends AbstractCompoundEvent {
 
     public void run() {
         JCheckBox checkBox = (JCheckBox) finder.findComponent(context, checkBoxName);
-        action.execute(center(checkBox), checkBox, finder, context);
+        if (checkBox.isSelected() ^ selected) {
+            action.execute(center(checkBox), checkBox, finder, context);
+        }
     }
 }

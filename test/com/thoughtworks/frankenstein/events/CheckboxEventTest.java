@@ -5,6 +5,7 @@ import javax.swing.*;
 import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
+import com.thoughtworks.frankenstein.events.actions.MockAction;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 
 /**
@@ -49,6 +50,27 @@ public class CheckboxEventTest extends AbstractEventTestCase {
         checkBoxEvent = new CheckboxEvent("parent.buttonName", true, mockAction);
         checkBoxEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
         assertEquals(checkBoxEvent.center(checkBox), mockAction.point);
+    }
+
+    public void testDoesNotClickButtonIfCheckboxIsAlreadySelected() {
+        doTestCheckBoxSelection(true);
+    }
+
+    public void testDoesNotClickButtonIfCheckboxIsAlreadyDeSelected() {
+        doTestCheckBoxSelection(false);
+    }
+
+    private void doTestCheckBoxSelection(boolean selected) {
+        JCheckBox checkBox = new JCheckBox();
+        CheckboxEvent checkBoxEvent;
+        checkBox.setSize(20, 10);
+        checkBox.setSelected(selected);
+        MockAction mockAction = new MockAction();
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        mockComponentFinder.expects(once()).method("findComponent").with(ANYTHING, eq("parent.buttonName")).will(returnValue(checkBox));
+        checkBoxEvent = new CheckboxEvent("parent.buttonName", selected, mockAction);
+        checkBoxEvent.play(null, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        assertTrue(mockAction.wasNotCalled());
     }
 
     protected FrankensteinEvent createEvent() {

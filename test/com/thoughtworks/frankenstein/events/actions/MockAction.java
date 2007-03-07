@@ -19,4 +19,8 @@ public class MockAction implements Action {
     public String name() {
         return null;
     }
+
+    public boolean wasNotCalled() {
+        return point == null;
+    }
 }
