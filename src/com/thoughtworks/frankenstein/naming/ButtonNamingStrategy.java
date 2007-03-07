@@ -17,7 +17,7 @@ public class ButtonNamingStrategy extends AbstractComponentNamingStrategy implem
     public void name(Component component, int counter) {
         if (!(component instanceof AbstractButton))
             throw new IllegalArgumentException("Can only be used to name buttons");
-        component.setName(prefix((JComponent) component) + buttonName(component, counter).replaceAll("\\s+", ""));
+        component.setName(prefix((JComponent) component) + removeWhitespace(buttonName(component, counter)));
     }
 
     private String buttonName(Component component, int counter) {

@@ -40,4 +40,8 @@ public abstract class AbstractComponentNamingStrategy {
         String[] type = componentType.getName().split("\\.");
         return type[type.length - 1];
     }
+
+    protected String removeWhitespace(String name) {
+        return name.replaceAll("\\s+", "");
+    }
 }

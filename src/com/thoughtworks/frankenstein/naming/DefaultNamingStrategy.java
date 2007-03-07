@@ -44,7 +44,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
         nameComponentOfType(JTextField.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JTextArea.class, panel, new CounterBasedNamingStrategy(prefix));
         nameComponentOfType(JRadioButton.class, panel, new ButtonNamingStrategy(prefix));
-        nameComponentOfType(JCheckBox.class, panel, new ButtonNamingStrategy(prefix));
+        nameComponentOfType(JCheckBox.class, panel, new CheckBoxNamingStrategy(prefix));
         nameComponentOfType(JToggleButton.class, panel, new ButtonNamingStrategy(prefix));
         nameComponentOfType(JButton.class, panel, new ButtonNamingStrategy(prefix));
         nameComponentOfType(JList.class, panel, new CounterBasedNamingStrategy(prefix));
