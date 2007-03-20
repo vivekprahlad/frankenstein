@@ -96,9 +96,8 @@ public class DefaultScriptContext implements ScriptContext {
     private void playEvents(List events) {
         int eventIndex = 0;
         for (Iterator iterator = events.iterator(); iterator.hasNext();) {
-            waitForIdle();
             fireScriptStepStartedEvent(eventIndex++);
-            playAndReportTestStatus((FrankensteinEvent) iterator.next());
+            play((FrankensteinEvent) iterator.next());
         }
         fireScriptCompletedEvent();
     }

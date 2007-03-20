@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
  * @author Vivek Prahlad
  */
 public interface ScriptContext {
+
     void startTest(String testName);
 
     void startMonitor();

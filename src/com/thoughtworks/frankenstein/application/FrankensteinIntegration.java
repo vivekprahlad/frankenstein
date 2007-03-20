@@ -34,6 +34,7 @@ public class FrankensteinIntegration {
     private SocketListener socketListener;
     private int port = Constants.LISTEN_PORT;//Default value
     private CompositeReporter testReporter;
+    private PlaybackSpeedControlScriptListener playbackControlListener;
 
     public FrankensteinIntegration(Class mainClass,
                                    JFrame frame,
@@ -66,6 +67,7 @@ public class FrankensteinIntegration {
         eventRecorder = new DefaultRecorder(new DefaultScriptContext(testReporter, monitor, context, finder));
         recorder = new DefaultFrankensteinRecorder(eventRecorder, new DefaultComponentDecoder(), namingStrategy);
         socketListener = new SocketListener(recorder);
+        playbackControlListener = new PlaybackSpeedControlScriptListener(Constants.DEFAULT_DELAY, Constants.DEFAULT_SHOULD_SLOW_DOWN);
         createRecorderUI(recorder);
     }
 
@@ -96,7 +98,7 @@ public class FrankensteinIntegration {
     /**
      * Set the port at which Frankenstein listens for commands. (The default port is 5678)
      * <p/>
-     * * @param port port at which Frankenstein listens.
+     *  @param port port at which Frankenstein listens.
      */
     public void setPort(int port) {
         this.port = port;
@@ -105,10 +107,18 @@ public class FrankensteinIntegration {
     /**
      * Changes the recorder mode. The two possible modes are RecorderMode.PLAY_MODE and RecorderMode.RECORD_AND_PLAY_MODE
      *
-     * @param recorderMode
+     * @param recorderMode the recorder mode.
      */
     public void setRecorderMode(RecorderMode recorderMode) {
         this.recorderMode = recorderMode;
+    }
+
+    /**
+     * Sets the playback delay between steps.
+     * @param delay delay in milliseconds.
+     */
+    public void setPlaybackDelay(int delay) {
+        playbackControlListener.setDelay(delay);
     }
 
     public void start(String[] args) {
@@ -143,7 +153,7 @@ public class FrankensteinIntegration {
 
     private void createRecorderUI(FrankensteinRecorder compositeRecorder) {
         frame.getContentPane().add(new RecorderPane(compositeRecorder, new DefaultFileDialogLauncher(), new RecorderTableModel(eventRecorder),
-                new PlaybackSpeedControlScriptListener(Constants.DEFAULT_DELAY, Constants.DEFAULT_SHOULD_SLOW_DOWN)));
+                playbackControlListener));
         frame.pack();
         frame.setVisible(true);
     }

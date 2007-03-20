@@ -76,5 +76,5 @@ public class CheckboxEventTest extends AbstractEventTestCase {
     protected FrankensteinEvent createEvent() {
         return new CheckboxEvent("parent.buttonName", true, new ClickAction());
     }
-
+    
 }

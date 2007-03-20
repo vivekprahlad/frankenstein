@@ -28,4 +28,8 @@ public class PlaybackSpeedControlScriptListener implements ScriptListener {
     public void setShouldWaitBetweenSteps(boolean shouldWait) {
         this.shouldWait = shouldWait;
     }
+
+    public void setDelay(int delayInMilliseconds) {
+        milliseconds = delayInMilliseconds;
+    }
 }
