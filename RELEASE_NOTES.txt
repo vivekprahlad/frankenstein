@@ -1,3 +1,26 @@
+Version 0.7.5
+================================
+
+Feature list:
+    - Better support for keystrokes.
+    - JProgressbar support. Between steps, Frankenstein waits in case a progress bar is active
+    - Option to play tests back slowly. (The delay is configurable via FrankensteinIntegration)
+    - Added optional 'play only' mode. This mode is useful for playing back test suites.
+    - Java driver
+    - Recorder highlights currently active step during playback.
+
+Several bugs were fixed:
+    - Fixed a problem with commas appearing in tree paths.
+    - Application crashes now result in tests being correctly reported as failed.
+    - Fixed a hang in the AbstractMouseAction
+    - Tree recorder generates double and rightclick events on mouse presses and mouse releases
+    - Fixed recorder UI layout when the recorder is maximised
+    - Fixed click_radio_button method in the Ruby driver.
+    - Fixed an issue with playing back clicks on checkboxes inside JTables
+
+Pavan KS and Prakash Subramanian from ThoughtWorks contributed most of the features for this release
+Anand Janakiraman contributed several bug reports and fixes.
+
 Version: 0.7.0 (Initial release)
 ================================
 
