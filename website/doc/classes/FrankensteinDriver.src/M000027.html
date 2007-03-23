@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>cancel_table_edit (FrankensteinDriver)</title>
+  <title>assert_number_of_table_rows (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 123</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cancel_table_edit</span>(<span class="ruby-identifier">table</span>)
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;cancel_table_edit \&quot;#{table}\&quot;&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 79</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_number_of_table_rows</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">number_of_rows</span>)
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">table_name</span>, <span class="ruby-value str">&quot;rowCount&quot;</span>, <span class="ruby-identifier">number_of_rows</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

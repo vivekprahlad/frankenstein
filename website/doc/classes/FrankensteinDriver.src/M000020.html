@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>assert_number_of_table_rows (FrankensteinDriver)</title>
+  <title>assert_checkbox_not_selected (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 79</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_number_of_table_rows</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">number_of_rows</span>)
-    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">table_name</span>,<span class="ruby-value str">&quot;rowCount&quot;</span>,<span class="ruby-identifier">number_of_rows</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 44</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_checkbox_not_selected</span>(<span class="ruby-identifier">checkbox_name</span>)
+    <span class="ruby-identifier">assert_togglebutton_not_selected</span> <span class="ruby-identifier">checkbox_name</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>assert_togglebutton_not_selected (FrankensteinDriver)</title>
+  <title>activate_window (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 64</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_togglebutton_not_selected</span>(<span class="ruby-identifier">togglebutton_name</span>)
-    <span class="ruby-identifier">assert_false</span> <span class="ruby-identifier">togglebutton_name</span>,<span class="ruby-value str">&quot;selected&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 27</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">activate_window</span>(<span class="ruby-identifier">title</span>)
+    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;activate_window \&quot;#{title}\&quot;&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

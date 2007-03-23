@@ -1,3 +1,20 @@
+
+body {
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size:   90%;
+    margin: 0;
+    margin-left: 40px;
+    padding: 0;
+    background: white;
+}
+
+h1,h2,h3,h4 { margin: 0; color: #efefef; background: transparent; }
+h1 { font-size: 150%; }
+h2,h3,h4 { margin-top: 1em; }
+
+a { background: #eef; color: #039; text-decoration: none; }
+a:hover { background: #039; color: #eef; }
+
 /* Override the base stylesheet's Anchor inside a table cell */
 td > a {
   background: transparent;
@@ -16,6 +33,7 @@ td > a {
 
 div#index {
     margin: 0;
+    margin-left: -40px;
     padding: 0;
     font-size: 90%;
 }
@@ -38,6 +56,7 @@ div#classHeader, div#fileHeader {
     color: white;
     padding: 0.5em 1.5em 0.5em 1.5em;
     margin: 0;
+    margin-left: -40px;
     border-bottom: 3px solid #006;
 }
 
@@ -118,6 +137,7 @@ table.header-table {
 .section-bar {
    color: #333;
    border-bottom: 1px solid #999;
+    margin-left: -20px;
 }
 
 
@@ -126,6 +146,7 @@ table.header-table {
     color: #eee;
     padding: 3px;
     margin-top: 2em;
+    margin-left: -30px;
     border: 1px solid #999;
 }
 

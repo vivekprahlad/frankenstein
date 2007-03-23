@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>click_button (FrankensteinDriver)</title>
+  <title>assert_table_cell (FrankensteinDriver)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 128</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">click_button</span>(<span class="ruby-identifier">button</span>)
-    <span class="ruby-identifier">append_to_script</span> <span class="ruby-node">&quot;click_button \&quot;#{button}\&quot;&quot;</span>
+  <pre><span class="ruby-comment cmt"># File frankenstein_driver.rb, line 84</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_table_cell</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">row</span>, <span class="ruby-identifier">column</span>, <span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">table_name</span>, <span class="ruby-node">&quot;getValueAt(#{row},#{column})&quot;</span>, <span class="ruby-identifier">value</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
