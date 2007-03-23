@@ -52,18 +52,18 @@
     <releases>        
         <release>
             <version>0.7.5</version>
-            <date>23/03/2007</date>
-            <jiraId>10233</jiraId>
+            <date>23-March-2007</date>
+            <jiraId>10234</jiraId>
             <downloads>
                 <download>
                     <url>http://www.openqa.org/frankenstein/releases/frankenstein-0.7.5.zip</url>
-                    <name>0.7.5 release</name>
+                    <name>Full release</name>
                 </download>                
             </downloads>
         </release>
         <release>
             <version>0.7.0</version>
-            <date>02/01/2007</date>
+            <date>02-January-2007</date>
             <jiraId>10233</jiraId>
             <downloads>
                 <download>
