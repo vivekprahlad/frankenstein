@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.playback;
 
 import java.lang.reflect.InvocationTargetException;
+import java.awt.*;
 import javax.swing.*;
 
 import org.jmock.Mock;
@@ -46,7 +47,6 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
                 };
             }
         });
-        ;
         return textField[0];
     }
 
@@ -269,5 +269,18 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
         nextMenu.add(menuItem);
         menu.add(nextMenu);
         return menu;
+    }
+
+    public void testFindsJAppletInSomeFrameGivenTheAppletName() {
+        Frame frame1 = new Frame();
+        Frame frame2 = new Frame();
+        frame1.setVisible(true);
+        frame2.setVisible(true);
+        JApplet applet = new JApplet();
+        applet.setName("testApplet");
+        frame2.add(applet);
+        assertEquals(applet, finder.findApplet("testApplet"));
+        frame1.dispose();
+        frame2.dispose();
     }
 }

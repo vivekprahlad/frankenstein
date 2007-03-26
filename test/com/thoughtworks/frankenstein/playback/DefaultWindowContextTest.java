@@ -36,6 +36,25 @@ public class DefaultWindowContextTest extends MockObjectTestCase {
         assertSame(frame, windowContext.activeWindow());
     }
 
+    public void testContextIsJAppletWhenJAppletIsShown() {
+        JApplet applet = new JApplet();
+        JButton button = new JButton();
+        applet.getContentPane().add(button);
+        windowContext.setActiveWindow(applet);
+        assertSame(applet, windowContext.activeWindow());
+    }
+
+    public void testContextIsJAppletWhenACompentInItHasFocus() {
+        Frame frame = new Frame();
+        JApplet applet = new JApplet();
+        JButton button = new JButton();
+        frame.add(applet);
+        applet.getContentPane().add(button);
+        setFocusManager(button);
+        windowContext.propertyChange(new PropertyChangeEvent(this, "focusOwner", null, button));
+        assertSame(applet, windowContext.activeWindow());
+    }
+
     public void testContextIsJDialogWhenJDialogIsShown() {
         JDialog dialog = new JDialog();
         JButton comp = new JButton();

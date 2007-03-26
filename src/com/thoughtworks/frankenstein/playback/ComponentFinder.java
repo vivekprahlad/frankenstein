@@ -28,4 +28,6 @@ public interface ComponentFinder {
     void menuHidden();
 
     JDialog findDialog(String title);
+
+    JApplet findApplet(String appletName);
 }

@@ -59,13 +59,17 @@ public class DefaultComponentFinder implements ComponentFinder {
     }
 
     public Window findWindow(String title) {
-        Frame[] frames = Frame.getFrames();
+        Frame[] frames = getAllFrames();
         for (int i = 0; i < frames.length; i++) {
             if (MatchStrategy.matchValues(title(frames[i]), title)) {
                 return frames[i];
             }
         }
         throw new RuntimeException("Could not find window with title: " + title);
+    }
+
+    private Frame[] getAllFrames() {
+        return Frame.getFrames();
     }
 
     private String title(Frame frame) {
@@ -93,5 +97,20 @@ public class DefaultComponentFinder implements ComponentFinder {
 
     public JDialog findDialog(String title) {
         return dialogList.findDialog(title);
+    }
+
+    public JApplet findApplet(String appletName) {
+        Frame[] frames = getAllFrames();
+        Component component = null;
+        for (int index = 0; index < frames.length; index++) {
+            Frame frame = frames[index];
+            component = findComp(appletName, frame);
+            if (component != null) {
+                break;
+            }
+        }
+        if (component == null)
+            throw new RuntimeException("Unable to find the applet with the given name " + appletName);
+        return (JApplet) component;
     }
 }

@@ -39,6 +39,11 @@ public class DefaultEventRegistryTest extends TestCase {
         }
     }
 
+    public void testCreatesActivateAppletEvent() {
+        defaultEventRegistry.registerEvent(ActivateAppletEvent.class);
+        assertEquals(new ActivateAppletEvent("testApplet"), defaultEventRegistry.createEvent("ActivateApplet \"testApplet\""));
+    }
+
     public void testCreatesCancelTableEditEvent() {
         defaultEventRegistry.registerEvent(CancelTableEditEvent.class);
         assertEquals(new CancelTableEditEvent("abc"), defaultEventRegistry.createEvent("CancelTableEdit \"abc\""));

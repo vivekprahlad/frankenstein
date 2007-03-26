@@ -26,6 +26,7 @@ public class DefaultEventRegistry implements EventRegistry {
         registerAction(ClickAction.class);
         registerAction(RightClickAction.class);
         registerAction(DoubleClickAction.class);
+        registerEvent(ActivateAppletEvent.class);
         registerEvent(ActivateInternalFrameEvent.class);
         registerEvent(ActivateDialogEvent.class);
         registerEvent(ActivateWindowEvent.class);

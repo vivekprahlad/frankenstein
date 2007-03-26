@@ -38,6 +38,7 @@ public class DefaultFrankensteinRecorder implements FrankensteinRecorder {
     }
 
     private void createRecorders() {
+        registerRecorder(AppletActivationRecorder.class);
         registerRecorder(AssertLabelRecorder.class);
         registerRecorder(ButtonClickRecorder.class);
         registerRecorder(CheckBoxRecorder.class);

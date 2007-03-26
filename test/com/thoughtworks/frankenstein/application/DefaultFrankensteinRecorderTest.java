@@ -101,7 +101,7 @@ public class DefaultFrankensteinRecorderTest extends MockObjectTestCase {
     }
 
     public void testCheckIfAllRecordersAreRegistered() {
-        assertEquals(23, compositeRecorder.recorders.size());
+        assertEquals(24, compositeRecorder.recorders.size());
     }
 
     private List eventList() {
