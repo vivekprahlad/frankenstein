@@ -3,6 +3,12 @@ package com.thoughtworks.frankenstein.playback;
 import com.thoughtworks.frankenstein.application.ThreadUtil;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
+/**
+ * Understands varying play back speed.
+ *
+ * @author Pavan
+ * @author Prakash
+ */
 public class PlaybackSpeedControlScriptListener implements ScriptListener {
     private long milliseconds;
     private boolean shouldWait;

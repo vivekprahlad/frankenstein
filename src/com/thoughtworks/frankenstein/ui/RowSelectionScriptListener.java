@@ -2,7 +2,12 @@ package com.thoughtworks.frankenstein.ui;
 
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 
-
+/**
+ * Understands rendering row selection after a script step is completed.
+ *
+ * @author Pavan
+ * @author Prakash
+ */
 public class RowSelectionScriptListener implements ScriptListener {
     private RecorderTable recorderTable;
 

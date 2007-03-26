@@ -2,6 +2,13 @@ package com.thoughtworks.frankenstein.playback;
 
 import junit.framework.TestCase;
 
+/**
+ * Ensures the behaviour of the PlaybackSpeedControllScriptListener.
+ *
+ * @author Pavan
+ * @author Prakash
+ */
+
 public class PlaybackSpeedControlScriptListenerTest extends TestCase {
     private PlaybackSpeedControlScriptListener playbackSpeedControlScriptListener;
     private long defaultDelay;
