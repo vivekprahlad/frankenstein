@@ -79,6 +79,14 @@ public class FrankensteinIntegration {
         this(mainClass, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
+    public FrankensteinIntegration(Application application) {
+        this(application, new JFrame("Recorder"), new RegexWorkerThreadMonitor("UIWorker"), new DefaultWindowContext(), new DefaultNamingStrategy());
+    }
+
+    public FrankensteinIntegration(Application application, JFrame frame, WorkerThreadMonitor monitor, WindowContext context, NamingStrategy namingStrategy) {
+        this(application, frame, monitor, context, namingStrategy, new DefaultComponentFinder(namingStrategy));
+    }
+
     public void registerAction(Class actionClass) {
         recorder.registerAction(actionClass);
     }

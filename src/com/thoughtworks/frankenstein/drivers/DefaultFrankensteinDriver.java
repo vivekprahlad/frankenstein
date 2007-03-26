@@ -65,6 +65,26 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         startTest(testName);
     }
 
+    public DefaultFrankensteinDriver(Application application, String[] args) {
+            this(application, args, new HtmlTestReporter());
+        }
+
+    public DefaultFrankensteinDriver(Application application, String[] args, TestReporter testReporter) {
+        this(application, args, testReporter, "test");
+    }
+
+    public DefaultFrankensteinDriver(Application application, String[] args, TestReporter testReporter, String testName) {
+        this(application, args, testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+    }
+
+    public DefaultFrankensteinDriver(Application application,
+                                     String[] args,
+                                     TestReporter testReporter,
+                                     RegexWorkerThreadMonitor threadMonitor,
+                                     String testName) {
+        this(application, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext(), testName);
+    }
+
     public DefaultFrankensteinDriver(Application application,
                                      String[] args,
                                      TestReporter testReporter,
