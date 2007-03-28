@@ -14,6 +14,14 @@ public class FrankensteinApplet extends JApplet implements AppletStub {
     private FrankensteinIntegration frankensteinIntegration;
     private Applet appletObject;
 
+
+    public FrankensteinApplet() throws HeadlessException {
+    }
+
+    public FrankensteinApplet(Applet appletObject) throws HeadlessException {
+        this.appletObject = appletObject;
+    }
+
     public void init() {
         setPermissions();
         
@@ -64,6 +72,10 @@ public class FrankensteinApplet extends JApplet implements AppletStub {
 
     public void appletResize(int width, int height) {
         resize(width, height);
+    }
+
+    public Applet getAppletObject() {
+        return appletObject;
     }
 
     private void setPermissions() {

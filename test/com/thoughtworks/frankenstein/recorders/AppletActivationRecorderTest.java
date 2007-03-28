@@ -1,9 +1,10 @@
 package com.thoughtworks.frankenstein.recorders;
 
-import java.awt.event.FocusEvent;
-
+import java.awt.*;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
+import com.thoughtworks.frankenstein.application.FrankensteinApplet;
 import com.thoughtworks.frankenstein.events.ActivateAppletEvent;
 
 /**
@@ -21,8 +22,14 @@ public class AppletActivationRecorderTest extends AbstractRecorderTestCase {
 
     public void testListensForAppletGettingActivated() {
         mockRecorder.expects(once()).method("record").with(eq(new ActivateAppletEvent("testApplet")));
-        JApplet jApplet = new JApplet();
-        jApplet.setName("testApplet");
-        appletActivationRecorder.eventDispatched(new FocusEvent(jApplet, FocusEvent.FOCUS_GAINED));
+        Frame frame = new Frame();
+        Container container = new Container();
+        JApplet actualApplet = new JApplet();
+        FrankensteinApplet frankensteinApplet = new FrankensteinApplet(actualApplet);
+        actualApplet.setName("testApplet");
+        frame.add(container);
+        container.add(frankensteinApplet);
+        appletActivationRecorder.eventDispatched(new WindowEvent(frame, WindowEvent.WINDOW_GAINED_FOCUS));
+        frame.dispose();
     }
 }
