@@ -97,6 +97,14 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         startButton.doClick();
     }
 
+    public void testDoesNotRecordButtonPresentInJavaConsole() {
+        JFrame frame = new JFrame("Java Console");
+        frame.getContentPane().add(button);
+        recorder.componentShown(button);
+        mockRecorder.expects(never()).method("record").with(eq(new ButtonEvent("abc", new ClickAction())));
+        button.doClick();
+    }
+
     private int listenerCount() {
         return button.getActionListeners().length;
     }

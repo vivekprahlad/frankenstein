@@ -27,7 +27,20 @@ public class WindowActivationRecorderTest extends AbstractRecorderTestCase {
 
     public void testDoesNotRecordActivationOfRecorderFrame() {
         mockRecorder.expects(never()).method("record").with(ANYTHING);
-        recorder.eventDispatched(new WindowEvent(createRecorderFrame(), WindowEvent.WINDOW_ACTIVATED));
+        JFrame frame = createRecorderFrame();
+        recorder.eventDispatched(new WindowEvent(frame, WindowEvent.WINDOW_ACTIVATED));
+        frame.dispose();
+    }
+
+    public void testDoesNotRecordActivationOfJavaConsole() {
+        mockRecorder.expects(never()).method("record").with(ANYTHING);
+        JFrame frame = createJavaConsole();
+        recorder.eventDispatched(new WindowEvent(frame, WindowEvent.WINDOW_ACTIVATED));
+        frame.dispose();
+    }
+
+    private JFrame createJavaConsole() {
+        return new JFrame("Java Console");
     }
 
     private JFrame createRecorderFrame() {

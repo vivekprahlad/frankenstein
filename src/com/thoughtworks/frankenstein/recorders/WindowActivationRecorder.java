@@ -16,6 +16,7 @@ import com.thoughtworks.frankenstein.ui.RecorderPane;
  */
 public class WindowActivationRecorder implements ComponentRecorder, AWTEventListener {
     private EventRecorder recorder;
+    public static final String JAVA_CONSOLE = "Java Console";
 
     public WindowActivationRecorder(EventRecorder recorder) {
         this.recorder = recorder;
@@ -35,13 +36,17 @@ public class WindowActivationRecorder implements ComponentRecorder, AWTEventList
             if (windowEvent.getID() == WindowEvent.WINDOW_ACTIVATED) {
                 if (windowEvent.getWindow() instanceof JFrame) {
                     JFrame frame = (JFrame) windowEvent.getWindow();
-                    if (hasNoRecorderPane(frame)) {
+                    if (hasNoRecorderPane(frame) && frameNotJavaConsole(frame)) {
                         recorder.record(new ActivateWindowEvent(frame.getTitle()));
                     }
 
                 }
             }
         }
+    }
+
+    private boolean frameNotJavaConsole(JFrame frame) {
+        return !frame.getTitle().equalsIgnoreCase(JAVA_CONSOLE);
     }
 
     protected boolean hasNoRecorderPane(Container component) {
