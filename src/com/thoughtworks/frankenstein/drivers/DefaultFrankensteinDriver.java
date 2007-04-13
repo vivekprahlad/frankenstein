@@ -66,8 +66,8 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public DefaultFrankensteinDriver(Application application, String[] args) {
-            this(application, args, new HtmlTestReporter());
-        }
+        this(application, args, new HtmlTestReporter());
+    }
 
     public DefaultFrankensteinDriver(Application application, String[] args, TestReporter testReporter) {
         this(application, args, testReporter, "test");
@@ -122,6 +122,10 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
 
     private void startTest(String testName) {
         testReporter.startTest(testName);
+    }
+
+    public void activateApplet(String appletName) {
+        scriptContext.play(new ActivateAppletEvent(appletName));
     }
 
     public void activateDialog(String dialogTitle) {

@@ -71,6 +71,14 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
         frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
     }
 
+    public void testActivateAppletEvent() {
+            String appletName = "applet";
+            ActivateAppletEvent windowEvent = new ActivateAppletEvent(appletName);
+            setScriptContextExpectation(windowEvent);
+            frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
+            frankensteinDriver.activateApplet(appletName);
+        }
+
     public void testActivateWindowEvent() {
         String windowTitle = "window";
         ActivateWindowEvent windowEvent = new ActivateWindowEvent(windowTitle);

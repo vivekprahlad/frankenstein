@@ -14,6 +14,13 @@ package com.thoughtworks.frankenstein.drivers;
 public interface FrankensteinDriver {
 
     /**
+     * Activates an applet with the specified name.
+     *
+     * @param appletName The name of the applet to be activated.
+     */
+    public void activateApplet(String appletName);
+
+    /**
      * Activates a dialog with a specified title.
      * The title can be specified as a regular expression.
      *
