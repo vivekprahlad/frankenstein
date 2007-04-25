@@ -20,6 +20,7 @@ public class RecorderTableModel extends AbstractTableModel implements ChangeList
     private static final int TARGET_COLUMN = 1;
     private static final int PARAMETER_COLUMN = 2;
     private EventRecorder recorder;
+    private RecorderTable table;
 
     public RecorderTableModel(EventRecorder recorder) {
         this.recorder = recorder;
@@ -65,7 +66,14 @@ public class RecorderTableModel extends AbstractTableModel implements ChangeList
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 fireTableDataChanged();
+                if (table!=null) {
+                    table.selectLastRow();
+                }
             }
         });
+    }
+
+    public void setTable(RecorderTable table) {
+        this.table = table;
     }
 }

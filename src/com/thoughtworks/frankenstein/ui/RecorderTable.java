@@ -5,7 +5,10 @@ package com.thoughtworks.frankenstein.ui;
  */
 
 public interface RecorderTable {
+
     void selectRow(int indexOfRowToBeSelected);
+
+    void selectLastRow();
 
     void clearSelection();
 }

@@ -23,6 +23,9 @@ public class RecorderPane extends JPanel {
 
         add(controlPanel, BorderLayout.PAGE_START);
         DefaultRecorderTable recorderTable = new DefaultRecorderTable(tableModel);
+        if (tableModel!=null) {
+            tableModel.setTable(recorderTable);
+        }
         recorder.addScriptListener(new RowSelectionScriptListener(recorderTable));
         recorder.addScriptListener(listener);
         JScrollPane scrollPane = new JScrollPane(recorderTable);

@@ -20,4 +20,8 @@ public class DefaultRecorderTable extends JTable implements RecorderTable {
         setRowSelectionInterval(indexOfRowToBeSelected, indexOfRowToBeSelected);
         scrollRectToVisible(getCellRect(indexOfRowToBeSelected, 0, true));
     }
+
+    public void selectLastRow() {
+        selectRow(getRowCount()-1);
+    }
 }

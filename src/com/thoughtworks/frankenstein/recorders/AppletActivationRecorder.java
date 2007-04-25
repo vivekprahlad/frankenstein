@@ -33,7 +33,7 @@ public class AppletActivationRecorder implements ComponentRecorder, AWTEventList
     public void eventDispatched(AWTEvent event) {
         if (event instanceof WindowEvent) {
 			WindowEvent windowEvent = (WindowEvent) event;
-			if (windowEvent.getID() == WindowEvent.WINDOW_GAINED_FOCUS) {
+			if (windowEvent.getID() == WindowEvent.WINDOW_GAINED_FOCUS && event.getSource() instanceof Frame) {
 				Frame frame = (Frame) event.getSource();
 				Component compo[] = frame.getComponents();
                 for (int i = 0; i < compo.length; i++) {
