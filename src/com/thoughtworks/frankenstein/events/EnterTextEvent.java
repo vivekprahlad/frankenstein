@@ -1,6 +1,6 @@
 package com.thoughtworks.frankenstein.events;
 
-import javax.swing.*;
+import javax.swing.text.JTextComponent;
 
 /**
  * Understands entering text in a text field.
@@ -15,7 +15,7 @@ public class EnterTextEvent extends AbstractFrankensteinEvent {
         this.textFieldName = textFieldName;
         this.text = text;
     }
-
+    
     public EnterTextEvent(String scriptLine) {
         this(params(scriptLine)[0], params(scriptLine)[1]);
     }
@@ -33,7 +33,7 @@ public class EnterTextEvent extends AbstractFrankensteinEvent {
     }
 
     public void run() {
-        JTextField field = (JTextField) finder.findComponent(context, textFieldName);
+        JTextComponent field = (JTextComponent) finder.findComponent(context, textFieldName);
         field.setText(text);
     }
 }

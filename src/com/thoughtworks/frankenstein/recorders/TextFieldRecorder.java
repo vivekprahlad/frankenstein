@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -35,14 +36,19 @@ public class TextFieldRecorder extends AbstractComponentRecorder {
         textField(component).getDocument().removeDocumentListener(listener);
     }
 
-    private JTextField textField(Component component) {
-        return (JTextField) component;
+
+    protected boolean matchesComponentType(AWTEvent event) {
+        return event.getSource() instanceof JTextComponent;
+    }
+
+    private JTextComponent textField(Component component) {
+        return (JTextComponent) component;
     }
 
     private class TextFieldListener implements DocumentListener {
-        private JTextField textField;
+        private JTextComponent textField;
 
-        public TextFieldListener(JTextField textField) {
+        public TextFieldListener(JTextComponent textField) {
             this.textField = textField;
         }
 

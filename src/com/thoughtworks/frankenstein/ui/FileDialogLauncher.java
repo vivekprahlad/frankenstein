@@ -10,7 +10,9 @@ import com.thoughtworks.frankenstein.application.FrankensteinRecorder;
  * @author Vivek Prahlad
  */
 public interface FileDialogLauncher {
+
     void launchOpenDialog(JPanel pane, JFileChooser chooser, FrankensteinRecorder recorder);
 
     void launchSaveDialog(JPanel pane, JFileChooser chooser, FrankensteinRecorder recorder);
+    
 }

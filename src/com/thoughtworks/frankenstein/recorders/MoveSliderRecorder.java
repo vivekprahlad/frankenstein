@@ -12,8 +12,11 @@ import com.thoughtworks.frankenstein.naming.NamingStrategy;
  * Understands recording slider motion
  */
 public class MoveSliderRecorder extends AbstractComponentRecorder implements ChangeListener {
-    public MoveSliderRecorder(EventRecorder recorder, NamingStrategy namingStrategy) {
+    private ComponentVisibility visibility;
+
+    public MoveSliderRecorder(EventRecorder recorder, NamingStrategy namingStrategy, ComponentVisibility visibility) {
         super(recorder, namingStrategy, JSlider.class);
+        this.visibility = visibility;
     }
 
     void componentShown(Component component) {
@@ -30,7 +33,7 @@ public class MoveSliderRecorder extends AbstractComponentRecorder implements Cha
 
     public void stateChanged(ChangeEvent e) {
         JSlider slider = (JSlider) e.getSource();
-        if (!slider.getValueIsAdjusting()) {
+        if (!slider.getValueIsAdjusting() && visibility.isShowingAndHasFocus(slider)) {
             recorder.record(new MoveSliderEvent(componentName(slider), slider.getValue()));
         }
     }
