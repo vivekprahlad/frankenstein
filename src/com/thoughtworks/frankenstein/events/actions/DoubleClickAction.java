@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events.actions;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 /**
@@ -17,6 +18,12 @@ public class DoubleClickAction extends AbstractMouseAction implements Action {
 
     public String name() {
         return "DoubleClick";
+    }
+
+    public synchronized void mouseReleased(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            notifyAll(); //Fix for bug FKS-4
+        }
     }
 
     public boolean equals(Object obj) {
