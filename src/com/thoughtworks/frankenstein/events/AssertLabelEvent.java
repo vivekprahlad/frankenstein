@@ -1,5 +1,8 @@
 package com.thoughtworks.frankenstein.events;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 /**
  *
  */
@@ -27,7 +30,11 @@ public class AssertLabelEvent extends AbstractFrankensteinEvent {
     }
 
     public void run() {
-        finder.findLabel(context, labelValue);
+        try {
+            finder.findLabel(context, labelValue);
+        } catch (Exception e) {
+            Logger.getLogger("Frankenstein").log(Level.WARNING, "AssertLabel failed: Could not find label with text " + labelValue);
+        }
     }
 }
 

@@ -22,6 +22,8 @@ public class DefaultRecorderTable extends JTable implements RecorderTable {
     }
 
     public void selectLastRow() {
-        selectRow(getRowCount()-1);
+        if (getRowCount()>0) {
+            selectRow(getRowCount()-1);
+        }
     }
 }
