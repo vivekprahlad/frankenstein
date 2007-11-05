@@ -2,7 +2,7 @@ package com.thoughtworks.frankenstein.common;
 
 public class Constants {
     public static final int LISTEN_PORT = 5678;
-    public static final int DEFAULT_DELAY = 500;
+    public static final int DEFAULT_DELAY = 2000;
     public static final boolean DEFAULT_SHOULD_SLOW_DOWN = false;
     public static final String EMPTY = "";
     public static final String SPACE = " ";

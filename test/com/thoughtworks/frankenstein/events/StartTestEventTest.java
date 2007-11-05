@@ -32,7 +32,7 @@ public class StartTestEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("StartTest \"testName\"", new StartTestEvent("testName").scriptLine());
+        assertEquals("start_test \"testName\"", new StartTestEvent("testName").scriptLine());
     }
 
     public void testPlaysEvent() {

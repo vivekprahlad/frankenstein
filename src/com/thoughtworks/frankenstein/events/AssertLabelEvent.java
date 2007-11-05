@@ -25,10 +25,6 @@ public class AssertLabelEvent extends AbstractFrankensteinEvent {
         return "";
     }
 
-    public String scriptLine() {
-        return underscore(action()) + SPACE + quote(parameters());
-    }
-
     public void run() {
         try {
             finder.findLabel(context, labelValue);

@@ -46,13 +46,13 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     }
 
     public void testClickButtonReceivesAnExceptionWhenPlayingAnEventThrowsAnException() {
-        TestScriptContext scriptContext = new TestScriptContext(frankensteinDriver.getTestReporter());
+        TestScriptContext scriptContext = new TestScriptContext(frankensteinDriver.testReporter);
         String buttonName = "button1";
         frankensteinDriver.setScriptContext(scriptContext);
         try {
             frankensteinDriver.clickButton(buttonName);
             fail();
-        } catch (Exception e) {
+        } catch (Exception expected) {
         }
     }
 

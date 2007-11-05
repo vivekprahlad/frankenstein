@@ -26,6 +26,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     protected ScriptContext scriptContext;
     protected Robot robot;
     protected static final String SPACE = " ";
+    protected static final ScriptStrategy scriptStrategy = new RubyScriptStrategy();
 
     public void record(EventList list, FrankensteinEvent lastEvent) {
         if (isSameTargetAs(lastEvent)) {
@@ -50,7 +51,7 @@ public abstract class AbstractFrankensteinEvent implements FrankensteinEvent {
     }
 
     public String scriptLine() {
-        return (underscore(action()) + SPACE + quote(target()) + (parameters().equals("") ? "" : " , " + quote(Script.escapeNewLines(parameters())))).replaceAll("\\s", SPACE).trim();
+        return scriptStrategy.convert(new String[] {action(), target(), parameters()});
     }
 
     protected String quote(String input) {

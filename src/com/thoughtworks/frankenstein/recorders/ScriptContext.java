@@ -24,4 +24,5 @@ public interface ScriptContext {
     void removeScriptListener(ScriptListener listener);
 
     void play(FrankensteinEvent event);
+
 }

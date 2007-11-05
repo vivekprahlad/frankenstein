@@ -52,10 +52,10 @@ public class TreeEvent extends AbstractCompoundEvent {
     public void run() {
         new SelectTreeEvent(treeName, path).play(context, finder, scriptContext, robot);
         JTree tree = (JTree) finder.findComponent(context, treeName);
-        action.execute(nodeLocation(tree), tree, finder, context);
+        action.execute(location(tree), tree, finder, context);
     }
 
-    private Point nodeLocation(JTree tree) {
+    private Point location(JTree tree) {
         Point treeLocation = tree.getLocation();
         Rectangle pathBounds = tree.getPathBounds(tree.getSelectionPath());
         Point nodeLocation = new Point(pathBounds.x + pathBounds.width / 2, pathBounds.y + pathBounds.height / 2);

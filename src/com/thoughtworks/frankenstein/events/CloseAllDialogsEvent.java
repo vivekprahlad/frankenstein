@@ -15,10 +15,6 @@ public class CloseAllDialogsEvent extends AbstractFrankensteinEvent {
         return "CloseAllDialogsEvent";
     }
 
-    public String scriptLine() {
-        return underscore(action());
-    }
-
     public String target() {
         return "";
     }

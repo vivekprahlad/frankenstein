@@ -51,6 +51,18 @@ public class EnterTextEventTest extends AbstractEventTestCase {
         assertEquals("text", textField.getText());
     }
 
+    public void testPlaysTextAreaEvent() {
+        EnterTextEvent event = new EnterTextEvent("parent.textAreaName", "text");
+        Mock mockComponentFinder = mock(ComponentFinder.class);
+        Mock mockContext = mock(WindowContext.class);
+        WindowContext context = (WindowContext) mockContext.proxy();
+        JTextArea textArea = new JTextArea();
+        mockComponentFinder.expects(once()).method("findComponent").with(same(context), eq("parent.textAreaName")).will(returnValue(textArea));
+        event.play(context, (ComponentFinder) mockComponentFinder.proxy(), null, null);
+        waitForIdle();
+        assertEquals("text", textArea.getText());
+    }
+    
     protected FrankensteinEvent createEvent() {
         return new EnterTextEvent("parent.textFieldName", "line one\nlinetwo\n");
     }

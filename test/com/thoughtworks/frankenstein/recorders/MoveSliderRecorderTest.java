@@ -14,7 +14,7 @@ import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
     private JSlider slider;
     private MoveSliderRecorder recorder;
-    private Mock mockVisibitily;
+    private Mock mockVisibility;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -22,12 +22,11 @@ public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
         slider.setName("slider");
         JScrollPane scrollPane = new JScrollPane(slider, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         new JFrame().getContentPane().add(scrollPane);
-        mockVisibitily = mock(ComponentVisibility.class);
+        mockVisibility = mock(ComponentVisibility.class);
         recorder = new MoveSliderRecorder((Recorder) mockRecorder.proxy(),
                 new DefaultNamingStrategy(),
-                (ComponentVisibility) mockVisibitily.proxy());
+                (ComponentVisibility) mockVisibility.proxy());
     }
-
 
     public void testAddsChangeListenerWhenSliderIsShown() {
         int listenerCount = listenerCount();
@@ -45,7 +44,7 @@ public class MoveSliderRecorderTest extends AbstractRecorderTestCase {
     public void testRecordsMovementOnSlider() {
         recorder.componentShown(slider);
         mockRecorder.expects(once()).method("record").with(eq(new MoveSliderEvent("slider", 10)));
-        mockVisibitily.expects(once()).method("isShowingAndHasFocus").with(same(slider)).will(returnValue(true));
+        mockVisibility.expects(once()).method("isShowingAndHasFocus").with(same(slider)).will(returnValue(true));
         slider.setValue(10);
     }
 

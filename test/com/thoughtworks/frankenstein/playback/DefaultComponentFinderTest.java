@@ -37,19 +37,41 @@ public class DefaultComponentFinderTest extends MockObjectTestCase {
     }
 
     private JTextField createTextField() throws InvocationTargetException, InterruptedException {
-        final JTextField[] textField = new JTextField[1];
-        SwingUtilities.invokeAndWait(new Runnable() {
-            public void run() {
-                textField[0] = new JTextField() {
-                    public boolean isShowing() {
-                        return true;
-                    }
-                };
-            }
-        });
-        return textField[0];
+    	final JTextField[] textField = new JTextField[1];
+    	SwingUtilities.invokeAndWait(new Runnable() {
+    		public void run() {
+    			textField[0] = new JTextField() {
+    				public boolean isShowing() {
+    					return true;
+    				}
+    			};
+    		}
+    	});
+    	return textField[0];
     }
 
+    public void testFindsTextAreaByName() throws InterruptedException, InvocationTargetException {
+        JPanel panel = new JPanel();
+        JTextArea textArea = createTextArea();
+        textArea.setName("parent.textarea");
+        panel.add(textArea);
+        mockWindowContext.expects(once()).method("activeWindow").will(returnValue(panel));
+        assertSame(textArea, finder.findComponent((WindowContext) mockWindowContext.proxy(), "parent.textarea"));
+    }
+    
+    private JTextArea createTextArea() throws InvocationTargetException, InterruptedException {
+    	final JTextArea[] textArea = new JTextArea[1];
+    	SwingUtilities.invokeAndWait(new Runnable() {
+    		public void run() {
+    			textArea[0] = new JTextArea() {
+    				public boolean isShowing() {
+    					return true;
+    				}
+    			};
+    		}
+    	});
+    	return textArea[0];
+    }
     public void testDoesNotProceedIfComponentNotFound() {
         mockWindowContext.expects(atLeastOnce()).method("activeWindow").will(returnValue(new JPanel()));
         try {

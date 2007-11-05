@@ -1,6 +1,7 @@
 package com.thoughtworks.frankenstein.events;
 
 import java.awt.*;
+import java.io.Serializable;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.WindowContext;
@@ -14,7 +15,7 @@ import com.thoughtworks.frankenstein.recorders.ScriptContext;
  * @author Vivek Prahlad
  * @see EventExecutionStrategy
  */
-public interface FrankensteinEvent extends Runnable {
+public interface FrankensteinEvent extends Runnable , Serializable{
     FrankensteinEvent NULL = new AbstractFrankensteinEvent() {
         public void play(WindowContext context, ComponentFinder finder, ScriptContext scriptContext, Robot robot) {
             throw new UnsupportedOperationException("Cannot play back null events");

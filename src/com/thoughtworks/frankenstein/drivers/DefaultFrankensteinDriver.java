@@ -28,7 +28,7 @@ import com.thoughtworks.frankenstein.script.TestReporter;
  */
 public class DefaultFrankensteinDriver implements FrankensteinDriver {
     private ScriptContext scriptContext;
-    private TestReporter testReporter;
+    protected TestReporter testReporter;
     private Application application;
 
     public DefaultFrankensteinDriver(Class mainClass, String[] args) {
@@ -48,7 +48,8 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      TestReporter testReporter,
                                      WorkerThreadMonitor threadMonitor,
                                      String testName) {
-        this(mainClass, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext(), testName);
+        this(mainClass, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()),
+                new DefaultWindowContext(), testName);
     }
 
     public DefaultFrankensteinDriver(Class mainClass,
@@ -58,11 +59,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      ComponentFinder componentFinder,
                                      WindowContext windowContext,
                                      String testName) {
-        this.testReporter = createCompositeReporter(testReporter);
-        this.scriptContext = new DefaultScriptContext(this.testReporter, threadMonitor, windowContext, componentFinder);
-        application = createApplication(mainClass);
-        application.launch(args);
-        startTest(testName);
+        this(createApplication(mainClass), args, testReporter, threadMonitor, componentFinder, windowContext, testName);
     }
 
     public DefaultFrankensteinDriver(Application application, String[] args) {
@@ -73,7 +70,10 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         this(application, args, testReporter, "test");
     }
 
-    public DefaultFrankensteinDriver(Application application, String[] args, TestReporter testReporter, String testName) {
+    public DefaultFrankensteinDriver(Application application,
+                                     String[] args,
+                                     TestReporter testReporter,
+                                     String testName) {
         this(application, args, testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
     }
 
@@ -82,7 +82,8 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      TestReporter testReporter,
                                      RegexWorkerThreadMonitor threadMonitor,
                                      String testName) {
-        this(application, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext(), testName);
+        this(application, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()),
+                new DefaultWindowContext(), testName);
     }
 
     public DefaultFrankensteinDriver(Application application,
@@ -100,7 +101,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
 
-    private Application createApplication(Class mainClass) {
+    private static Application createApplication(Class mainClass) {
         return new CommandLineApplication(mainClass);
     }
 
@@ -114,10 +115,6 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     void setScriptContext(ScriptContext scriptContext) {
         this.scriptContext = scriptContext;
         this.scriptContext.startMonitor();
-    }
-
-    TestReporter getTestReporter() {
-        return testReporter;
     }
 
     private void startTest(String testName) {

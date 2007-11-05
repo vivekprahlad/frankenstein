@@ -244,15 +244,10 @@ public class DefaultRecorderTest extends MockObjectTestCase {
         }
 
         public void play(FrankensteinEvent event) {
+            //To change body of implemented methods use File | Settings | File Templates.
         }
 
         public void startMonitor() {
-        }
-
-        public void addTestReporter(TestReporter testReporter) {
-        }
-
-        public void removeAllTestReporters() {
         }
 
     }
