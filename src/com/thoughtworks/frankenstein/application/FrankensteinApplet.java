@@ -1,9 +1,9 @@
 package com.thoughtworks.frankenstein.application;
 
+import javax.swing.*;
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.awt.*;
-import javax.swing.*;
 
 /**
  * Launches a designated applet after launching Frankenstein.
@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author Pavan.
  */
 public class FrankensteinApplet extends JApplet implements AppletStub {
-    private FrankensteinIntegration frankensteinIntegration;
+    private DefaultFrankensteinIntegration frankensteinIntegration;
     private Applet appletObject;
 
 
@@ -24,12 +24,12 @@ public class FrankensteinApplet extends JApplet implements AppletStub {
 
     public void init() {
         setPermissions();
-        
+
         String className = getParameter("appletName");
         if (className == null) {
             throw new RuntimeException("Cannot find the parameter 'appletName'");
         }
-        frankensteinIntegration = new FrankensteinIntegration(new NullApplication());
+        frankensteinIntegration = new DefaultFrankensteinIntegration(new NullApplication());
         frankensteinIntegration.start(null);
         Class mainClass;
         try {

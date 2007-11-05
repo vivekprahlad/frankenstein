@@ -1,20 +1,19 @@
 package com.thoughtworks.frankenstein.drivers;
 
-import java.util.List;
-
-import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
-
 import com.thoughtworks.frankenstein.application.Application;
 import com.thoughtworks.frankenstein.events.*;
-import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
 import com.thoughtworks.frankenstein.events.actions.DoubleClickAction;
 import com.thoughtworks.frankenstein.events.actions.RightClickAction;
+import com.thoughtworks.frankenstein.events.assertions.AssertEvent;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 import com.thoughtworks.frankenstein.script.TestReporter;
+import org.jmock.Mock;
+import org.jmock.MockObjectTestCase;
+
+import java.util.List;
 
 /**
  * Ensures the behaviour of the DefaultFrankensteinDriver.
@@ -31,7 +30,7 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     protected void setUp() throws Exception {
         Mock applicationMock = mock(Application.class);
         applicationMock.expects(once()).method("launch").with(ANYTHING);
-        frankensteinDriver = new DefaultFrankensteinDriver((Application) applicationMock.proxy(), new String[]{"abc", "def"}, new HtmlTestReporter(), null, null, null, testName);
+        frankensteinDriver = new DefaultFrankensteinDriver((Application) applicationMock.proxy(), new String[]{"abc", "def"}, new NullTestReporter(), null, null, null, testName);
         scriptContextMock = mock(ScriptContext.class);
     }
 
@@ -46,7 +45,7 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     }
 
     public void testClickButtonReceivesAnExceptionWhenPlayingAnEventThrowsAnException() {
-        TestScriptContext scriptContext = new TestScriptContext(frankensteinDriver.testReporter);
+        TestScriptContext scriptContext = new TestScriptContext(new HtmlTestReporter());
         String buttonName = "button1";
         frankensteinDriver.setScriptContext(scriptContext);
         try {
@@ -72,12 +71,12 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
     }
 
     public void testActivateAppletEvent() {
-            String appletName = "applet";
-            ActivateAppletEvent windowEvent = new ActivateAppletEvent(appletName);
-            setScriptContextExpectation(windowEvent);
-            frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
-            frankensteinDriver.activateApplet(appletName);
-        }
+        String appletName = "applet";
+        ActivateAppletEvent windowEvent = new ActivateAppletEvent(appletName);
+        setScriptContextExpectation(windowEvent);
+        frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
+        frankensteinDriver.activateApplet(appletName);
+    }
 
     public void testActivateWindowEvent() {
         String windowTitle = "window";
@@ -544,5 +543,10 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
 
         public void startMonitor() {
         }
+    }
+
+    protected void tearDown() throws Exception {
+        frankensteinDriver.finishTest();
+        super.tearDown();
     }
 }

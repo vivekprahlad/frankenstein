@@ -1,7 +1,7 @@
 package com.thoughtworks.frankenstein.drivers;
 
 import com.thoughtworks.frankenstein.application.Application;
-import com.thoughtworks.frankenstein.application.CommandLineApplication;
+import com.thoughtworks.frankenstein.application.PlaybackFrankensteinIntegration;
 import com.thoughtworks.frankenstein.application.RegexWorkerThreadMonitor;
 import com.thoughtworks.frankenstein.application.WorkerThreadMonitor;
 import com.thoughtworks.frankenstein.events.*;
@@ -14,9 +14,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultComponentFinder;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.playback.WindowContext;
-import com.thoughtworks.frankenstein.recorders.DefaultScriptContext;
 import com.thoughtworks.frankenstein.recorders.ScriptContext;
-import com.thoughtworks.frankenstein.script.CompositeReporter;
 import com.thoughtworks.frankenstein.script.HtmlTestReporter;
 import com.thoughtworks.frankenstein.script.TestReporter;
 
@@ -27,20 +25,24 @@ import com.thoughtworks.frankenstein.script.TestReporter;
  * @author Prakash
  */
 public class DefaultFrankensteinDriver implements FrankensteinDriver {
-    private ScriptContext scriptContext;
-    protected TestReporter testReporter;
-    private Application application;
+    private PlaybackFrankensteinIntegration frankensteinIntegration;
 
     public DefaultFrankensteinDriver(Class mainClass, String[] args) {
-        this(mainClass, args, new HtmlTestReporter());
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, new HtmlTestReporter());
+        frankensteinIntegration.start(args);
+        startTest("test");
     }
 
     public DefaultFrankensteinDriver(Class mainClass, String[] args, TestReporter testReporter) {
-        this(mainClass, args, testReporter, "test");
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, testReporter);
+        frankensteinIntegration.start(args);
+        startTest("test");
     }
 
     public DefaultFrankensteinDriver(Class mainClass, String[] args, TestReporter testReporter, String testName) {
-        this(mainClass, args, testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, testReporter);
+        frankensteinIntegration.start(args);
+        startTest(testName);
     }
 
     public DefaultFrankensteinDriver(Class mainClass,
@@ -48,8 +50,9 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      TestReporter testReporter,
                                      WorkerThreadMonitor threadMonitor,
                                      String testName) {
-        this(mainClass, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()),
-                new DefaultWindowContext(), testName);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext());
+        frankensteinIntegration.start(args);
+        startTest(testName);
     }
 
     public DefaultFrankensteinDriver(Class mainClass,
@@ -59,22 +62,30 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      ComponentFinder componentFinder,
                                      WindowContext windowContext,
                                      String testName) {
-        this(createApplication(mainClass), args, testReporter, threadMonitor, componentFinder, windowContext, testName);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, testReporter, threadMonitor, componentFinder, windowContext);
+        frankensteinIntegration.start(args);
+        startTest(testName);
     }
 
     public DefaultFrankensteinDriver(Application application, String[] args) {
-        this(application, args, new HtmlTestReporter());
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(application, new HtmlTestReporter());
+        frankensteinIntegration.start(args);
+        startTest("test");
     }
 
     public DefaultFrankensteinDriver(Application application, String[] args, TestReporter testReporter) {
-        this(application, args, testReporter, "test");
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(application, testReporter);
+        frankensteinIntegration.start(args);
+        startTest("test");
     }
 
     public DefaultFrankensteinDriver(Application application,
                                      String[] args,
                                      TestReporter testReporter,
                                      String testName) {
-        this(application, args, testReporter, new RegexWorkerThreadMonitor("UIWorker"), testName);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(application, testReporter);
+        frankensteinIntegration.start(args);
+        startTest(testName);
     }
 
     public DefaultFrankensteinDriver(Application application,
@@ -82,8 +93,9 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      TestReporter testReporter,
                                      RegexWorkerThreadMonitor threadMonitor,
                                      String testName) {
-        this(application, args, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()),
-                new DefaultWindowContext(), testName);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(application, testReporter, threadMonitor, new DefaultComponentFinder(new DefaultNamingStrategy()), new DefaultWindowContext());
+        frankensteinIntegration.start(args);
+        startTest(testName);
     }
 
     public DefaultFrankensteinDriver(Application application,
@@ -93,52 +105,41 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
                                      ComponentFinder componentFinder,
                                      WindowContext windowContext,
                                      String testName) {
-        this.testReporter = createCompositeReporter(testReporter);
-        this.scriptContext = new DefaultScriptContext(this.testReporter, threadMonitor, windowContext, componentFinder);
-        this.application = application;
-        this.application.launch(args);
+        frankensteinIntegration = new PlaybackFrankensteinIntegration(application, testReporter, threadMonitor, componentFinder, windowContext);
+        frankensteinIntegration.start(args);
         startTest(testName);
     }
 
-
-    private static Application createApplication(Class mainClass) {
-        return new CommandLineApplication(mainClass);
-    }
-
-    private CompositeReporter createCompositeReporter(TestReporter testReporter) {
-        CompositeReporter compositeReporter = new CompositeReporter();
-        compositeReporter.addTestReporter(testReporter);
-        compositeReporter.addTestReporter(new FailFastReporter());
-        return compositeReporter;
-    }
-
     void setScriptContext(ScriptContext scriptContext) {
-        this.scriptContext = scriptContext;
-        this.scriptContext.startMonitor();
+        frankensteinIntegration.setScriptContext(scriptContext);
+    }
+
+    TestReporter getTestReporter() {
+        return frankensteinIntegration.getTestReporter();
     }
 
     private void startTest(String testName) {
-        testReporter.startTest(testName);
+        getTestReporter().startTest(testName);
     }
 
     public void activateApplet(String appletName) {
-        scriptContext.play(new ActivateAppletEvent(appletName));
+        frankensteinIntegration.play(new ActivateAppletEvent(appletName));
     }
 
     public void activateDialog(String dialogTitle) {
-        scriptContext.play(new ActivateDialogEvent(dialogTitle));
+        frankensteinIntegration.play(new ActivateDialogEvent(dialogTitle));
     }
 
     public void activateWindow(String windowTitle) {
-        scriptContext.play(new ActivateWindowEvent(windowTitle));
+        frankensteinIntegration.play(new ActivateWindowEvent(windowTitle));
     }
 
     public void activateInternalFrame(String internalFrameTitle) {
-        scriptContext.play(new ActivateInternalFrameEvent(internalFrameTitle));
+        frankensteinIntegration.play(new ActivateInternalFrameEvent(internalFrameTitle));
     }
 
     public void assertValue(String componentName, String ognlExpression, String expectedValue) {
-        scriptContext.play(new AssertEvent(componentName, ognlExpression, expectedValue));
+        frankensteinIntegration.play(new AssertEvent(componentName, ognlExpression, expectedValue));
     }
 
     public void assertNumberOfTableRows(String tableName, int expectedNumberOfRows) {
@@ -200,130 +201,131 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
     }
 
     public void assertLabel(String expectedText) {
-        scriptContext.play(new AssertLabelEvent(expectedText));
+        frankensteinIntegration.play(new AssertLabelEvent(expectedText));
     }
 
     public void cancelTableEdit(String tableName) {
-        scriptContext.play(new CancelTableEditEvent(tableName));
+        frankensteinIntegration.play(new CancelTableEditEvent(tableName));
     }
 
     public void clickButton(String buttonName) {
-        scriptContext.play(new ButtonEvent(buttonName, new ClickAction()));
+        frankensteinIntegration.play(new ButtonEvent(buttonName, new ClickAction()));
     }
 
     public void clickCheckBox(String checkBoxName, boolean isChecked) {
-        scriptContext.play(new CheckboxEvent(checkBoxName, isChecked, new ClickAction()));
+        frankensteinIntegration.play(new CheckboxEvent(checkBoxName, isChecked, new ClickAction()));
     }
 
     public void clickRadioButton(String radioButtonName) {
-        scriptContext.play(new RadioButtonEvent(radioButtonName, new ClickAction()));
+        frankensteinIntegration.play(new RadioButtonEvent(radioButtonName, new ClickAction()));
     }
 
     public void clickTableHeader(String tableHeaderName, String tableColumnName) {
-        scriptContext.play(new TableHeaderEvent(tableHeaderName, tableColumnName, new ClickAction()));
+        frankensteinIntegration.play(new TableHeaderEvent(tableHeaderName, tableColumnName, new ClickAction()));
     }
 
     public void closeInternalFrame(String internalFrameTitle) {
-        scriptContext.play(new CloseInternalFrameEvent(internalFrameTitle));
+        frankensteinIntegration.play(new CloseInternalFrameEvent(internalFrameTitle));
     }
 
     public void closeAllDialogs() {
-        scriptContext.play(new CloseAllDialogsEvent(null));
+        frankensteinIntegration.play(new CloseAllDialogsEvent(null));
     }
 
     public void delay(int milliseconds) {
-        scriptContext.play(new DelayEvent(String.valueOf(milliseconds)));
+        frankensteinIntegration.play(new DelayEvent(String.valueOf(milliseconds)));
     }
 
     public void dialogClosed(String dialogTitle) {
-        scriptContext.play(new DialogClosedEvent(dialogTitle));
+        frankensteinIntegration.play(new DialogClosedEvent(dialogTitle));
     }
 
     public void dialogShown(String dialogTitle) {
-        scriptContext.play(new DialogShownEvent(dialogTitle));
+        frankensteinIntegration.play(new DialogShownEvent(dialogTitle));
     }
 
     public void doubleClickTableRow(String tableName, int rowIndex) {
-        scriptContext.play(new TableRowEvent(tableName, rowIndex, new DoubleClickAction()));
+        frankensteinIntegration.play(new TableRowEvent(tableName, rowIndex, new DoubleClickAction()));
     }
 
     public void doubleClickList(String listName, int itemIndex) {
-        scriptContext.play(new ListEvent(listName, itemIndex, new DoubleClickAction()));
+        frankensteinIntegration.play(new ListEvent(listName, itemIndex, new DoubleClickAction()));
     }
 
     public void doubleClickTree(String treeName, String[] pathElements) {
-        scriptContext.play(new TreeEvent(treeName, pathElements, new DoubleClickAction()));
+        frankensteinIntegration.play(new TreeEvent(treeName, pathElements, new DoubleClickAction()));
     }
 
     public void enterText(String textFieldname, String text) {
-        scriptContext.play(new EnterTextEvent(textFieldname, text));
+        frankensteinIntegration.play(new EnterTextEvent(textFieldname, text));
     }
 
     public void editTableCell(String tableName, int row, int column) {
-        scriptContext.play(new EditTableCellEvent(tableName, row, column));
+        frankensteinIntegration.play(new EditTableCellEvent(tableName, row, column));
     }
 
     public void internalFrameShown(String internalFrameTitle) {
-        scriptContext.play(new InternalFrameShownEvent(internalFrameTitle));
+        frankensteinIntegration.play(new InternalFrameShownEvent(internalFrameTitle));
     }
 
     public void keyStroke(String keyModifierAndKeyCodeText) {
-        scriptContext.play(new KeyStrokeEvent(keyModifierAndKeyCodeText));
+        frankensteinIntegration.play(new KeyStrokeEvent(keyModifierAndKeyCodeText));
     }
 
     public void navigate(String pathString) {
-        scriptContext.play(new NavigateEvent(pathString));
+        frankensteinIntegration.play(new NavigateEvent(pathString));
     }
 
     public void rightClickTree(String treeName, String[] pathElements) {
-        scriptContext.play(new TreeEvent(treeName, pathElements, new RightClickAction()));
+        frankensteinIntegration.play(new TreeEvent(treeName, pathElements, new RightClickAction()));
     }
 
     public void rightClickList(String listName, int itemIndex) {
-        scriptContext.play(new ListEvent(listName, itemIndex, new RightClickAction()));
+        frankensteinIntegration.play(new ListEvent(listName, itemIndex, new RightClickAction()));
     }
 
     public void rightClickTableRow(String tableName, int rowIndex) {
-        scriptContext.play(new TableRowEvent(tableName, rowIndex, new RightClickAction()));
+        frankensteinIntegration.play(new TableRowEvent(tableName, rowIndex, new RightClickAction()));
     }
 
     public void selectDropDown(String comboBoxName, String value) {
-        scriptContext.play(new SelectDropDownEvent(comboBoxName, value));
+        frankensteinIntegration.play(new SelectDropDownEvent(comboBoxName, value));
     }
 
     public void selectFile(String filePath) {
-        scriptContext.play(new SelectFileEvent(filePath));
+        frankensteinIntegration.play(new SelectFileEvent(filePath));
     }
 
     public void selectFiles(String[] filePaths) {
-        scriptContext.play(new SelectFilesEvent(filePaths));
+        frankensteinIntegration.play(new SelectFilesEvent(filePaths));
     }
 
     public void selectList(String listName, String[] listElements) {
-        scriptContext.play(new SelectListEvent(listName, listElements));
+        frankensteinIntegration.play(new SelectListEvent(listName, listElements));
     }
 
     public void selectTableRow(String tableName, int[] rows) {
-        scriptContext.play(new SelectTableRowEvent(tableName, rows));
+        frankensteinIntegration.play(new SelectTableRowEvent(tableName, rows));
     }
 
     public void selectTree(String treeName, String[] pathElements) {
-        scriptContext.play(new SelectTreeEvent(treeName, pathElements));
+        frankensteinIntegration.play(new SelectTreeEvent(treeName, pathElements));
     }
 
     public void stopTableEdit(String tableName) {
-        scriptContext.play(new StopTableEditEvent(tableName));
+        frankensteinIntegration.play(new StopTableEditEvent(tableName));
     }
 
     public void switchTab(String tabPaneTitle, String tabTitle) {
-        scriptContext.play(new SwitchTabEvent(tabPaneTitle, tabTitle));
+        frankensteinIntegration.play(new SwitchTabEvent(tabPaneTitle, tabTitle));
     }
 
     public void moveSlider(String sliderName, int position) {
-        scriptContext.play(new MoveSliderEvent(sliderName, position));
+        frankensteinIntegration.play(new MoveSliderEvent(sliderName, position));
     }
 
     public void finishTest() {
-        testReporter.finishTest();
+        getTestReporter().finishTest();
+        frankensteinIntegration.stop();
     }
 }

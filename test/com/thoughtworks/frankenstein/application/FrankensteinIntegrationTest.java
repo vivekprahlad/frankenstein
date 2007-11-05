@@ -1,26 +1,25 @@
 package com.thoughtworks.frankenstein.application;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.*;
-
-import org.jmock.MockObjectTestCase;
-
 import com.thoughtworks.frankenstein.events.ActivateWindowEvent;
 import com.thoughtworks.frankenstein.naming.DefaultNamingStrategy;
 import com.thoughtworks.frankenstein.playback.DefaultWindowContext;
 import com.thoughtworks.frankenstein.recorders.ComponentRecorder;
+import org.jmock.MockObjectTestCase;
+
+import javax.swing.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Ensures behaviour of FrankensteinIntegration
+ * Ensures behaviour of DefaultFrankensteinIntegration
  */
 public class FrankensteinIntegrationTest extends MockObjectTestCase {
-    private FrankensteinIntegration integration;
+    private DefaultFrankensteinIntegration integration;
     private MockJFrame frame;
 
     protected void setUp() throws Exception {
         frame = new MockJFrame();
-        integration = new FrankensteinIntegration(TestMainClass.class, frame,
+        integration = new DefaultFrankensteinIntegration(TestMainClass.class, frame,
                 new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
     }
 
@@ -39,7 +38,7 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
     }
 
     public void testDoesNotLaunchMainForClassesWithoutMainMethod() {
-        FrankensteinIntegration integration = new FrankensteinIntegration(FrankensteinIntegrationTest.class, new MockJFrame(), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
+        DefaultFrankensteinIntegration integration = new DefaultFrankensteinIntegration(FrankensteinIntegrationTest.class, new MockJFrame(), new NullWorkerThreadMonitor(), new DefaultWindowContext(), new DefaultNamingStrategy());
         try {
             integration.start(null);
             fail();
@@ -65,7 +64,6 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         TestComponentRecorder.unregisterCalled = false;
         integration.registerRecorder(TestComponentRecorder.class);
         integration.start(null);
-
         frame.getContentPane().add(new JButton("Test"));
         integration.stop();
         assertTrue(TestComponentRecorder.registerCalled);
@@ -74,8 +72,8 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
     }
 
     public void testDoesNotRegisterRecorderWhenInPlayMode() {
-        FrankensteinIntegration frankensteinIntegrationInPlayMode =
-                new FrankensteinIntegration(TestMainClass.class,
+        DefaultFrankensteinIntegration frankensteinIntegrationInPlayMode =
+                new DefaultFrankensteinIntegration(TestMainClass.class,
                         new MockJFrame(),
                         new NullWorkerThreadMonitor(),
                         new DefaultWindowContext(),
@@ -91,7 +89,6 @@ public class FrankensteinIntegrationTest extends MockObjectTestCase {
         assertFalse(TestComponentRecorder.unregisterCalled);
         frankensteinIntegrationInPlayMode = null;
     }
-
 
     public void testChangesLogLevel() {
         integration.setLogLevel(Level.WARNING);

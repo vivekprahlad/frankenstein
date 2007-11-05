@@ -9,7 +9,7 @@ public class PipingMain {
     }
 
     protected static FrankensteinIntegration createFrankensteinIntegration(String[] args) throws ClassNotFoundException {
-        return new FrankensteinIntegration(parseClass(args));
+        return FrankensteinIntegrationFactory.getFrankensteinIntegration(parseClass(args));
     }
 
     static String[] parseArgs(String[] args) {

@@ -1,18 +1,17 @@
 package com.thoughtworks.frankenstein.application;
 
-import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.List;
-
-import org.jmock.MockObjectTestCase;
-
 import com.thoughtworks.frankenstein.common.Constants;
 import com.thoughtworks.frankenstein.events.DefaultEventRegistry;
 import com.thoughtworks.frankenstein.events.EnterTextEvent;
 import com.thoughtworks.frankenstein.recorders.ScriptListener;
 import com.thoughtworks.frankenstein.script.Script;
 import com.thoughtworks.frankenstein.script.TestReporter;
+import org.jmock.MockObjectTestCase;
+
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.List;
 
 /**
  * Ensures behaviour of socket listener
@@ -21,7 +20,7 @@ public class SocketListenerTest extends MockObjectTestCase {
 
     public void testAcceptsTextFromSocket() throws IOException, InterruptedException {
         MockFrankensteinRecorder recorder = new MockFrankensteinRecorder();
-        SocketListener listener = new SocketListener(recorder);
+        SocketListener listener = new SocketListener(new BulkExecutionRequestProcessingStrategy(recorder));
         listener.start(Constants.LISTEN_PORT);
         Socket socket = new Socket(InetAddress.getLocalHost(), Constants.LISTEN_PORT);
         BufferedReader reader;
@@ -48,7 +47,6 @@ public class SocketListenerTest extends MockObjectTestCase {
 
         String eof = reader.readLine();
         assertNull(eof);
-
         reader.close();
         writer.close();
         socket.close();
