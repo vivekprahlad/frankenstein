@@ -131,6 +131,9 @@ public class DefaultWindowContext implements PropertyChangeListener, WindowConte
     }
 
     private boolean isProgressBarActive(ActiveProgressbarMatchingRule rule, ComponentHierarchyWalker walker) {
+        if (activeWindow == null) {
+            return false;
+        }
         return rule.matches((Container) activeWindow, walker);
     }
 
