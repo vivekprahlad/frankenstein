@@ -6,11 +6,14 @@ import org.jmock.Mock;
 
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
 import com.thoughtworks.frankenstein.recorders.EventList;
+import com.thoughtworks.frankenstein.drivers.DefaultFrankensteinDriver;
 
 /**
  * Ensures behaviour of SelectFileEvent
  */
 public class SelectFilesEventTest extends AbstractEventTestCase {
+    private static final String QUOTE = "\"";
+
     public void testEqualsAndHashCode() {
         SelectFilesEvent one = new SelectFilesEvent(file("/home/test/file") + "," + file("/home/test/file2"));
         SelectFilesEvent two = new SelectFilesEvent(file("/home/test/file") + "," + file("/home/test/file2"));
@@ -35,7 +38,15 @@ public class SelectFilesEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLine() {
-        assertEquals("select_files \"" + file("/home/test/file") + "," + file("/home/test/file2") + "\"", new SelectFilesEvent(file("/home/test/file") + "," + file("/home/test/file2")).scriptLine());
+        assertEquals("select_files \"" + file("/home/test/file") + "," + file("/home/test/file2") + QUOTE, new SelectFilesEvent(file("/home/test/file") + "," + file("/home/test/file2")).scriptLine());
+    }
+
+    public void testScriptLineInJava() {
+        assertEquals("selectFiles(new String[]{" + quote(file("/home/test/file")) + "," + quote(file("/home/test/file2")) + "})", new SelectFilesEvent(file("/home/test/file") + "," + file("/home/test/file2")).scriptLine(new JavaScriptStrategy()));
+    }
+
+    private String quote(String text) {
+        return QUOTE + text + QUOTE;
     }
 
     public void testPlaysEvent() throws Exception {

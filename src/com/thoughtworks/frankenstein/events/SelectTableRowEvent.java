@@ -53,4 +53,8 @@ public class SelectTableRowEvent extends AbstractFrankensteinEvent {
             table.getSelectionModel().addSelectionInterval(row, row);
         }
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.array(rows));       
+    }
 }

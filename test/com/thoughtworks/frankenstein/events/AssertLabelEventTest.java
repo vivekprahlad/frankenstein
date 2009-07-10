@@ -36,6 +36,10 @@ public class AssertLabelEventTest extends AbstractEventTestCase {
         assertEquals("assert_label \"labelValue\"", new AssertLabelEvent("labelValue").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("assertLabel(\"labelValue\")", new AssertLabelEvent("labelValue").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         AssertLabelEvent event = new AssertLabelEvent("labelValue");
         JLabel lable = new JLabel("labelValue");

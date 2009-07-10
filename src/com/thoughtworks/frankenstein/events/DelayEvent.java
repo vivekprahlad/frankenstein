@@ -30,4 +30,8 @@ public class DelayEvent extends AbstractFrankensteinEvent {
     public void run() {
         ThreadUtil.sleep(duration);
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(scriptStrategy.escape(duration));
+    }
 }

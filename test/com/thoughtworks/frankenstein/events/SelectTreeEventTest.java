@@ -39,6 +39,10 @@ public class SelectTreeEventTest extends AbstractEventTestCase {
         assertEquals("select_tree \"name\",\"one\",\"two\",\"three\"", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("selectTree(\"name\", new String[]{\"one\",\"two\",\"three\"})", new SelectTreeEvent("name", new String[]{"one", "two", "three"}).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         Mock componentFinder = mock(ComponentFinder.class);
         JTree tree = tree();

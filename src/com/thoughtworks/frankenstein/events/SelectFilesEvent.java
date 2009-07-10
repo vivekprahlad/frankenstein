@@ -44,6 +44,10 @@ public class SelectFilesEvent extends AbstractFrankensteinEvent {
         finder.findFileChooser(context).setSelectedFiles(files());
     }
 
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(scriptStrategy.array(fileNames));
+    }
+
     private File[] files() {
         File[] files = new File[fileNames.length];
         for (int i = 0; i < fileNames.length; i++) {

@@ -39,6 +39,10 @@ public class SelectListEventTest extends AbstractEventTestCase {
         assertEquals("select_list \"parent.listFieldName\" , \"text\"", new SelectListEvent("parent.listFieldName", new String[]{"text"}).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("selectList(\"parent.listFieldName\" , \"text\")", new SelectListEvent("parent.listFieldName", new String[]{"text"}).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         SelectListEvent event = new SelectListEvent("parent.listFieldName", new String[]{"text"});
         Mock mockComponentFinder = mock(ComponentFinder.class);

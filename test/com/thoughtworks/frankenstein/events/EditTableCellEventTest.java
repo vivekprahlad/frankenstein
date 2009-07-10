@@ -42,6 +42,10 @@ public class EditTableCellEventTest extends AbstractEventTestCase {
         assertEquals("edit_table_cell \"testTableName\" , \"1,2\"", new EditTableCellEvent("testTableName", 1, 2).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("editTableCell(\"testTableName\" , 1,2)", new EditTableCellEvent("testTableName", 1, 2).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         EditTableCellEvent event = new EditTableCellEvent("parent.tableName", 1, 1);
         Mock mockComponentFinder = mock(ComponentFinder.class);

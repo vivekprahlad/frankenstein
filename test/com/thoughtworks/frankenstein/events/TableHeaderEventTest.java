@@ -42,6 +42,10 @@ public class TableHeaderEventTest extends AbstractEventTestCase {
         assertEquals("click_table_header \"header\" , \"one\"", new TableHeaderEvent("header", "one", new ClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("clickTableHeader(\"header\" , \"one\")", new TableHeaderEvent("header", "one", new ClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         JTable table = new JTable(3, 3);
         JTableHeader tableHeader = table.getTableHeader();

@@ -38,6 +38,10 @@ public class SelectFileEventTest extends AbstractEventTestCase {
         assertEquals("select_file \"" + file("/home/test/file") + "\"", new SelectFileEvent(file("/home/test/file")).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("selectFile(\""+file("/home/test/file") + "\")", new SelectFileEvent(file("/home/test/file")).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testDoesNotReplaceSInScriptLine() {
         assertEquals("select_file \"" + file("/home/sabc/file") + "\"", new SelectFileEvent(file("/home/sabc/file")).scriptLine());
     }

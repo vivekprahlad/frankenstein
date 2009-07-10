@@ -39,6 +39,10 @@ public class ListEventTest extends AbstractEventTestCase {
         assertEquals("double_click_list \"list\" , \"0\"", new ListEvent("list", 0, new DoubleClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("doubleClickList(\"list\" , 0)", new ListEvent("list", 0, new DoubleClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         String[] listOfStrings = {"one", "two", "three", "four", "five"};
         JList list = new JList(listOfStrings);

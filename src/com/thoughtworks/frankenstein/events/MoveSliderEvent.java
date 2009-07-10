@@ -36,4 +36,9 @@ public class MoveSliderEvent extends AbstractFrankensteinEvent {
         JSlider slider = (JSlider) finder.findComponent(context, sliderName);
         slider.setValue(movement);
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.escape(movement));        
+
+    }
 }

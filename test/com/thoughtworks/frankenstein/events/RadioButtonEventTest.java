@@ -40,6 +40,10 @@ public class RadioButtonEventTest extends AbstractEventTestCase {
         assertEquals("click_radio_button \"testButton\"", new RadioButtonEvent("testButton", new ClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("clickRadioButton(\"testButton\")", new RadioButtonEvent("testButton", new ClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         RadioButtonEvent radioButtonEvent;

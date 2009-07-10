@@ -12,6 +12,46 @@ public class RubyScriptStrategy implements ScriptStrategy {
         return underscore(scriptElements[0]) + target(scriptElements[1]) + parameters(hasTarget(scriptElements[1]),scriptElements[2]);
     }
 
+    public String toMethod(String action) {
+        return underscore(action);
+    }
+
+    public String enclose(String body) {
+        return SPACE + body;
+    }
+
+    public String escape(boolean value) {
+        return quote(String.valueOf(value));
+    }
+
+    public String escape(int value) {
+        return quote(String.valueOf(value));
+    }
+
+    public String array(String[] strings) {
+        return quote(toArray(strings));
+    }
+
+    public String array(int[] rows) {
+        String array = "";
+        for (int i = 0; i < rows.length; i++) {
+            array += rows[i] + ",";
+        }
+        return rows.length == 0 ? "" : quote(array.substring(0, array.length()-1));        
+    }
+
+    public String cell(int row, int column) {
+        return quote(String.valueOf(row) + "," + String.valueOf(column));
+    }
+
+    private String toArray(String[] strings) {
+        String array = "";
+        for (int i = 0; i < strings.length; i++) {
+            array += strings[i] + ",";
+        }
+        return strings.length == 0 ? "" : array.substring(0, array.length()-1);
+    }
+
     private boolean hasTarget(String target) {
         return (!"".equals(target));
     }

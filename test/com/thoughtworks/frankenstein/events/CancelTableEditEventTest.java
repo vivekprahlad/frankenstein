@@ -41,6 +41,10 @@ public class CancelTableEditEventTest extends AbstractEventTestCase {
         assertEquals("cancel_table_edit \"testTarget\"", new CancelTableEditEvent("testTarget").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("cancelTableEdit(\"testTarget\")", new CancelTableEditEvent("testTarget").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         CancelTableEditEvent event = new CancelTableEditEvent("parent.tableName");
         Mock mockComponentFinder = mock(ComponentFinder.class);

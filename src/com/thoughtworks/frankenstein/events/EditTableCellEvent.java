@@ -51,4 +51,8 @@ public class EditTableCellEvent extends AbstractFrankensteinEvent {
         table.editCellAt(row, column);
         finder.setTableCellEditor(table.getEditorComponent());
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.cell(row, column));
+    }
 }

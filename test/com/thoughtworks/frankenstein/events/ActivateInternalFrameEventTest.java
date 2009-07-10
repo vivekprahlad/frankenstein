@@ -39,6 +39,10 @@ public class ActivateInternalFrameEventTest extends AbstractEventTestCase {
         assertEquals("activate_internal_frame \"title\"", new ActivateInternalFrameEvent("title").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("activateInternalFrame(\"title\")", new ActivateInternalFrameEvent("title").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         JInternalFrame internalFrame = createInternalFrame();

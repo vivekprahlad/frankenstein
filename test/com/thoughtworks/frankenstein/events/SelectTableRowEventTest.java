@@ -40,6 +40,10 @@ public class SelectTableRowEventTest extends AbstractEventTestCase {
         assertEquals("select_table_row \"table\" , \"1,3,8\"", new SelectTableRowEvent("table", new int[]{1, 3, 8}).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("selectTableRow(\"table\" , new int[]{1,3,8})", new SelectTableRowEvent("table", new int[]{1, 3, 8}).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         JTable table = new JTable();
         SelectTableRowEvent event = new SelectTableRowEvent("table", new int[]{1, 2, 4});
@@ -55,11 +59,6 @@ public class SelectTableRowEventTest extends AbstractEventTestCase {
         for (int i = 0; i < rows.length; i++) {
             assertEquals(rows[i], selectedRows[i]);
         }
-    }
-
-    private void assertListSelection(ListSelectionEvent event, int startIndex, int endIndex) {
-        assertEquals(startIndex, event.getFirstIndex());
-        assertEquals(endIndex, event.getLastIndex());
     }
 
     protected FrankensteinEvent createEvent() {

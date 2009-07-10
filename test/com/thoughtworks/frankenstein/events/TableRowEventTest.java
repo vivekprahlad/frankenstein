@@ -50,6 +50,10 @@ public class TableRowEventTest extends AbstractEventTestCase {
         assertEquals("right_click_table_row \"table\" , \"1\"", createTableRowEvent().scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("rightClickTableRow(\"table\" , 1)", createTableRowEvent().scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         doTestAtRow(2);
     }

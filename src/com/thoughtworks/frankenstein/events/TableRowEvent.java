@@ -45,5 +45,9 @@ public class TableRowEvent extends AbstractCompoundEvent {
         point.translate(cellRect.x, cellRect.y + table.getRowHeight(rowIndex) / 2);
         return point;
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.escape(rowIndex));
+    }
 }
 

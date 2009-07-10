@@ -39,6 +39,10 @@ public class SwitchTabEventTest extends AbstractEventTestCase {
         assertEquals("switch_tab \"parent.testTabName\" , \"tabTwo\"", new SwitchTabEvent("parent.testTabName", "tabTwo").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("switchTab(\"parent.testTabName\" , \"tabTwo\")", new SwitchTabEvent("parent.testTabName", "tabTwo").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         SwitchTabEvent event = new SwitchTabEvent("parent.testTabName", "tabTwo");
         Mock mockComponentFinder = mock(ComponentFinder.class);

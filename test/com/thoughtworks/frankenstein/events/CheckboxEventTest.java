@@ -40,6 +40,10 @@ public class CheckboxEventTest extends AbstractEventTestCase {
         assertEquals("click_checkbox \"testButton\" , \"true\"", new CheckboxEvent("testButton", true, new ClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("clickCheckbox(\"testButton\" , true)", new CheckboxEvent("testButton", true, new ClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         JCheckBox checkBox = new JCheckBox();
         CheckboxEvent checkBoxEvent;

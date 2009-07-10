@@ -39,4 +39,8 @@ public class ListEvent extends AbstractCompoundEvent {
         JList list = (JList) finder.findComponent(context, listName);
         action.execute(list.indexToLocation(itemIndex), list, finder, context);
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.escape(itemIndex));
+    }
 }

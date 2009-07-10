@@ -58,6 +58,10 @@ public class TreeEventTest extends AbstractEventTestCase {
         assertEquals("right_click_tree \"tree\",\"one\",\"two\",\"three\"", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("rightClickTree(\"tree\", new String[]{\"one\",\"two\",\"three\"})", new TreeEvent("tree", new String[]{"one", "two", "three"}, new RightClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         Mock mockFinder = mock(ComponentFinder.class);
         JTree tree = tree();

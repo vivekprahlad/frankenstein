@@ -35,6 +35,10 @@ public class StartTestEventTest extends AbstractEventTestCase {
         assertEquals("start_test \"testName\"", new StartTestEvent("testName").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("startTest(\"testName\")", new StartTestEvent("testName").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         Mock scriptContext = mock(ScriptContext.class);
         scriptContext.expects(once()).method("startTest").with(eq("testName"));

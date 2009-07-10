@@ -42,7 +42,7 @@ public class AssertEventTest extends AbstractEventTestCase {
     }
 
     public void testScriptLineInJava() {
-        assertEquals("assert( \"table\" , \"enabled:true\")", new AssertEvent("table", "enabled", "true").scriptLine(new JavaScriptStrategy()));
+        assertEquals("assert(\"table\" , \"enabled:true\")", new AssertEvent("table", "enabled", "true").scriptLine(new JavaScriptStrategy()));
     }
 
     public void testPlaysEvent() throws Exception {

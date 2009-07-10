@@ -50,4 +50,8 @@ public class CheckboxEvent extends AbstractCompoundEvent {
             action.execute(center(checkBox), checkBox, finder, context);
         }
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + " , " + scriptStrategy.escape(selected));
+    }
 }

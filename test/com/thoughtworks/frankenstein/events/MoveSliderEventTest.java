@@ -42,6 +42,10 @@ public class MoveSliderEventTest extends AbstractEventTestCase {
         assertEquals("move_slider \"slider\" , \"10\"", new MoveSliderEvent("slider", 10).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("moveSlider(\"slider\" , 10)", new MoveSliderEvent("slider", 10).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         JSlider slider = new JSlider(1, 100, 10);
         slider.setName("slider");

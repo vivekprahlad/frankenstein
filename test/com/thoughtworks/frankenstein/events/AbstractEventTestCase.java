@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.common.WaitForIdle;
  * Base test case for all events.
  */
 public abstract class AbstractEventTestCase extends MockObjectTestCase {
+
     public abstract void testEqualsAndHashCode();
 
     public abstract void testToString();
@@ -21,6 +22,8 @@ public abstract class AbstractEventTestCase extends MockObjectTestCase {
     public abstract void testParameters();
 
     public abstract void testScriptLine();
+
+    public abstract void testScriptLineInJava();
 
     public abstract void testPlaysEvent() throws Exception;
 

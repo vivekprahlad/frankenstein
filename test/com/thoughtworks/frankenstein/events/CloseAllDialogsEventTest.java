@@ -40,6 +40,10 @@ public class CloseAllDialogsEventTest extends AbstractEventTestCase {
         assertEquals("close_all_dialogs", new CloseAllDialogsEvent("").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("closeAllDialogs()", new CloseAllDialogsEvent("").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws Exception {
         Mock mockComponentFinder = mock(ComponentFinder.class);
         Mock mockContext = mock(WindowContext.class);

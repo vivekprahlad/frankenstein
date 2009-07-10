@@ -39,6 +39,10 @@ public class EnterTextEventTest extends AbstractEventTestCase {
         assertEquals("enter_text \"parent.textFieldName\" , \"text\"", new EnterTextEvent("parent.textFieldName", "text").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("enterText(\"parent.textFieldName\" , \"text\")", new EnterTextEvent("parent.textFieldName", "text").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         EnterTextEvent event = new EnterTextEvent("parent.textFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);

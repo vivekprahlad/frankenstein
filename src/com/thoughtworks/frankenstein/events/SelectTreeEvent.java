@@ -77,4 +77,8 @@ public class SelectTreeEvent extends AbstractFrankensteinEvent {
         JTree tree = (JTree) finder.findComponent(context, treeName);
         select(tree);
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + ", " + scriptStrategy.array(path));
+    }
 }

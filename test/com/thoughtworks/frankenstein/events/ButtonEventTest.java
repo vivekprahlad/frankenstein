@@ -41,6 +41,10 @@ public class ButtonEventTest extends AbstractEventTestCase {
         assertEquals("click_button \"testButton\"", new ButtonEvent("testButton", new ClickAction()).scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("clickButton(\"testButton\")", new ButtonEvent("testButton", new ClickAction()).scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() throws InterruptedException, AWTException {
         ButtonEvent buttonEvent;
         JButton button = new JButton("abc");

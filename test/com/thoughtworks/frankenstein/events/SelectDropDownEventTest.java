@@ -39,6 +39,10 @@ public class SelectDropDownEventTest extends AbstractEventTestCase {
         assertEquals("select_drop_down \"parent.comboFieldName\" , \"text\"", new SelectDropDownEvent("parent.comboFieldName", "text").scriptLine());
     }
 
+    public void testScriptLineInJava() {
+        assertEquals("selectDropDown(\"parent.comboFieldName\" , \"text\")", new SelectDropDownEvent("parent.comboFieldName", "text").scriptLine(new JavaScriptStrategy()));
+    }
+
     public void testPlaysEvent() {
         SelectDropDownEvent event = new SelectDropDownEvent("parent.comboFieldName", "text");
         Mock mockComponentFinder = mock(ComponentFinder.class);

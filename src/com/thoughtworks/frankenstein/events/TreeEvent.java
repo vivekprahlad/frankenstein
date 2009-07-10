@@ -62,4 +62,8 @@ public class TreeEvent extends AbstractCompoundEvent {
         treeLocation.translate(nodeLocation.x, nodeLocation.y);
         return treeLocation;
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(target()) + ", " + scriptStrategy.array(path));
+    }
 }
