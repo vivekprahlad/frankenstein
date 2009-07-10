@@ -40,4 +40,6 @@ public interface FrankensteinEvent extends Runnable , Serializable{
     public String parameters();
 
     public String scriptLine();
+
+    public String scriptLine(ScriptStrategy scriptStrategy);
 }

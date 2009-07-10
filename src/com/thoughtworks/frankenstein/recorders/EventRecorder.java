@@ -15,7 +15,7 @@ public interface EventRecorder {
 
     void addChangeListener(ChangeListener listener);
 
-    void removeChangeListener();
+    void removeChangeListeners();
 
     List eventList();
 

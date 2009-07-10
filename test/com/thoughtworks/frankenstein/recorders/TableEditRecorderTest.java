@@ -124,7 +124,7 @@ public class TableEditRecorderTest extends AbstractRecorderTestCase {
         public void addChangeListener(ChangeListener listener) {
         }
 
-        public void removeChangeListener() {
+        public void removeChangeListeners() {
         }
 
         public void start() {

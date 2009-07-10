@@ -38,6 +38,10 @@ public class ExceptionThrowingEvent implements FrankensteinEvent {
         return null;
     }
 
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return null;
+    }
+
     public void run() {
     }
 }

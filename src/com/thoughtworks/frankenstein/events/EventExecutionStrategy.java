@@ -11,7 +11,6 @@ import javax.swing.*;
  */
 public abstract class EventExecutionStrategy {
     abstract void execute(Runnable runnable);
-
     public static final EventExecutionStrategy IN_PLAYER_THREAD = new EventExecutionStrategy() {
         void execute(Runnable runnable) {
             runnable.run();

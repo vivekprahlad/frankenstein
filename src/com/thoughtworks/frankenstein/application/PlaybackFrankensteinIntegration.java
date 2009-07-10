@@ -16,7 +16,7 @@ import com.thoughtworks.frankenstein.script.TestReporter;
 /**
  * Playback specific FrankensteinIntegration
  */
-public class PlaybackFrankensteinIntegration extends DefaultFrankensteinIntegration {
+public class PlaybackFrankensteinIntegration extends FrankensteinIntegration {
     private ScriptContext scriptContext;
 
     public PlaybackFrankensteinIntegration(Class mainClass) {

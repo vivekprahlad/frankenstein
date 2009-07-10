@@ -25,7 +25,8 @@ import com.thoughtworks.frankenstein.script.TestReporter;
  * @author Prakash
  */
 public class DefaultFrankensteinDriver implements FrankensteinDriver {
-    private PlaybackFrankensteinIntegration frankensteinIntegration;
+    protected PlaybackFrankensteinIntegration frankensteinIntegration;
+    protected String[] args;
 
     public DefaultFrankensteinDriver(Class mainClass, String[] args) {
         frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, new HtmlTestReporter());
@@ -43,6 +44,11 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         frankensteinIntegration = new PlaybackFrankensteinIntegration(mainClass, testReporter);
         frankensteinIntegration.start(args);
         startTest(testName);
+    }
+
+    public DefaultFrankensteinDriver(PlaybackFrankensteinIntegration frankensteinIntegration, String[] args) {
+        this.frankensteinIntegration = frankensteinIntegration;
+        this.args = args;
     }
 
     public DefaultFrankensteinDriver(Class mainClass,
@@ -118,7 +124,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         return frankensteinIntegration.getTestReporter();
     }
 
-    private void startTest(String testName) {
+    protected void startTest(String testName) {
         getTestReporter().startTest(testName);
     }
 

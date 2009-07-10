@@ -281,6 +281,5 @@ public class DefaultNamingStrategyTest extends TestCase {
         panel.add(slider);
         namingStrategy.nameComponentsIn(panel);
         assertEquals("JSlider_1", slider.getName());
-
     }
 }

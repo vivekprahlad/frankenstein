@@ -63,6 +63,14 @@ public class ButtonClickRecorderTest extends AbstractRecorderTestCase {
         button.doClick();
     }
 
+    public void testRecordsInstancesofToggleButtons() {
+        JToggleButton button = new JToggleButton("abc") {};
+        new JFrame().getContentPane().add(button);
+        recorder.componentShown(button);
+        mockRecorder.expects(once()).method("record").with(eq(new ButtonEvent("abc", new ClickAction())));
+        button.doClick();
+    }
+
     public void testDoesNotRecordRadioButtons() {
         JRadioButton button = new JRadioButton("abc");
         assertFalse(recorder.matchesComponentType(new ComponentEvent(button, ComponentEvent.COMPONENT_SHOWN)));

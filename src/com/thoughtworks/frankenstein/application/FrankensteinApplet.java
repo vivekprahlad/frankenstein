@@ -11,7 +11,7 @@ import java.awt.*;
  * @author Pavan.
  */
 public class FrankensteinApplet extends JApplet implements AppletStub {
-    private DefaultFrankensteinIntegration frankensteinIntegration;
+    private FrankensteinIntegration frankensteinIntegration;
     private Applet appletObject;
 
 
@@ -29,7 +29,7 @@ public class FrankensteinApplet extends JApplet implements AppletStub {
         if (className == null) {
             throw new RuntimeException("Cannot find the parameter 'appletName'");
         }
-        frankensteinIntegration = new DefaultFrankensteinIntegration(new NullApplication());
+        frankensteinIntegration = new FrankensteinIntegration(new NullApplication());
         frankensteinIntegration.start(null);
         Class mainClass;
         try {

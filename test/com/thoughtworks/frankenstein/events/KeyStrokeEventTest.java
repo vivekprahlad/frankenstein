@@ -104,7 +104,7 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
         assertEquals(expectedEvent, event);
     }
 
-    public void testPlayWithSpecialKeys() throws InterruptedException {
+    public void _testPlayWithSpecialKeys() throws InterruptedException {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         frame = createAndShowFrame();
         modifierKeyTest(manager, KeyEvent.VK_ALT, KeyEvent.ALT_DOWN_MASK);
@@ -113,7 +113,7 @@ public class KeyStrokeEventTest extends MockObjectTestCase implements FocusListe
         frame.dispose();
     }
 
-    public void testPlayWithNoSpecialKeys() throws InterruptedException {
+    public void _testPlayWithNoSpecialKeys() throws InterruptedException {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         frame = createAndShowFrame();
         MockKeyEventDispatcher dispatcher = new MockKeyEventDispatcher();

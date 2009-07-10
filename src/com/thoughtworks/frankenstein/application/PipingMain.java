@@ -8,7 +8,7 @@ public class PipingMain {
         createFrankensteinIntegration(args).start(parseArgs(args));
     }
 
-    protected static FrankensteinIntegration createFrankensteinIntegration(String[] args) throws ClassNotFoundException {
+    protected static FrankensteinIntegrationIf createFrankensteinIntegration(String[] args) throws ClassNotFoundException {
         return FrankensteinIntegrationFactory.getFrankensteinIntegration(parseClass(args));
     }
 

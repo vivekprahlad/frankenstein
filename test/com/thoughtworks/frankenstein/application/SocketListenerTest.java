@@ -25,6 +25,7 @@ public class SocketListenerTest extends MockObjectTestCase {
         Socket socket = new Socket(InetAddress.getLocalHost(), Constants.LISTEN_PORT);
         BufferedReader reader;
         BufferedWriter writer;
+
         synchronized (MockFrankensteinRecorder.RECORDER_LOCK) {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -53,7 +54,7 @@ public class SocketListenerTest extends MockObjectTestCase {
         listener.stop();
     }
 
-    private static class MockFrankensteinRecorder implements FrankensteinRecorder {
+    private static class MockFrankensteinRecorder implements FrankensteinRecorder { 
         List events;
         static final Object RECORDER_LOCK = new Object();
 

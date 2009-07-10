@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class RegexWorkerThreadMonitorTest extends TestCase {
 
     public void testWaitsForThreadToComplete() {
-        WorkerThreadMonitor monitor = new RegexWorkerThreadMonitor("Worker");
+        WorkerThreadMonitor monitor = new RegexWorkerThreadMonitor("MyWorker");
         monitor.start();
         Thread thread = new Thread(new Runnable() {
             public void run() {

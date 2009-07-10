@@ -10,6 +10,7 @@ import com.thoughtworks.frankenstein.events.FrankensteinEvent;
  * @author Vivek Prahlad
  */
 public interface TestReporter {
+
     void startTest(String testName);
 
     void reportSuccess(FrankensteinEvent event);
@@ -17,4 +18,5 @@ public interface TestReporter {
     void reportFailure(FrankensteinEvent event, Exception cause, Robot robot);
 
     void finishTest();
+
 }

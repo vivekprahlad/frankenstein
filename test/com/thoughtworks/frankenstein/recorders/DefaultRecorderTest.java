@@ -10,7 +10,6 @@ import org.jmock.MockObjectTestCase;
 
 import com.thoughtworks.frankenstein.events.*;
 import com.thoughtworks.frankenstein.events.actions.ClickAction;
-import com.thoughtworks.frankenstein.script.TestReporter;
 
 /**
  * Ensures behaviour of DefaultRecorder
@@ -152,7 +151,7 @@ public class DefaultRecorderTest extends MockObjectTestCase {
     public void testRemoveRecorderListener() {
         Mock mockRecorderListener = mock(ChangeListener.class);
         recorder.addChangeListener((ChangeListener) mockRecorderListener.proxy());
-        recorder.removeChangeListener();
+        recorder.removeChangeListeners();
         recorder.addEvent(new SelectDropDownEvent("comboName2", "choice2"));
     }
 

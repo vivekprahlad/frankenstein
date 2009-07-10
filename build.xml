@@ -117,6 +117,10 @@
         <copy file="lib/ognl-2.6.9.jar" tofile="dist/ognl-2.6.9.jar"/>
     </target>
 
+    <target name="zip.sources">
+        <zip  basedir="${module.basedir}/src" file="dist/frankenstein-src.zip"/>
+    </target>
+
     <target name="compile.tests" depends="compile.src" description="compile module dataobjects; test classes"
             unless="skip.tests">
         <mkdir dir="${compiledtests.dir}"/>
@@ -234,5 +238,5 @@
         <delete dir="${release.dir}"/>
     </target>
 
-    <target name="all" depends="clean, init, compile, test, jar" description="build all"/>
+    <target name="all" depends="clean, init, compile.src, jar, zip.sources" description="build all"/>
 </project>

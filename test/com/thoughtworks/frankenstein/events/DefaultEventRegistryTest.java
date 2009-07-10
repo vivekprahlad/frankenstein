@@ -321,6 +321,10 @@ public class DefaultEventRegistryTest extends TestCase {
             return null;
         }
 
+        public String scriptLine(ScriptStrategy scriptStrategy) {
+            return null;
+        }
+
         public void run() {
         }
     }

@@ -1,12 +1,12 @@
 package com.thoughtworks.frankenstein.events.assertions;
 
-import javax.swing.*;
-
-import org.jmock.Mock;
-
 import com.thoughtworks.frankenstein.events.AbstractEventTestCase;
 import com.thoughtworks.frankenstein.events.FrankensteinEvent;
+import com.thoughtworks.frankenstein.events.JavaScriptStrategy;
 import com.thoughtworks.frankenstein.playback.ComponentFinder;
+import org.jmock.Mock;
+
+import javax.swing.*;
 
 /**
  * Ensures behaviour of AssertEvent
@@ -39,6 +39,10 @@ public class AssertEventTest extends AbstractEventTestCase {
 
     public void testScriptLine() {
         assertEquals("assert \"table\" , \"enabled:true\"", new AssertEvent("table", "enabled", "true").scriptLine());
+    }
+
+    public void testScriptLineInJava() {
+        assertEquals("assert( \"table\" , \"enabled:true\")", new AssertEvent("table", "enabled", "true").scriptLine(new JavaScriptStrategy()));
     }
 
     public void testPlaysEvent() throws Exception {

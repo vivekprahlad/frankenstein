@@ -7,8 +7,8 @@ import junit.framework.TestCase;
  */
 public class FrankensteinIntegrationFactoryTest extends TestCase {
     public void testFactoryGivesTheCorrectInstanceOfFIBasedOnSystemProperty() {
-        FrankensteinIntegration frankensteinIntegration = FrankensteinIntegrationFactory.getFrankensteinIntegration(Object.class);
-        assertEquals(DefaultFrankensteinIntegration.class, frankensteinIntegration.getClass());
+        FrankensteinIntegrationIf frankensteinIntegration = FrankensteinIntegrationFactory.getFrankensteinIntegration(Object.class);
+        assertEquals(FrankensteinIntegration.class, frankensteinIntegration.getClass());
         frankensteinIntegration.stop();
         System.setProperty("playback", "step");
         assertEquals(PlaybackFrankensteinIntegration.class, FrankensteinIntegrationFactory.getFrankensteinIntegration(Object.class).getClass());
