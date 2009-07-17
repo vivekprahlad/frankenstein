@@ -15,7 +15,7 @@ import com.thoughtworks.frankenstein.playback.ComponentFinder;
 /**
  * Ensures behaviour of windowactivated event.
  */
-public class ActivateWindowEventTest extends MockObjectTestCase {
+public class ActivateWindowEventTest extends AbstractEventTestCase {
     public static final Object FOCUS_LOCK = new Object();
 
     public void testEqualsAndHashCode() {
@@ -45,11 +45,16 @@ public class ActivateWindowEventTest extends MockObjectTestCase {
         assertEquals("activate_window \"title\"", new ActivateWindowEvent("title").scriptLine());
     }
 
-    private void waitForIdle() {
-        new WaitForIdle().waitForIdle();
+    public void testScriptLineInJava() {
+        assertEquals("activateWindow(\"title\")", new ActivateWindowEvent("title").scriptLine(new JavaScriptStrategy()));
+        assertEquals("activateWindow(\"\")", new ActivateWindowEvent("").scriptLine(new JavaScriptStrategy()));
     }
 
-    public void testPlay() throws InterruptedException, InvocationTargetException {
+    protected FrankensteinEvent createEvent() {
+        return new ActivateWindowEvent("title");
+    }
+
+    public void testPlaysEvent() throws InterruptedException, InvocationTargetException {
         final JFrame frameOne = new JFrame("title1");
         JFrame frameTwo = new JFrame("title2");
         frameTwo.setLocation(100, 100);

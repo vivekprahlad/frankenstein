@@ -36,13 +36,8 @@ public class ActivateDialogEvent extends AbstractFrankensteinEvent {
     }
 
     private void activateDialog(final JDialog dialog) {
-        Thread dialogToggleThread = new Thread(new Runnable() {
-            public void run() {
-                dialog.setVisible(false);
-                dialog.setVisible(true);
-            }
-        });
-        dialogToggleThread.start();
+        dialog.toFront();
+        dialog.toFront();
     }
 
     public synchronized void dialogActivated() {

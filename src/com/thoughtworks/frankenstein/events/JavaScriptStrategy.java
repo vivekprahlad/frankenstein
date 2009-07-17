@@ -81,5 +81,4 @@ public class JavaScriptStrategy implements ScriptStrategy {
     protected String quote(String input) {
         return (new StringBuilder()).append("\"").append(input).append("\"").toString();
     }
-
 }

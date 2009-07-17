@@ -68,4 +68,8 @@ public class ActivateWindowEvent extends AbstractFrankensteinEvent implements Fo
             waitForFocus(rootPaneContainer.getGlassPane());
         }
     }
+
+    public String scriptLine(ScriptStrategy scriptStrategy) {
+        return scriptStrategy.toMethod(action()) + scriptStrategy.enclose(quote(title));
+    }
 }
