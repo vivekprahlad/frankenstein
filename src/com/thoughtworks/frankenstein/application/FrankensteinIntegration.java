@@ -32,9 +32,9 @@ import java.util.ArrayList;
  */
 public class FrankensteinIntegration implements FrankensteinIntegrationIf, ChangeListener {
     protected Recorder eventRecorder;
-    private DefaultFrankensteinRecorder recorder;
+    protected DefaultFrankensteinRecorder recorder;
     protected Application application;
-    private JFrame frame;
+    protected JFrame frame;
     protected WindowContext context;
     protected RecorderMode recorderMode;
     protected SocketListener socketListener;
