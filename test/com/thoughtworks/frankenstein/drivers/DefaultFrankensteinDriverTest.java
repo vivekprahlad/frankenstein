@@ -264,7 +264,7 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
         CheckboxEvent event = new CheckboxEvent(checkBoxName, true, new ClickAction());
         setScriptContextExpectation(event);
         frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
-        frankensteinDriver.clickCheckBox(checkBoxName, true);
+        frankensteinDriver.clickCheckbox(checkBoxName, true);
     }
 
     public void testClickCheckBoxDeSelected() {
@@ -272,7 +272,7 @@ public class DefaultFrankensteinDriverTest extends MockObjectTestCase {
         CheckboxEvent event = new CheckboxEvent(checkBoxName, false, new ClickAction());
         setScriptContextExpectation(event);
         frankensteinDriver.setScriptContext((ScriptContext) scriptContextMock.proxy());
-        frankensteinDriver.clickCheckBox(checkBoxName, false);
+        frankensteinDriver.clickCheckbox(checkBoxName, false);
     }
 
     public void testClickRadioButton() {

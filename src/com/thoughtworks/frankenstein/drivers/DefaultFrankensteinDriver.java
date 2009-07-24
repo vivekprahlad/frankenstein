@@ -218,7 +218,7 @@ public class DefaultFrankensteinDriver implements FrankensteinDriver {
         frankensteinIntegration.play(new ButtonEvent(buttonName, new ClickAction()));
     }
 
-    public void clickCheckBox(String checkBoxName, boolean isChecked) {
+    public void clickCheckbox(String checkBoxName, boolean isChecked) {
         frankensteinIntegration.play(new CheckboxEvent(checkBoxName, isChecked, new ClickAction()));
     }
 

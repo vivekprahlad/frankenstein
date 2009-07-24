@@ -196,7 +196,7 @@ public interface FrankensteinDriver {
      * @param checkBoxName The name of the check box.
      * @param isChecked    true if check box is expected to be checked, false otherwise.
      */
-    public void clickCheckBox(String checkBoxName, boolean isChecked);
+    public void clickCheckbox(String checkBoxName, boolean isChecked);
 
     /**
      * Click on the specified radio button.

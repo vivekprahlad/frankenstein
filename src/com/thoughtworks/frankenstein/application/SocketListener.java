@@ -25,7 +25,7 @@ public class SocketListener implements Runnable, ScriptListener {
 
     public synchronized void start(int port) {
         try {
-            socket = new ServerSocket(port);
+            socket = new ServerSocket(port);//Use MINA NioAcceptor instead?
         } catch (IOException e) {
             Logger.getLogger("Frankenstein").log(Level.WARNING, "Error with socket IO", e);
         }
@@ -39,9 +39,11 @@ public class SocketListener implements Runnable, ScriptListener {
             while (run) {
                 Socket sock;
                 try {
-                    sock = socket.accept();
+                    sock = socket.accept();//Mina: message received?
                 } catch (IOException e) {
-                    Logger.getLogger("Frankenstein").log(Level.WARNING, "Accept failed because Socket is closed or not bound.", e);
+                    if (run) {
+                        Logger.getLogger("Frankenstein").log(Level.WARNING, "Accept failed because Socket is closed or not bound.", e);
+                    }
                     return;
                 }
                 requestProcessingStrategy.handleRequest(new BufferedReader(new InputStreamReader(sock.getInputStream())), new BufferedWriter(new OutputStreamWriter(sock.getOutputStream())));
@@ -55,7 +57,7 @@ public class SocketListener implements Runnable, ScriptListener {
     public synchronized void stop() {
         try {
             run = false;
-            if (socket != null) socket.close();
+            if (socket != null) socket.close();//MINA dispose?
             if (thread != null) thread.interrupt();
         } catch (IOException e) {
             throw new RuntimeException(e);
