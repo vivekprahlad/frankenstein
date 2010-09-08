@@ -12,7 +12,7 @@ Compiling from source
 
 You will need:
 
-* JDK 1.4 (or above)
+* JDK 1.5 (or above)
 * Apache Ant (http://jakarta.apache.org/ant/).
 
 To compile and run tests tests, just type:
