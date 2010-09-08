@@ -1,1 +1,6 @@
 frankenstein.log*
+.DS_Store
+.idea
+out
+testName.html
+Frankenstein-git.iml
